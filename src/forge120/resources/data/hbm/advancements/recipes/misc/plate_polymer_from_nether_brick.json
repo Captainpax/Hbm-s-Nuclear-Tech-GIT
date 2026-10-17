@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_nether_brick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{"items": ["minecraft:nether_brick"]}]
+      }
+    }
+  },
+  "rewards": {"recipes": ["hbm:plate_polymer_from_nether_brick"]}
+}

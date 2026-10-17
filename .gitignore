@@ -26,6 +26,8 @@
 /run-client-smoke
 /run-data
 /run-ore-config
+__pycache__/
+*.pyc
 
 # CurseForge configuration
 /curseforge.properties

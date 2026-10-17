@@ -30,7 +30,7 @@ CONFIG_WRAPPER = re.compile(
 )
 RECIPE_SITE = re.compile(
     r"\b(?:GameRegistry\.add(?:Recipe|ShapelessRecipe|Smelting)|"
-    r"(?:this\.)?addRecipe|recipes\.(?:put|add)|"
+    r"(?:this\.)?add(?:Recipe(?:Auto)?|ShapelessAuto)|recipes\.(?:put|add)|"
     r"new\s+(?:GenericRecipe|ShapedOreRecipe|ShapelessOreRecipe))\s*\("
 )
 
@@ -103,6 +103,10 @@ def inventory() -> list[dict[str, str]]:
     for path in sorted((JAVA / "crafting").rglob("*.java")):
         add(rows, "recipe_source", path.stem, path)
         scan_recipe_sites(rows, path)
+    # This central helper is outside inventory/recipes and crafting; skipping it
+    # omitted the majority of ordinary shaped and shapeless progression recipes.
+    add(rows, "recipe_source", "CraftingManager", JAVA / "main" / "CraftingManager.java")
+    scan_recipe_sites(rows, JAVA / "main" / "CraftingManager.java")
     for path in sorted((JAVA / "config").glob("*.java")):
         add(rows, "config_source", path.stem, path)
         scan_config_options(rows, path)

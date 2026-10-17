@@ -60,6 +60,7 @@ public final class PortItems {
     public static final RegistryObject<Item> NITER = ingot("niter");
     public static final RegistryObject<Item> ORE_ALUMINIUM = ore("ore_aluminium", PortBlocks.ORE_ALUMINIUM);
     public static final RegistryObject<Item> CHUNK_ORE_CRYOLITE = ingot("chunk_ore_cryolite");
+    public static final RegistryObject<Item> PLATE_POLYMER = ingot("plate_polymer");
     public static final RegistryObject<Item> MACHINE_BATTERY = ITEMS.register("machine_battery",
             () -> new PortBatteryBlockItem((PortBatteryBlock) PortBlocks.MACHINE_BATTERY.get(),
                     new Item.Properties()));

@@ -21,10 +21,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
@@ -893,6 +895,48 @@ public final class PortGameTests {
             level.setBlock(core, Blocks.AIR.defaultBlockState(), 3);
         } else {
             throw new IllegalStateException("Unknown battery pack persistence phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void insulatorCraftingMatchesLegacy(GameTestHelper helper) {
+        String[] recipes = {
+                "plate_polymer_from_wool", "plate_polymer_from_brick", "plate_polymer_from_nether_brick"
+        };
+        Item[][] inputs = {
+                {Items.STRING, Items.WHITE_WOOL, Items.STRING},
+                {Items.BRICK, Items.BRICK},
+                {Items.NETHER_BRICK, Items.NETHER_BRICK}
+        };
+        var level = helper.getLevel();
+        var player = FakePlayerFactory.getMinecraft(level);
+        var menu = player.inventoryMenu;
+        for (int i = 0; i < recipes.length; i++) {
+            var id = ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, recipes[i]);
+            var recipe = level.getRecipeManager().byKey(id)
+                    .orElseThrow(() -> new IllegalStateException("Missing insulator recipe: " + id));
+            if (!(recipe instanceof ShapedRecipe shaped)) {
+                throw new IllegalStateException("Insulator recipe is not shaped: " + id);
+            }
+            var unlock = level.getServer().getAdvancements().getAdvancement(
+                    ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "recipes/misc/" + recipes[i]));
+            if (unlock == null || !Set.of(unlock.getRewards().getRecipes()).contains(id)) {
+                throw new IllegalStateException("Insulator recipe-book unlock is missing: " + id);
+            }
+            var grid = new TransientCraftingContainer(menu, 3, 3);
+            for (int slot = 0; slot < inputs[i].length; slot++) {
+                grid.setItem(slot, new ItemStack(inputs[i][slot]));
+            }
+            ItemStack result = shaped.assemble(grid, level.registryAccess());
+            if (!shaped.matches(grid, level) || !result.is(PortItems.PLATE_POLYMER.get())
+                    || result.getCount() != 4) {
+                throw new IllegalStateException("Insulator recipe inputs or yield differ from legacy: " + id);
+            }
+            grid.setItem(1, new ItemStack(Items.DIRT));
+            if (shaped.matches(grid, level)) {
+                throw new IllegalStateException("Insulator recipe accepts an invalid material: " + id);
+            }
         }
         helper.succeed();
     }

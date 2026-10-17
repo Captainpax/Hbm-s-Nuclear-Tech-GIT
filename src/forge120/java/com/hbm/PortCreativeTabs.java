@@ -31,6 +31,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.FLUORITE.get());
                         output.accept(PortItems.NITER.get());
                         output.accept(PortItems.CHUNK_ORE_CRYOLITE.get());
+                        output.accept(PortItems.PLATE_POLYMER.get());
                     })
                     .build());
 

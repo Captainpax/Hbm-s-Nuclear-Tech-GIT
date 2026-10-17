@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_wool": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{"items": ["minecraft:white_wool"]}]
+      }
+    }
+  },
+  "rewards": {"recipes": ["hbm:plate_polymer_from_wool"]}
+}

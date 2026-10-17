@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["BB"],
+  "key": {
+    "B": {"tag": "forge:ingots/nether_brick"}
+  },
+  "result": {"item": "hbm:plate_polymer", "count": 4}
+}

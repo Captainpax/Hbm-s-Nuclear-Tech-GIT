@@ -1,4 +1,11 @@
 kind,key,status,target,notes
+item,plate_polymer,partial,src/forge120/java/com/hbm/PortItems.java,Original Insulator item registered with source texture and three vanilla-material crafting paths; plastic rubber fiber and asbestos inputs plus downstream progression pending
+asset,textures/items/plate_polymer.png,verified,src/forge120/resources/assets/hbm/textures/item/plate_polymer.png,Original texture copied byte-for-byte
+recipe_source,CraftingManager,partial,src/forge120/resources/data/hbm/recipes,Three Insulator recipes ported and GameTest-verified; central crafting catalog remains largely unported
+java_source,main/CraftingManager,partial,src/forge120/resources/data/hbm/recipes,Three Insulator crafting paths ported; most legacy crafting behavior pending
+recipe_site,CraftingManager:108,partial,src/forge120/resources/data/hbm/recipes/plate_polymer_from_wool.json,GameTest checks string-white wool-string shape and four Insulators; real-player recipe-book unlock pending
+recipe_site,CraftingManager:109,partial,src/forge120/resources/data/hbm/recipes/plate_polymer_from_brick.json,GameTest checks two brick ingots and four Insulators through Forge tag; real-player recipe-book unlock pending
+recipe_site,CraftingManager:110,partial,src/forge120/resources/data/hbm/recipes/plate_polymer_from_nether_brick.json,Legacy ingotNetherBrick key mapped to Forge nether brick ingot tag with vanilla nether brick; GameTest checks four Insulators; real-player recipe-book unlock pending
 block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; item and placed-block textures manually checked in client; break behavior and hazard integration still need full parity checks
 block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and fine-particle filtered-mask protection tested across all mask variants; other hazard effects pending
 item,gas_mask,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and five filters ported; custom worn model and overlay pending

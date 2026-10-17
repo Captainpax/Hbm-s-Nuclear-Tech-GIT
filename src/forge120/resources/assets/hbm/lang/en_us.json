@@ -55,6 +55,7 @@
   "item.hbm.fluorite": "Fluorite",
   "item.hbm.niter": "Niter",
   "item.hbm.chunk_ore_cryolite": "Cryolite Chunk",
+  "item.hbm.plate_polymer": "Insulator",
   "message.hbm.battery_readout": "%1$s / %2$s HE",
   "item.hbm.geiger_counter": "Handheld Geiger Counter",
   "geiger.title": "GEIGER COUNTER",
