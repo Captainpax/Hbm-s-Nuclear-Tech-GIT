@@ -23,7 +23,10 @@ public final class PortCreativeTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hbm.blocks"))
                     .icon(() -> new ItemStack(PortItems.ORE_URANIUM.get()))
-                    .displayItems((parameters, output) -> output.accept(PortItems.ORE_URANIUM.get()))
+                    .displayItems((parameters, output) -> {
+                        output.accept(PortItems.ORE_URANIUM.get());
+                        output.accept(PortItems.GAS_RADON.get());
+                    })
                     .build());
 
     private PortCreativeTabs() {}

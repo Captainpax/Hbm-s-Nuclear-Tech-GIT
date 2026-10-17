@@ -1,7 +1,10 @@
 kind,key,status,target,notes
-block,ore_uranium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered and worldgen data added; radon behavior pending
+block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; break behavior and hazard integration still need full parity checks
+block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement and decay tested; radiation exposure and mask behavior pending
 item,ingot_uranium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and smelting added; hazard behavior pending
 asset,textures/blocks/ore_uranium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_uranium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_uranium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_uranium.png,Original texture copied byte-for-byte
+asset,textures/blocks/gas_radon.png,verified,src/forge120/resources/assets/hbm/textures/block/gas_radon.png,Original texture copied byte-for-byte
 recipe_source,SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,Uranium ore smelting entry only
+recipe_site,SmeltingRecipes:31,verified,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,GameTest checks ore input uranium ingot result 6 XP and 200-tick cooking time
 worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_uranium.json,Uranium ore placement only

@@ -1,0 +1,22 @@
+# Parity and acceptance matrix
+
+Baseline: 1.7.10 `master` at `9d7b7ca3bc999b7909fdb349738d305dff58bd7d`. The generated [legacy inventory](legacy-inventory.csv) is the entry-level checklist; [status overrides](status.csv) record port evidence. A source entry marked `partial` must not be counted as complete. For recipe and config entries, source-line references are candidates for manual expansion: branches, loops, JSON-loaded recipes, and integration-provided entries can create multiple runtime outcomes from one call site.
+
+Every feature group below requires a single-player and dedicated-server pass, including save/reload and multiplayer rejoin where state exists. Differences forced by 1.20.1 must be documented against the source behavior rather than silently omitted.
+
+| Group | 1.7.10 source and intended behavior to preserve | Minimum 1.20.1 evidence | State |
+| --- | --- | --- | --- |
+| Registries and variants | `ModBlocks`, `ModItems`, `TileMappings`, `EntityMappings`, enum-backed metadata variants; all original IDs/content and meaningful variant properties remain obtainable | Registry snapshot, missing-mapping check, creative/search access, correct drops and block states, server startup | Uranium ore and ingot only; partial |
+| Recipes and progression | `crafting`, `inventory/recipes`, JSON loaders; each input, output, count, fluid, energy, duration, condition, and unlock path works | Data validation plus automated recipe assertions and manual progression from raw resources to endgame | One uranium smelting recipe; partial |
+| Config | `config`; each option has equivalent default, bounds/semantics, side, persistence, and reload behavior where supported | Compare options to source, toggle each class of setting, restart and verify behavior | Unported; uranium spawn count hardcoded |
+| Persistence and networking | `extprop`, tile entities, packets; active machine, player, missile, and radiation state survives saves and syncs to clients | Save/reload/rejoin tests, packet direction/validation tests, two-client dedicated-server smoke | Unported |
+| Machines, energy, fluids, multiblocks | Machine tile entities, inventories, energy/fluid systems, formation rules | Input/output and throughput tests, recipe duration, power/fluid conservation, unload/reload and chunk-boundary tests | Unported |
+| Radiation and hazards | Hazard types, contamination, gas, protection, armor-filter consumption; radon from uranium ore is included | Dose and protection tests, persistence, particle/gas movement and decay, client HUD feedback | Radon movement and ore outgassing only; partial |
+| Weapons, explosions, missiles, mobs | Weapon items/entities, ballistics, damage, explosion algorithms, missile launch/flight/impact, AI | Server-authoritative combat tests, griefing/config tests, multiplayer observation, save/reload in flight | Unported |
+| World generation and structures | `HbmWorldGen`, world/structure sources and structure assets; configured ores and structures appear at source-equivalent rates and dimensions | Multi-seed new-world and fresh-chunk tests, biome/dimension filters, no duplicate generation, no retro-generation in old chunks | Overworld uranium ore only; partial |
+| Client presentation | GUI, HUD, renderers, particles, sound, animations, models, textures | Screenshot/animation/sound comparison, inventory/world model checks, interaction and accessibility smoke | Two original textures copied; otherwise unported |
+| Optional integrations | Legacy integration sources; equivalent integrations where a maintained Forge 1.20.1 counterpart exists, with no hard dependency | Test each supported mod combination and mod-absent launch, recipes and capabilities at boundaries | Unported |
+
+## Release gate
+
+The development JAR is not a parity release. Release requires every inventory entry to have a verified modern target or a documented unavoidable engine difference, no unexplained source candidates, passing client and dedicated-server smoke, progression and multiplayer checks, fresh-chunk worldgen tests, and supported optional-integration combinations. Existing 1.7.10 saves and already generated 1.20.1 chunks are explicitly outside scope.

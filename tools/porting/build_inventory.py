@@ -21,6 +21,14 @@ ASSETS = ROOT / "src" / "main" / "resources" / "assets" / "hbm"
 OUTPUT = ROOT / "docs" / "porting" / "legacy-inventory.csv"
 STATUS = ROOT / "docs" / "porting" / "status.csv"
 FIELDS = ("kind", "key", "source", "line", "status", "target", "notes")
+CONFIG_OPTION = re.compile(
+    r'(?:\bconfig\.get\(\s*[^,]+,\s*|\bCommonConfig\.createConfig\w+\(\s*[^,]+,\s*[^,]+,\s*)"([^"]+)"'
+)
+RECIPE_SITE = re.compile(
+    r"\b(?:GameRegistry\.add(?:Recipe|ShapelessRecipe|Smelting)|"
+    r"(?:this\.)?addRecipe|recipes\.(?:put|add)|"
+    r"new\s+(?:GenericRecipe|ShapedOreRecipe|ShapelessOreRecipe))\s*\("
+)
 
 
 def rel(path: Path) -> str:
@@ -49,6 +57,24 @@ def scan_calls(rows: list[dict[str, str]], path: Path, kind: str, pattern: str) 
             add(rows, kind, match.group(1), path, number)
 
 
+def scan_config_options(rows: list[dict[str, str]], path: Path) -> None:
+    for number, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        match = CONFIG_OPTION.search(line)
+        if match and not line.lstrip().startswith("//"):
+            add(rows, "config_option", f"{path.stem}:{match.group(1)}:{number}", path, number)
+
+
+def scan_recipe_sites(rows: list[dict[str, str]], path: Path) -> None:
+    for number, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        stripped = line.strip()
+        if stripped.startswith(("//", "*", "public ", "private ", "protected ")):
+            continue
+        match = RECIPE_SITE.search(line)
+        if match:
+            add(rows, "recipe_site", f"{path.stem}:{number}", path, number)
+            rows[-1]["notes"] = stripped[:200]
+
+
 def inventory() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     scan_calls(rows, JAVA / "blocks" / "ModBlocks.java", "block", r"GameRegistry\.registerBlock\(\s*(\w+)")
@@ -58,10 +84,13 @@ def inventory() -> list[dict[str, str]]:
 
     for path in sorted((JAVA / "inventory" / "recipes").glob("*.java")):
         add(rows, "recipe_source", path.stem, path)
+        scan_recipe_sites(rows, path)
     for path in sorted((JAVA / "crafting").rglob("*.java")):
         add(rows, "recipe_source", path.stem, path)
+        scan_recipe_sites(rows, path)
     for path in sorted((JAVA / "config").glob("*.java")):
         add(rows, "config_source", path.stem, path)
+        scan_config_options(rows, path)
     for path in sorted((JAVA / "inventory" / "gui").rglob("*.java")):
         add(rows, "screen_source", path.stem, path)
     for path in sorted((JAVA / "wiaj").rglob("*Gui*.java")):
