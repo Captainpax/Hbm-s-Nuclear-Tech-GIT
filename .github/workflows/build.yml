@@ -63,6 +63,10 @@ jobs:
         run: |
           cp tools/porting/fixtures/hbm-server-cobalt-off.toml run-ore-config/world/serverconfig/hbm-server.toml
           ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=cobalt-off --no-daemon --console=plain
+      - name: Test titanium-cluster-disabled generation with other clusters enabled
+        run: |
+          cp tools/porting/fixtures/hbm-server-cluster-titanium-off.toml run-ore-config/world/serverconfig/hbm-server.toml
+          ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=cluster-titanium-off --no-daemon --console=plain
       - uses: actions/upload-artifact@v4
         with:
           name: hbm-forge-1.20.1-dev

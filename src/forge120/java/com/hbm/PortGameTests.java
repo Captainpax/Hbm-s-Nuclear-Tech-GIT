@@ -1143,6 +1143,56 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void crystalClusterDropsAndSmelting(GameTestHelper helper) {
+        Block[] clusters = {PortBlocks.CLUSTER_IRON.get(), PortBlocks.CLUSTER_TITANIUM.get(),
+                PortBlocks.CLUSTER_ALUMINIUM.get(), PortBlocks.CLUSTER_COPPER.get()};
+        Item[] clusterItems = {PortItems.CLUSTER_IRON.get(), PortItems.CLUSTER_TITANIUM.get(),
+                PortItems.CLUSTER_ALUMINIUM.get(), PortItems.CLUSTER_COPPER.get()};
+        Item[] crystals = {PortItems.CRYSTAL_IRON.get(), PortItems.CRYSTAL_TITANIUM.get(),
+                PortItems.CRYSTAL_ALUMINIUM.get(), PortItems.CRYSTAL_COPPER.get()};
+        Item[] ingots = {Items.IRON_INGOT, PortItems.INGOT_TITANIUM.get(),
+                PortItems.INGOT_ALUMINIUM.get(), PortItems.INGOT_COPPER.get()};
+        BlockPos clusterPos = helper.absolutePos(new BlockPos(1, 1, 1));
+        ItemStack silkPick = new ItemStack(Items.IRON_PICKAXE);
+        silkPick.enchant(Enchantments.SILK_TOUCH, 1);
+        ItemStack fortunePick = new ItemStack(Items.IRON_PICKAXE);
+        fortunePick.enchant(Enchantments.BLOCK_FORTUNE, 3);
+        for (int i = 0; i < clusters.length; i++) {
+            var id = ForgeRegistries.BLOCKS.getKey(clusters[i]);
+            if (id == null || ForgeRegistries.ITEMS.getValue(id) != clusterItems[i]
+                    || !helper.getLevel().registryAccess().registryOrThrow(Registries.PLACED_FEATURE).containsKey(id)) {
+                throw new IllegalStateException("Crystal cluster item or placed feature missing for " + id);
+            }
+            helper.getLevel().setBlock(clusterPos, clusters[i].defaultBlockState(), 3);
+            var player = FakePlayerFactory.getMinecraft(helper.getLevel());
+            var drops = Block.getDrops(clusters[i].defaultBlockState(), helper.getLevel(), clusterPos,
+                    null, player, new ItemStack(Items.IRON_PICKAXE));
+            var fortuneDrops = Block.getDrops(clusters[i].defaultBlockState(), helper.getLevel(), clusterPos,
+                    null, player, fortunePick);
+            if (drops.size() != 1 || !drops.get(0).is(crystals[i]) || drops.get(0).getCount() != 1
+                    || fortuneDrops.size() != 1 || !fortuneDrops.get(0).is(crystals[i])
+                    || fortuneDrops.get(0).getCount() != 1) {
+                throw new IllegalStateException("Crystal cluster yield differs from legacy for " + id);
+            }
+            var silkDrops = Block.getDrops(clusters[i].defaultBlockState(), helper.getLevel(), clusterPos,
+                    null, player, silkPick);
+            if (silkDrops.size() != 1 || !silkDrops.get(0).is(clusterItems[i])
+                    || silkDrops.get(0).getCount() != 1) {
+                throw new IllegalStateException("Silk Touch cluster yield differs from legacy for " + id);
+            }
+            var recipe = helper.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING,
+                    new SimpleContainer(new ItemStack(crystals[i])), helper.getLevel())
+                    .orElseThrow(() -> new IllegalStateException("Crystal smelting recipe missing for " + id));
+            var result = recipe.getResultItem(helper.getLevel().registryAccess());
+            if (!result.is(ingots[i]) || result.getCount() != 2
+                    || recipe.getExperience() != 2.0F || recipe.getCookingTime() != 200) {
+                throw new IllegalStateException("Crystal smelting differs from legacy for " + id);
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void uraniumOutgasses(GameTestHelper helper) {
         BlockPos orePos = new BlockPos(1, 2, 1);
         helper.setBlock(orePos, PortBlocks.ORE_URANIUM.get());
@@ -1770,7 +1820,9 @@ public final class PortGameTests {
                 PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get(),
                 PortBlocks.ORE_SULFUR.get(), PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get(),
                 PortBlocks.ORE_ALUMINIUM.get(), PortBlocks.ORE_RARE.get(), PortBlocks.ORE_LIGNITE.get(),
-                PortBlocks.ORE_CINNEBAR.get(), PortBlocks.ORE_COBALT.get()
+                PortBlocks.ORE_CINNEBAR.get(), PortBlocks.ORE_COBALT.get(),
+                PortBlocks.CLUSTER_IRON.get(), PortBlocks.CLUSTER_TITANIUM.get(),
+                PortBlocks.CLUSTER_ALUMINIUM.get(), PortBlocks.CLUSTER_COPPER.get()
         };
         int[] found = new int[ores.length];
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
@@ -1833,7 +1885,8 @@ public final class PortGameTests {
         for (String ore : new String[] {
                 "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium",
                 "sulfur", "fluorite", "niter", "aluminium", "asbestos",
-                "rare", "lignite", "cinnebar", "cobalt"
+                "rare", "lignite", "cinnebar", "cobalt",
+                "cluster_iron", "cluster_titanium", "cluster_aluminium", "cluster_copper"
         }) {
             int expected = PortConfig.ENABLE_OVERWORLD_ORES.get() ? PortConfig.oreCount(ore) : 0;
             if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != expected) {
@@ -1848,7 +1901,9 @@ public final class PortGameTests {
                 PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get(),
                 PortBlocks.ORE_ALUMINIUM.get(), PortBlocks.ORE_ASBESTOS.get(),
                 PortBlocks.ORE_RARE.get(), PortBlocks.ORE_LIGNITE.get(),
-                PortBlocks.ORE_CINNEBAR.get(), PortBlocks.ORE_COBALT.get()
+                PortBlocks.ORE_CINNEBAR.get(), PortBlocks.ORE_COBALT.get(),
+                PortBlocks.CLUSTER_IRON.get(), PortBlocks.CLUSTER_TITANIUM.get(),
+                PortBlocks.CLUSTER_ALUMINIUM.get(), PortBlocks.CLUSTER_COPPER.get()
         };
         if (phase.equals("master-off")) {
             int chunkX = ThreadLocalRandom.current().nextInt(20_000, 24_000);
@@ -1894,6 +1949,16 @@ public final class PortGameTests {
                     || countOresInFreshChunks(level, chunkX, chunkZ,
                             new Block[] {PortBlocks.ORE_URANIUM.get()}) == 0) {
                 throw new IllegalStateException("Cobalt-only disable setting failed in fresh chunks");
+            }
+        } else if (phase.equals("cluster-titanium-off")) {
+            int chunkX = ThreadLocalRandom.current().nextInt(56_000, 60_000);
+            int chunkZ = ThreadLocalRandom.current().nextInt(56_000, 60_000);
+            if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.CLUSTER_TITANIUM_COUNT.get() != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.CLUSTER_TITANIUM.get()}) != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.CLUSTER_IRON.get()}) == 0) {
+                throw new IllegalStateException("Titanium-cluster disable setting failed in fresh chunks");
             }
         } else if (!phase.isEmpty()) {
             throw new IllegalStateException("Unknown ore config test phase: " + phase);

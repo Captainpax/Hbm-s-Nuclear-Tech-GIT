@@ -1,4 +1,31 @@
 kind,key,status,target,notes
+block,cluster_iron,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
+block,cluster_titanium,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
+block,cluster_aluminium,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
+block,cluster_copper,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
+item,crystal_iron,partial,src/forge120/java/com/hbm/PortItems.java,Cluster drop and two-ingot furnace path ported; crystallizer centrifuge shredder and electrolyser processing pending
+item,crystal_titanium,partial,src/forge120/java/com/hbm/PortItems.java,Cluster drop and two-ingot furnace path ported; crystallizer centrifuge shredder and electrolyser processing pending
+item,crystal_aluminium,partial,src/forge120/java/com/hbm/PortItems.java,Cluster drop and two-ingot furnace path ported; crystallizer centrifuge shredder and electrolyser processing pending
+item,crystal_copper,partial,src/forge120/java/com/hbm/PortItems.java,Cluster drop and two-ingot furnace path ported; crystallizer centrifuge shredder and electrolyser processing pending
+item,ingot_aluminium,partial,src/forge120/java/com/hbm/PortItems.java,Two-ingot crystal smelting path and source texture ported; remaining aluminium processing and recipes pending
+asset,textures/blocks/cluster_iron.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_iron.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_titanium.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_titanium.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_aluminium.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_aluminium.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_copper.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_copper.png,Original texture copied byte-for-byte
+asset,textures/items/crystal_iron.png,verified,src/forge120/resources/assets/hbm/textures/item/crystal_iron.png,Original texture copied byte-for-byte
+asset,textures/items/crystal_titanium.png,verified,src/forge120/resources/assets/hbm/textures/item/crystal_titanium.png,Original texture copied byte-for-byte
+asset,textures/items/crystal_aluminium.png,verified,src/forge120/resources/assets/hbm/textures/item/crystal_aluminium.png,Original texture copied byte-for-byte
+asset,textures/items/crystal_copper.png,verified,src/forge120/resources/assets/hbm/textures/item/crystal_copper.png,Original texture copied byte-for-byte
+asset,textures/items/ingot_aluminium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_aluminium.png,Original texture copied byte-for-byte
+config_option,WorldConfig:2.C00_ironClusterSpawn:176,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy four attempts per new chunk in Y15-59 band; distribution validation pending
+config_option,WorldConfig:2.C01_titaniumClusterSpawn:177,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy two attempts per new chunk in Y15-44 band and startup zero-disable test; distribution validation pending
+config_option,WorldConfig:2.C02_aluminiumClusterSpawn:178,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy three attempts per new chunk in Y15-49 band; distribution validation pending
+config_option,WorldConfig:2.C03_copperClusterSpawn:179,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy four attempts per new chunk in Y15-34 band; distribution validation pending
+java_source,blocks/generic/BlockCluster,partial,src/forge120/resources/data/hbm/loot_tables/blocks,Four matching crystal drops and Silk Touch blocks ported; full in-world harvest audit pending
+recipe_site,SmeltingRecipes:140,partial,src/forge120/resources/data/hbm/recipes/ingot_from_crystal_iron.json,One crystal smelts to two ingots with two XP in 200 ticks; real-furnace progression pending
+recipe_site,SmeltingRecipes:147,partial,src/forge120/resources/data/hbm/recipes/ingot_from_crystal_titanium.json,One crystal smelts to two ingots with two XP in 200 ticks; real-furnace progression pending
+recipe_site,SmeltingRecipes:150,partial,src/forge120/resources/data/hbm/recipes/ingot_from_crystal_copper.json,One crystal smelts to two ingots with two XP in 200 ticks; real-furnace progression pending
+recipe_site,SmeltingRecipes:152,partial,src/forge120/resources/data/hbm/recipes/ingot_from_crystal_aluminium.json,One crystal smelts to two ingots with two XP in 200 ticks; real-furnace progression pending
 java_source,handler/FuelHandler,partial,src/forge120/java/com/hbm/PortLigniteItem.java,Lignite 1200-tick furnace fuel behavior ported; other custom fuels remain
 block,ore_rare,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk source-height placement rare chunk drop and uncommon item rarity with Silk Touch ported; processing and in-world visual check pending
 block,ore_lignite,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk source-height placement and lignite drop with Silk Touch ported; in-world visual check pending
@@ -108,10 +135,10 @@ item,ingot_uranium,partial,src/forge120/java/com/hbm/PortItems.java,Registered a
 asset,textures/blocks/ore_uranium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_uranium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_uranium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_uranium.png,Original texture copied byte-for-byte
 asset,textures/blocks/gas_radon.png,verified,src/forge120/resources/assets/hbm/textures/block/gas_radon.png,Original texture copied byte-for-byte
-recipe_source,SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Nine ordinary ore smelting entries plus asbestos powder into sheet; remaining recipes pending
-java_source,crafting/SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Nine ordinary ore smelting entries plus asbestos powder into sheet; remaining smelting recipes pending
+recipe_source,SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Nine ordinary ore and four crystal smelting entries plus asbestos powder into sheet; remaining recipes pending
+java_source,crafting/SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Nine ordinary ore and four crystal smelting entries plus asbestos powder into sheet; remaining smelting recipes pending
 recipe_site,SmeltingRecipes:31,verified,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,GameTest checks ore input uranium ingot result 6 XP and 200-tick cooking time
-worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Sixteen ordinary Overworld ores including asbestos rare lignite cinnabar and cobalt use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
+worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Sixteen ordinary ores and four crystal clusters use configurable counts and master toggle in fresh Overworld chunks; other deposits structures and distribution-rate validation pending
 block,ore_thorium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_th232,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_thorium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_thorium.png,Original texture copied byte-for-byte
@@ -149,7 +176,7 @@ asset,textures/items/ingot_beryllium.png,verified,src/forge120/resources/assets/
 recipe_site,SmeltingRecipes:42,verified,src/forge120/resources/data/hbm/recipes/ingot_beryllium_from_ore.json,GameTest checks ore input output 2 XP and 200-tick cooking time
 config_option,WorldConfig:2.09_berylliumSpawnrate:136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 config_option,WorldConfig:2.00_uraniumSpawnrate:127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
-config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all sixteen ported ores absent in fresh chunks; other legacy ores unported
+config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all twenty ported deposits absent in fresh chunks; other legacy worldgen unported
 block,ore_sulfur,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 sulfur plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_fluorite,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 fluorite plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_niter,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 niter plus silk-touch drops tested; tool tier fortune and downstream recipes pending

@@ -26,6 +26,10 @@ public final class PortConfig {
     public static final ForgeConfigSpec.IntValue ORE_LIGNITE_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_CINNEBAR_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_COBALT_COUNT;
+    public static final ForgeConfigSpec.IntValue CLUSTER_IRON_COUNT;
+    public static final ForgeConfigSpec.IntValue CLUSTER_TITANIUM_COUNT;
+    public static final ForgeConfigSpec.IntValue CLUSTER_ALUMINIUM_COUNT;
+    public static final ForgeConfigSpec.IntValue CLUSTER_COPPER_COUNT;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -65,6 +69,10 @@ public final class PortConfig {
         ORE_RARE_COUNT = oreCount(builder, "2.14_rareEarthSpawnRate", 6);
         ORE_CINNEBAR_COUNT = oreCount(builder, "2.18_cinnebarSpawnRate", 1);
         ORE_COBALT_COUNT = oreCount(builder, "2.18_cobaltSpawnRate", 2);
+        CLUSTER_IRON_COUNT = oreCount(builder, "2.C00_ironClusterSpawn", 4);
+        CLUSTER_TITANIUM_COUNT = oreCount(builder, "2.C01_titaniumClusterSpawn", 2);
+        CLUSTER_ALUMINIUM_COUNT = oreCount(builder, "2.C02_aluminiumClusterSpawn", 3);
+        CLUSTER_COPPER_COUNT = oreCount(builder, "2.C03_copperClusterSpawn", 4);
         builder.pop();
         SPEC = builder.build();
     }
@@ -98,6 +106,10 @@ public final class PortConfig {
             case "lignite" -> ORE_LIGNITE_COUNT;
             case "cinnebar" -> ORE_CINNEBAR_COUNT;
             case "cobalt" -> ORE_COBALT_COUNT;
+            case "cluster_iron" -> CLUSTER_IRON_COUNT;
+            case "cluster_titanium" -> CLUSTER_TITANIUM_COUNT;
+            case "cluster_aluminium" -> CLUSTER_ALUMINIUM_COUNT;
+            case "cluster_copper" -> CLUSTER_COPPER_COUNT;
             default -> throw new IllegalArgumentException("Unknown HBM ore placement: " + ore);
         };
     }

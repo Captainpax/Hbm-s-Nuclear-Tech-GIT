@@ -36,7 +36,11 @@ public final class PortClientSmoke {
                 PortItems.ORE_CINNEBAR.get(), PortItems.ORE_COBALT.get(),
                 PortItems.CHUNK_ORE_RARE.get(), PortItems.LIGNITE.get(),
                 PortItems.CINNEBAR.get(), PortItems.FRAGMENT_COBALT.get(),
-                PortItems.INGOT_COBALT.get()
+                PortItems.INGOT_COBALT.get(), PortItems.CLUSTER_IRON.get(),
+                PortItems.CLUSTER_TITANIUM.get(), PortItems.CLUSTER_ALUMINIUM.get(),
+                PortItems.CLUSTER_COPPER.get(), PortItems.CRYSTAL_IRON.get(),
+                PortItems.CRYSTAL_TITANIUM.get(), PortItems.CRYSTAL_ALUMINIUM.get(),
+                PortItems.CRYSTAL_COPPER.get(), PortItems.INGOT_ALUMINIUM.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {

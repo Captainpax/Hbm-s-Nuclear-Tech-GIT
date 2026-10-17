@@ -25,3 +25,7 @@
 		14_rareEarthSpawnRate = 6
 		18_cinnebarSpawnRate = 1
 		18_cobaltSpawnRate = 0
+		C00_ironClusterSpawn = 4
+		C01_titaniumClusterSpawn = 2
+		C02_aluminiumClusterSpawn = 3
+		C03_copperClusterSpawn = 4

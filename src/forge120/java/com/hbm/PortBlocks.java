@@ -74,6 +74,10 @@ public final class PortBlocks {
     public static final RegistryObject<Block> ORE_LIGNITE = ore("ore_lignite", 5.0F, 15.0F);
     public static final RegistryObject<Block> ORE_CINNEBAR = ore("ore_cinnebar", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_COBALT = ore("ore_cobalt", 5.0F, 10.0F);
+    public static final RegistryObject<Block> CLUSTER_IRON = ore("cluster_iron", 5.0F, 15.0F);
+    public static final RegistryObject<Block> CLUSTER_TITANIUM = ore("cluster_titanium", 5.0F, 15.0F);
+    public static final RegistryObject<Block> CLUSTER_ALUMINIUM = ore("cluster_aluminium", 5.0F, 15.0F);
+    public static final RegistryObject<Block> CLUSTER_COPPER = ore("cluster_copper", 5.0F, 15.0F);
 
     private PortBlocks() {}
 

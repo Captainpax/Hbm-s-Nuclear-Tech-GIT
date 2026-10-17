@@ -111,6 +111,15 @@ public final class PortItems {
     public static final RegistryObject<Item> CINNEBAR = ingot("cinnebar");
     public static final RegistryObject<Item> FRAGMENT_COBALT = ingot("fragment_cobalt");
     public static final RegistryObject<Item> INGOT_COBALT = ingot("ingot_cobalt");
+    public static final RegistryObject<Item> CLUSTER_IRON = ore("cluster_iron", PortBlocks.CLUSTER_IRON);
+    public static final RegistryObject<Item> CLUSTER_TITANIUM = ore("cluster_titanium", PortBlocks.CLUSTER_TITANIUM);
+    public static final RegistryObject<Item> CLUSTER_ALUMINIUM = ore("cluster_aluminium", PortBlocks.CLUSTER_ALUMINIUM);
+    public static final RegistryObject<Item> CLUSTER_COPPER = ore("cluster_copper", PortBlocks.CLUSTER_COPPER);
+    public static final RegistryObject<Item> CRYSTAL_IRON = ingot("crystal_iron");
+    public static final RegistryObject<Item> CRYSTAL_TITANIUM = ingot("crystal_titanium");
+    public static final RegistryObject<Item> CRYSTAL_ALUMINIUM = ingot("crystal_aluminium");
+    public static final RegistryObject<Item> CRYSTAL_COPPER = ingot("crystal_copper");
+    public static final RegistryObject<Item> INGOT_ALUMINIUM = ingot("ingot_aluminium");
 
     /** Legacy ItemBatteryPack enum order, now represented by stable named item IDs. */
     public static final List<RegistryObject<Item>> BATTERY_PACKS = List.of(

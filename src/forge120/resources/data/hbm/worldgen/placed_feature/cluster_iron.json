@@ -1,0 +1,27 @@
+{
+  "feature": "hbm:cluster_iron",
+  "placement": [
+    {
+      "type": "hbm:ore_count",
+      "ore": "cluster_iron"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": 15
+        },
+        "max_inclusive": {
+          "absolute": 59
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
