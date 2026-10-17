@@ -36,7 +36,7 @@ public final class PortItems {
     public static final RegistryObject<Item> GAS_MASK_FILTER_PISS = ITEMS.register("gas_mask_filter_piss",
             () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
     public static final RegistryObject<Item> GEIGER_COUNTER = ITEMS.register("geiger_counter",
-            () -> new Item(new Item.Properties().stacksTo(1)));
+            () -> new PortGeigerCounter(new Item.Properties().stacksTo(1)));
 
     private PortItems() {}
 }

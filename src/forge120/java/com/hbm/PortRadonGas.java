@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
-/** Invisible, non-solid radon: movement/decay only; exposure is a later slice. */
+/** Invisible, non-solid radon with movement, decay, and server-side exposure. */
 public final class PortRadonGas extends Block {
     public PortRadonGas(BlockBehaviour.Properties properties) {
         super(properties.noCollission().noOcclusion().replaceable());

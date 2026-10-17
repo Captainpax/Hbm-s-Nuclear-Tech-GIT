@@ -7,14 +7,14 @@ The parity baseline is commit `9d7b7ca3bc999b7909fdb349738d305dff58bd7d` on the 
 ## Current gate
 
 - Forge 1.20.1-47.4.10 / Java 17 / ForgeGradle 6 build: passing.
-- `hbm:ore_uranium`, `hbm:gas_radon`, `hbm:ingot_uranium`, four gas masks, five filters, and a Geiger counter: registered with source inventory textures. Eleven dedicated GameTests pass, including smelting, fresh-chunk uranium generation, ore outgassing, gas movement, exposure persistence, illness and lethal damage, filter installation/wear, the fine-particle protection matrix, and exposure-packet serialization/validation.
+- `hbm:ore_uranium`, `hbm:gas_radon`, `hbm:ingot_uranium`, four gas masks, five filters, and a Geiger counter: registered with source inventory textures. Fifteen dedicated GameTests pass, including smelting, fresh-chunk uranium generation, ore outgassing, gas movement, exposure persistence, illness and lethal damage, filter installation/wear, fine-particle protection, packet validation, chunk-radiation NBT/diffusion/no-generation checks, Geiger server use, and Nether ambient exposure.
 - The development client reached the render thread and loaded texture atlases. Visual inspection in a world remains pending.
-- Radon decay, movement, unprotected exposure, and protection by fine-particle filters are implemented. Exposure NBT persistence passed a dedicated-server test. Two server radiation/hazard switches and two client Geiger HUD offsets are wired in. The legacy 200/400/600/800 RAD illness tiers and 1000 RAD lethal threshold run server-side. Player exposure now has a server-to-client sync packet and a counter-gated personal-dose HUD, but actual multiplayer rejoin and in-world HUD visual checks remain pending. Environmental radiation, other hazards, mob transformations, full ore-break parity, nearly all other content, and integrations remain pending.
+- Radon decay, movement, unprotected exposure, and protection by fine-particle filters are implemented. Exposure NBT persistence and chunk-radiation NBT round-trip passed dedicated-server tests. Four server radiation/hazard settings and two client Geiger HUD offsets are wired in. The legacy 200/400/600/800 RAD illness tiers and 1000 RAD lethal threshold run server-side. The default scalar chunk radiation system persists per dimension, diffuses across loaded chunks, and doses entities; Nether ambient radiation is included. The Geiger counter reports chunk, environmental, and personal readings on right-click, and its HUD shows synced personal dose. Actual world reload, multiplayer rejoin, and in-world HUD visual checks remain pending. Other radiation sources, hazards, mob transformations, full ore-break parity, nearly all other content, and integrations remain pending.
 - No 1.7.10 world conversion or generation in already generated 1.20.1 chunks is planned.
 
 ## Next gates
 
-1. Complete the radiation ecosystem: environmental/chunk radiation, other protective equipment and hazards, Geiger readout and sounds, mob transformations, and in-world multiplayer/HUD checks.
+1. Complete the radiation ecosystem: remaining sources, PRISM and high-radiation world effects, armor resistance and other hazards, Geiger sounds, mob transformations, and in-world multiplayer/HUD/reload checks.
 2. Port common energy, fluid, machine, and networking frameworks before expanding registries in feature groups.
 3. Close each inventory item with equivalent gameplay and client/server checks. Audit optional 1.20.1 integrations separately.
 

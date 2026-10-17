@@ -21,24 +21,29 @@ asset,textures/items/gas_mask_filter_mono.png,verified,src/forge120/resources/as
 asset,textures/items/gas_mask_filter_combo.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_combo.png,Original texture copied byte-for-byte
 asset,textures/items/gas_mask_filter_rag.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_rag.png,Original texture copied byte-for-byte
 asset,textures/items/gas_mask_filter_piss.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_piss.png,Original texture copied byte-for-byte
-java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos fields persist; other living properties and effects pending
+java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos persist while environmental accumulation/rate are runtime-only; other living properties pending
+java_source,handler/radiation/ChunkRadiationManager,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar per-dimension storage and loaded-chunk diffusion ported; alternate systems and effects pending
+java_source,handler/radiation/ChunkRadiationHandlerSimple,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar field diffusion and NBT persistence ported; fog and world destruction pending
+java_source,util/ContaminationUtil,partial,src/forge120/java/com/hbm/PortEnvironmentRadiation.java,Chunk and Nether exposure plus environmental accumulation ported; armor resistance and other hazard types pending
 packet_source,ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos fields sync server-to-client only; other extended properties pending
 java_source,packet/toclient/ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos sync only; full legacy packet data pending
-item,geiger_counter,partial,src/forge120/java/com/hbm/PortItems.java,Inventory item enables synced personal-dose HUD; right-click readout environmental radiation and sounds pending
-java_source,items/tool/ItemGeigerCounter,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Personal-dose HUD trigger only; environmental readout and clicks pending
+item,geiger_counter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory item enables synced personal-dose HUD and right-click chunk/environment/personal readout; resistance and sounds pending
+java_source,items/tool/ItemGeigerCounter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Right-click chunk/environment/personal readings ported; click sounds resistance and full radioactive source coverage pending
 renderer_source,RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger personal-dose bar and rate ported; other overlays pending
 java_source,render/util/RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger personal-dose bar and rate ported; other overlays pending
 java_source,main/ModEventHandlerClient,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger overlay registration only; remaining client events pending
 asset,textures/items/geiger_counter.png,verified,src/forge120/resources/assets/hbm/textures/item/geiger_counter.png,Original texture copied byte-for-byte
 asset,textures/misc/overlay_misc.png,verified,src/forge120/resources/assets/hbm/textures/misc/overlay_misc.png,Original texture copied byte-for-byte
 java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and fine-particle filtered-mask protection present; other protections and visual behavior pending
-java_source,config/RadiationConfig,partial,src/forge120/java/com/hbm/PortConfig.java,Two server-synced options ported; remaining radiation and pollution settings pending
+java_source,config/RadiationConfig,partial,src/forge120/java/com/hbm/PortConfig.java,Four server settings ported; PRISM fog world effects and pollution settings pending
 java_source,config/ClientConfig,partial,src/forge120/java/com/hbm/PortClientConfig.java,Geiger HUD offsets ported; remaining client options pending
 config_option,ClientConfig:GEIGER_OFFSET_HORIZONTAL:16,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero and HUD placement ported; in-world visual placement pending
 config_option,ClientConfig:GEIGER_OFFSET_VERTICAL:17,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero and HUD placement ported; in-world visual placement pending
-java_source,handler/EntityEffectHandler,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers and lethal threshold ported; transformations and all other effects pending
+java_source,handler/EntityEffectHandler,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers lethal threshold and chunk/Nether exposure ported; transformations and other effects pending
 java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only
-config_option,RadiationConfig:RADIATION_00_enableContamination:52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon dose; broader radiation effects not yet ported
+config_option,RadiationConfig:RADIATION_00_enableContamination:52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and chunk dose; broader radiation effects not yet ported
+config_option,RadiationConfig:RADIATION_01_enableChunkRads:53,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls default scalar chunk radiation; PRISM and world effects pending
+config_option,RadiationConfig:AMBIENT_00_nether:46,partial,src/forge120/java/com/hbm/PortConfig.java,Default 0.1 RAD per second Nether ambient exposure ported; full armor resistance pending
 config_option,RadiationConfig:HAZ_00_disableAsbestos:61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon asbestos dose; other asbestos sources not yet ported
 item,ingot_uranium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and smelting added; hazard behavior pending
 asset,textures/blocks/ore_uranium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_uranium.png,Original texture copied byte-for-byte

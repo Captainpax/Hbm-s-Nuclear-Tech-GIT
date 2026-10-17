@@ -22,11 +22,14 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Set;
 
 @GameTestHolder(HbmPort.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -107,6 +110,10 @@ public final class PortGameTests {
         if (Math.abs(exposure.radiation() - 0.05F) > 0.0001F || exposure.asbestos() != 1) {
             throw new IllegalStateException("Radon did not apply its legacy exposure amounts");
         }
+        exposure.rollEnvironmentalRadiation();
+        if (Math.abs(exposure.environmentRate() - 0.05F) > 0.0001F) {
+            throw new IllegalStateException("Radon did not contribute to environmental Geiger reading");
+        }
         CompoundTag saved = cow.saveWithoutId(new CompoundTag());
         var restored = EntityType.COW.create(helper.getLevel());
         if (restored == null) throw new IllegalStateException("Could not create a cow for NBT reload");
@@ -159,6 +166,105 @@ public final class PortGameTests {
             }
         } finally {
             invalid.release();
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void chunkRadiationPersistsAndDiffuses(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
+        int chunkX = pos.getX() >> 4;
+        int chunkZ = pos.getZ() >> 4;
+        long center = ChunkPos.asLong(chunkX, chunkZ);
+        long east = ChunkPos.asLong(chunkX + 1, chunkZ);
+        PortChunkRadiation.set(level, pos, 100.0F);
+        if (PortChunkRadiation.at(level, pos) != 100.0F) {
+            throw new IllegalStateException("Chunk radiation was not set in a loaded chunk");
+        }
+        PortChunkRadiation copy = PortChunkRadiation.load(
+                PortChunkRadiation.get(level).save(new CompoundTag()));
+        if (copy.at(center) != 100.0F) {
+            throw new IllegalStateException("Chunk radiation did not survive NBT round-trip");
+        }
+        copy.spread(Set.of(center, east));
+        if (Math.abs(copy.at(center) - 59.35F) > 0.001F
+                || Math.abs(copy.at(east) - 7.375F) > 0.001F) {
+            throw new IllegalStateException("Chunk radiation diffusion differs from scalar weights");
+        }
+        int distantX = chunkX + 8000;
+        int distantZ = chunkZ + 8000;
+        if (level.getChunkSource().hasChunk(distantX, distantZ)) {
+            throw new IllegalStateException("Expected test chunk to be unloaded");
+        }
+        PortChunkRadiation.set(level, new BlockPos(distantX << 4, pos.getY(), distantZ << 4), 100.0F);
+        if (level.getChunkSource().hasChunk(distantX, distantZ)) {
+            throw new IllegalStateException("Setting radiation generated an unloaded chunk");
+        }
+        PortChunkRadiation.set(level, pos, 0.0F);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void chunkRadiationExposesLivingEntity(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
+        PortChunkRadiation.set(level, pos, 20.0F);
+        var cow = EntityType.COW.create(level);
+        if (cow == null) throw new IllegalStateException("Could not create exposure test cow");
+        cow.setPos(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
+        PortEnvironmentRadiation.tick(cow);
+        var data = PortRadiation.get(cow)
+                .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+        data.rollEnvironmentalRadiation();
+        PortChunkRadiation.set(level, pos, 0.0F);
+        if (Math.abs(data.radiation() - 1.0F) > 0.0001F
+                || Math.abs(data.environmentRate() - 1.0F) > 0.0001F) {
+            throw new IllegalStateException("20 RAD/s did not give one RAD and report one RAD of tick exposure");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void geigerCounterReadsServerMeasurements(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var player = FakePlayerFactory.getMinecraft(level);
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
+        player.setPos(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
+        PortChunkRadiation.set(level, pos, 10.0F);
+        ItemStack counter = new ItemStack(PortItems.GEIGER_COUNTER.get());
+        player.setItemInHand(InteractionHand.MAIN_HAND, counter);
+        var data = PortRadiation.get(player)
+                .orElseThrow(() -> new IllegalStateException("Player exposure capability missing"));
+        data.addRadiation(5.0F);
+        data.addEnvironmentalRadiation(2.0F);
+        data.rollEnvironmentalRadiation();
+        try {
+            PortItems.GEIGER_COUNTER.get().use(level, player, InteractionHand.MAIN_HAND);
+            if (PortChunkRadiation.at(level, pos) != 10.0F
+                    || data.environmentRate() != 2.0F || data.radiation() != 5.0F) {
+                throw new IllegalStateException("Geiger readout altered server measurements");
+            }
+        } finally {
+            PortChunkRadiation.set(level, pos, 0.0F);
+            data.addRadiation(-2500.0F);
+            player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void netherAmbientRadiationDosesEntities(GameTestHelper helper) {
+        ServerLevel nether = helper.getLevel().getServer().getLevel(Level.NETHER);
+        if (nether == null) throw new IllegalStateException("Nether test dimension is unavailable");
+        var cow = EntityType.COW.create(nether);
+        if (cow == null) throw new IllegalStateException("Could not create Nether exposure test cow");
+        PortEnvironmentRadiation.tick(cow);
+        var data = PortRadiation.get(cow)
+                .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+        float expected = PortConfig.NETHER_AMBIENT_RADS.get().floatValue() / 20.0F;
+        if (Math.abs(data.radiation() - expected) > 0.0001F) {
+            throw new IllegalStateException("Nether ambient radiation did not dose an entity");
         }
         helper.succeed();
     }

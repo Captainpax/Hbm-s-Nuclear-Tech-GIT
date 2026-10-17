@@ -34,8 +34,11 @@ public final class PortRadiation {
     public interface Exposure {
         float radiation();
         int asbestos();
+        float environmentRate();
         void addRadiation(float amount);
         void addAsbestos(int amount);
+        void addEnvironmentalRadiation(float amount);
+        void rollEnvironmentalRadiation();
         CompoundTag save();
         void load(CompoundTag tag);
     }
@@ -43,9 +46,12 @@ public final class PortRadiation {
     private static final class Data implements Exposure {
         private float radiation;
         private int asbestos;
+        private float environmentalAccumulation;
+        private float environmentRate;
 
         @Override public float radiation() { return radiation; }
         @Override public int asbestos() { return asbestos; }
+        @Override public float environmentRate() { return environmentRate; }
 
         @Override
         public void addRadiation(float amount) {
@@ -55,6 +61,19 @@ public final class PortRadiation {
         @Override
         public void addAsbestos(int amount) {
             asbestos = (int) Math.max(0L, Math.min(60L * 60 * 20, (long) asbestos + amount));
+        }
+
+        @Override
+        public void addEnvironmentalRadiation(float amount) {
+            if (Float.isFinite(amount) && amount > 0.0F) {
+                environmentalAccumulation = Math.min(1_000_000.0F, environmentalAccumulation + amount);
+            }
+        }
+
+        @Override
+        public void rollEnvironmentalRadiation() {
+            environmentRate = environmentalAccumulation;
+            environmentalAccumulation = 0.0F;
         }
 
         @Override
@@ -69,6 +88,8 @@ public final class PortRadiation {
         public void load(CompoundTag tag) {
             radiation = 0;
             asbestos = 0;
+            environmentalAccumulation = 0.0F;
+            environmentRate = 0.0F;
             addRadiation(tag.getFloat("hfr_radiation"));
             addAsbestos(tag.getInt("hfr_asbestos"));
         }
@@ -120,6 +141,7 @@ public final class PortRadiation {
         if (entity.level().isClientSide) return;
         if (PortGasMask.protectFromFineParticles(entity)) return;
         get(entity).ifPresent(data -> {
+            data.addEnvironmentalRadiation(0.05F);
             if (PortConfig.ENABLE_CONTAMINATION.get() && !isRadiationImmune(entity)
                     && !(entity instanceof Player player && (player.isCreative() || player.tickCount < 200))) {
                 data.addRadiation(0.05F);

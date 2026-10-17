@@ -26,7 +26,9 @@ public final class PortRadiationEffects {
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
-        if (entity.level().isClientSide || !entity.isAlive() || !PortConfig.ENABLE_CONTAMINATION.get()) return;
+        if (entity.level().isClientSide || !entity.isAlive()) return;
+        PortEnvironmentRadiation.tick(entity);
+        if (!PortConfig.ENABLE_CONTAMINATION.get()) return;
         if (entity instanceof Player player && player.isCreative()) return;
         PortRadiation.get(entity).ifPresent(data -> apply(entity, data));
     }
