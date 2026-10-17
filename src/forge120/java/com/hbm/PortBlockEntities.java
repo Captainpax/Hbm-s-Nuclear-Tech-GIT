@@ -18,5 +18,9 @@ public final class PortBlockEntities {
             TYPES.register("machine_battery_socket", () -> BlockEntityType.Builder.of(
                     PortBatterySocketBlockEntity::new, PortBlocks.MACHINE_BATTERY_SOCKET.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<PortBatterySocketProxyBlockEntity>> BATTERY_SOCKET_PROXY =
+            TYPES.register("machine_battery_socket_proxy", () -> BlockEntityType.Builder.of(
+                    PortBatterySocketProxyBlockEntity::new, PortBlocks.MACHINE_BATTERY_SOCKET.get()).build(null));
+
     private PortBlockEntities() {}
 }

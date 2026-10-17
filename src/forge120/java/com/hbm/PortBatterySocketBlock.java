@@ -82,7 +82,8 @@ public final class PortBatterySocketBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return state.getValue(PART) == 0 ? new PortBatterySocketBlockEntity(pos, state) : null;
+        return state.getValue(PART) == 0 ? new PortBatterySocketBlockEntity(pos, state)
+                : new PortBatterySocketProxyBlockEntity(pos, state);
     }
 
     @Override

@@ -7636,7 +7636,7 @@ block,machine_bat9000,src/main/java/com/hbm/blocks/ModBlocks.java,3231,unported,
 block,machine_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3203,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,One-mega-HE facing block with comparator charged-item drops two-slot menu and classic-cable transfer; visual GUI and full harvest behavior pending
 block,machine_battery_potato,src/main/java/com/hbm/blocks/ModBlocks.java,3202,unported,,
 block,machine_battery_redd,src/main/java/com/hbm/blocks/ModBlocks.java,3201,unported,,
-block,machine_battery_socket,src/main/java/com/hbm/blocks/ModBlocks.java,3200,partial,src/forge120/java/com/hbm/PortBatterySocketBlock.java,Four-part floor footprint with a core item reservoir and proxy HE ports; source dynamic model and broader pack support remain pending
+block,machine_battery_socket,src/main/java/com/hbm/blocks/ModBlocks.java,3200,partial,src/forge120/java/com/hbm/PortBatterySocketBlock.java,Four-part floor footprint with core item reservoir proxy HE ports and shared proxy item automation; source dynamic model and broader pack support remain pending
 block,machine_bigasstank,src/main/java/com/hbm/blocks/ModBlocks.java,3232,unported,,
 block,machine_blast_furnace,src/main/java/com/hbm/blocks/ModBlocks.java,3032,unported,,
 block,machine_boiler,src/main/java/com/hbm/blocks/ModBlocks.java,3018,unported,,
@@ -8123,7 +8123,7 @@ block,zirnox_destroyed,src/main/java/com/hbm/blocks/ModBlocks.java,3052,unported
 block_entity,TileEntityAshpit,src/main/java/com/hbm/tileentity/TileMappings.java,298,unported,,
 block_entity,TileEntityBarrel,src/main/java/com/hbm/tileentity/TileMappings.java,170,unported,,
 block_entity,TileEntityBatteryREDD,src/main/java/com/hbm/tileentity/TileMappings.java,90,unported,,
-block_entity,TileEntityBatterySocket,src/main/java/com/hbm/tileentity/TileMappings.java,89,partial,src/forge120/java/com/hbm/PortBatterySocketBlockEntity.java,One battery item slot HE controls comparator and dedicated-server restart across a chunk border; SC discharge logging and proxy item automation pending
+block_entity,TileEntityBatterySocket,src/main/java/com/hbm/tileentity/TileMappings.java,89,partial,src/forge120/java/com/hbm/PortBatterySocketBlockEntity.java,One battery item slot HE controls comparator and dedicated-server restart across a chunk border; SC discharge throughput logging and legacy auto-extraction edge-case audit pending
 block_entity,TileEntityBedrockOre,src/main/java/com/hbm/tileentity/TileMappings.java,238,unported,,
 block_entity,TileEntityBlastDoor,src/main/java/com/hbm/tileentity/TileMappings.java,144,unported,,
 block_entity,TileEntityBlockICF,src/main/java/com/hbm/tileentity/TileMappings.java,180,unported,,
@@ -8383,7 +8383,7 @@ block_entity,TileEntityPneumoStorageImporter,src/main/java/com/hbm/tileentity/Ti
 block_entity,TileEntityPneumoStorageMono,src/main/java/com/hbm/tileentity/TileMappings.java,475,unported,,
 block_entity,TileEntityPneumoTube,src/main/java/com/hbm/tileentity/TileMappings.java,471,unported,,
 block_entity,TileEntityPneumoTubePaintable,src/main/java/com/hbm/tileentity/TileMappings.java,472,unported,,
-block_entity,TileEntityProxyCombo,src/main/java/com/hbm/tileentity/TileMappings.java,234,unported,,
+block_entity,TileEntityProxyCombo,src/main/java/com/hbm/tileentity/TileMappings.java,234,partial,src/forge120/java/com/hbm/PortBatterySocketProxyBlockEntity.java,Socket-specific proxy delegates one inventory slot to the core without duplicate state; other proxy functions and machines pending
 block_entity,TileEntityProxyConductor,src/main/java/com/hbm/tileentity/TileMappings.java,236,unported,,
 block_entity,TileEntityProxyDyn,src/main/java/com/hbm/tileentity/TileMappings.java,235,unported,,
 block_entity,TileEntityProxyEnergy,src/main/java/com/hbm/tileentity/TileMappings.java,233,unported,,
@@ -11559,7 +11559,7 @@ java_source,blocks/network/FluidSwitch,src/main/java/com/hbm/blocks/network/Flui
 java_source,blocks/network/FluidValve,src/main/java/com/hbm/blocks/network/FluidValve.java,,unported,,
 java_source,blocks/network/IBlockFluidDuct,src/main/java/com/hbm/blocks/network/IBlockFluidDuct.java,,unported,,
 java_source,blocks/network/MachineBatteryREDD,src/main/java/com/hbm/blocks/network/MachineBatteryREDD.java,,unported,,
-java_source,blocks/network/MachineBatterySocket,src/main/java/com/hbm/blocks/network/MachineBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketBlock.java,2x2 placement proxy menu access one-drop teardown comparator and pickaxe mining tag ported; tooltip look overlay and full harvest rules pending
+java_source,blocks/network/MachineBatterySocket,src/main/java/com/hbm/blocks/network/MachineBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketBlock.java,2x2 placement proxy menu and item capability access one-drop teardown comparator and pickaxe mining tag ported; tooltip look overlay and full harvest rules pending
 java_source,blocks/network/PowerCableBox,src/main/java/com/hbm/blocks/network/PowerCableBox.java,,unported,,
 java_source,blocks/network/PylonBase,src/main/java/com/hbm/blocks/network/PylonBase.java,,unported,,
 java_source,blocks/network/PylonLarge,src/main/java/com/hbm/blocks/network/PylonLarge.java,,unported,,
@@ -13794,7 +13794,7 @@ java_source,tileentity/TileEntityLoadedBase,src/main/java/com/hbm/tileentity/Til
 java_source,tileentity/TileEntityMachineBase,src/main/java/com/hbm/tileentity/TileEntityMachineBase.java,,unported,,
 java_source,tileentity/TileEntityMachinePolluting,src/main/java/com/hbm/tileentity/TileEntityMachinePolluting.java,,unported,,
 java_source,tileentity/TileEntityProxyBase,src/main/java/com/hbm/tileentity/TileEntityProxyBase.java,,unported,,
-java_source,tileentity/TileEntityProxyCombo,src/main/java/com/hbm/tileentity/TileEntityProxyCombo.java,,unported,,
+java_source,tileentity/TileEntityProxyCombo,src/main/java/com/hbm/tileentity/TileEntityProxyCombo.java,,partial,src/forge120/java/com/hbm/PortBatterySocketProxyBlockEntity.java,Socket-specific inventory delegation and capability lifecycle ported; generic power fluid heat and integration proxy roles pending
 java_source,tileentity/TileEntityProxyConductor,src/main/java/com/hbm/tileentity/TileEntityProxyConductor.java,,unported,,
 java_source,tileentity/TileEntityProxyDyn,src/main/java/com/hbm/tileentity/TileEntityProxyDyn.java,,unported,,
 java_source,tileentity/TileEntityProxyEnergy,src/main/java/com/hbm/tileentity/TileEntityProxyEnergy.java,,unported,,
@@ -14069,7 +14069,7 @@ java_source,tileentity/machine/rbmk/TileEntityRBMKTerminal,src/main/java/com/hbm
 java_source,tileentity/machine/storage/TileEntityBarrel,src/main/java/com/hbm/tileentity/machine/storage/TileEntityBarrel.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityBatteryBase,src/main/java/com/hbm/tileentity/machine/storage/TileEntityBatteryBase.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityBatteryREDD,src/main/java/com/hbm/tileentity/machine/storage/TileEntityBatteryREDD.java,,unported,,
-java_source,tileentity/machine/storage/TileEntityBatterySocket,src/main/java/com/hbm/tileentity/machine/storage/TileEntityBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketBlockEntity.java,Installed battery accepts and provides HE at item rates with mode priority item NBT and restart tests; SC discharge and integrations pending
+java_source,tileentity/machine/storage/TileEntityBatterySocket,src/main/java/com/hbm/tileentity/machine/storage/TileEntityBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketBlockEntity.java,Installed battery accepts and provides HE at item rates with mode priority item NBT proxy automation and restart tests; SC discharge and integrations pending
 java_source,tileentity/machine/storage/TileEntityCrateBase,src/main/java/com/hbm/tileentity/machine/storage/TileEntityCrateBase.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityCrateDesh,src/main/java/com/hbm/tileentity/machine/storage/TileEntityCrateDesh.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityCrateIron,src/main/java/com/hbm/tileentity/machine/storage/TileEntityCrateIron.java,,unported,,

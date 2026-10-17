@@ -364,7 +364,7 @@ public final class PortGameTests {
             var state = level.getBlockState(pos);
             if (!state.is(block) || state.getValue(PortBatterySocketBlock.PART) != part
                     || !PortBatterySocketBlock.corePos(pos, state).equals(core)
-                    || (part != 0 && level.getBlockEntity(pos) != null)) {
+                    || (part != 0 && !(level.getBlockEntity(pos) instanceof PortBatterySocketProxyBlockEntity))) {
                 throw new IllegalStateException("Battery socket 2x2 footprint or core mapping is wrong");
             }
         }
@@ -390,6 +390,48 @@ public final class PortGameTests {
         List<ItemEntity> dropped = level.getEntitiesOfClass(ItemEntity.class, new AABB(core).inflate(2));
         if (dropped.stream().filter(entity -> entity.getItem().is(PortItems.CUBE_POWER.get())).count() != 1) {
             throw new IllegalStateException("Socket item was lost or duplicated on proxy break");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void batterySocketProxiesShareAutomationSlot(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos core = helper.absolutePos(new BlockPos(3, 2, 3));
+        PortBatterySocketBlock block = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        var state = block.defaultBlockState().setValue(PortBatterySocketBlock.FACING, Direction.NORTH);
+        level.setBlock(core, state, 3);
+        block.setPlacedBy(level, core, state, null, new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get()));
+        PortBatterySocketBlockEntity socket = (PortBatterySocketBlockEntity) level.getBlockEntity(core);
+        var first = level.getBlockEntity(PortBatterySocketBlock.partPos(core, Direction.NORTH, 1))
+                .getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).resolve().orElseThrow();
+        var second = level.getBlockEntity(PortBatterySocketBlock.partPos(core, Direction.NORTH, 2))
+                .getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.EAST).resolve().orElseThrow();
+        var third = level.getBlockEntity(PortBatterySocketBlock.partPos(core, Direction.NORTH, 3))
+                .getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).resolve().orElseThrow();
+        if (first.getSlots() != 1 || second.getSlots() != 1 || third.getSlots() != 1
+                || first.isItemValid(0, new ItemStack(Items.DIRT))
+                || first.insertItem(0, new ItemStack(Items.DIRT), false).isEmpty()) {
+            throw new IllegalStateException("Socket proxy exposes invalid or duplicated inventory slots");
+        }
+        ItemStack cube = new ItemStack(PortItems.CUBE_POWER.get());
+        PortBatteryItem battery = (PortBatteryItem) cube.getItem();
+        battery.setCharge(cube, 0);
+        if (!first.insertItem(0, cube, false).isEmpty()
+                || !second.getStackInSlot(0).is(PortItems.CUBE_POWER.get())
+                || !third.insertItem(0, new ItemStack(PortItems.BATTERY_POTATO.get()), true)
+                        .is(PortItems.BATTERY_POTATO.get())) {
+            throw new IllegalStateException("Proxy insertion did not reach the one core slot");
+        }
+        ItemStack installed = socket.items().getStackInSlot(0);
+        battery.setCharge(installed, 500);
+        if (!second.extractItem(0, 1, true).isEmpty()) {
+            throw new IllegalStateException("Proxy automation extracted a partially charged battery");
+        }
+        battery.setCharge(installed, battery.capacity());
+        if (!third.extractItem(0, 1, false).is(PortItems.CUBE_POWER.get())
+                || !socket.items().getStackInSlot(0).isEmpty()) {
+            throw new IllegalStateException("Proxy extraction did not empty the one core slot");
         }
         helper.succeed();
     }
@@ -667,12 +709,21 @@ public final class PortGameTests {
                     || target.power() != 0) {
                 throw new IllegalStateException("Cross-chunk socket footprint item HE or controls failed restart");
             }
+            var proxyItems = level.getBlockEntity(proxy)
+                    .getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.EAST).resolve().orElseThrow();
+            if (proxyItems.getSlots() != 1
+                    || !proxyItems.getStackInSlot(0).is(PortItems.CUBE_POWER.get())) {
+                throw new IllegalStateException("Cross-chunk socket proxy lost core item automation on reload");
+            }
             socket.setModes(PortBatteryBlockEntity.OUTPUT, PortBatteryBlockEntity.OUTPUT);
             PortBatterySocketBlockEntity.tick(level, core, level.getBlockState(core), socket);
             if (socket.reservoir().power() != 0 || target.power() != 3_456) {
                 throw new IllegalStateException("Reloaded socket failed to output item HE across its proxy");
             }
             level.setBlock(proxy, Blocks.AIR.defaultBlockState(), 3);
+            if (proxyItems.getSlots() != 0) {
+                throw new IllegalStateException("Removed socket proxy retained access to its former core");
+            }
             level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), 3);
             for (int part = 0; part < 4; part++) {
                 if (!level.getBlockState(PortBatterySocketBlock.partPos(core, Direction.NORTH, part)).isAir()) {
