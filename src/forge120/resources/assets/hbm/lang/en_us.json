@@ -1,0 +1,6 @@
+{
+  "block.hbm.ore_uranium": "Uranium Ore",
+  "item.hbm.ingot_uranium": "Uranium Ingot",
+  "itemGroup.hbm.parts": "HBM Parts",
+  "itemGroup.hbm.blocks": "HBM Blocks"
+}

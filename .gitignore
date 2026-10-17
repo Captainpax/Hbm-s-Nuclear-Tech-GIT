@@ -23,6 +23,7 @@
 
 # other
 /run
+/run-data
 
 # CurseForge configuration
 /curseforge.properties
