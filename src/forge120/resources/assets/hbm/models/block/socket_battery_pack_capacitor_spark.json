@@ -1,0 +1,7 @@
+{
+  "parent": "hbm:block/socket_capacitor",
+  "textures": {
+    "texture0": "hbm:models/machines/capacitor_spark",
+    "particle": "hbm:models/machines/capacitor_spark"
+  }
+}

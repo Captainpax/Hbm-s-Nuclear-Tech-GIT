@@ -1,0 +1,24 @@
+{
+  "loader": "forge:obj",
+  "model": "hbm:models/machines/battery.obj",
+  "flip_v": true,
+  "render_type": "minecraft:cutout",
+  "transform": {
+    "origin": "corner",
+    "translation": [
+      1,
+      0,
+      1
+    ]
+  },
+  "textures": {
+    "texture0": "hbm:models/machines/capacitor_copper",
+    "particle": "hbm:models/machines/capacitor_copper"
+  },
+  "visibility": {
+    "Supports": false,
+    "Capacitor": true,
+    "Battery": false,
+    "Socket": false
+  }
+}

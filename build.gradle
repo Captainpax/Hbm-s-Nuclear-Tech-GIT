@@ -39,7 +39,9 @@ minecraft {
                 hbm { source sourceSets.main }
             }
         }
-        client {}
+        client {
+            property 'hbm.port.auditSocketModels', 'true'
+        }
         server { args '--nogui' }
         gameTestServer {
             property 'forge.enabledGameTestNamespaces', modId

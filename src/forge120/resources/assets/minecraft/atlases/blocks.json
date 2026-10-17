@@ -1,0 +1,52 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/battery_redstone"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/battery_lead"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/battery_lithium"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/battery_sodium"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/battery_schrabidium"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/battery_quantum"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/capacitor_copper"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/capacitor_gold"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/capacitor_niobium"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/capacitor_tantalum"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/capacitor_bismuth"
+    },
+    {
+      "type": "single",
+      "resource": "hbm:models/machines/capacitor_spark"
+    }
+  ]
+}

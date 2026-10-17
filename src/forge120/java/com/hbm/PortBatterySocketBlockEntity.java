@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -121,6 +122,17 @@ public final class PortBatterySocketBlockEntity extends BlockEntity implements M
 
     public ContainerData menuData() {
         return menuData;
+    }
+
+    @Override
+    public AABB getRenderBoundingBox() {
+        BlockState state = getBlockState();
+        BlockPos corner = PortBatterySocketBlock.partPos(worldPosition,
+                state.getValue(PortBatterySocketBlock.FACING), 3);
+        return new AABB(Math.min(worldPosition.getX(), corner.getX()), worldPosition.getY(),
+                Math.min(worldPosition.getZ(), corner.getZ()),
+                Math.max(worldPosition.getX(), corner.getX()) + 1, worldPosition.getY() + 2,
+                Math.max(worldPosition.getZ(), corner.getZ()) + 1);
     }
 
     public short lowMode() {

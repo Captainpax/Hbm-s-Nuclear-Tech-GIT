@@ -1,0 +1,24 @@
+{
+  "loader": "forge:obj",
+  "model": "hbm:models/machines/battery.obj",
+  "flip_v": true,
+  "render_type": "minecraft:cutout",
+  "transform": {
+    "origin": "corner",
+    "translation": [
+      1,
+      0,
+      1
+    ]
+  },
+  "textures": {
+    "texture0": "hbm:models/machines/battery_redstone",
+    "particle": "hbm:models/machines/battery_redstone"
+  },
+  "visibility": {
+    "Supports": false,
+    "Capacitor": false,
+    "Battery": true,
+    "Socket": false
+  }
+}

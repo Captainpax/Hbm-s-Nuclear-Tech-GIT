@@ -143,6 +143,38 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void batterySocketRenderBoundsAndPackUpdateTags(GameTestHelper helper) {
+        BlockPos core = helper.absolutePos(new BlockPos(3, 2, 3));
+        for (Direction facing : Direction.Plane.HORIZONTAL) {
+            var state = PortBlocks.MACHINE_BATTERY_SOCKET.get().defaultBlockState()
+                    .setValue(PortBatterySocketBlock.FACING, facing);
+            PortBatterySocketBlockEntity socket = new PortBatterySocketBlockEntity(core, state);
+            BlockPos oppositeCorner = PortBatterySocketBlock.partPos(core, facing, 3);
+            AABB bounds = socket.getRenderBoundingBox();
+            if (bounds.minX != Math.min(core.getX(), oppositeCorner.getX())
+                    || bounds.maxX != Math.max(core.getX(), oppositeCorner.getX()) + 1
+                    || bounds.minY != core.getY() || bounds.maxY != core.getY() + 2
+                    || bounds.minZ != Math.min(core.getZ(), oppositeCorner.getZ())
+                    || bounds.maxZ != Math.max(core.getZ(), oppositeCorner.getZ()) + 1) {
+                throw new IllegalStateException("Socket renderer is culled before its entire footprint: " + facing);
+            }
+            for (var pack : PortItems.BATTERY_PACKS) {
+                ItemStack installed = new ItemStack(pack.get());
+                ((PortBatteryItem) installed.getItem()).setCharge(installed, 12345L);
+                socket.items().setStackInSlot(0, installed);
+                PortBatterySocketBlockEntity clientCopy = new PortBatterySocketBlockEntity(core, state);
+                clientCopy.load(socket.getUpdateTag());
+                ItemStack received = clientCopy.items().getStackInSlot(0);
+                if (!received.is(pack.get())
+                        || ((PortBatteryItem) received.getItem()).charge(received) != 12345L) {
+                    throw new IllegalStateException("Socket update tag omitted installed pack: " + pack.getId());
+                }
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void powerNetworkConservesAndPrioritizes(GameTestHelper helper) {
         PortPowerStorage sourceA = new PortPowerStorage(100);
         PortPowerStorage sourceB = new PortPowerStorage(50);

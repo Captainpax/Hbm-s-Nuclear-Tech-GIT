@@ -1,0 +1,7 @@
+{
+  "parent": "hbm:block/socket_battery",
+  "textures": {
+    "texture0": "hbm:models/machines/battery_sodium",
+    "particle": "hbm:models/machines/battery_sodium"
+  }
+}
