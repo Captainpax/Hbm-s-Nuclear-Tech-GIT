@@ -17,6 +17,8 @@ public final class HbmPort {
         PortItems.ITEMS.register(modBus);
         PortCreativeTabs.TABS.register(modBus);
         modBus.addListener(PortRadiation::registerCapabilities);
+        PortNetwork.register();
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PortConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PortClientConfig.SPEC);
     }
 }

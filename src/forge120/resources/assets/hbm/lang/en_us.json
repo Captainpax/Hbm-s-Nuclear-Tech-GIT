@@ -2,6 +2,7 @@
   "block.hbm.ore_uranium": "Uranium Ore",
   "block.hbm.gas_radon": "Radon Gas",
   "item.hbm.ingot_uranium": "Uranium Ingot",
+  "item.hbm.geiger_counter": "Handheld Geiger Counter",
   "item.hbm.gas_mask": "Gas Mask",
   "item.hbm.gas_mask_filter": "Gas Mask Filter",
   "item.hbm.gas_mask_m65": "M65-Z Gas Mask",

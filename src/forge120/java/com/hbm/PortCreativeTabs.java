@@ -39,6 +39,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.GAS_MASK_FILTER_COMBO.get());
                         output.accept(PortItems.GAS_MASK_FILTER_RAG.get());
                         output.accept(PortItems.GAS_MASK_FILTER_PISS.get());
+                        output.accept(PortItems.GEIGER_COUNTER.get());
                     })
                     .build());
 

@@ -1,5 +1,6 @@
 package com.hbm;
 
+import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -7,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
@@ -126,6 +128,37 @@ public final class PortGameTests {
         PortRadiationEffects.apply(zombie, immuneExposure);
         if (zombie.getHealth() <= 0.0F) {
             throw new IllegalStateException("A legacy radiation-immune mob got radiation sickness");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void exposurePacketRoundTripAndValidation(GameTestHelper helper) {
+        FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer());
+        try {
+            new PortNetwork.ExposureSync(234.5F, 73).encode(buffer);
+            var packet = PortNetwork.ExposureSync.decode(buffer);
+            var cow = EntityType.COW.create(helper.getLevel());
+            if (cow == null) throw new IllegalStateException("Could not create packet test entity");
+            var data = PortRadiation.get(cow)
+                    .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+            packet.applyTo(data);
+            if (data.radiation() != 234.5F || data.asbestos() != 73) {
+                throw new IllegalStateException("Exposure packet round-trip lost data");
+            }
+        } finally {
+            buffer.release();
+        }
+        FriendlyByteBuf invalid = new FriendlyByteBuf(Unpooled.buffer());
+        try {
+            invalid.writeFloat(Float.NaN);
+            invalid.writeVarInt(Integer.MAX_VALUE);
+            var packet = PortNetwork.ExposureSync.decode(invalid);
+            if (packet.radiation() != 0.0F || packet.asbestos() != 60 * 60 * 20) {
+                throw new IllegalStateException("Exposure packet accepted invalid values");
+            }
+        } finally {
+            invalid.release();
         }
         helper.succeed();
     }

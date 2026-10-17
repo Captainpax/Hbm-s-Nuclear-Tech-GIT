@@ -1,6 +1,6 @@
 # Forge 1.20.1 port in progress
 
-The `captainpax/forge-1.20.1` branch is a direct port of this repository. It currently builds a development JAR with the first uranium content slice; it does **not** yet have gameplay parity. See [porting status](docs/porting/README.md) and the [source-linked checklist](docs/porting/legacy-inventory.csv). Build with `./gradlew build` and run the dedicated smoke suite with `./gradlew runGameTestServer` using Java 17 (the Gradle toolchain can provision it).
+The `captainpax/forge-1.20.1` branch is a direct port of this repository. It currently builds a development JAR with early uranium, radiation, gas-mask, and Geiger-counter systems; it does **not** yet have gameplay parity or a stable/playable release. See [porting status](docs/porting/README.md) and the [source-linked checklist](docs/porting/legacy-inventory.csv). Build with `./gradlew build` and run the dedicated smoke suite with `./gradlew runGameTestServer` using Java 17 (the Gradle toolchain can provision it).
 
 The original 1.7.10 project remains on `master`. Its README follows below.
 

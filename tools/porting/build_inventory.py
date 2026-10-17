@@ -25,6 +25,9 @@ FIELDS = ("kind", "key", "source", "line", "status", "target", "notes")
 CONFIG_OPTION = re.compile(
     r'(?:\bconfig\.get\(\s*[^,]+,\s*|\bCommonConfig\.createConfig\w+\(\s*[^,]+,\s*[^,]+,\s*)"([^"]+)"'
 )
+CONFIG_WRAPPER = re.compile(
+    r"\bConfigWrapper<[^>]+>\s+([A-Za-z_]\w*)\s*=\s*new\s+ConfigWrapper\s*\("
+)
 RECIPE_SITE = re.compile(
     r"\b(?:GameRegistry\.add(?:Recipe|ShapelessRecipe|Smelting)|"
     r"(?:this\.)?addRecipe|recipes\.(?:put|add)|"
@@ -63,6 +66,9 @@ def scan_config_options(rows: list[dict[str, str]], path: Path) -> None:
         match = CONFIG_OPTION.search(line)
         if match and not line.lstrip().startswith("//"):
             add(rows, "config_option", f"{path.stem}:{match.group(1)}:{number}", path, number)
+        wrapper = CONFIG_WRAPPER.search(line)
+        if wrapper and not line.lstrip().startswith("//"):
+            add(rows, "config_option", f"{path.stem}:{wrapper.group(1)}:{number}", path, number)
 
 
 def scan_recipe_sites(rows: list[dict[str, str]], path: Path) -> None:
