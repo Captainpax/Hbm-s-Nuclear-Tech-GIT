@@ -14,6 +14,7 @@ public final class HbmPort {
     public HbmPort() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         PortBlocks.BLOCKS.register(modBus);
+        PortBlockEntities.TYPES.register(modBus);
         PortItems.ITEMS.register(modBus);
         PortPlacementModifiers.TYPES.register(modBus);
         PortSounds.SOUND_EVENTS.register(modBus);

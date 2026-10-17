@@ -87,7 +87,12 @@ def inventory() -> list[dict[str, str]]:
     for path in sorted(LEGACY_JAVA.rglob("*.java")):
         key_root = JAVA if path.is_relative_to(JAVA) else LEGACY_JAVA
         add(rows, "java_source", path.relative_to(key_root).with_suffix("").as_posix(), path)
-    scan_calls(rows, JAVA / "blocks" / "ModBlocks.java", "block", r"GameRegistry\.registerBlock\(\s*(\w+)")
+    # ModBlocks registers hundreds of blocks through its local register(Block)
+    # helpers. Exclude the helper's parameter "b" so its two forwarding calls
+    # do not appear as phantom blocks. The dynamic remap instance is
+    # accounted for by its source, not as a stable registry identifier.
+    scan_calls(rows, JAVA / "blocks" / "ModBlocks.java", "block", r"^\s*GameRegistry\.registerBlock\(\s*(?!b\b)(\w+)")
+    scan_calls(rows, JAVA / "blocks" / "ModBlocks.java", "block", r"^\s*register\(\s*(?!remap\b)(\w+)\s*(?:,\s*\w+\.class)?\s*\);")
     scan_calls(rows, JAVA / "items" / "ModItems.java", "item", r"GameRegistry\.registerItem\(\s*(\w+)")
     scan_calls(rows, JAVA / "tileentity" / "TileMappings.java", "block_entity", r"^\s*put\(\s*(\w+)\.class")
     scan_calls(rows, JAVA / "entity" / "EntityMappings.java", "entity", r"^\s*add(?:Entity|Mob)\(\s*(\w+)\.class")
@@ -127,10 +132,15 @@ def inventory() -> list[dict[str, str]]:
             add(rows, kind, path.relative_to(ASSETS).as_posix(), path)
     if STATUS.exists():
         with STATUS.open(encoding="utf-8", newline="") as stream:
-            overrides = {
-                (row["kind"], row["key"]): row
-                for row in csv.DictReader(stream)
-            }
+            overrides: dict[tuple[str, str], dict[str, str]] = {}
+            for override in csv.DictReader(stream):
+                key = (override["kind"], override["key"])
+                if key in overrides:
+                    raise SystemExit(f"Duplicate status override: {key}")
+                overrides[key] = override
+        unknown = overrides.keys() - {(row["kind"], row["key"]) for row in rows}
+        if unknown:
+            raise SystemExit(f"Status overrides missing from the source inventory: {sorted(unknown)}")
         for row in rows:
             override = overrides.get((row["kind"], row["key"]))
             if override:

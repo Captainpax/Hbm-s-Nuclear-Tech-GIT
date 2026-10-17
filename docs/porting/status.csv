@@ -124,3 +124,10 @@ java_source,api/hbm/energymk2/IEnergyHandlerMK2,partial,src/forge120/java/com/hb
 java_source,api/hbm/energymk2/IEnergyProviderMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Provider output limits and proportional depletion tested; actual block-entity providers pending
 java_source,api/hbm/energymk2/IEnergyReceiverMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Receiver input limits and priorities tested; actual block-entity receivers pending
 java_source,api/hbm/energymk2/PowerNetMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,One-tick priority distribution and HE conservation tested; topology expiry and in-world integration pending
+block,machine_battery,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,One-mega-HE battery registered with facing model comparator and charged-item drops; GUI slots cable network and full mode interaction pending
+block_entity,TileEntityMachineBattery,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,Long HE storage redstone mode defaults adjacent transfer and dedicated-server restart persistence tested; item slots cable topology and client GUI pending
+java_source,blocks/machine/MachineBattery,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,Block placement and charged-item drop round-trip tested; GUI WAILA details and full harvest behavior pending
+java_source,tileentity/machine/storage/TileEntityMachineBattery,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,One-mega-HE state comparator redstone modes and transfer rates tested; priority controls inventory slots cable graph and FE integration pending
+asset,textures/blocks/battery_front_alt.png,verified,src/forge120/resources/assets/hbm/textures/block/battery_front_alt.png,Original texture copied byte-for-byte
+asset,textures/blocks/battery_side_alt.png,verified,src/forge120/resources/assets/hbm/textures/block/battery_side_alt.png,Original texture copied byte-for-byte
+asset,textures/blocks/battery_top.png,verified,src/forge120/resources/assets/hbm/textures/block/battery_top.png,Original texture copied byte-for-byte

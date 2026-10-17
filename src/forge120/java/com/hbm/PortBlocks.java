@@ -35,6 +35,12 @@ public final class PortBlocks {
     public static final RegistryObject<Block> ORE_FLUORITE = ore("ore_fluorite", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_NITER = ore("ore_niter", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_ALUMINIUM = ore("ore_aluminium", 5.0F, 10.0F);
+    public static final RegistryObject<Block> MACHINE_BATTERY = BLOCKS.register("machine_battery",
+            () -> new PortBatteryBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(5.0F, 10.0F)
+                    .sound(SoundType.METAL)
+                    .requiresCorrectToolForDrops(), 1_000_000L));
 
     private PortBlocks() {}
 

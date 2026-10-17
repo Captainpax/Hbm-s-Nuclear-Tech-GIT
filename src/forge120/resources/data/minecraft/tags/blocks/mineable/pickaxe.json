@@ -1,4 +1,4 @@
 {
   "replace": false,
-  "values": ["hbm:ore_uranium", "hbm:ore_thorium", "hbm:ore_titanium", "hbm:ore_copper", "hbm:ore_tungsten", "hbm:ore_lead", "hbm:ore_beryllium", "hbm:ore_sulfur", "hbm:ore_fluorite", "hbm:ore_niter", "hbm:ore_aluminium"]
+  "values": ["hbm:ore_uranium", "hbm:ore_thorium", "hbm:ore_titanium", "hbm:ore_copper", "hbm:ore_tungsten", "hbm:ore_lead", "hbm:ore_beryllium", "hbm:ore_sulfur", "hbm:ore_fluorite", "hbm:ore_niter", "hbm:ore_aluminium", "hbm:machine_battery"]
 }

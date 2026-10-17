@@ -58,6 +58,7 @@ public final class PortItems {
     public static final RegistryObject<Item> NITER = ingot("niter");
     public static final RegistryObject<Item> ORE_ALUMINIUM = ore("ore_aluminium", PortBlocks.ORE_ALUMINIUM);
     public static final RegistryObject<Item> CHUNK_ORE_CRYOLITE = ingot("chunk_ore_cryolite");
+    public static final RegistryObject<Item> MACHINE_BATTERY = ore("machine_battery", PortBlocks.MACHINE_BATTERY);
 
     private PortItems() {}
 

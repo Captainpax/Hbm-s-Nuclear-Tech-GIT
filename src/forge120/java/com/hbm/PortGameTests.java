@@ -122,6 +122,74 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void batteryTransfersAndPreservesChargeOnBreak(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = helper.absolutePos(new BlockPos(1, 2, 1));
+        BlockPos targetPos = sourcePos.east();
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(targetPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(sourcePos.west(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+        if (!(level.getBlockEntity(sourcePos) instanceof PortBatteryBlockEntity source)
+                || !(level.getBlockEntity(targetPos) instanceof PortBatteryBlockEntity target)) {
+            throw new IllegalStateException("Battery block entities were not created");
+        }
+        source.setPower(5000);
+        if (source.mode(level.hasNeighborSignal(sourcePos)) != PortBatteryBlockEntity.OUTPUT
+                || target.mode(level.hasNeighborSignal(targetPos)) != PortBatteryBlockEntity.INPUT) {
+            throw new IllegalStateException("Battery redstone modes differ from legacy defaults");
+        }
+        PortBatteryBlockEntity.tick(level, sourcePos, level.getBlockState(sourcePos), source);
+        if (source.power() != 3334 || target.power() != 1666
+                || source.comparatorPower() != 1 || target.comparatorPower() != 1) {
+            throw new IllegalStateException("Battery direct transfer speed, conservation, or comparator failed");
+        }
+        var drops = Block.getDrops(level.getBlockState(sourcePos), level, sourcePos, source,
+                FakePlayerFactory.getMinecraft(level), new ItemStack(Items.IRON_PICKAXE));
+        if (drops.size() != 1 || !drops.get(0).is(PortItems.MACHINE_BATTERY.get())
+                || drops.get(0).getTag() == null
+                || drops.get(0).getTag().getCompound("persistent").getLong("power") != 3334) {
+            throw new IllegalStateException("Battery drop lost its stored HE");
+        }
+        level.setBlock(sourcePos, Blocks.AIR.defaultBlockState(), 3);
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        PortBlocks.MACHINE_BATTERY.get().setPlacedBy(level, sourcePos, level.getBlockState(sourcePos),
+                null, drops.get(0));
+        if (!(level.getBlockEntity(sourcePos) instanceof PortBatteryBlockEntity restored)
+                || restored.power() != 3334) {
+            throw new IllegalStateException("Placed battery did not restore item HE");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void batteryChargeSurvivesServerRestart(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos fixture = new BlockPos(512, 80, 512);
+        level.getChunkAt(fixture);
+        if (phase.equals("seed")) {
+            level.setBlock(fixture, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+            if (!(level.getBlockEntity(fixture) instanceof PortBatteryBlockEntity battery)) {
+                throw new IllegalStateException("Battery restart fixture was not created");
+            }
+            battery.setPower(123_456);
+        } else if (phase.equals("verify")) {
+            if (!(level.getBlockEntity(fixture) instanceof PortBatteryBlockEntity battery)
+                    || battery.power() != 123_456) {
+                throw new IllegalStateException("Battery charge did not survive a dedicated-server restart");
+            }
+            level.setBlock(fixture, Blocks.AIR.defaultBlockState(), 3);
+        } else {
+            throw new IllegalStateException("Unknown battery persistence phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void uraniumProgression(GameTestHelper helper) {
         var oreId = PortBlocks.ORE_URANIUM.getId();
         if (ForgeRegistries.BLOCKS.getValue(oreId) != PortBlocks.ORE_URANIUM.get()) {
