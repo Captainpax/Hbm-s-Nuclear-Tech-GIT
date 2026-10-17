@@ -685,7 +685,7 @@ asset,models/zirnox/deb_exchanger.obj,src/main/resources/assets/hbm/models/zirno
 asset,models/zirnox/deb_shrapnel.obj,src/main/resources/assets/hbm/models/zirnox/deb_shrapnel.obj,,unported,,
 asset,models/zirnox_destroyed.obj,src/main/resources/assets/hbm/models/zirnox_destroyed.obj,,unported,,
 asset,my_hecking_realism.png,src/main/resources/assets/hbm/my_hecking_realism.png,,unported,,
-asset,sounds.json,src/main/resources/assets/hbm/sounds.json,,unported,,
+asset,sounds.json,src/main/resources/assets/hbm/sounds.json,,partial,src/forge120/resources/assets/hbm/sounds.json,Geiger click and tech boop entries ported with lowercase modern ID; most legacy sound definitions remain unported
 asset,sounds/alarm/airRaid.ogg,src/main/resources/assets/hbm/sounds/alarm/airRaid.ogg,,unported,,
 asset,sounds/alarm/amsSiren.ogg,src/main/resources/assets/hbm/sounds/alarm/amsSiren.ogg,,unported,,
 asset,sounds/alarm/apcLoop.ogg,src/main/resources/assets/hbm/sounds/alarm/apcLoop.ogg,,unported,,
@@ -962,12 +962,12 @@ asset,sounds/tool/boltgun.ogg,src/main/resources/assets/hbm/sounds/tool/boltgun.
 asset,sounds/tool/extract1.ogg,src/main/resources/assets/hbm/sounds/tool/extract1.ogg,,unported,,
 asset,sounds/tool/extract2.ogg,src/main/resources/assets/hbm/sounds/tool/extract2.ogg,,unported,,
 asset,sounds/tool/gasmaskScrew.ogg,src/main/resources/assets/hbm/sounds/tool/gasmaskScrew.ogg,,unported,,
-asset,sounds/tool/geiger1.ogg,src/main/resources/assets/hbm/sounds/tool/geiger1.ogg,,unported,,
-asset,sounds/tool/geiger2.ogg,src/main/resources/assets/hbm/sounds/tool/geiger2.ogg,,unported,,
-asset,sounds/tool/geiger3.ogg,src/main/resources/assets/hbm/sounds/tool/geiger3.ogg,,unported,,
-asset,sounds/tool/geiger4.ogg,src/main/resources/assets/hbm/sounds/tool/geiger4.ogg,,unported,,
-asset,sounds/tool/geiger5.ogg,src/main/resources/assets/hbm/sounds/tool/geiger5.ogg,,unported,,
-asset,sounds/tool/geiger6.ogg,src/main/resources/assets/hbm/sounds/tool/geiger6.ogg,,unported,,
+asset,sounds/tool/geiger1.ogg,src/main/resources/assets/hbm/sounds/tool/geiger1.ogg,,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger1.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger2.ogg,src/main/resources/assets/hbm/sounds/tool/geiger2.ogg,,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger2.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger3.ogg,src/main/resources/assets/hbm/sounds/tool/geiger3.ogg,,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger3.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger4.ogg,src/main/resources/assets/hbm/sounds/tool/geiger4.ogg,,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger4.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger5.ogg,src/main/resources/assets/hbm/sounds/tool/geiger5.ogg,,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger5.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger6.ogg,src/main/resources/assets/hbm/sounds/tool/geiger6.ogg,,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger6.ogg,Original audio copied byte-for-byte
 asset,sounds/tool/jetpackTank.ogg,src/main/resources/assets/hbm/sounds/tool/jetpackTank.ogg,,unported,,
 asset,sounds/tool/nitro.ogg,src/main/resources/assets/hbm/sounds/tool/nitro.ogg,,unported,,
 asset,sounds/tool/pinBreak.ogg,src/main/resources/assets/hbm/sounds/tool/pinBreak.ogg,,unported,,
@@ -983,7 +983,7 @@ asset,sounds/tool/repair7.ogg,src/main/resources/assets/hbm/sounds/tool/repair7.
 asset,sounds/tool/spray.ogg,src/main/resources/assets/hbm/sounds/tool/spray.ogg,,unported,,
 asset,sounds/tool/stim.ogg,src/main/resources/assets/hbm/sounds/tool/stim.ogg,,unported,,
 asset,sounds/tool/techBleep.ogg,src/main/resources/assets/hbm/sounds/tool/techBleep.ogg,,unported,,
-asset,sounds/tool/techBoop.ogg,src/main/resources/assets/hbm/sounds/tool/techBoop.ogg,,unported,,
+asset,sounds/tool/techBoop.ogg,src/main/resources/assets/hbm/sounds/tool/techBoop.ogg,,verified,src/forge120/resources/assets/hbm/sounds/tool/tech_boop.ogg,Original audio copied byte-for-byte with modern lowercase path
 asset,sounds/tool/upgradePlug.ogg,src/main/resources/assets/hbm/sounds/tool/upgradePlug.ogg,,unported,,
 asset,sounds/tool/vice.ogg,src/main/resources/assets/hbm/sounds/tool/vice.ogg,,unported,,
 asset,sounds/turret/chekhov_fire.ogg,src/main/resources/assets/hbm/sounds/turret/chekhov_fire.ogg,,unported,,
@@ -9343,7 +9343,7 @@ item,gas_mask_mono,src/main/java/com/hbm/items/ModItems.java,6219,partial,src/fo
 item,gas_mask_olde,src/main/java/com/hbm/items/ModItems.java,6220,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
 item,gas_tester,src/main/java/com/hbm/items/ModItems.java,6095,unported,,
 item,gear_large,src/main/java/com/hbm/items/ModItems.java,4967,unported,,
-item,geiger_counter,src/main/java/com/hbm/items/ModItems.java,5541,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory and hand model plus zero-dose HUD and right-click chunk/environment/personal readout manually checked in client; nonzero rate multiplayer resistance and sounds pending
+item,geiger_counter,src/main/java/com/hbm/items/ModItems.java,5541,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory and hand model plus zero-dose HUD and right-click readout manually checked; click sounds registered and threshold-tested; nonzero rate multiplayer and resistance pending
 item,gem_alexandrite,src/main/java/com/hbm/items/ModItems.java,4809,unported,,
 item,gem_rad,src/main/java/com/hbm/items/ModItems.java,4808,unported,,
 item,gem_sodalite,src/main/java/com/hbm/items/ModItems.java,4805,unported,,
@@ -12541,7 +12541,7 @@ java_source,items/tool/ItemDyatlov,src/main/java/com/hbm/items/tool/ItemDyatlov.
 java_source,items/tool/ItemFertilizer,src/main/java/com/hbm/items/tool/ItemFertilizer.java,,unported,,
 java_source,items/tool/ItemFilter,src/main/java/com/hbm/items/tool/ItemFilter.java,,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Five filter variants support install and swap; full hazard behavior and sound pending
 java_source,items/tool/ItemFusionCore,src/main/java/com/hbm/items/tool/ItemFusionCore.java,,unported,,
-java_source,items/tool/ItemGeigerCounter,src/main/java/com/hbm/items/tool/ItemGeigerCounter.java,,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Right-click chunk/environment/personal readings ported; click sounds resistance and full radioactive source coverage pending
+java_source,items/tool/ItemGeigerCounter,src/main/java/com/hbm/items/tool/ItemGeigerCounter.java,,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Right-click measurements and legacy weighted click sounds ported; audible comparison resistance and full radioactive source coverage pending
 java_source,items/tool/ItemGuideBook,src/main/java/com/hbm/items/tool/ItemGuideBook.java,,unported,,
 java_source,items/tool/ItemKey,src/main/java/com/hbm/items/tool/ItemKey.java,,unported,,
 java_source,items/tool/ItemKeyPin,src/main/java/com/hbm/items/tool/ItemKeyPin.java,,unported,,

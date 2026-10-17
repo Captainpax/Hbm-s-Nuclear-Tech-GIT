@@ -279,6 +279,31 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void geigerSoundsMatchLegacyThresholds(GameTestHelper helper) {
+        if (ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("hbm", "item.tech_boop"))
+                != PortSounds.TECH_BOOP.get()) {
+            throw new IllegalStateException("Geiger right-click sound is not registered");
+        }
+        for (int i = 1; i <= 6; i++) {
+            var id = new ResourceLocation("hbm", "item.geiger" + i);
+            if (ForgeRegistries.SOUND_EVENTS.getValue(id) != PortSounds.geiger(i)) {
+                throw new IllegalStateException("Geiger click sound " + i + " is not registered");
+            }
+        }
+        int[] rates = {5, 10, 15, 20, 25, 30};
+        for (int i = 0; i < rates.length; i++) {
+            if (PortGeigerCounter.clickSoundFor(rates[i], RandomSource.create(37)) != i + 1) {
+                throw new IllegalStateException("Geiger click threshold differs at " + rates[i] + " RAD/s");
+            }
+        }
+        int background = PortGeigerCounter.clickSoundFor(0.0F, RandomSource.create(37));
+        if (background != 0 && background != 1) {
+            throw new IllegalStateException("Quiet Geiger emitted an invalid sound");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void netherAmbientRadiationDosesEntities(GameTestHelper helper) {
         ServerLevel nether = helper.getLevel().getServer().getLevel(Level.NETHER);
         if (nether == null) throw new IllegalStateException("Nether test dimension is unavailable");

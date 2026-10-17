@@ -1,0 +1,9 @@
+{
+  "item.tech_boop": {"category": "player", "sounds": [{"name": "hbm:tool/tech_boop", "stream": false}]},
+  "item.geiger1": {"category": "player", "sounds": [{"name": "hbm:tool/geiger1", "stream": false}]},
+  "item.geiger2": {"category": "player", "sounds": [{"name": "hbm:tool/geiger2", "stream": false}]},
+  "item.geiger3": {"category": "player", "sounds": [{"name": "hbm:tool/geiger3", "stream": false}]},
+  "item.geiger4": {"category": "player", "sounds": [{"name": "hbm:tool/geiger4", "stream": false}]},
+  "item.geiger5": {"category": "player", "sounds": [{"name": "hbm:tool/geiger5", "stream": false}]},
+  "item.geiger6": {"category": "player", "sounds": [{"name": "hbm:tool/geiger6", "stream": false}]}
+}

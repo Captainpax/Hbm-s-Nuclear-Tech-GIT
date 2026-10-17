@@ -27,13 +27,21 @@ java_source,handler/radiation/ChunkRadiationHandlerSimple,partial,src/forge120/j
 java_source,util/ContaminationUtil,partial,src/forge120/java/com/hbm/PortEnvironmentRadiation.java,Chunk and Nether exposure plus environmental accumulation ported; armor resistance and other hazard types pending
 packet_source,ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos fields sync server-to-client only; other extended properties pending
 java_source,packet/toclient/ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos sync only; full legacy packet data pending
-item,geiger_counter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory and hand model plus zero-dose HUD and right-click chunk/environment/personal readout manually checked in client; nonzero rate multiplayer resistance and sounds pending
-java_source,items/tool/ItemGeigerCounter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Right-click chunk/environment/personal readings ported; click sounds resistance and full radioactive source coverage pending
+item,geiger_counter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory and hand model plus zero-dose HUD and right-click readout manually checked; click sounds registered and threshold-tested; nonzero rate multiplayer and resistance pending
+java_source,items/tool/ItemGeigerCounter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Right-click measurements and legacy weighted click sounds ported; audible comparison resistance and full radioactive source coverage pending
 renderer_source,RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger zero-dose HUD visually checked at default position; nonzero dose/rate and other overlays pending
 java_source,render/util/RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger zero-dose HUD visually checked at default position; nonzero dose/rate and other overlays pending
 java_source,main/ModEventHandlerClient,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger overlay registration only; remaining client events pending
 asset,textures/items/geiger_counter.png,verified,src/forge120/resources/assets/hbm/textures/item/geiger_counter.png,Original texture copied byte-for-byte
 asset,textures/misc/overlay_misc.png,verified,src/forge120/resources/assets/hbm/textures/misc/overlay_misc.png,Original texture copied byte-for-byte
+asset,sounds.json,partial,src/forge120/resources/assets/hbm/sounds.json,Geiger click and tech boop entries ported with lowercase modern ID; most legacy sound definitions remain unported
+asset,sounds/tool/geiger1.ogg,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger1.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger2.ogg,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger2.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger3.ogg,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger3.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger4.ogg,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger4.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger5.ogg,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger5.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/geiger6.ogg,verified,src/forge120/resources/assets/hbm/sounds/tool/geiger6.ogg,Original audio copied byte-for-byte
+asset,sounds/tool/techBoop.ogg,verified,src/forge120/resources/assets/hbm/sounds/tool/tech_boop.ogg,Original audio copied byte-for-byte with modern lowercase path
 java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and fine-particle filtered-mask protection present; other protections and visual behavior pending
 java_source,config/RadiationConfig,partial,src/forge120/java/com/hbm/PortConfig.java,Four server settings ported; PRISM fog world effects and pollution settings pending
 java_source,config/ClientConfig,partial,src/forge120/java/com/hbm/PortClientConfig.java,Geiger HUD offsets ported; remaining client options pending
