@@ -17,6 +17,10 @@ public final class PortItems {
             () -> new BlockItem(PortBlocks.GAS_RADON.get(), new Item.Properties()));
     public static final RegistryObject<Item> INGOT_URANIUM = ITEMS.register("ingot_uranium",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> GAS_MASK = ITEMS.register("gas_mask",
+            () -> new PortGasMask(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> GAS_MASK_FILTER = ITEMS.register("gas_mask_filter",
+            () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
 
     private PortItems() {}
 }

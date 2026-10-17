@@ -29,5 +29,19 @@ public final class PortCreativeTabs {
                     })
                     .build());
 
+    public static final RegistryObject<CreativeModeTab> CONSUMABLES = TABS.register("consumables",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.hbm.consumables"))
+                    .icon(() -> new ItemStack(PortItems.GAS_MASK_FILTER.get()))
+                    .displayItems((parameters, output) -> output.accept(PortItems.GAS_MASK_FILTER.get()))
+                    .build());
+
+    public static final RegistryObject<CreativeModeTab> ARMOR = TABS.register("armor",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.hbm.armor"))
+                    .icon(() -> new ItemStack(PortItems.GAS_MASK.get()))
+                    .displayItems((parameters, output) -> output.accept(PortItems.GAS_MASK.get()))
+                    .build());
+
     private PortCreativeTabs() {}
 }

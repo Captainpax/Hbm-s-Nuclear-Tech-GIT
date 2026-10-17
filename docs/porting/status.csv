@@ -1,8 +1,14 @@
 kind,key,status,target,notes
 block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; break behavior and hazard integration still need full parity checks
-block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement and unprotected exposure tested; masks and full hazard effects pending
+block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and standard filtered-mask protection tested; other hazard effects pending
+item,gas_mask,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and one filter type ported; custom worn model overlay and additional mask variants pending
+item,gas_mask_filter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and radon protection ported; sounds recipes and other hazards pending
+java_source,items/armor/ArmorGasMask,partial,src/forge120/java/com/hbm/PortGasMask.java,First mask protection and filter storage ported; other mask variants and rendering pending
+java_source,items/tool/ItemFilter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Standard filter interaction ported; full item behavior pending
+asset,textures/items/gas_mask.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter.png,Original texture copied byte-for-byte
 java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos fields persist; other living properties and effects pending
-java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay and unprotected exposure present; protection/filter and visual behavior pending
+java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and standard filtered-mask protection present; other filters and visual behavior pending
 java_source,config/RadiationConfig,partial,src/forge120/java/com/hbm/PortConfig.java,Two server-synced options ported; remaining radiation and pollution settings pending
 java_source,handler/EntityEffectHandler,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers and lethal threshold ported; transformations and all other effects pending
 java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only

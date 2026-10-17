@@ -11,6 +11,8 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -19,6 +21,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -123,6 +126,63 @@ public final class PortGameTests {
         if (zombie.getHealth() <= 0.0F) {
             throw new IllegalStateException("A legacy radiation-immune mob got radiation sickness");
         }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void filteredMaskBlocksRadonAndWearsOut(GameTestHelper helper) {
+        var cow = helper.spawnWithNoFreeWill(EntityType.COW, new BlockPos(1, 2, 1));
+        ItemStack mask = new ItemStack(PortItems.GAS_MASK.get());
+        ItemStack filter = new ItemStack(PortItems.GAS_MASK_FILTER.get());
+        filter.setDamageValue(filter.getMaxDamage() - 1);
+        PortGasMask.installFilter(mask, filter);
+        cow.setItemSlot(EquipmentSlot.HEAD, mask);
+        var exposure = PortRadiation.get(cow)
+                .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+
+        PortRadiation.exposeRadon(cow);
+        if (exposure.radiation() != 0.0F || exposure.asbestos() != 0
+                || PortGasMask.filter(mask).getDamageValue() != filter.getMaxDamage()) {
+            throw new IllegalStateException("Filter failed to protect or consume one durability point");
+        }
+        PortRadiation.exposeRadon(cow);
+        if (exposure.radiation() != 0.0F || !PortGasMask.filter(mask).isEmpty()) {
+            throw new IllegalStateException("Final filter use should protect and remove spent filter");
+        }
+        PortRadiation.exposeRadon(cow);
+        if (Math.abs(exposure.radiation() - 0.05F) > 0.0001F || exposure.asbestos() != 1) {
+            throw new IllegalStateException("Unfiltered radon did not expose the entity");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void gasMaskFilterInstallsAndSwaps(GameTestHelper helper) {
+        var player = FakePlayerFactory.getMinecraft(helper.getLevel());
+        ItemStack mask = new ItemStack(PortItems.GAS_MASK.get());
+        player.setItemSlot(EquipmentSlot.HEAD, mask);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(PortItems.GAS_MASK_FILTER.get()));
+        PortItems.GAS_MASK_FILTER.get().use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
+        if (!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
+                || !PortGasMask.filter(mask).is(PortItems.GAS_MASK_FILTER.get())) {
+            throw new IllegalStateException("Right-click did not install the filter in the worn mask");
+        }
+
+        ItemStack replacement = new ItemStack(PortItems.GAS_MASK_FILTER.get());
+        replacement.setDamageValue(10);
+        player.setItemInHand(InteractionHand.MAIN_HAND, replacement);
+        PortItems.GAS_MASK_FILTER.get().use(helper.getLevel(), player, InteractionHand.MAIN_HAND);
+        if (!player.getItemInHand(InteractionHand.MAIN_HAND).is(PortItems.GAS_MASK_FILTER.get())
+                || player.getItemInHand(InteractionHand.MAIN_HAND).getDamageValue() != 0
+                || PortGasMask.filter(mask).getDamageValue() != 10) {
+            throw new IllegalStateException("Replacing a filter did not return the old filter");
+        }
+        ItemStack reloaded = ItemStack.of(mask.save(new CompoundTag()));
+        if (PortGasMask.filter(reloaded).getDamageValue() != 10) {
+            throw new IllegalStateException("Installed filter did not persist in mask NBT");
+        }
+        player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+        player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         helper.succeed();
     }
 

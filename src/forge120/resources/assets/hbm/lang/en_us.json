@@ -2,7 +2,11 @@
   "block.hbm.ore_uranium": "Uranium Ore",
   "block.hbm.gas_radon": "Radon Gas",
   "item.hbm.ingot_uranium": "Uranium Ingot",
+  "item.hbm.gas_mask": "Gas Mask",
+  "item.hbm.gas_mask_filter": "Gas Mask Filter",
   "itemGroup.hbm.parts": "HBM Parts",
   "itemGroup.hbm.blocks": "HBM Blocks",
+  "itemGroup.hbm.consumables": "HBM Consumables",
+  "itemGroup.hbm.armor": "HBM Armor",
   "death.attack.hbm.radiation": "%1$s succumbed to radiation poisoning"
 }
