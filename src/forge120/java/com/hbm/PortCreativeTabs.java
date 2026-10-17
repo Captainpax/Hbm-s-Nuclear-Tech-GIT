@@ -16,7 +16,15 @@ public final class PortCreativeTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hbm.parts"))
                     .icon(() -> new ItemStack(PortItems.INGOT_URANIUM.get()))
-                    .displayItems((parameters, output) -> output.accept(PortItems.INGOT_URANIUM.get()))
+                    .displayItems((parameters, output) -> {
+                        output.accept(PortItems.INGOT_URANIUM.get());
+                        output.accept(PortItems.INGOT_TH232.get());
+                        output.accept(PortItems.INGOT_TITANIUM.get());
+                        output.accept(PortItems.INGOT_COPPER.get());
+                        output.accept(PortItems.INGOT_TUNGSTEN.get());
+                        output.accept(PortItems.INGOT_LEAD.get());
+                        output.accept(PortItems.INGOT_BERYLLIUM.get());
+                    })
                     .build());
 
     public static final RegistryObject<CreativeModeTab> BLOCKS = TABS.register("blocks",
@@ -25,6 +33,12 @@ public final class PortCreativeTabs {
                     .icon(() -> new ItemStack(PortItems.ORE_URANIUM.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(PortItems.ORE_URANIUM.get());
+                        output.accept(PortItems.ORE_THORIUM.get());
+                        output.accept(PortItems.ORE_TITANIUM.get());
+                        output.accept(PortItems.ORE_COPPER.get());
+                        output.accept(PortItems.ORE_TUNGSTEN.get());
+                        output.accept(PortItems.ORE_LEAD.get());
+                        output.accept(PortItems.ORE_BERYLLIUM.get());
                         output.accept(PortItems.GAS_RADON.get());
                     })
                     .build());

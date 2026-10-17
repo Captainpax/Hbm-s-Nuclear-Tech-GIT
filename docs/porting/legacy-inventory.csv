@@ -2415,13 +2415,13 @@ asset,textures/blocks/ore_basalt_sulfur.png,src/main/resources/assets/hbm/textur
 asset,textures/blocks/ore_basalt_sulfur_top.png,src/main/resources/assets/hbm/textures/blocks/ore_basalt_sulfur_top.png,,unported,,
 asset,textures/blocks/ore_bedrock_coltan.png,src/main/resources/assets/hbm/textures/blocks/ore_bedrock_coltan.png,,unported,,
 asset,textures/blocks/ore_bedrock_oil.png,src/main/resources/assets/hbm/textures/blocks/ore_bedrock_oil.png,,unported,,
-asset,textures/blocks/ore_beryllium.png,src/main/resources/assets/hbm/textures/blocks/ore_beryllium.png,,unported,,
+asset,textures/blocks/ore_beryllium.png,src/main/resources/assets/hbm/textures/blocks/ore_beryllium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_beryllium.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_cinnebar.png,src/main/resources/assets/hbm/textures/blocks/ore_cinnebar.png,,unported,,
 asset,textures/blocks/ore_coal_oil.png,src/main/resources/assets/hbm/textures/blocks/ore_coal_oil.png,,unported,,
 asset,textures/blocks/ore_coal_oil_burning.png,src/main/resources/assets/hbm/textures/blocks/ore_coal_oil_burning.png,,unported,,
 asset,textures/blocks/ore_cobalt.png,src/main/resources/assets/hbm/textures/blocks/ore_cobalt.png,,unported,,
 asset,textures/blocks/ore_coltan.png,src/main/resources/assets/hbm/textures/blocks/ore_coltan.png,,unported,,
-asset,textures/blocks/ore_copper.png,src/main/resources/assets/hbm/textures/blocks/ore_copper.png,,unported,,
+asset,textures/blocks/ore_copper.png,src/main/resources/assets/hbm/textures/blocks/ore_copper.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_copper.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_depth_borax.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_borax.png,,unported,,
 asset,textures/blocks/ore_depth_cinnebar.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_cinnebar.png,,unported,,
 asset,textures/blocks/ore_depth_nether_neodymium.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_nether_neodymium.png,,unported,,
@@ -2437,7 +2437,7 @@ asset,textures/blocks/ore_gneiss_rare.png,src/main/resources/assets/hbm/textures
 asset,textures/blocks/ore_gneiss_schrabidium.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_schrabidium.png,,unported,,
 asset,textures/blocks/ore_gneiss_uranium.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_uranium.png,,unported,,
 asset,textures/blocks/ore_gneiss_uranium_scorched.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_uranium_scorched.png,,unported,,
-asset,textures/blocks/ore_lead.png,src/main/resources/assets/hbm/textures/blocks/ore_lead.png,,unported,,
+asset,textures/blocks/ore_lead.png,src/main/resources/assets/hbm/textures/blocks/ore_lead.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_lead.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_lignite.png,src/main/resources/assets/hbm/textures/blocks/ore_lignite.png,,unported,,
 asset,textures/blocks/ore_lithium.png,src/main/resources/assets/hbm/textures/blocks/ore_lithium.png,,unported,,
 asset,textures/blocks/ore_meteor.aluminium.png,src/main/resources/assets/hbm/textures/blocks/ore_meteor.aluminium.png,,unported,,
@@ -2482,11 +2482,11 @@ asset,textures/blocks/ore_salpeter.png,src/main/resources/assets/hbm/textures/bl
 asset,textures/blocks/ore_schrabidium.png,src/main/resources/assets/hbm/textures/blocks/ore_schrabidium.png,,unported,,
 asset,textures/blocks/ore_sulfur.png,src/main/resources/assets/hbm/textures/blocks/ore_sulfur.png,,unported,,
 asset,textures/blocks/ore_tektite_osmiridium.png,src/main/resources/assets/hbm/textures/blocks/ore_tektite_osmiridium.png,,unported,,
-asset,textures/blocks/ore_thorium.png,src/main/resources/assets/hbm/textures/blocks/ore_thorium.png,,unported,,
+asset,textures/blocks/ore_thorium.png,src/main/resources/assets/hbm/textures/blocks/ore_thorium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_thorium.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_tikite.png,src/main/resources/assets/hbm/textures/blocks/ore_tikite.png,,unported,,
 asset,textures/blocks/ore_tikite_alt.png,src/main/resources/assets/hbm/textures/blocks/ore_tikite_alt.png,,unported,,
-asset,textures/blocks/ore_titanium.png,src/main/resources/assets/hbm/textures/blocks/ore_titanium.png,,unported,,
-asset,textures/blocks/ore_tungsten.png,src/main/resources/assets/hbm/textures/blocks/ore_tungsten.png,,unported,,
+asset,textures/blocks/ore_titanium.png,src/main/resources/assets/hbm/textures/blocks/ore_titanium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_titanium.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_tungsten.png,src/main/resources/assets/hbm/textures/blocks/ore_tungsten.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_tungsten.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_uranium.png,src/main/resources/assets/hbm/textures/blocks/ore_uranium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_uranium.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_uranium_scorched.png,src/main/resources/assets/hbm/textures/blocks/ore_uranium_scorched.png,,unported,,
 asset,textures/blocks/owo.png,src/main/resources/assets/hbm/textures/blocks/owo.png,,unported,,
@@ -4702,7 +4702,7 @@ asset,textures/items/ingot_astatine.png,src/main/resources/assets/hbm/textures/i
 asset,textures/items/ingot_au198.png,src/main/resources/assets/hbm/textures/items/ingot_au198.png,,unported,,
 asset,textures/items/ingot_australium.png,src/main/resources/assets/hbm/textures/items/ingot_australium.png,,unported,,
 asset,textures/items/ingot_bakelite.png,src/main/resources/assets/hbm/textures/items/ingot_bakelite.png,,unported,,
-asset,textures/items/ingot_beryllium.png,src/main/resources/assets/hbm/textures/items/ingot_beryllium.png,,unported,,
+asset,textures/items/ingot_beryllium.png,src/main/resources/assets/hbm/textures/items/ingot_beryllium.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_beryllium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_beskar_double.png,src/main/resources/assets/hbm/textures/items/ingot_beskar_double.png,,unported,,
 asset,textures/items/ingot_beskar_single.png,src/main/resources/assets/hbm/textures/items/ingot_beskar_single.png,,unported,,
 asset,textures/items/ingot_beskar_single_alt.png,src/main/resources/assets/hbm/textures/items/ingot_beskar_single_alt.png,,unported,,
@@ -4728,7 +4728,7 @@ asset,textures/items/ingot_chainsteel_hot.png,src/main/resources/assets/hbm/text
 asset,textures/items/ingot_co60.png,src/main/resources/assets/hbm/textures/items/ingot_co60.png,,unported,,
 asset,textures/items/ingot_cobalt.png,src/main/resources/assets/hbm/textures/items/ingot_cobalt.png,,unported,,
 asset,textures/items/ingot_combine_steel.png,src/main/resources/assets/hbm/textures/items/ingot_combine_steel.png,,unported,,
-asset,textures/items/ingot_copper.png,src/main/resources/assets/hbm/textures/items/ingot_copper.png,,unported,,
+asset,textures/items/ingot_copper.png,src/main/resources/assets/hbm/textures/items/ingot_copper.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_copper.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_crystalline.png,src/main/resources/assets/hbm/textures/items/ingot_crystalline.png,,unported,,
 asset,textures/items/ingot_desh.png,src/main/resources/assets/hbm/textures/items/ingot_desh.png,,unported,,
 asset,textures/items/ingot_desh_rainbow.png,src/main/resources/assets/hbm/textures/items/ingot_desh_rainbow.png,,unported,,
@@ -4753,7 +4753,7 @@ asset,textures/items/ingot_iodine.png,src/main/resources/assets/hbm/textures/ite
 asset,textures/items/ingot_iron.png,src/main/resources/assets/hbm/textures/items/ingot_iron.png,,unported,,
 asset,textures/items/ingot_iron_small.png,src/main/resources/assets/hbm/textures/items/ingot_iron_small.png,,unported,,
 asset,textures/items/ingot_lanthanium.png,src/main/resources/assets/hbm/textures/items/ingot_lanthanium.png,,unported,,
-asset,textures/items/ingot_lead.png,src/main/resources/assets/hbm/textures/items/ingot_lead.png,,unported,,
+asset,textures/items/ingot_lead.png,src/main/resources/assets/hbm/textures/items/ingot_lead.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_lead.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_les.png,src/main/resources/assets/hbm/textures/items/ingot_les.png,,unported,,
 asset,textures/items/ingot_magnetized_tungsten.png,src/main/resources/assets/hbm/textures/items/ingot_magnetized_tungsten.png,,unported,,
 asset,textures/items/ingot_metal.bar.png,src/main/resources/assets/hbm/textures/items/ingot_metal.bar.png,,unported,,
@@ -4824,11 +4824,11 @@ asset,textures/items/ingot_tcalloy.png,src/main/resources/assets/hbm/textures/it
 asset,textures/items/ingot_technetium.png,src/main/resources/assets/hbm/textures/items/ingot_technetium.png,,unported,,
 asset,textures/items/ingot_tennessine.png,src/main/resources/assets/hbm/textures/items/ingot_tennessine.png,,unported,,
 asset,textures/items/ingot_tetraneutronium_new.png,src/main/resources/assets/hbm/textures/items/ingot_tetraneutronium_new.png,,unported,,
-asset,textures/items/ingot_th232.png,src/main/resources/assets/hbm/textures/items/ingot_th232.png,,unported,,
+asset,textures/items/ingot_th232.png,src/main/resources/assets/hbm/textures/items/ingot_th232.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_th232.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_thorium.png,src/main/resources/assets/hbm/textures/items/ingot_thorium.png,,unported,,
 asset,textures/items/ingot_thorium_fuel.png,src/main/resources/assets/hbm/textures/items/ingot_thorium_fuel.png,,unported,,
-asset,textures/items/ingot_titanium.png,src/main/resources/assets/hbm/textures/items/ingot_titanium.png,,unported,,
-asset,textures/items/ingot_tungsten.png,src/main/resources/assets/hbm/textures/items/ingot_tungsten.png,,unported,,
+asset,textures/items/ingot_titanium.png,src/main/resources/assets/hbm/textures/items/ingot_titanium.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_titanium.png,Original texture copied byte-for-byte
+asset,textures/items/ingot_tungsten.png,src/main/resources/assets/hbm/textures/items/ingot_tungsten.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_tungsten.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_tungsten_carbide.png,src/main/resources/assets/hbm/textures/items/ingot_tungsten_carbide.png,,unported,,
 asset,textures/items/ingot_u233.png,src/main/resources/assets/hbm/textures/items/ingot_u233.png,,unported,,
 asset,textures/items/ingot_u235.png,src/main/resources/assets/hbm/textures/items/ingot_u235.png,,unported,,
@@ -7595,11 +7595,11 @@ block,ore_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2366,unported,,
 block,ore_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2374,unported,,
 block,ore_australium,src/main/java/com/hbm/blocks/ModBlocks.java,2378,unported,,
 block,ore_bedrock_oil,src/main/java/com/hbm/blocks/ModBlocks.java,2391,unported,,
-block,ore_beryllium,src/main/java/com/hbm/blocks/ModBlocks.java,2368,unported,,
+block,ore_beryllium,src/main/java/com/hbm/blocks/ModBlocks.java,2368,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 block,ore_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2381,unported,,
 block,ore_cobalt,src/main/java/com/hbm/blocks/ModBlocks.java,2380,unported,,
 block,ore_coltan,src/main/java/com/hbm/blocks/ModBlocks.java,2382,unported,,
-block,ore_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2364,unported,,
+block,ore_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2364,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 block,ore_depth_borax,src/main/java/com/hbm/blocks/ModBlocks.java,2423,unported,,
 block,ore_depth_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2421,unported,,
 block,ore_depth_nether_neodymium,src/main/java/com/hbm/blocks/ModBlocks.java,2430,unported,,
@@ -7615,7 +7615,7 @@ block,ore_gneiss_rare,src/main/java/com/hbm/blocks/ModBlocks.java,2417,unported,
 block,ore_gneiss_schrabidium,src/main/java/com/hbm/blocks/ModBlocks.java,2416,unported,,
 block,ore_gneiss_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2411,unported,,
 block,ore_gneiss_uranium_scorched,src/main/java/com/hbm/blocks/ModBlocks.java,2412,unported,,
-block,ore_lead,src/main/java/com/hbm/blocks/ModBlocks.java,2369,unported,,
+block,ore_lead,src/main/java/com/hbm/blocks/ModBlocks.java,2369,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 block,ore_lignite,src/main/java/com/hbm/blocks/ModBlocks.java,2373,unported,,
 block,ore_nether_coal,src/main/java/com/hbm/blocks/ModBlocks.java,2394,unported,,
 block,ore_nether_cobalt,src/main/java/com/hbm/blocks/ModBlocks.java,2402,unported,,
@@ -7635,10 +7635,10 @@ block,ore_rare,src/main/java/com/hbm/blocks/ModBlocks.java,2379,unported,,
 block,ore_schrabidium,src/main/java/com/hbm/blocks/ModBlocks.java,2375,unported,,
 block,ore_sulfur,src/main/java/com/hbm/blocks/ModBlocks.java,2362,unported,,
 block,ore_tektite_osmiridium,src/main/java/com/hbm/blocks/ModBlocks.java,2823,unported,,
-block,ore_thorium,src/main/java/com/hbm/blocks/ModBlocks.java,2360,unported,,
+block,ore_thorium,src/main/java/com/hbm/blocks/ModBlocks.java,2360,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 block,ore_tikite,src/main/java/com/hbm/blocks/ModBlocks.java,2436,unported,,
-block,ore_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2361,unported,,
-block,ore_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2365,unported,,
+block,ore_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2361,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
+block,ore_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2365,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 block,ore_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2358,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; item and placed-block textures manually checked in client; break behavior and hazard integration still need full parity checks
 block,ore_uranium_scorched,src/main/java/com/hbm/blocks/ModBlocks.java,2359,unported,,
 block,part_emitter,src/main/java/com/hbm/blocks/ModBlocks.java,2577,unported,,
@@ -8448,17 +8448,17 @@ config_option,WorldConfig:17.R00_craterBiomeRad:233,src/main/java/com/hbm/config
 config_option,WorldConfig:17.R01_craterBiomeInnerRad:234,src/main/java/com/hbm/config/WorldConfig.java,234,unported,,
 config_option,WorldConfig:17.R02_craterBiomeOuterRad:235,src/main/java/com/hbm/config/WorldConfig.java,235,unported,,
 config_option,WorldConfig:17.R03_craterBiomeWaterMult:236,src/main/java/com/hbm/config/WorldConfig.java,236,unported,,
-config_option,WorldConfig:2.00_uraniumSpawnrate:127,src/main/java/com/hbm/config/WorldConfig.java,127,unported,,
-config_option,WorldConfig:2.01_titaniumSpawnrate:128,src/main/java/com/hbm/config/WorldConfig.java,128,unported,,
+config_option,WorldConfig:2.00_uraniumSpawnrate:127,src/main/java/com/hbm/config/WorldConfig.java,127,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_uranium.json,Legacy default count is data-driven; config override not yet ported
+config_option,WorldConfig:2.01_titaniumSpawnrate:128,src/main/java/com/hbm/config/WorldConfig.java,128,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_titanium.json,Legacy default count is data-driven; config override not yet ported
 config_option,WorldConfig:2.02_sulfurSpawnrate:129,src/main/java/com/hbm/config/WorldConfig.java,129,unported,,
 config_option,WorldConfig:2.03_aluminiumSpawnrate:130,src/main/java/com/hbm/config/WorldConfig.java,130,unported,,
-config_option,WorldConfig:2.04_copperSpawnrate:131,src/main/java/com/hbm/config/WorldConfig.java,131,unported,,
+config_option,WorldConfig:2.04_copperSpawnrate:131,src/main/java/com/hbm/config/WorldConfig.java,131,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_copper.json,Legacy default count is data-driven; config override not yet ported
 config_option,WorldConfig:2.05_fluoriteSpawnrate:132,src/main/java/com/hbm/config/WorldConfig.java,132,unported,,
 config_option,WorldConfig:2.06_niterSpawnrate:133,src/main/java/com/hbm/config/WorldConfig.java,133,unported,,
-config_option,WorldConfig:2.07_tungstenSpawnrate:134,src/main/java/com/hbm/config/WorldConfig.java,134,unported,,
-config_option,WorldConfig:2.08_leadSpawnrate:135,src/main/java/com/hbm/config/WorldConfig.java,135,unported,,
-config_option,WorldConfig:2.09_berylliumSpawnrate:136,src/main/java/com/hbm/config/WorldConfig.java,136,unported,,
-config_option,WorldConfig:2.10_thoriumSpawnrate:137,src/main/java/com/hbm/config/WorldConfig.java,137,unported,,
+config_option,WorldConfig:2.07_tungstenSpawnrate:134,src/main/java/com/hbm/config/WorldConfig.java,134,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_tungsten.json,Legacy default count is data-driven; config override not yet ported
+config_option,WorldConfig:2.08_leadSpawnrate:135,src/main/java/com/hbm/config/WorldConfig.java,135,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_lead.json,Legacy default count is data-driven; config override not yet ported
+config_option,WorldConfig:2.09_berylliumSpawnrate:136,src/main/java/com/hbm/config/WorldConfig.java,136,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_beryllium.json,Legacy default count is data-driven; config override not yet ported
+config_option,WorldConfig:2.10_thoriumSpawnrate:137,src/main/java/com/hbm/config/WorldConfig.java,137,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_thorium.json,Legacy default count is data-driven; config override not yet ported
 config_option,WorldConfig:2.11_ligniteSpawnrate:138,src/main/java/com/hbm/config/WorldConfig.java,138,unported,,
 config_option,WorldConfig:2.12_asbestosSpawnRate:139,src/main/java/com/hbm/config/WorldConfig.java,139,unported,,
 config_option,WorldConfig:2.13_lithiumSpawnRate:140,src/main/java/com/hbm/config/WorldConfig.java,140,unported,,
@@ -9491,7 +9491,7 @@ item,ingot_asbestos,src/main/java/com/hbm/items/ModItems.java,4567,unported,,
 item,ingot_au198,src/main/java/com/hbm/items/ModItems.java,4477,unported,,
 item,ingot_australium,src/main/java/com/hbm/items/ModItems.java,4530,unported,,
 item,ingot_bakelite,src/main/java/com/hbm/items/ModItems.java,4507,unported,,
-item,ingot_beryllium,src/main/java/com/hbm/items/ModItems.java,4500,unported,,
+item,ingot_beryllium,src/main/java/com/hbm/items/ModItems.java,4500,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 item,ingot_biorubber,src/main/java/com/hbm/items/ModItems.java,4508,unported,,
 item,ingot_bismuth,src/main/java/com/hbm/items/ModItems.java,4493,unported,,
 item,ingot_bismuth_bronze,src/main/java/com/hbm/items/ModItems.java,4489,unported,,
@@ -9506,7 +9506,7 @@ item,ingot_chainsteel,src/main/java/com/hbm/items/ModItems.java,4547,unported,,
 item,ingot_co60,src/main/java/com/hbm/items/ModItems.java,4475,unported,,
 item,ingot_cobalt,src/main/java/com/hbm/items/ModItems.java,4501,unported,,
 item,ingot_combine_steel,src/main/java/com/hbm/items/ModItems.java,4518,unported,,
-item,ingot_copper,src/main/java/com/hbm/items/ModItems.java,4481,unported,,
+item,ingot_copper,src/main/java/com/hbm/items/ModItems.java,4481,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 item,ingot_desh,src/main/java/com/hbm/items/ModItems.java,4533,unported,,
 item,ingot_dineutronium,src/main/java/com/hbm/items/ModItems.java,4540,unported,,
 item,ingot_dura_steel,src/main/java/com/hbm/items/ModItems.java,4505,unported,,
@@ -9520,7 +9520,7 @@ item,ingot_graphite,src/main/java/com/hbm/items/ModItems.java,4503,unported,,
 item,ingot_gunmetal,src/main/java/com/hbm/items/ModItems.java,4536,unported,,
 item,ingot_hes,src/main/java/com/hbm/items/ModItems.java,4528,unported,,
 item,ingot_lanthanium,src/main/java/com/hbm/items/ModItems.java,4531,unported,,
-item,ingot_lead,src/main/java/com/hbm/items/ModItems.java,4492,unported,,
+item,ingot_lead,src/main/java/com/hbm/items/ModItems.java,4492,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 item,ingot_les,src/main/java/com/hbm/items/ModItems.java,4529,unported,,
 item,ingot_magnetized_tungsten,src/main/java/com/hbm/items/ModItems.java,4517,unported,,
 item,ingot_mercury,src/main/java/com/hbm/items/ModItems.java,4629,unported,,
@@ -9566,10 +9566,10 @@ item,ingot_steel_dusted,src/main/java/com/hbm/items/ModItems.java,4546,unported,
 item,ingot_tantalium,src/main/java/com/hbm/items/ModItems.java,4497,unported,,
 item,ingot_tcalloy,src/main/java/com/hbm/items/ModItems.java,4487,unported,,
 item,ingot_technetium,src/main/java/com/hbm/items/ModItems.java,4474,unported,,
-item,ingot_th232,src/main/java/com/hbm/items/ModItems.java,4462,unported,,
+item,ingot_th232,src/main/java/com/hbm/items/ModItems.java,4462,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 item,ingot_thorium_fuel,src/main/java/com/hbm/items/ModItems.java,4522,unported,,
-item,ingot_titanium,src/main/java/com/hbm/items/ModItems.java,4480,unported,,
-item,ingot_tungsten,src/main/java/com/hbm/items/ModItems.java,4483,unported,,
+item,ingot_titanium,src/main/java/com/hbm/items/ModItems.java,4480,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
+item,ingot_tungsten,src/main/java/com/hbm/items/ModItems.java,4483,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 item,ingot_tungsten_carbide,src/main/java/com/hbm/items/ModItems.java,4484,unported,,
 item,ingot_u233,src/main/java/com/hbm/items/ModItems.java,4458,unported,,
 item,ingot_u235,src/main/java/com/hbm/items/ModItems.java,4459,unported,,
@@ -15462,19 +15462,19 @@ recipe_site,SmeltingRecipes:173,src/main/java/com/hbm/crafting/SmeltingRecipes.j
 recipe_site,SmeltingRecipes:177,src/main/java/com/hbm/crafting/SmeltingRecipes.java,177,unported,,"GameRegistry.addSmelting(new ItemStack(ModItems.ore_bedrock, 1, i), new ItemStack(Blocks.cobblestone, 16), 0.1F);"
 recipe_site,SmeltingRecipes:181,src/main/java/com/hbm/crafting/SmeltingRecipes.java,181,unported,,"GameRegistry.addSmelting(new ItemStack(ModItems.ingot_steel_dusted, 1, i), ItemHot.heatUp(new ItemStack(ModItems.ingot_steel_dusted, 1, i)), 1.0F);"
 recipe_site,SmeltingRecipes:28,src/main/java/com/hbm/crafting/SmeltingRecipes.java,28,unported,,"GameRegistry.addSmelting(ModItems.glyphid_meat, new ItemStack(ModItems.glyphid_meat_grilled), 1.0F);"
-recipe_site,SmeltingRecipes:30,src/main/java/com/hbm/crafting/SmeltingRecipes.java,30,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_thorium), new ItemStack(ModItems.ingot_th232), 3.0F);"
+recipe_site,SmeltingRecipes:30,src/main/java/com/hbm/crafting/SmeltingRecipes.java,30,verified,src/forge120/resources/data/hbm/recipes/ingot_th232_from_ore.json,GameTest checks ore input output 3 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:31,src/main/java/com/hbm/crafting/SmeltingRecipes.java,31,verified,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,GameTest checks ore input uranium ingot result 6 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:32,src/main/java/com/hbm/crafting/SmeltingRecipes.java,32,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_uranium_scorched), new ItemStack(ModItems.ingot_uranium), 6.0F);"
 recipe_site,SmeltingRecipes:33,src/main/java/com/hbm/crafting/SmeltingRecipes.java,33,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_nether_uranium), new ItemStack(ModItems.ingot_uranium), 12.0F);"
 recipe_site,SmeltingRecipes:34,src/main/java/com/hbm/crafting/SmeltingRecipes.java,34,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_nether_uranium_scorched), new ItemStack(ModItems.ingot_uranium), 12.0F);"
 recipe_site,SmeltingRecipes:35,src/main/java/com/hbm/crafting/SmeltingRecipes.java,35,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_nether_plutonium), new ItemStack(ModItems.ingot_plutonium), 24.0F);"
-recipe_site,SmeltingRecipes:36,src/main/java/com/hbm/crafting/SmeltingRecipes.java,36,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_titanium), new ItemStack(ModItems.ingot_titanium), 3.0F);"
-recipe_site,SmeltingRecipes:37,src/main/java/com/hbm/crafting/SmeltingRecipes.java,37,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_copper), new ItemStack(ModItems.ingot_copper), 2.5F);"
-recipe_site,SmeltingRecipes:38,src/main/java/com/hbm/crafting/SmeltingRecipes.java,38,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_tungsten), new ItemStack(ModItems.ingot_tungsten), 6.0F);"
+recipe_site,SmeltingRecipes:36,src/main/java/com/hbm/crafting/SmeltingRecipes.java,36,verified,src/forge120/resources/data/hbm/recipes/ingot_titanium_from_ore.json,GameTest checks ore input output 3 XP and 200-tick cooking time
+recipe_site,SmeltingRecipes:37,src/main/java/com/hbm/crafting/SmeltingRecipes.java,37,verified,src/forge120/resources/data/hbm/recipes/ingot_copper_from_ore.json,GameTest checks ore input output 2.5 XP and 200-tick cooking time
+recipe_site,SmeltingRecipes:38,src/main/java/com/hbm/crafting/SmeltingRecipes.java,38,verified,src/forge120/resources/data/hbm/recipes/ingot_tungsten_from_ore.json,GameTest checks ore input output 6 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:39,src/main/java/com/hbm/crafting/SmeltingRecipes.java,39,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_nether_tungsten), new ItemStack(ModItems.ingot_tungsten), 12.0F);"
 recipe_site,SmeltingRecipes:40,src/main/java/com/hbm/crafting/SmeltingRecipes.java,40,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_aluminium), DictFrame.fromOne(ModItems.chunk_ore, EnumChunkType.CRYOLITE, 1), 2.5F);"
-recipe_site,SmeltingRecipes:41,src/main/java/com/hbm/crafting/SmeltingRecipes.java,41,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_lead), new ItemStack(ModItems.ingot_lead), 3.0F);"
-recipe_site,SmeltingRecipes:42,src/main/java/com/hbm/crafting/SmeltingRecipes.java,42,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_beryllium), new ItemStack(ModItems.ingot_beryllium), 2.0F);"
+recipe_site,SmeltingRecipes:41,src/main/java/com/hbm/crafting/SmeltingRecipes.java,41,verified,src/forge120/resources/data/hbm/recipes/ingot_lead_from_ore.json,GameTest checks ore input output 3 XP and 200-tick cooking time
+recipe_site,SmeltingRecipes:42,src/main/java/com/hbm/crafting/SmeltingRecipes.java,42,verified,src/forge120/resources/data/hbm/recipes/ingot_beryllium_from_ore.json,GameTest checks ore input output 2 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:43,src/main/java/com/hbm/crafting/SmeltingRecipes.java,43,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_schrabidium), new ItemStack(ModItems.ingot_schrabidium), 128.0F);"
 recipe_site,SmeltingRecipes:44,src/main/java/com/hbm/crafting/SmeltingRecipes.java,44,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_nether_schrabidium), new ItemStack(ModItems.ingot_schrabidium), 256.0F);"
 recipe_site,SmeltingRecipes:45,src/main/java/com/hbm/crafting/SmeltingRecipes.java,45,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_cobalt), new ItemStack(ModItems.ingot_cobalt), 2.0F);"
@@ -15619,7 +15619,7 @@ recipe_source,SILEXRecipes,src/main/java/com/hbm/inventory/recipes/SILEXRecipes.
 recipe_source,ScrapsCraftingHandler,src/main/java/com/hbm/crafting/handlers/ScrapsCraftingHandler.java,,unported,,
 recipe_source,ShapedOreRecipeExt,src/main/java/com/hbm/crafting/handlers/ShapedOreRecipeExt.java,,unported,,
 recipe_source,ShredderRecipes,src/main/java/com/hbm/inventory/recipes/ShredderRecipes.java,,unported,,
-recipe_source,SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,partial,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,Uranium ore smelting entry only
+recipe_source,SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Seven ordinary ore smelting entries only
 recipe_source,SolderingRecipes,src/main/java/com/hbm/inventory/recipes/SolderingRecipes.java,,unported,,
 recipe_source,SolidificationRecipes,src/main/java/com/hbm/inventory/recipes/SolidificationRecipes.java,,unported,,
 recipe_source,TestCraftingHandler,src/main/java/com/hbm/crafting/handlers/TestCraftingHandler.java,,unported,,
@@ -16538,7 +16538,7 @@ worldgen_source,Dud,src/main/java/com/hbm/world/feature/Dud.java,,unported,,
 worldgen_source,DungeonToolbox,src/main/java/com/hbm/world/generator/DungeonToolbox.java,,unported,,
 worldgen_source,Geyser,src/main/java/com/hbm/world/feature/Geyser.java,,unported,,
 worldgen_source,GlyphidHive,src/main/java/com/hbm/world/feature/GlyphidHive.java,,unported,,
-worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature/ore_uranium.json,Uranium ore placement only
+worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Seven ordinary Overworld ores placed at legacy default settings; remaining ores structures and config overrides pending
 worldgen_source,HugeMush,src/main/java/com/hbm/world/feature/HugeMush.java,,unported,,
 worldgen_source,INBTBlockTransformable,src/main/java/com/hbm/world/gen/nbt/INBTBlockTransformable.java,,unported,,
 worldgen_source,INBTTileEntityTransformable,src/main/java/com/hbm/world/gen/nbt/INBTTileEntityTransformable.java,,unported,,

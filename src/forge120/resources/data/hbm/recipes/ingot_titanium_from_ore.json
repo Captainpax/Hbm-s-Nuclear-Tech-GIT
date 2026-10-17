@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "hbm:ore_titanium"
+  },
+  "result": "hbm:ingot_titanium",
+  "experience": 3,
+  "cookingtime": 200
+}

@@ -2,6 +2,7 @@ package com.hbm;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -13,10 +14,22 @@ public final class PortItems {
 
     public static final RegistryObject<Item> ORE_URANIUM = ITEMS.register("ore_uranium",
             () -> new BlockItem(PortBlocks.ORE_URANIUM.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ORE_THORIUM = ore("ore_thorium", PortBlocks.ORE_THORIUM);
+    public static final RegistryObject<Item> ORE_TITANIUM = ore("ore_titanium", PortBlocks.ORE_TITANIUM);
+    public static final RegistryObject<Item> ORE_COPPER = ore("ore_copper", PortBlocks.ORE_COPPER);
+    public static final RegistryObject<Item> ORE_TUNGSTEN = ore("ore_tungsten", PortBlocks.ORE_TUNGSTEN);
+    public static final RegistryObject<Item> ORE_LEAD = ore("ore_lead", PortBlocks.ORE_LEAD);
+    public static final RegistryObject<Item> ORE_BERYLLIUM = ore("ore_beryllium", PortBlocks.ORE_BERYLLIUM);
     public static final RegistryObject<Item> GAS_RADON = ITEMS.register("gas_radon",
             () -> new BlockItem(PortBlocks.GAS_RADON.get(), new Item.Properties()));
     public static final RegistryObject<Item> INGOT_URANIUM = ITEMS.register("ingot_uranium",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> INGOT_TH232 = ingot("ingot_th232");
+    public static final RegistryObject<Item> INGOT_TITANIUM = ingot("ingot_titanium");
+    public static final RegistryObject<Item> INGOT_COPPER = ingot("ingot_copper");
+    public static final RegistryObject<Item> INGOT_TUNGSTEN = ingot("ingot_tungsten");
+    public static final RegistryObject<Item> INGOT_LEAD = ingot("ingot_lead");
+    public static final RegistryObject<Item> INGOT_BERYLLIUM = ingot("ingot_beryllium");
     public static final RegistryObject<Item> GAS_MASK = ITEMS.register("gas_mask",
             () -> new PortGasMask(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> GAS_MASK_M65 = ITEMS.register("gas_mask_m65",
@@ -39,4 +52,12 @@ public final class PortItems {
             () -> new PortGeigerCounter(new Item.Properties().stacksTo(1)));
 
     private PortItems() {}
+
+    private static RegistryObject<Item> ore(String name, RegistryObject<Block> block) {
+        return ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+    }
+
+    private static RegistryObject<Item> ingot(String name) {
+        return ITEMS.register(name, () -> new Item(new Item.Properties()));
+    }
 }

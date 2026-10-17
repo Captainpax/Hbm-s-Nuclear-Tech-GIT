@@ -18,10 +18,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -57,6 +59,46 @@ public final class PortGameTests {
         }
         if (!helper.getLevel().registryAccess().registryOrThrow(Registries.PLACED_FEATURE).containsKey(oreId)) {
             throw new IllegalStateException("Uranium ore placed feature is missing");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void ordinaryOreSmeltingAndRegistration(GameTestHelper helper) {
+        Block[] ores = {
+                PortBlocks.ORE_THORIUM.get(), PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
+                PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get()
+        };
+        Item[] oreItems = {
+                PortItems.ORE_THORIUM.get(), PortItems.ORE_TITANIUM.get(), PortItems.ORE_COPPER.get(),
+                PortItems.ORE_TUNGSTEN.get(), PortItems.ORE_LEAD.get(), PortItems.ORE_BERYLLIUM.get()
+        };
+        Item[] ingots = {
+                PortItems.INGOT_TH232.get(), PortItems.INGOT_TITANIUM.get(), PortItems.INGOT_COPPER.get(),
+                PortItems.INGOT_TUNGSTEN.get(), PortItems.INGOT_LEAD.get(), PortItems.INGOT_BERYLLIUM.get()
+        };
+        float[] experience = {3.0F, 3.0F, 2.5F, 6.0F, 3.0F, 2.0F};
+        BlockPos orePos = helper.absolutePos(new BlockPos(1, 1, 1));
+        for (int i = 0; i < ores.length; i++) {
+            var id = ForgeRegistries.BLOCKS.getKey(ores[i]);
+            if (id == null || ForgeRegistries.ITEMS.getValue(id) != oreItems[i]
+                    || !helper.getLevel().registryAccess().registryOrThrow(Registries.PLACED_FEATURE).containsKey(id)) {
+                throw new IllegalStateException("Ore item or placed feature missing for " + id);
+            }
+            var input = new SimpleContainer(new ItemStack(oreItems[i]));
+            var recipe = helper.getLevel().getRecipeManager()
+                    .getRecipeFor(RecipeType.SMELTING, input, helper.getLevel())
+                    .orElseThrow(() -> new IllegalStateException("Ore smelting recipe missing for " + id));
+            if (!recipe.getResultItem(helper.getLevel().registryAccess()).is(ingots[i])
+                    || recipe.getExperience() != experience[i] || recipe.getCookingTime() != 200) {
+                throw new IllegalStateException("Ore smelting differs from legacy for " + id);
+            }
+            helper.getLevel().setBlock(orePos, ores[i].defaultBlockState(), 3);
+            var drops = Block.getDrops(ores[i].defaultBlockState(), helper.getLevel(), orePos,
+                    null, FakePlayerFactory.getMinecraft(helper.getLevel()), new ItemStack(Items.IRON_PICKAXE));
+            if (drops.size() != 1 || !drops.get(0).is(oreItems[i]) || drops.get(0).getCount() != 1) {
+                throw new IllegalStateException("Ore self-drop differs from legacy for " + id);
+            }
         }
         helper.succeed();
     }
@@ -460,7 +502,7 @@ public final class PortGameTests {
                 level.getChunk(chunkX, chunkZ);
                 for (int x = chunkX << 4; x < (chunkX << 4) + 16; x++) {
                     for (int z = chunkZ << 4; z < (chunkZ << 4) + 16; z++) {
-                        for (int y = 5; y <= 20; y++) {
+                        for (int y = 5; y <= 24; y++) {
                             if (level.getBlockState(new BlockPos(x, y, z)).is(PortBlocks.ORE_URANIUM.get())) {
                                 oreCount++;
                             }
@@ -471,6 +513,41 @@ public final class PortGameTests {
         }
         if (oreCount == 0) {
             throw new IllegalStateException("No uranium ore generated in four new overworld chunks");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 300)
+    public static void ordinaryOresGenerateInFreshChunks(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        Block[] ores = {
+                PortBlocks.ORE_THORIUM.get(), PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
+                PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get()
+        };
+        int[] found = new int[ores.length];
+        BlockPos origin = helper.absolutePos(BlockPos.ZERO);
+        int baseChunkX = (origin.getX() >> 4) + ThreadLocalRandom.current().nextInt(256, 8192);
+        int baseChunkZ = (origin.getZ() >> 4) + ThreadLocalRandom.current().nextInt(256, 8192);
+        for (int chunkX = baseChunkX; chunkX < baseChunkX + 2; chunkX++) {
+            for (int chunkZ = baseChunkZ; chunkZ < baseChunkZ + 2; chunkZ++) {
+                level.getChunk(chunkX, chunkZ);
+                for (int x = chunkX << 4; x < (chunkX << 4) + 16; x++) {
+                    for (int z = chunkZ << 4; z < (chunkZ << 4) + 16; z++) {
+                        for (int y = 5; y <= 49; y++) {
+                            var state = level.getBlockState(new BlockPos(x, y, z));
+                            for (int i = 0; i < ores.length; i++) {
+                                if (state.is(ores[i])) found[i]++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < ores.length; i++) {
+            if (found[i] == 0) {
+                throw new IllegalStateException("No " + ForgeRegistries.BLOCKS.getKey(ores[i])
+                        + " in four fresh overworld chunks");
+            }
         }
         helper.succeed();
     }

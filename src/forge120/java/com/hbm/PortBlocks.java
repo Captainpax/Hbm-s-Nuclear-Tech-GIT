@@ -20,10 +20,25 @@ public final class PortBlocks {
                     .sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> ORE_THORIUM = ore("ore_thorium", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_TITANIUM = ore("ore_titanium", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_COPPER = ore("ore_copper", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_TUNGSTEN = ore("ore_tungsten", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_LEAD = ore("ore_lead", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_BERYLLIUM = ore("ore_beryllium", 5.0F, 15.0F);
+
     public static final RegistryObject<Block> GAS_RADON = BLOCKS.register("gas_radon",
             () -> new PortRadonGas(BlockBehaviour.Properties.of()
                     .strength(0.0F)
                     .noLootTable()));
 
     private PortBlocks() {}
+
+    private static RegistryObject<Block> ore(String name, float hardness, float resistance) {
+        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE)
+                .strength(hardness, resistance)
+                .sound(SoundType.STONE)
+                .requiresCorrectToolForDrops()));
+    }
 }
