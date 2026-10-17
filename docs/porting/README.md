@@ -9,7 +9,7 @@ The parity baseline is commit `9d7b7ca3bc999b7909fdb349738d305dff58bd7d` on the 
 - Forge 1.20.1-47.4.10 / Java 17 / ForgeGradle 6 build: passing.
 - `hbm:ore_uranium`, `hbm:gas_radon`, and `hbm:ingot_uranium`: registered with source textures. Five dedicated GameTests pass: smelting, fresh-chunk uranium generation, ore outgassing, downward gas movement, and radon exposure through entity NBT reload.
 - The development client reached the render thread and loaded texture atlases. Visual inspection in a world remains pending.
-- Radon decay, movement, and unprotected exposure are implemented. Exposure NBT persistence passed a dedicated-server test. Protective masks, radiation illness, client sync, full ore-break parity, nearly all other content, multiplayer systems, and integrations remain pending.
+- Radon decay, movement, and unprotected exposure are implemented. Exposure NBT persistence passed a dedicated-server test. The first two server-synced radiation/hazard config switches are wired to radon. Protective masks, radiation illness, client sync, full ore-break parity, nearly all other content, multiplayer systems, and integrations remain pending.
 - No 1.7.10 world conversion or generation in already generated 1.20.1 chunks is planned.
 
 ## Next gates

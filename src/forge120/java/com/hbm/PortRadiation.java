@@ -119,13 +119,13 @@ public final class PortRadiation {
     public static void exposeRadon(LivingEntity entity) {
         if (entity.level().isClientSide) return;
         get(entity).ifPresent(data -> {
-            if (!isRadiationImmune(entity)
+            if (PortConfig.ENABLE_CONTAMINATION.get() && !isRadiationImmune(entity)
                     && !(entity instanceof Player player && (player.isCreative() || player.tickCount < 200))) {
                 data.addRadiation(0.05F);
             }
             // The original gas also adds one asbestos unit without fine-particle protection.
             // Mask/filter and immunity checks are not available until armor is ported.
-            data.addAsbestos(1);
+            if (!PortConfig.DISABLE_ASBESTOS.get()) data.addAsbestos(1);
         });
     }
 

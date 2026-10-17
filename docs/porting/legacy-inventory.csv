@@ -8317,7 +8317,7 @@ config_option,PotionConfig:8.S0_potionSickness:40,src/main/java/com/hbm/config/P
 config_option,RadiationConfig:AMBIENT_00_nether:46,src/main/java/com/hbm/config/RadiationConfig.java,46,unported,,
 config_option,RadiationConfig:FOG_00_threshold:44,src/main/java/com/hbm/config/RadiationConfig.java,44,unported,,
 config_option,RadiationConfig:FOG_01_threshold:45,src/main/java/com/hbm/config/RadiationConfig.java,45,unported,,
-config_option,RadiationConfig:HAZ_00_disableAsbestos:61,src/main/java/com/hbm/config/RadiationConfig.java,61,unported,,
+config_option,RadiationConfig:HAZ_00_disableAsbestos:61,src/main/java/com/hbm/config/RadiationConfig.java,61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon asbestos dose; other asbestos sources not yet ported
 config_option,RadiationConfig:HAZ_01_disableCoaldust:62,src/main/java/com/hbm/config/RadiationConfig.java,62,unported,,
 config_option,RadiationConfig:HAZ_02_disableHot:63,src/main/java/com/hbm/config/RadiationConfig.java,63,unported,,
 config_option,RadiationConfig:HAZ_03_disableExplosive:64,src/main/java/com/hbm/config/RadiationConfig.java,64,unported,,
@@ -8333,7 +8333,7 @@ config_option,RadiationConfig:POL_05_buffMobThreshold:75,src/main/java/com/hbm/c
 config_option,RadiationConfig:POL_06_sootFogThreshold:76,src/main/java/com/hbm/config/RadiationConfig.java,76,unported,,
 config_option,RadiationConfig:POL_07_sootFogDivisor:77,src/main/java/com/hbm/config/RadiationConfig.java,77,unported,,
 config_option,RadiationConfig:POL_08_smokeStackSootMult:78,src/main/java/com/hbm/config/RadiationConfig.java,78,unported,,
-config_option,RadiationConfig:RADIATION_00_enableContamination:52,src/main/java/com/hbm/config/RadiationConfig.java,52,unported,,
+config_option,RadiationConfig:RADIATION_00_enableContamination:52,src/main/java/com/hbm/config/RadiationConfig.java,52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon dose; broader radiation effects not yet ported
 config_option,RadiationConfig:RADIATION_01_enableChunkRads:53,src/main/java/com/hbm/config/RadiationConfig.java,53,unported,,
 config_option,RadiationConfig:RADIATION_99_enablePRISM:54,src/main/java/com/hbm/config/RadiationConfig.java,54,unported,,
 config_option,RadiationConfig:RADWORLD_00_toggle:47,src/main/java/com/hbm/config/RadiationConfig.java,47,unported,,
@@ -11291,7 +11291,7 @@ java_source,config/MachineConfig,src/main/java/com/hbm/config/MachineConfig.java
 java_source,config/MachineDynConfig,src/main/java/com/hbm/config/MachineDynConfig.java,,unported,,
 java_source,config/MobConfig,src/main/java/com/hbm/config/MobConfig.java,,unported,,
 java_source,config/PotionConfig,src/main/java/com/hbm/config/PotionConfig.java,,unported,,
-java_source,config/RadiationConfig,src/main/java/com/hbm/config/RadiationConfig.java,,unported,,
+java_source,config/RadiationConfig,src/main/java/com/hbm/config/RadiationConfig.java,,partial,src/forge120/java/com/hbm/PortConfig.java,Two server-synced options ported; remaining radiation and pollution settings pending
 java_source,config/RunningConfig,src/main/java/com/hbm/config/RunningConfig.java,,unported,,
 java_source,config/ServerConfig,src/main/java/com/hbm/config/ServerConfig.java,,unported,,
 java_source,config/StructureConfig,src/main/java/com/hbm/config/StructureConfig.java,,unported,,
