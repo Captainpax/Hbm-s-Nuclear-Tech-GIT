@@ -68,17 +68,20 @@ public final class PortGameTests {
     public static void ordinaryOreSmeltingAndRegistration(GameTestHelper helper) {
         Block[] ores = {
                 PortBlocks.ORE_THORIUM.get(), PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
-                PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get()
+                PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get(),
+                PortBlocks.ORE_ALUMINIUM.get()
         };
         Item[] oreItems = {
                 PortItems.ORE_THORIUM.get(), PortItems.ORE_TITANIUM.get(), PortItems.ORE_COPPER.get(),
-                PortItems.ORE_TUNGSTEN.get(), PortItems.ORE_LEAD.get(), PortItems.ORE_BERYLLIUM.get()
+                PortItems.ORE_TUNGSTEN.get(), PortItems.ORE_LEAD.get(), PortItems.ORE_BERYLLIUM.get(),
+                PortItems.ORE_ALUMINIUM.get()
         };
-        Item[] ingots = {
+        Item[] products = {
                 PortItems.INGOT_TH232.get(), PortItems.INGOT_TITANIUM.get(), PortItems.INGOT_COPPER.get(),
-                PortItems.INGOT_TUNGSTEN.get(), PortItems.INGOT_LEAD.get(), PortItems.INGOT_BERYLLIUM.get()
+                PortItems.INGOT_TUNGSTEN.get(), PortItems.INGOT_LEAD.get(), PortItems.INGOT_BERYLLIUM.get(),
+                PortItems.CHUNK_ORE_CRYOLITE.get()
         };
-        float[] experience = {3.0F, 3.0F, 2.5F, 6.0F, 3.0F, 2.0F};
+        float[] experience = {3.0F, 3.0F, 2.5F, 6.0F, 3.0F, 2.0F, 2.5F};
         BlockPos orePos = helper.absolutePos(new BlockPos(1, 1, 1));
         for (int i = 0; i < ores.length; i++) {
             var id = ForgeRegistries.BLOCKS.getKey(ores[i]);
@@ -90,7 +93,7 @@ public final class PortGameTests {
             var recipe = helper.getLevel().getRecipeManager()
                     .getRecipeFor(RecipeType.SMELTING, input, helper.getLevel())
                     .orElseThrow(() -> new IllegalStateException("Ore smelting recipe missing for " + id));
-            if (!recipe.getResultItem(helper.getLevel().registryAccess()).is(ingots[i])
+            if (!recipe.getResultItem(helper.getLevel().registryAccess()).is(products[i])
                     || recipe.getExperience() != experience[i] || recipe.getCookingTime() != 200) {
                 throw new IllegalStateException("Ore smelting differs from legacy for " + id);
             }
@@ -554,7 +557,8 @@ public final class PortGameTests {
         Block[] ores = {
                 PortBlocks.ORE_THORIUM.get(), PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
                 PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get(),
-                PortBlocks.ORE_SULFUR.get(), PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get()
+                PortBlocks.ORE_SULFUR.get(), PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get(),
+                PortBlocks.ORE_ALUMINIUM.get()
         };
         int[] found = new int[ores.length];
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
@@ -594,7 +598,7 @@ public final class PortGameTests {
         try {
             for (String ore : new String[] {
                     "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium",
-                    "sulfur", "fluorite", "niter"
+                    "sulfur", "fluorite", "niter", "aluminium"
             }) {
                 var setting = PortConfig.oreCountSetting(ore);
                 int originalCount = setting.get();
@@ -633,7 +637,8 @@ public final class PortGameTests {
                     PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
                     PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(),
                     PortBlocks.ORE_BERYLLIUM.get(), PortBlocks.ORE_SULFUR.get(),
-                    PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get()
+                    PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get(),
+                    PortBlocks.ORE_ALUMINIUM.get()
             };
             if (countOresInFreshChunks(level, baseChunkX + 64, baseChunkZ + 64, all) != 0) {
                 throw new IllegalStateException("HBM ore generated with the Overworld master switch disabled");

@@ -27,6 +27,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.SULFUR.get());
                         output.accept(PortItems.FLUORITE.get());
                         output.accept(PortItems.NITER.get());
+                        output.accept(PortItems.CHUNK_ORE_CRYOLITE.get());
                     })
                     .build());
 
@@ -45,6 +46,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_SULFUR.get());
                         output.accept(PortItems.ORE_FLUORITE.get());
                         output.accept(PortItems.ORE_NITER.get());
+                        output.accept(PortItems.ORE_ALUMINIUM.get());
                         output.accept(PortItems.GAS_RADON.get());
                     })
                     .build());

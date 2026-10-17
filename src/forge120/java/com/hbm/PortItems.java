@@ -56,6 +56,8 @@ public final class PortItems {
     public static final RegistryObject<Item> SULFUR = ingot("sulfur");
     public static final RegistryObject<Item> FLUORITE = ingot("fluorite");
     public static final RegistryObject<Item> NITER = ingot("niter");
+    public static final RegistryObject<Item> ORE_ALUMINIUM = ore("ore_aluminium", PortBlocks.ORE_ALUMINIUM);
+    public static final RegistryObject<Item> CHUNK_ORE_CRYOLITE = ingot("chunk_ore_cryolite");
 
     private PortItems() {}
 

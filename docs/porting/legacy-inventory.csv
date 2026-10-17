@@ -2400,7 +2400,7 @@ asset,textures/blocks/oil_pipe.png,src/main/resources/assets/hbm/textures/blocks
 asset,textures/blocks/oil_spill.png,src/main/resources/assets/hbm/textures/blocks/oil_spill.png,,unported,,
 asset,textures/blocks/ore3_base.png,src/main/resources/assets/hbm/textures/blocks/ore3_base.png,,unported,,
 asset,textures/blocks/ore_alexandrite.png,src/main/resources/assets/hbm/textures/blocks/ore_alexandrite.png,,unported,,
-asset,textures/blocks/ore_aluminium.png,src/main/resources/assets/hbm/textures/blocks/ore_aluminium.png,,unported,,
+asset,textures/blocks/ore_aluminium.png,src/main/resources/assets/hbm/textures/blocks/ore_aluminium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_aluminium.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_asbestos.png,src/main/resources/assets/hbm/textures/blocks/ore_asbestos.png,,unported,,
 asset,textures/blocks/ore_australium.png,src/main/resources/assets/hbm/textures/blocks/ore_australium.png,,unported,,
 asset,textures/blocks/ore_basalt_asbestos.png,src/main/resources/assets/hbm/textures/blocks/ore_basalt_asbestos.png,,unported,,
@@ -4148,7 +4148,7 @@ asset,textures/items/chopper_tail.png,src/main/resources/assets/hbm/textures/ite
 asset,textures/items/chopper_torso.png,src/main/resources/assets/hbm/textures/items/chopper_torso.png,,unported,,
 asset,textures/items/chopper_wing.png,src/main/resources/assets/hbm/textures/items/chopper_wing.png,,unported,,
 asset,textures/items/chunk_base.png,src/main/resources/assets/hbm/textures/items/chunk_base.png,,unported,,
-asset,textures/items/chunk_ore.cryolite.png,src/main/resources/assets/hbm/textures/items/chunk_ore.cryolite.png,,unported,,
+asset,textures/items/chunk_ore.cryolite.png,src/main/resources/assets/hbm/textures/items/chunk_ore.cryolite.png,,verified,src/forge120/resources/assets/hbm/textures/item/chunk_ore_cryolite.png,Original cryolite variant texture copied byte-for-byte
 asset,textures/items/chunk_ore.ilmenite.png,src/main/resources/assets/hbm/textures/items/chunk_ore.ilmenite.png,,unported,,
 asset,textures/items/chunk_ore.ilmenite_alt.png,src/main/resources/assets/hbm/textures/items/chunk_ore.ilmenite_alt.png,,unported,,
 asset,textures/items/chunk_ore.malachite.png,src/main/resources/assets/hbm/textures/items/chunk_ore.malachite.png,,unported,,
@@ -7591,7 +7591,7 @@ block,obj_tester,src/main/java/com/hbm/blocks/ModBlocks.java,2354,unported,,
 block,oil_pipe,src/main/java/com/hbm/blocks/ModBlocks.java,3444,unported,,
 block,oil_spill,src/main/java/com/hbm/blocks/ModBlocks.java,2820,unported,,
 block,ore_alexandrite,src/main/java/com/hbm/blocks/ModBlocks.java,2427,unported,,
-block,ore_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2366,unported,,
+block,ore_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2366,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting to the named cryolite variant tested; tool tier and downstream processing pending
 block,ore_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2374,unported,,
 block,ore_australium,src/main/java/com/hbm/blocks/ModBlocks.java,2378,unported,,
 block,ore_bedrock_oil,src/main/java/com/hbm/blocks/ModBlocks.java,2391,unported,,
@@ -8451,7 +8451,7 @@ config_option,WorldConfig:17.R03_craterBiomeWaterMult:236,src/main/java/com/hbm/
 config_option,WorldConfig:2.00_uraniumSpawnrate:127,src/main/java/com/hbm/config/WorldConfig.java,127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.01_titaniumSpawnrate:128,src/main/java/com/hbm/config/WorldConfig.java,128,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.02_sulfurSpawnrate:129,src/main/java/com/hbm/config/WorldConfig.java,129,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.03_aluminiumSpawnrate:130,src/main/java/com/hbm/config/WorldConfig.java,130,unported,,
+config_option,WorldConfig:2.03_aluminiumSpawnrate:130,src/main/java/com/hbm/config/WorldConfig.java,130,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.04_copperSpawnrate:131,src/main/java/com/hbm/config/WorldConfig.java,131,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and zero-count absence in fresh chunks tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.05_fluoriteSpawnrate:132,src/main/java/com/hbm/config/WorldConfig.java,132,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.06_niterSpawnrate:133,src/main/java/com/hbm/config/WorldConfig.java,133,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
@@ -8500,7 +8500,7 @@ config_option,WorldConfig:2.C01_enableAsbestosCave:198,src/main/java/com/hbm/con
 config_option,WorldConfig:2.C01_titaniumClusterSpawn:177,src/main/java/com/hbm/config/WorldConfig.java,177,unported,,
 config_option,WorldConfig:2.C02_aluminiumClusterSpawn:178,src/main/java/com/hbm/config/WorldConfig.java,178,unported,,
 config_option,WorldConfig:2.C03_copperClusterSpawn:179,src/main/java/com/hbm/config/WorldConfig.java,179,unported,,
-config_option,WorldConfig:2.D00_overworldOres:123,src/main/java/com/hbm/config/WorldConfig.java,123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off absence of all ten ported ores in fresh chunks tested; other legacy ores not yet ported
+config_option,WorldConfig:2.D00_overworldOres:123,src/main/java/com/hbm/config/WorldConfig.java,123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off absence of all eleven ported ores in fresh chunks tested; other legacy ores not yet ported
 config_option,WorldConfig:2.D01_netherOres:124,src/main/java/com/hbm/config/WorldConfig.java,124,unported,,
 config_option,WorldConfig:2.D02_endOres:125,src/main/java/com/hbm/config/WorldConfig.java,125,unported,,
 config_option,WorldConfig:2.E00_tikiteSpawnrate:191,src/main/java/com/hbm/config/WorldConfig.java,191,unported,,
@@ -9076,7 +9076,7 @@ item,chlorophyte_axe,src/main/java/com/hbm/items/ModItems.java,5940,unported,,
 item,chlorophyte_pickaxe,src/main/java/com/hbm/items/ModItems.java,5939,unported,,
 item,chocolate,src/main/java/com/hbm/items/ModItems.java,6039,unported,,
 item,chocolate_milk,src/main/java/com/hbm/items/ModItems.java,6107,unported,,
-item,chunk_ore,src/main/java/com/hbm/items/ModItems.java,4821,unported,,
+item,chunk_ore,src/main/java/com/hbm/items/ModItems.java,4821,partial,src/forge120/java/com/hbm/PortItems.java,CRYOLITE metadata variant represented as named chunk_ore_cryolite item; other variants and processing pending
 item,cigarette,src/main/java/com/hbm/items/ModItems.java,6109,unported,,
 item,cinnebar,src/main/java/com/hbm/items/ModItems.java,4627,unported,,
 item,circuit,src/main/java/com/hbm/items/ModItems.java,5041,unported,,
@@ -15472,7 +15472,7 @@ recipe_site,SmeltingRecipes:36,src/main/java/com/hbm/crafting/SmeltingRecipes.ja
 recipe_site,SmeltingRecipes:37,src/main/java/com/hbm/crafting/SmeltingRecipes.java,37,verified,src/forge120/resources/data/hbm/recipes/ingot_copper_from_ore.json,GameTest checks ore input output 2.5 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:38,src/main/java/com/hbm/crafting/SmeltingRecipes.java,38,verified,src/forge120/resources/data/hbm/recipes/ingot_tungsten_from_ore.json,GameTest checks ore input output 6 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:39,src/main/java/com/hbm/crafting/SmeltingRecipes.java,39,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_nether_tungsten), new ItemStack(ModItems.ingot_tungsten), 12.0F);"
-recipe_site,SmeltingRecipes:40,src/main/java/com/hbm/crafting/SmeltingRecipes.java,40,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_aluminium), DictFrame.fromOne(ModItems.chunk_ore, EnumChunkType.CRYOLITE, 1), 2.5F);"
+recipe_site,SmeltingRecipes:40,src/main/java/com/hbm/crafting/SmeltingRecipes.java,40,verified,src/forge120/resources/data/hbm/recipes/chunk_ore_cryolite_from_ore_aluminium.json,GameTest checks aluminium ore to named CRYOLITE chunk with 2.5 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:41,src/main/java/com/hbm/crafting/SmeltingRecipes.java,41,verified,src/forge120/resources/data/hbm/recipes/ingot_lead_from_ore.json,GameTest checks ore input output 3 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:42,src/main/java/com/hbm/crafting/SmeltingRecipes.java,42,verified,src/forge120/resources/data/hbm/recipes/ingot_beryllium_from_ore.json,GameTest checks ore input output 2 XP and 200-tick cooking time
 recipe_site,SmeltingRecipes:43,src/main/java/com/hbm/crafting/SmeltingRecipes.java,43,unported,,"GameRegistry.addSmelting(Item.getItemFromBlock(ModBlocks.ore_schrabidium), new ItemStack(ModItems.ingot_schrabidium), 128.0F);"
@@ -15619,7 +15619,7 @@ recipe_source,SILEXRecipes,src/main/java/com/hbm/inventory/recipes/SILEXRecipes.
 recipe_source,ScrapsCraftingHandler,src/main/java/com/hbm/crafting/handlers/ScrapsCraftingHandler.java,,unported,,
 recipe_source,ShapedOreRecipeExt,src/main/java/com/hbm/crafting/handlers/ShapedOreRecipeExt.java,,unported,,
 recipe_source,ShredderRecipes,src/main/java/com/hbm/inventory/recipes/ShredderRecipes.java,,unported,,
-recipe_source,SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Seven ordinary ore smelting entries only
+recipe_source,SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries including aluminium to named cryolite chunk; remaining recipes pending
 recipe_source,SolderingRecipes,src/main/java/com/hbm/inventory/recipes/SolderingRecipes.java,,unported,,
 recipe_source,SolidificationRecipes,src/main/java/com/hbm/inventory/recipes/SolidificationRecipes.java,,unported,,
 recipe_source,TestCraftingHandler,src/main/java/com/hbm/crafting/handlers/TestCraftingHandler.java,,unported,,
@@ -16510,7 +16510,7 @@ structure_asset,structures/test-tandem.nbt,src/main/resources/assets/hbm/structu
 structure_asset,structures/vertibird.nbt,src/main/resources/assets/hbm/structures/vertibird.nbt,,unported,,
 variant_source,BlockEnums,src/main/java/com/hbm/blocks/BlockEnums.java,,unported,,
 variant_source,ItemAmmoEnums,src/main/java/com/hbm/items/ItemAmmoEnums.java,,unported,,
-variant_source,ItemEnums,src/main/java/com/hbm/items/ItemEnums.java,,unported,,
+variant_source,ItemEnums,src/main/java/com/hbm/items/ItemEnums.java,,partial,src/forge120/java/com/hbm/PortItems.java,EnumChunkType CRYOLITE mapped to named item; other enum-backed item variants pending
 worldgen_source,AncientTomb,src/main/java/com/hbm/world/dungeon/AncientTomb.java,,unported,,
 worldgen_source,Antenna,src/main/java/com/hbm/world/dungeon/Antenna.java,,unported,,
 worldgen_source,ArcticVault,src/main/java/com/hbm/world/dungeon/ArcticVault.java,,unported,,
@@ -16538,7 +16538,7 @@ worldgen_source,Dud,src/main/java/com/hbm/world/feature/Dud.java,,unported,,
 worldgen_source,DungeonToolbox,src/main/java/com/hbm/world/generator/DungeonToolbox.java,,unported,,
 worldgen_source,Geyser,src/main/java/com/hbm/world/feature/Geyser.java,,unported,,
 worldgen_source,GlyphidHive,src/main/java/com/hbm/world/feature/GlyphidHive.java,,unported,,
-worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Ten ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
+worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Eleven ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
 worldgen_source,HugeMush,src/main/java/com/hbm/world/feature/HugeMush.java,,unported,,
 worldgen_source,INBTBlockTransformable,src/main/java/com/hbm/world/gen/nbt/INBTBlockTransformable.java,,unported,,
 worldgen_source,INBTTileEntityTransformable,src/main/java/com/hbm/world/gen/nbt/INBTTileEntityTransformable.java,,unported,,

@@ -34,6 +34,7 @@ public final class PortBlocks {
     public static final RegistryObject<Block> ORE_SULFUR = ore("ore_sulfur", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_FLUORITE = ore("ore_fluorite", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_NITER = ore("ore_niter", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_ALUMINIUM = ore("ore_aluminium", 5.0F, 10.0F);
 
     private PortBlocks() {}
 

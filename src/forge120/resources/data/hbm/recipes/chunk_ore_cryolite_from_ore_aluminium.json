@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "hbm:ore_aluminium"
+  },
+  "result": "hbm:chunk_ore_cryolite",
+  "experience": 2.5,
+  "cookingtime": 200
+}
