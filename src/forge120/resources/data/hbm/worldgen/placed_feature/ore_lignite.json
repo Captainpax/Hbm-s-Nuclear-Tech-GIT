@@ -1,0 +1,27 @@
+{
+  "feature": "hbm:ore_lignite",
+  "placement": [
+    {
+      "type": "hbm:ore_count",
+      "ore": "lignite"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": 35
+        },
+        "max_inclusive": {
+          "absolute": 59
+        }
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

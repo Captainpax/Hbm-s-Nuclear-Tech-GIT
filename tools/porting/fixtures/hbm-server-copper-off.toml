@@ -53,3 +53,7 @@
 		# Ore vein placement attempts per new Overworld chunk; zero disables this ore.
 		#Range: > 0
 		12_asbestosSpawnRate = 2
+		11_ligniteSpawnrate = 2
+		14_rareEarthSpawnRate = 6
+		18_cinnebarSpawnRate = 1
+		18_cobaltSpawnRate = 2

@@ -22,6 +22,10 @@ public final class PortConfig {
     public static final ForgeConfigSpec.IntValue ORE_NITER_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_ALUMINIUM_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_ASBESTOS_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_RARE_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_LIGNITE_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_CINNEBAR_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_COBALT_COUNT;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -57,6 +61,10 @@ public final class PortConfig {
         ORE_NITER_COUNT = oreCount(builder, "2.06_niterSpawnrate", 6);
         ORE_ALUMINIUM_COUNT = oreCount(builder, "2.03_aluminiumSpawnrate", 7);
         ORE_ASBESTOS_COUNT = oreCount(builder, "2.12_asbestosSpawnRate", 2);
+        ORE_LIGNITE_COUNT = oreCount(builder, "2.11_ligniteSpawnrate", 2);
+        ORE_RARE_COUNT = oreCount(builder, "2.14_rareEarthSpawnRate", 6);
+        ORE_CINNEBAR_COUNT = oreCount(builder, "2.18_cinnebarSpawnRate", 1);
+        ORE_COBALT_COUNT = oreCount(builder, "2.18_cobaltSpawnRate", 2);
         builder.pop();
         SPEC = builder.build();
     }
@@ -86,6 +94,10 @@ public final class PortConfig {
             case "niter" -> ORE_NITER_COUNT;
             case "aluminium" -> ORE_ALUMINIUM_COUNT;
             case "asbestos" -> ORE_ASBESTOS_COUNT;
+            case "rare" -> ORE_RARE_COUNT;
+            case "lignite" -> ORE_LIGNITE_COUNT;
+            case "cinnebar" -> ORE_CINNEBAR_COUNT;
+            case "cobalt" -> ORE_COBALT_COUNT;
             default -> throw new IllegalArgumentException("Unknown HBM ore placement: " + ore);
         };
     }

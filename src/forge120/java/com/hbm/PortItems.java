@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -99,6 +100,17 @@ public final class PortItems {
             pack("battery_pack_capacitor_bismuth", 2_500_000L, true);
     public static final RegistryObject<Item> BATTERY_PACK_CAPACITOR_SPARK =
             pack("battery_pack_capacitor_spark", 10_000_000L, true);
+    public static final RegistryObject<Item> ORE_RARE = ITEMS.register("ore_rare",
+            () -> new BlockItem(PortBlocks.ORE_RARE.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> ORE_LIGNITE = ore("ore_lignite", PortBlocks.ORE_LIGNITE);
+    public static final RegistryObject<Item> ORE_CINNEBAR = ore("ore_cinnebar", PortBlocks.ORE_CINNEBAR);
+    public static final RegistryObject<Item> ORE_COBALT = ore("ore_cobalt", PortBlocks.ORE_COBALT);
+    public static final RegistryObject<Item> CHUNK_ORE_RARE = ingot("chunk_ore_rare");
+    public static final RegistryObject<Item> LIGNITE = ITEMS.register("lignite",
+            () -> new PortLigniteItem(new Item.Properties()));
+    public static final RegistryObject<Item> CINNEBAR = ingot("cinnebar");
+    public static final RegistryObject<Item> FRAGMENT_COBALT = ingot("fragment_cobalt");
+    public static final RegistryObject<Item> INGOT_COBALT = ingot("ingot_cobalt");
 
     /** Legacy ItemBatteryPack enum order, now represented by stable named item IDs. */
     public static final List<RegistryObject<Item>> BATTERY_PACKS = List.of(

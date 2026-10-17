@@ -59,6 +59,10 @@ jobs:
         run: |
           cp tools/porting/fixtures/hbm-server-asbestos-off.toml run-ore-config/world/serverconfig/hbm-server.toml
           ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=asbestos-off --no-daemon --console=plain
+      - name: Test cobalt-disabled generation with other ores enabled
+        run: |
+          cp tools/porting/fixtures/hbm-server-cobalt-off.toml run-ore-config/world/serverconfig/hbm-server.toml
+          ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=cobalt-off --no-daemon --console=plain
       - uses: actions/upload-artifact@v4
         with:
           name: hbm-forge-1.20.1-dev

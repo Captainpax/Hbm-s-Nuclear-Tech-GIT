@@ -70,6 +70,10 @@ public final class PortBlocks {
                     .sound(SoundType.METAL)
                     .noOcclusion()
                     .requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ORE_RARE = ore("ore_rare", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_LIGNITE = ore("ore_lignite", 5.0F, 15.0F);
+    public static final RegistryObject<Block> ORE_CINNEBAR = ore("ore_cinnebar", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_COBALT = ore("ore_cobalt", 5.0F, 10.0F);
 
     private PortBlocks() {}
 

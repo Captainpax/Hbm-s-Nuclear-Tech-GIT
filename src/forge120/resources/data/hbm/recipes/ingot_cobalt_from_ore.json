@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "hbm:ore_cobalt"
+  },
+  "result": "hbm:ingot_cobalt",
+  "experience": 2,
+  "cookingtime": 200
+}

@@ -34,6 +34,11 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.PLATE_POLYMER.get());
                         output.accept(PortItems.INGOT_ASBESTOS.get());
                         output.accept(PortItems.POWDER_ASBESTOS.get());
+                        output.accept(PortItems.CHUNK_ORE_RARE.get());
+                        output.accept(PortItems.LIGNITE.get());
+                        output.accept(PortItems.CINNEBAR.get());
+                        output.accept(PortItems.FRAGMENT_COBALT.get());
+                        output.accept(PortItems.INGOT_COBALT.get());
                     })
                     .build());
 
@@ -54,6 +59,10 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_NITER.get());
                         output.accept(PortItems.ORE_ALUMINIUM.get());
                         output.accept(PortItems.ORE_ASBESTOS.get());
+                        output.accept(PortItems.ORE_RARE.get());
+                        output.accept(PortItems.ORE_LIGNITE.get());
+                        output.accept(PortItems.ORE_CINNEBAR.get());
+                        output.accept(PortItems.ORE_COBALT.get());
                         output.accept(PortItems.BLOCK_ASBESTOS.get());
                         output.accept(PortItems.GAS_RADON.get());
                         output.accept(PortItems.GAS_ASBESTOS.get());

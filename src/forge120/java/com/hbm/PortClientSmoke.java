@@ -31,15 +31,20 @@ public final class PortClientSmoke {
         }
         for (var item : new net.minecraft.world.item.Item[] {
                 PortItems.ORE_ASBESTOS.get(), PortItems.BLOCK_ASBESTOS.get(),
-                PortItems.INGOT_ASBESTOS.get(), PortItems.POWDER_ASBESTOS.get()
+                PortItems.INGOT_ASBESTOS.get(), PortItems.POWDER_ASBESTOS.get(),
+                PortItems.ORE_RARE.get(), PortItems.ORE_LIGNITE.get(),
+                PortItems.ORE_CINNEBAR.get(), PortItems.ORE_COBALT.get(),
+                PortItems.CHUNK_ORE_RARE.get(), PortItems.LIGNITE.get(),
+                PortItems.CINNEBAR.get(), PortItems.FRAGMENT_COBALT.get(),
+                PortItems.INGOT_COBALT.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {
-                throw new IllegalStateException("Asbestos inventory model is missing: " + item);
+                throw new IllegalStateException("Ore/resource inventory model is missing: " + item);
             }
         }
         finished = true;
-        LOGGER.info("HBM client smoke passed: menu loaded, Insulator and asbestos inventory models, socket OBJ layers validated");
+        LOGGER.info("HBM client smoke passed: menu loaded, Insulator and ore/resource inventory models, socket OBJ layers validated");
         minecraft.stop();
     }
 }
