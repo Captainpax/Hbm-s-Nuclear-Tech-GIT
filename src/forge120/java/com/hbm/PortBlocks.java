@@ -48,6 +48,13 @@ public final class PortBlocks {
                     .sound(SoundType.METAL)
                     .noOcclusion()
                     .requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MACHINE_BATTERY_SOCKET = BLOCKS.register("machine_battery_socket",
+            () -> new PortBatterySocketBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(5.0F, 10.0F)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()
+                    .requiresCorrectToolForDrops()));
 
     private PortBlocks() {}
 

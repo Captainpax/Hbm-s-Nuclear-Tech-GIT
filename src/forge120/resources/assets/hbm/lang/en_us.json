@@ -11,6 +11,8 @@
   "block.hbm.ore_niter": "Niter Ore",
   "block.hbm.ore_aluminium": "Aluminium-Bearing Ore",
   "block.hbm.machine_battery": "Energy Storage Block (LEGACY)",
+  "block.hbm.machine_battery_socket": "Battery Socket",
+  "container.hbm.battery_socket": "Battery Socket",
   "block.hbm.red_cable_classic": "Classic HE Cable",
   "item.hbm.battery_potato": "Potato Battery",
   "item.hbm.cube_power": "Power Cube",

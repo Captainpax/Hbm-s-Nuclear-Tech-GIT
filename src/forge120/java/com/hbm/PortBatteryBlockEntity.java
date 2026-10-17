@@ -24,7 +24,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 /** Server-owned HE, two item slots, modes, and classic-cable network transfer. */
-public final class PortBatteryBlockEntity extends BlockEntity implements MenuProvider {
+public final class PortBatteryBlockEntity extends BlockEntity implements MenuProvider, PortPowerEndpoint {
     public static final short INPUT = 0;
     public static final short BUFFER = 1;
     public static final short OUTPUT = 2;
@@ -90,7 +90,33 @@ public final class PortBatteryBlockEntity extends BlockEntity implements MenuPro
         return storage;
     }
 
-    void onPowerTransferred() {
+    @Override
+    public BlockEntity blockEntity() {
+        return this;
+    }
+
+    @Override
+    public PortPowerReservoir reservoir() {
+        return storage;
+    }
+
+    @Override
+    public short mode(ServerLevel level) {
+        return mode(level.hasNeighborSignal(worldPosition));
+    }
+
+    @Override
+    public long providerSpeed() {
+        return capacity() / 600;
+    }
+
+    @Override
+    public long receiverSpeed() {
+        return capacity() / 200;
+    }
+
+    @Override
+    public void onPowerTransferred() {
         changed();
     }
 

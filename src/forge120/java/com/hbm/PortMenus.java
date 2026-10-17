@@ -13,5 +13,8 @@ public final class PortMenus {
     public static final RegistryObject<MenuType<PortBatteryMenu>> BATTERY =
             TYPES.register("machine_battery", () -> IForgeMenuType.create(PortBatteryMenu::new));
 
+    public static final RegistryObject<MenuType<PortBatterySocketMenu>> BATTERY_SOCKET =
+            TYPES.register("machine_battery_socket", () -> IForgeMenuType.create(PortBatterySocketMenu::new));
+
     private PortMenus() {}
 }

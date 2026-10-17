@@ -1,0 +1,4 @@
+{
+  "parent": "hbm:block/machine_battery_socket_base",
+  "transform": { "origin": "corner", "translation": [0, 0, 0] }
+}

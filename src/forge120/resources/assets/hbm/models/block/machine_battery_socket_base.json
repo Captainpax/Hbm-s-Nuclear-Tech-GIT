@@ -1,0 +1,16 @@
+{
+  "loader": "forge:obj",
+  "model": "hbm:models/machines/battery.obj",
+  "flip_v": true,
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "texture0": "hbm:block/battery_socket",
+    "particle": "hbm:block/battery_socket"
+  },
+  "visibility": {
+    "Supports": false,
+    "Capacitor": false,
+    "Battery": false,
+    "Socket": true
+  }
+}

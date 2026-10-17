@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north,part=0": { "model": "hbm:block/machine_battery_socket_north" },
+    "facing=east,part=0": { "model": "hbm:block/machine_battery_socket_east" },
+    "facing=south,part=0": { "model": "hbm:block/machine_battery_socket_south" },
+    "facing=west,part=0": { "model": "hbm:block/machine_battery_socket_west" },
+    "facing=north,part=1": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=east,part=1": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=south,part=1": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=west,part=1": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=north,part=2": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=east,part=2": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=south,part=2": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=west,part=2": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=north,part=3": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=east,part=3": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=south,part=3": { "model": "hbm:block/machine_battery_socket_empty" },
+    "facing=west,part=3": { "model": "hbm:block/machine_battery_socket_empty" }
+  }
+}

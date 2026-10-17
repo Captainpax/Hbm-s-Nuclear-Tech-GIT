@@ -7,6 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.gametest.framework.GameTest;
@@ -16,10 +17,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.effect.MobEffects;
@@ -29,6 +32,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -304,6 +309,166 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void batterySocketItemPlacementRejectsBlockedFootprint(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        if (!PortBlocks.MACHINE_BATTERY_SOCKET.get().defaultBlockState().is(BlockTags.MINEABLE_WITH_PICKAXE)
+                || !PortBlocks.RED_CABLE_CLASSIC.get().defaultBlockState().is(BlockTags.MINEABLE_WITH_PICKAXE)) {
+            throw new IllegalStateException("Socket or classic cable has no survival pickaxe mining tag");
+        }
+        BlockPos core = helper.absolutePos(new BlockPos(3, 2, 3));
+        BlockPos floor = core.below();
+        level.setBlock(floor, Blocks.STONE.defaultBlockState(), 3);
+        var player = FakePlayerFactory.getMinecraft(level);
+        player.moveTo(core.getX() + 0.5D, core.getY(), core.getZ() + 2.5D);
+        ItemStack held = new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get(), 2);
+        player.setItemInHand(InteractionHand.MAIN_HAND, held);
+        BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(floor), Direction.UP, floor, false);
+        UseOnContext context = new UseOnContext(player, InteractionHand.MAIN_HAND, hit);
+        PortBatterySocketBlock socket = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        Direction facing = context.getHorizontalDirection().getOpposite();
+        BlockPos blocked = PortBatterySocketBlock.partPos(core, facing, 3);
+        level.setBlock(blocked, Blocks.STONE.defaultBlockState(), 3);
+        if (socket.getStateForPlacement(new net.minecraft.world.item.context.BlockPlaceContext(context)) != null
+                || held.useOn(context).consumesAction() || !level.getBlockState(core).isAir()
+                || held.getCount() != 2) {
+            throw new IllegalStateException("Socket item placed despite an obstructed 2x2 footprint");
+        }
+        level.setBlock(blocked, Blocks.AIR.defaultBlockState(), 3);
+        InteractionResult placed = held.useOn(context);
+        if (!placed.consumesAction()) {
+            throw new IllegalStateException("Socket item could not place on an empty footprint: " + placed);
+        }
+        for (int part = 0; part < 4; part++) {
+            BlockPos pos = PortBatterySocketBlock.partPos(core, facing, part);
+            if (!level.getBlockState(pos).is(socket)
+                    || level.getBlockState(pos).getValue(PortBatterySocketBlock.PART) != part) {
+                throw new IllegalStateException("Socket item placement missed footprint part " + part);
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void batterySocketFormsAndBreaksAsOneMachine(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos core = helper.absolutePos(new BlockPos(3, 2, 3));
+        PortBatterySocketBlock block = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        var coreState = block.defaultBlockState().setValue(PortBatterySocketBlock.FACING, Direction.NORTH);
+        level.setBlock(core, coreState, 3);
+        block.setPlacedBy(level, core, coreState, null, new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get()));
+        if (!(level.getBlockEntity(core) instanceof PortBatterySocketBlockEntity socket)) {
+            throw new IllegalStateException("Battery socket core block entity was not created");
+        }
+        for (int part = 0; part < 4; part++) {
+            BlockPos pos = PortBatterySocketBlock.partPos(core, Direction.NORTH, part);
+            var state = level.getBlockState(pos);
+            if (!state.is(block) || state.getValue(PortBatterySocketBlock.PART) != part
+                    || !PortBatterySocketBlock.corePos(pos, state).equals(core)
+                    || (part != 0 && level.getBlockEntity(pos) != null)) {
+                throw new IllegalStateException("Battery socket 2x2 footprint or core mapping is wrong");
+            }
+        }
+        ItemStack cube = new ItemStack(PortItems.CUBE_POWER.get());
+        ((PortBatteryItem) cube.getItem()).setCharge(cube, 123);
+        socket.items().setStackInSlot(0, cube);
+        if (socket.reservoir().power() != 123 || socket.reservoir().capacity() != 1_000_000_000_000_000_000L
+                || socket.comparatorPower() != 0) {
+            throw new IllegalStateException("Socket did not read installed battery HE or comparator state");
+        }
+        BlockPos proxy = PortBatterySocketBlock.partPos(core, Direction.NORTH, 3);
+        var drops = Block.getDrops(level.getBlockState(proxy), level, proxy, null,
+                FakePlayerFactory.getMinecraft(level), new ItemStack(Items.IRON_PICKAXE));
+        if (drops.size() != 1 || !drops.get(0).is(PortItems.MACHINE_BATTERY_SOCKET.get())) {
+            throw new IllegalStateException("Breaking a socket proxy would not return one machine item");
+        }
+        level.setBlock(proxy, Blocks.AIR.defaultBlockState(), 3);
+        for (int part = 0; part < 4; part++) {
+            if (!level.getBlockState(PortBatterySocketBlock.partPos(core, Direction.NORTH, part)).isAir()) {
+                throw new IllegalStateException("Breaking a socket proxy left orphan multiblock parts");
+            }
+        }
+        List<ItemEntity> dropped = level.getEntitiesOfClass(ItemEntity.class, new AABB(core).inflate(2));
+        if (dropped.stream().filter(entity -> entity.getItem().is(PortItems.CUBE_POWER.get())).count() != 1) {
+            throw new IllegalStateException("Socket item was lost or duplicated on proxy break");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void batterySocketChargesItemThroughCable(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = helper.absolutePos(new BlockPos(1, 2, 3));
+        BlockPos cablePos = sourcePos.east();
+        BlockPos core = cablePos.east();
+        PortBatterySocketBlock block = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        var coreState = block.defaultBlockState().setValue(PortBatterySocketBlock.FACING, Direction.NORTH);
+        level.setBlock(core, coreState, 3);
+        block.setPlacedBy(level, core, coreState, null, new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get()));
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        PortCableBlock cable = (PortCableBlock) PortBlocks.RED_CABLE_CLASSIC.get();
+        level.setBlock(cablePos, cable.connectedState(level, cablePos), 3);
+        level.setBlock(sourcePos.west(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+        PortBatteryBlockEntity source = (PortBatteryBlockEntity) level.getBlockEntity(sourcePos);
+        PortBatterySocketBlockEntity socket = (PortBatterySocketBlockEntity) level.getBlockEntity(core);
+        ItemStack cube = new ItemStack(PortItems.CUBE_POWER.get());
+        ((PortBatteryItem) cube.getItem()).setCharge(cube, 0);
+        socket.items().setStackInSlot(0, cube);
+        source.setPower(5_000);
+        PortBatteryBlockEntity.tick(level, sourcePos, level.getBlockState(sourcePos), source);
+        if (source.power() != 3_334 || socket.reservoir().power() != 1_666) {
+            throw new IllegalStateException("Socket item did not accept HE from the classic cable");
+        }
+        PortBatterySocketBlockEntity.tick(level, core, level.getBlockState(core), socket);
+        if (source.power() != 3_334 || socket.reservoir().power() != 1_666) {
+            throw new IllegalStateException("Socket transferred HE twice when it ticked after the source");
+        }
+        var sided = socket.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).resolve().orElseThrow();
+        if (sided.getSlots() != 1 || !sided.extractItem(0, 1, true).isEmpty()) {
+            throw new IllegalStateException("Automation removed a partially charged socket battery");
+        }
+        ((PortBatteryItem) cube.getItem()).setCharge(cube, ((PortBatteryItem) cube.getItem()).capacity());
+        if (!sided.extractItem(0, 1, true).is(PortItems.CUBE_POWER.get())) {
+            throw new IllegalStateException("Automation could not remove a full socket battery");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void batterySocketDischargesItemToLegacyBattery(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos core = helper.absolutePos(new BlockPos(3, 2, 3));
+        PortBatterySocketBlock block = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        var coreState = block.defaultBlockState().setValue(PortBatterySocketBlock.FACING, Direction.NORTH);
+        level.setBlock(core, coreState, 3);
+        block.setPlacedBy(level, core, coreState, null, new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get()));
+        BlockPos port = PortBatterySocketBlock.partPos(core, Direction.NORTH, 2);
+        BlockPos targetPos = port.east();
+        level.setBlock(targetPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        PortBatterySocketBlockEntity socket = (PortBatterySocketBlockEntity) level.getBlockEntity(core);
+        PortBatteryBlockEntity target = (PortBatteryBlockEntity) level.getBlockEntity(targetPos);
+        ItemStack cube = new ItemStack(PortItems.CUBE_POWER.get());
+        ((PortBatteryItem) cube.getItem()).setCharge(cube, 4_000);
+        socket.items().setStackInSlot(0, cube);
+        socket.setModes(PortBatteryBlockEntity.OUTPUT, PortBatteryBlockEntity.OUTPUT);
+        PortBatterySocketBlockEntity.tick(level, core, level.getBlockState(core), socket);
+        if (socket.reservoir().power() != 0 || target.power() != 4_000) {
+            throw new IllegalStateException("Socket proxy did not output HE from the installed item");
+        }
+        var fake = FakePlayerFactory.getMinecraft(level);
+        fake.moveTo(core.getX() + 0.5D, core.getY() + 0.5D, core.getZ() + 0.5D);
+        PortBatterySocketMenu menu = new PortBatterySocketMenu(2, fake.getInventory(), socket);
+        if (!menu.stillValid(fake) || menu.power() != 0 || menu.capacity() != 1_000_000_000_000_000_000L
+                || !menu.clickMenuButton(fake, 0) || !menu.clickMenuButton(fake, 1)
+                || !menu.clickMenuButton(fake, 2) || menu.clickMenuButton(fake, 99)
+                || socket.lowMode() != PortBatteryBlockEntity.DISABLED
+                || socket.highMode() != PortBatteryBlockEntity.DISABLED
+                || socket.priority() != PortPowerNetwork.Priority.NORMAL) {
+            throw new IllegalStateException("Socket menu controls or 64-bit item HE data failed");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void batteryItemSlotsAndMenuControls(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
@@ -458,6 +623,64 @@ public final class PortGameTests {
             level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), 3);
         } else {
             throw new IllegalStateException("Unknown cable persistence phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void batterySocketPersistsAcrossChunkBorderAndServerRestart(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos core = new BlockPos(527, 80, 560);
+        BlockPos proxy = core.east();
+        BlockPos targetPos = proxy.east();
+        level.getChunkAt(core);
+        level.getChunkAt(proxy);
+        if (core.getX() >> 4 == proxy.getX() >> 4) {
+            throw new IllegalStateException("Socket restart fixture does not cross a chunk border");
+        }
+        PortBatterySocketBlock block = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        if (phase.equals("seed")) {
+            var state = block.defaultBlockState().setValue(PortBatterySocketBlock.FACING, Direction.NORTH);
+            level.setBlock(core, state, 3);
+            block.setPlacedBy(level, core, state, null, new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get()));
+            level.setBlock(targetPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+            PortBatterySocketBlockEntity socket = (PortBatterySocketBlockEntity) level.getBlockEntity(core);
+            ItemStack cube = new ItemStack(PortItems.CUBE_POWER.get());
+            ((PortBatteryItem) cube.getItem()).setCharge(cube, 3_456);
+            socket.items().setStackInSlot(0, cube);
+            socket.setModes(PortBatteryBlockEntity.DISABLED, PortBatteryBlockEntity.DISABLED);
+            socket.setPriority(PortPowerNetwork.Priority.HIGH);
+        } else if (phase.equals("verify")) {
+            if (!(level.getBlockEntity(core) instanceof PortBatterySocketBlockEntity socket)
+                    || !(level.getBlockEntity(targetPos) instanceof PortBatteryBlockEntity target)
+                    || !level.getBlockState(proxy).is(block)
+                    || level.getBlockState(proxy).getValue(PortBatterySocketBlock.PART) != 2
+                    || socket.reservoir().power() != 3_456
+                    || socket.reservoir().capacity() != 1_000_000_000_000_000_000L
+                    || socket.lowMode() != PortBatteryBlockEntity.DISABLED
+                    || socket.priority() != PortPowerNetwork.Priority.HIGH
+                    || target.power() != 0) {
+                throw new IllegalStateException("Cross-chunk socket footprint item HE or controls failed restart");
+            }
+            socket.setModes(PortBatteryBlockEntity.OUTPUT, PortBatteryBlockEntity.OUTPUT);
+            PortBatterySocketBlockEntity.tick(level, core, level.getBlockState(core), socket);
+            if (socket.reservoir().power() != 0 || target.power() != 3_456) {
+                throw new IllegalStateException("Reloaded socket failed to output item HE across its proxy");
+            }
+            level.setBlock(proxy, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), 3);
+            for (int part = 0; part < 4; part++) {
+                if (!level.getBlockState(PortBatterySocketBlock.partPos(core, Direction.NORTH, part)).isAir()) {
+                    throw new IllegalStateException("Cross-chunk socket breakup left an orphan part");
+                }
+            }
+        } else {
+            throw new IllegalStateException("Unknown socket persistence phase: " + phase);
         }
         helper.succeed();
     }

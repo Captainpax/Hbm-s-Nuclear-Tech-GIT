@@ -23,7 +23,7 @@ jobs:
         run: python tools/porting/build_inventory.py --check
       - name: Build and seed dedicated persistence GameTest
         run: ./gradlew build runGameTestServer -PhbmPersistencePhase=seed --no-daemon --console=plain
-      - name: Restart dedicated server and verify radiation battery and cross-chunk cable state
+      - name: Restart dedicated server and verify radiation battery cable and socket state
         run: ./gradlew runGameTestServer -PhbmPersistencePhase=verify --no-daemon --console=plain
       - name: Test master-disabled ore generation in fresh chunks
         run: |

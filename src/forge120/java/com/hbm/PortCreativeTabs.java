@@ -49,6 +49,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_ALUMINIUM.get());
                         output.accept(PortItems.GAS_RADON.get());
                         output.accept(PortItems.RED_CABLE_CLASSIC.get());
+                        output.accept(PortItems.MACHINE_BATTERY_SOCKET.get());
                     })
                     .build());
 

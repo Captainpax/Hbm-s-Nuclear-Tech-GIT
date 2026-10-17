@@ -3,7 +3,7 @@ package com.hbm;
 import net.minecraft.nbt.CompoundTag;
 
 /** Long-valued HE storage shared by the ported power network and future machines. */
-public final class PortPowerStorage {
+public final class PortPowerStorage implements PortPowerReservoir {
     private final long capacity;
     private long power;
 

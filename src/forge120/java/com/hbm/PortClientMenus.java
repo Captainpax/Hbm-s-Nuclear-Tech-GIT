@@ -12,6 +12,9 @@ public final class PortClientMenus {
 
     @SubscribeEvent
     public static void registerScreens(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> MenuScreens.register(PortMenus.BATTERY.get(), PortBatteryScreen::new));
+        event.enqueueWork(() -> {
+            MenuScreens.register(PortMenus.BATTERY.get(), PortBatteryScreen::new);
+            MenuScreens.register(PortMenus.BATTERY_SOCKET.get(), PortBatterySocketScreen::new);
+        });
     }
 }

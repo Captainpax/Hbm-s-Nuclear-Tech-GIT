@@ -12,16 +12,16 @@ public final class PortPowerNetwork {
 
     @FunctionalInterface
     public interface TransferObserver {
-        void transferred(PortPowerStorage source, PortPowerStorage destination, long amount);
+        void transferred(PortPowerReservoir source, PortPowerReservoir destination, long amount);
     }
 
-    public record Provider(PortPowerStorage storage, long maxOutput) {
+    public record Provider(PortPowerReservoir storage, long maxOutput) {
         public Provider {
             if (storage == null || maxOutput < 0) throw new IllegalArgumentException("Invalid HE provider");
         }
     }
 
-    public record Receiver(PortPowerStorage storage, long maxInput, Priority priority) {
+    public record Receiver(PortPowerReservoir storage, long maxInput, Priority priority) {
         public Receiver {
             if (storage == null || maxInput < 0 || priority == null) {
                 throw new IllegalArgumentException("Invalid HE receiver");
@@ -75,12 +75,12 @@ public final class PortPowerNetwork {
             long[] providerShare = proportionalShares(budget, supply, supplyTotal);
             for (int i = 0; i < group.size(); i++) {
                 long needed = share[i];
-                PortPowerStorage destination = group.get(i).storage();
+                PortPowerReservoir destination = group.get(i).storage();
                 // The second pass only spends a provider's remaining output when a
                 // proportional share could not be used, e.g. a buffer cannot feed itself.
                 for (int pass = 0; pass < 2 && needed > 0; pass++) {
                     for (int sourceIndex = 0; sourceIndex < providers.size() && needed > 0; sourceIndex++) {
-                        PortPowerStorage source = providers.get(sourceIndex).storage();
+                        PortPowerReservoir source = providers.get(sourceIndex).storage();
                         if (source == destination) continue;
                         long limit = pass == 0 ? providerShare[sourceIndex] : outputLeft[sourceIndex];
                         long amount = Math.min(needed, limit);
@@ -122,7 +122,7 @@ public final class PortPowerNetwork {
     }
 
     private static void rejectDuplicateStorages(List<Provider> providers, List<Receiver> receivers) {
-        IdentityHashMap<PortPowerStorage, Boolean> seen = new IdentityHashMap<>();
+        IdentityHashMap<PortPowerReservoir, Boolean> seen = new IdentityHashMap<>();
         for (Provider provider : providers) {
             if (seen.put(provider.storage(), Boolean.TRUE) != null) {
                 throw new IllegalArgumentException("Duplicate HE provider storage");

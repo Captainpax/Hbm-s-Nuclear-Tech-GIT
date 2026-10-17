@@ -46,7 +46,7 @@ public final class PortCableBlock extends Block {
         for (Direction direction : Direction.values()) {
             BlockPos neighbor = pos.relative(direction);
             state = state.setValue(property(direction), level.hasChunkAt(neighbor)
-                    && connects(level.getBlockState(neighbor)));
+                    && connects(level.getBlockState(neighbor), direction));
         }
         return state;
     }
@@ -54,7 +54,8 @@ public final class PortCableBlock extends Block {
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
             LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
-        return state.setValue(property(direction), level.hasChunkAt(neighborPos) && connects(neighborState));
+        return state.setValue(property(direction), level.hasChunkAt(neighborPos)
+                && connects(neighborState, direction));
     }
 
     @Override
@@ -69,8 +70,9 @@ public final class PortCableBlock extends Block {
         return shape;
     }
 
-    static boolean connects(BlockState state) {
-        return state.getBlock() instanceof PortCableBlock || state.getBlock() instanceof PortBatteryBlock;
+    static boolean connects(BlockState state, Direction direction) {
+        return state.getBlock() instanceof PortCableBlock || state.getBlock() instanceof PortBatteryBlock
+                || (direction.getAxis().isHorizontal() && state.getBlock() instanceof PortBatterySocketBlock);
     }
 
     private static BooleanProperty property(Direction direction) {
