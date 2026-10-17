@@ -23,6 +23,7 @@
 
 # other
 /run
+/run-client-smoke
 /run-data
 /run-ore-config
 

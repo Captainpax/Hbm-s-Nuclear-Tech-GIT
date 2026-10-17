@@ -42,6 +42,11 @@ minecraft {
         client {
             property 'hbm.port.auditSocketModels', 'true'
         }
+        clientSmoke {
+            parent runs.client
+            workingDirectory project.file('run-client-smoke')
+            property 'hbm.port.clientSmoke', 'true'
+        }
         server { args '--nogui' }
         gameTestServer {
             property 'forge.enabledGameTestNamespaces', modId

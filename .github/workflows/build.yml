@@ -8,6 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  client-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
+      - name: Launch client and validate socket OBJ layers
+        run: xvfb-run -a ./gradlew runClientSmoke --no-daemon --console=plain
+
   build-and-gametest:
     runs-on: ubuntu-latest
     permissions:

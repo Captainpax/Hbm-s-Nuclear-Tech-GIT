@@ -32,6 +32,7 @@ public final class PortBatterySocketRenderer implements BlockEntityRenderer<Port
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final ResourceLocation SUPPORTS = model("socket_supports");
     private static final RenderType LAYER = RenderType.cutout();
+    private static volatile boolean modelsAudited;
     private final Map<Item, ResourceLocation> packModels = new IdentityHashMap<>();
 
     public PortBatterySocketRenderer(BlockEntityRendererProvider.Context context) {
@@ -51,6 +52,7 @@ public final class PortBatterySocketRenderer implements BlockEntityRenderer<Port
     @SubscribeEvent
     public static void auditBakedModels(ModelEvent.BakingCompleted event) {
         if (!Boolean.getBoolean("hbm.port.auditSocketModels")) return;
+        modelsAudited = false;
         validateModel(event, SUPPORTS, new ResourceLocation(HbmPort.MOD_ID, "block/battery_socket"));
         for (var pack : PortItems.BATTERY_PACKS) {
             String id = pack.getId().getPath();
@@ -59,7 +61,12 @@ public final class PortBatterySocketRenderer implements BlockEntityRenderer<Port
             validateModel(event, model("socket_" + id),
                     new ResourceLocation(HbmPort.MOD_ID, "models/machines/" + sourceName));
         }
+        modelsAudited = true;
         LOGGER.info("Validated the socket supports and {} installed-pack OBJ layers", PortItems.BATTERY_PACKS.size());
+    }
+
+    static boolean modelsAudited() {
+        return modelsAudited;
     }
 
     private static void validateModel(ModelEvent.BakingCompleted event, ResourceLocation id,
