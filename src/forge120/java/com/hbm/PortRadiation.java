@@ -151,6 +151,12 @@ public final class PortRadiation {
         });
     }
 
+    public static void exposeAsbestos(LivingEntity entity) {
+        if (entity.level().isClientSide || PortConfig.DISABLE_ASBESTOS.get()) return;
+        if (PortGasMask.protectFromFineParticles(entity)) return;
+        get(entity).ifPresent(data -> data.addAsbestos(1));
+    }
+
     static boolean isRadiationImmune(LivingEntity entity) {
         return entity instanceof Zombie || entity instanceof AbstractSkeleton
                 || entity instanceof MushroomCow || entity instanceof Ocelot;

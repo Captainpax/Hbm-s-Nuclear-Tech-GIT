@@ -29,8 +29,16 @@ public final class PortClientSmoke {
                 null, null, 0) == minecraft.getModelManager().getMissingModel()) {
             throw new IllegalStateException("Insulator inventory model is missing");
         }
+        for (var item : new net.minecraft.world.item.Item[] {
+                PortItems.ORE_ASBESTOS.get(), PortItems.INGOT_ASBESTOS.get()
+        }) {
+            if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
+                    == minecraft.getModelManager().getMissingModel()) {
+                throw new IllegalStateException("Asbestos inventory model is missing: " + item);
+            }
+        }
         finished = true;
-        LOGGER.info("HBM client smoke passed: menu loaded, Insulator model and socket OBJ layers validated");
+        LOGGER.info("HBM client smoke passed: menu loaded, Insulator and asbestos inventory models, socket OBJ layers validated");
         minecraft.stop();
     }
 }

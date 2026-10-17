@@ -1,4 +1,13 @@
 kind,key,status,target,notes
+block,ore_asbestos,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Stone and deepslate worldgen plus sheet drops and outgassing ported; visual and full break-event parity checks pending
+block,gas_asbestos,partial,src/forge120/java/com/hbm/PortAsbestosGas.java,Drift decay fine-particle filtered exposure and mycelium particles ported; visual comparison and full armor protection pending
+item,ingot_asbestos,partial,src/forge120/java/com/hbm/PortItems.java,Source sheet icon and ore drop ported; crafting and other sources pending
+asset,textures/blocks/ore_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_asbestos.png,Original texture copied byte-for-byte
+asset,textures/blocks/gas_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/block/gas_asbestos.png,Original texture copied byte-for-byte
+asset,textures/items/ingot_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_asbestos.png,Original texture copied byte-for-byte
+config_option,WorldConfig:2.12_asbestosSpawnRate:139,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default of two attempts per fresh chunk plus zero-disable test wired through placed feature; distribution-rate testing pending
+java_source,blocks/gas/BlockGasAsbestos,partial,src/forge120/java/com/hbm/PortAsbestosGas.java,Server exposure drift and decay plus client town-aura equivalent particles ported; visual comparison pending
+java_source,blocks/generic/BlockOutgas,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Asbestos ore branch ported; other outgassing blocks remain
 item,plate_polymer,partial,src/forge120/java/com/hbm/PortItems.java,Original Insulator item registered with source texture and three vanilla-material crafting paths; plastic rubber fiber and asbestos inputs plus downstream progression pending
 asset,textures/items/plate_polymer.png,verified,src/forge120/resources/assets/hbm/textures/item/plate_polymer.png,Original texture copied byte-for-byte
 recipe_source,CraftingManager,partial,src/forge120/resources/data/hbm/recipes,Three Insulator recipes ported and GameTest-verified; central crafting catalog remains largely unported
@@ -59,14 +68,14 @@ java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_t
 config_option,RadiationConfig:RADIATION_00_enableContamination:52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and chunk dose; broader radiation effects not yet ported
 config_option,RadiationConfig:RADIATION_01_enableChunkRads:53,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls default scalar chunk radiation; PRISM and world effects pending
 config_option,RadiationConfig:AMBIENT_00_nether:46,partial,src/forge120/java/com/hbm/PortConfig.java,Default 0.1 RAD per second Nether ambient exposure ported; full armor resistance pending
-config_option,RadiationConfig:HAZ_00_disableAsbestos:61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon asbestos dose; other asbestos sources not yet ported
+config_option,RadiationConfig:HAZ_00_disableAsbestos:61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and airborne asbestos dose; other asbestos sources not yet ported
 item,ingot_uranium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and smelting added; hazard behavior pending
 asset,textures/blocks/ore_uranium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_uranium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_uranium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_uranium.png,Original texture copied byte-for-byte
 asset,textures/blocks/gas_radon.png,verified,src/forge120/resources/assets/hbm/textures/block/gas_radon.png,Original texture copied byte-for-byte
 recipe_source,SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries including aluminium to named cryolite chunk; remaining recipes pending
 recipe_site,SmeltingRecipes:31,verified,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,GameTest checks ore input uranium ingot result 6 XP and 200-tick cooking time
-worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Eleven ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
+worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Twelve ordinary Overworld ores including asbestos use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
 block,ore_thorium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_th232,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_thorium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_thorium.png,Original texture copied byte-for-byte
@@ -104,7 +113,7 @@ asset,textures/items/ingot_beryllium.png,verified,src/forge120/resources/assets/
 recipe_site,SmeltingRecipes:42,verified,src/forge120/resources/data/hbm/recipes/ingot_beryllium_from_ore.json,GameTest checks ore input output 2 XP and 200-tick cooking time
 config_option,WorldConfig:2.09_berylliumSpawnrate:136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 config_option,WorldConfig:2.00_uraniumSpawnrate:127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
-config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all eleven ported ores absent in fresh chunks; other legacy ores unported
+config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all twelve ported ores absent in fresh chunks; other legacy ores unported
 block,ore_sulfur,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 sulfur plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_fluorite,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 fluorite plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_niter,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 niter plus silk-touch drops tested; tool tier fortune and downstream recipes pending

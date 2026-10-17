@@ -2136,7 +2136,7 @@ asset,textures/blocks/fusion_component.png,src/main/resources/assets/hbm/texture
 asset,textures/blocks/fusion_hatch.png,src/main/resources/assets/hbm/textures/blocks/fusion_hatch.png,,unported,,
 asset,textures/blocks/fusion_heater_side.png,src/main/resources/assets/hbm/textures/blocks/fusion_heater_side.png,,unported,,
 asset,textures/blocks/fusion_heater_top.png,src/main/resources/assets/hbm/textures/blocks/fusion_heater_top.png,,unported,,
-asset,textures/blocks/gas_asbestos.png,src/main/resources/assets/hbm/textures/blocks/gas_asbestos.png,,unported,,
+asset,textures/blocks/gas_asbestos.png,src/main/resources/assets/hbm/textures/blocks/gas_asbestos.png,,verified,src/forge120/resources/assets/hbm/textures/block/gas_asbestos.png,Original texture copied byte-for-byte
 asset,textures/blocks/gas_coal.png,src/main/resources/assets/hbm/textures/blocks/gas_coal.png,,unported,,
 asset,textures/blocks/gas_explosive.png,src/main/resources/assets/hbm/textures/blocks/gas_explosive.png,,unported,,
 asset,textures/blocks/gas_flammable.png,src/main/resources/assets/hbm/textures/blocks/gas_flammable.png,,unported,,
@@ -2401,7 +2401,7 @@ asset,textures/blocks/oil_spill.png,src/main/resources/assets/hbm/textures/block
 asset,textures/blocks/ore3_base.png,src/main/resources/assets/hbm/textures/blocks/ore3_base.png,,unported,,
 asset,textures/blocks/ore_alexandrite.png,src/main/resources/assets/hbm/textures/blocks/ore_alexandrite.png,,unported,,
 asset,textures/blocks/ore_aluminium.png,src/main/resources/assets/hbm/textures/blocks/ore_aluminium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_aluminium.png,Original texture copied byte-for-byte
-asset,textures/blocks/ore_asbestos.png,src/main/resources/assets/hbm/textures/blocks/ore_asbestos.png,,unported,,
+asset,textures/blocks/ore_asbestos.png,src/main/resources/assets/hbm/textures/blocks/ore_asbestos.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_asbestos.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_australium.png,src/main/resources/assets/hbm/textures/blocks/ore_australium.png,,unported,,
 asset,textures/blocks/ore_basalt_asbestos.png,src/main/resources/assets/hbm/textures/blocks/ore_basalt_asbestos.png,,unported,,
 asset,textures/blocks/ore_basalt_asbestos_top.png,src/main/resources/assets/hbm/textures/blocks/ore_basalt_asbestos_top.png,,unported,,
@@ -4697,7 +4697,7 @@ asset,textures/items/ingot_americium.png,src/main/resources/assets/hbm/textures/
 asset,textures/items/ingot_americium_fuel.png,src/main/resources/assets/hbm/textures/items/ingot_americium_fuel.png,,unported,,
 asset,textures/items/ingot_arsenic.png,src/main/resources/assets/hbm/textures/items/ingot_arsenic.png,,unported,,
 asset,textures/items/ingot_arsenic_bronze.png,src/main/resources/assets/hbm/textures/items/ingot_arsenic_bronze.png,,unported,,
-asset,textures/items/ingot_asbestos.png,src/main/resources/assets/hbm/textures/items/ingot_asbestos.png,,unported,,
+asset,textures/items/ingot_asbestos.png,src/main/resources/assets/hbm/textures/items/ingot_asbestos.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_asbestos.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_astatine.png,src/main/resources/assets/hbm/textures/items/ingot_astatine.png,,unported,,
 asset,textures/items/ingot_au198.png,src/main/resources/assets/hbm/textures/items/ingot_au198.png,,unported,,
 asset,textures/items/ingot_australium.png,src/main/resources/assets/hbm/textures/items/ingot_australium.png,,unported,,
@@ -7550,7 +7550,7 @@ block,fusion_klystron_creative,src/main/java/com/hbm/blocks/ModBlocks.java,3341,
 block,fusion_mhdt,src/main/java/com/hbm/blocks/ModBlocks.java,3345,unported,,
 block,fusion_plasma_forge,src/main/java/com/hbm/blocks/ModBlocks.java,3347,unported,,
 block,fusion_torus,src/main/java/com/hbm/blocks/ModBlocks.java,3339,unported,,
-block,gas_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,3455,unported,,
+block,gas_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,3455,partial,src/forge120/java/com/hbm/PortAsbestosGas.java,Drift decay fine-particle filtered exposure and mycelium particles ported; visual comparison and full armor protection pending
 block,gas_coal,src/main/java/com/hbm/blocks/ModBlocks.java,3456,unported,,
 block,gas_explosive,src/main/java/com/hbm/blocks/ModBlocks.java,3458,unported,,
 block,gas_flammable,src/main/java/com/hbm/blocks/ModBlocks.java,3457,unported,,
@@ -7788,7 +7788,7 @@ block,oil_pipe,src/main/java/com/hbm/blocks/ModBlocks.java,3444,unported,,
 block,oil_spill,src/main/java/com/hbm/blocks/ModBlocks.java,2820,unported,,
 block,ore_alexandrite,src/main/java/com/hbm/blocks/ModBlocks.java,2427,unported,,
 block,ore_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2366,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting to the named cryolite variant tested; tool tier and downstream processing pending
-block,ore_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2374,unported,,
+block,ore_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2374,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Stone and deepslate worldgen plus sheet drops and outgassing ported; visual and full break-event parity checks pending
 block,ore_australium,src/main/java/com/hbm/blocks/ModBlocks.java,2378,unported,,
 block,ore_basalt,src/main/java/com/hbm/blocks/ModBlocks.java,2433,unported,,
 block,ore_bedrock,src/main/java/com/hbm/blocks/ModBlocks.java,2439,unported,,
@@ -8664,7 +8664,7 @@ config_option,PotionConfig:8.S0_potionSickness:40,src/main/java/com/hbm/config/P
 config_option,RadiationConfig:AMBIENT_00_nether:46,src/main/java/com/hbm/config/RadiationConfig.java,46,partial,src/forge120/java/com/hbm/PortConfig.java,Default 0.1 RAD per second Nether ambient exposure ported; full armor resistance pending
 config_option,RadiationConfig:FOG_00_threshold:44,src/main/java/com/hbm/config/RadiationConfig.java,44,unported,,
 config_option,RadiationConfig:FOG_01_threshold:45,src/main/java/com/hbm/config/RadiationConfig.java,45,unported,,
-config_option,RadiationConfig:HAZ_00_disableAsbestos:61,src/main/java/com/hbm/config/RadiationConfig.java,61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon asbestos dose; other asbestos sources not yet ported
+config_option,RadiationConfig:HAZ_00_disableAsbestos:61,src/main/java/com/hbm/config/RadiationConfig.java,61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and airborne asbestos dose; other asbestos sources not yet ported
 config_option,RadiationConfig:HAZ_01_disableCoaldust:62,src/main/java/com/hbm/config/RadiationConfig.java,62,unported,,
 config_option,RadiationConfig:HAZ_02_disableHot:63,src/main/java/com/hbm/config/RadiationConfig.java,63,unported,,
 config_option,RadiationConfig:HAZ_03_disableExplosive:64,src/main/java/com/hbm/config/RadiationConfig.java,64,unported,,
@@ -8781,7 +8781,7 @@ config_option,WorldConfig:2.08_leadSpawnrate:135,src/main/java/com/hbm/config/Wo
 config_option,WorldConfig:2.09_berylliumSpawnrate:136,src/main/java/com/hbm/config/WorldConfig.java,136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 config_option,WorldConfig:2.10_thoriumSpawnrate:137,src/main/java/com/hbm/config/WorldConfig.java,137,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 config_option,WorldConfig:2.11_ligniteSpawnrate:138,src/main/java/com/hbm/config/WorldConfig.java,138,unported,,
-config_option,WorldConfig:2.12_asbestosSpawnRate:139,src/main/java/com/hbm/config/WorldConfig.java,139,unported,,
+config_option,WorldConfig:2.12_asbestosSpawnRate:139,src/main/java/com/hbm/config/WorldConfig.java,139,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default of two attempts per fresh chunk plus zero-disable test wired through placed feature; distribution-rate testing pending
 config_option,WorldConfig:2.13_lithiumSpawnRate:140,src/main/java/com/hbm/config/WorldConfig.java,140,unported,,
 config_option,WorldConfig:2.14_rareEarthSpawnRate:141,src/main/java/com/hbm/config/WorldConfig.java,141,unported,,
 config_option,WorldConfig:2.16_gasShaleSpawnRate:142,src/main/java/com/hbm/config/WorldConfig.java,142,unported,,
@@ -8821,7 +8821,7 @@ config_option,WorldConfig:2.C01_enableAsbestosCave:198,src/main/java/com/hbm/con
 config_option,WorldConfig:2.C01_titaniumClusterSpawn:177,src/main/java/com/hbm/config/WorldConfig.java,177,unported,,
 config_option,WorldConfig:2.C02_aluminiumClusterSpawn:178,src/main/java/com/hbm/config/WorldConfig.java,178,unported,,
 config_option,WorldConfig:2.C03_copperClusterSpawn:179,src/main/java/com/hbm/config/WorldConfig.java,179,unported,,
-config_option,WorldConfig:2.D00_overworldOres:123,src/main/java/com/hbm/config/WorldConfig.java,123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all eleven ported ores absent in fresh chunks; other legacy ores unported
+config_option,WorldConfig:2.D00_overworldOres:123,src/main/java/com/hbm/config/WorldConfig.java,123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all twelve ported ores absent in fresh chunks; other legacy ores unported
 config_option,WorldConfig:2.D01_netherOres:124,src/main/java/com/hbm/config/WorldConfig.java,124,unported,,
 config_option,WorldConfig:2.D02_endOres:125,src/main/java/com/hbm/config/WorldConfig.java,125,unported,,
 config_option,WorldConfig:2.E00_tikiteSpawnrate:191,src/main/java/com/hbm/config/WorldConfig.java,191,unported,,
@@ -9808,7 +9808,7 @@ item,ingot_am_mix,src/main/java/com/hbm/items/ModItems.java,4471,unported,,
 item,ingot_americium_fuel,src/main/java/com/hbm/items/ModItems.java,4526,unported,,
 item,ingot_arsenic,src/main/java/com/hbm/items/ModItems.java,4494,unported,,
 item,ingot_arsenic_bronze,src/main/java/com/hbm/items/ModItems.java,4490,unported,,
-item,ingot_asbestos,src/main/java/com/hbm/items/ModItems.java,4567,unported,,
+item,ingot_asbestos,src/main/java/com/hbm/items/ModItems.java,4567,partial,src/forge120/java/com/hbm/PortItems.java,Source sheet icon and ore drop ported; crafting and other sources pending
 item,ingot_au198,src/main/java/com/hbm/items/ModItems.java,4477,unported,,
 item,ingot_australium,src/main/java/com/hbm/items/ModItems.java,4530,unported,,
 item,ingot_bakelite,src/main/java/com/hbm/items/ModItems.java,4507,unported,,
@@ -11093,7 +11093,7 @@ java_source,blocks/fluid/ToxicBlock,src/main/java/com/hbm/blocks/fluid/ToxicBloc
 java_source,blocks/fluid/ToxicFluid,src/main/java/com/hbm/blocks/fluid/ToxicFluid.java,,unported,,
 java_source,blocks/fluid/VolcanicBlock,src/main/java/com/hbm/blocks/fluid/VolcanicBlock.java,,unported,,
 java_source,blocks/fluid/VolcanicFluid,src/main/java/com/hbm/blocks/fluid/VolcanicFluid.java,,unported,,
-java_source,blocks/gas/BlockGasAsbestos,src/main/java/com/hbm/blocks/gas/BlockGasAsbestos.java,,unported,,
+java_source,blocks/gas/BlockGasAsbestos,src/main/java/com/hbm/blocks/gas/BlockGasAsbestos.java,,partial,src/forge120/java/com/hbm/PortAsbestosGas.java,Server exposure drift and decay plus client town-aura equivalent particles ported; visual comparison pending
 java_source,blocks/gas/BlockGasBase,src/main/java/com/hbm/blocks/gas/BlockGasBase.java,,unported,,
 java_source,blocks/gas/BlockGasClorine,src/main/java/com/hbm/blocks/gas/BlockGasClorine.java,,unported,,
 java_source,blocks/gas/BlockGasCoal,src/main/java/com/hbm/blocks/gas/BlockGasCoal.java,,unported,,
@@ -11183,7 +11183,7 @@ java_source,blocks/generic/BlockNoSpawn,src/main/java/com/hbm/blocks/generic/Blo
 java_source,blocks/generic/BlockNuclearWaste,src/main/java/com/hbm/blocks/generic/BlockNuclearWaste.java,,unported,,
 java_source,blocks/generic/BlockOre,src/main/java/com/hbm/blocks/generic/BlockOre.java,,unported,,
 java_source,blocks/generic/BlockOreBasalt,src/main/java/com/hbm/blocks/generic/BlockOreBasalt.java,,unported,,
-java_source,blocks/generic/BlockOutgas,src/main/java/com/hbm/blocks/generic/BlockOutgas.java,,unported,,
+java_source,blocks/generic/BlockOutgas,src/main/java/com/hbm/blocks/generic/BlockOutgas.java,,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Asbestos ore branch ported; other outgassing blocks remain
 java_source,blocks/generic/BlockPedestal,src/main/java/com/hbm/blocks/generic/BlockPedestal.java,,unported,,
 java_source,blocks/generic/BlockPinkLog,src/main/java/com/hbm/blocks/generic/BlockPinkLog.java,,unported,,
 java_source,blocks/generic/BlockPinkSlab,src/main/java/com/hbm/blocks/generic/BlockPinkSlab.java,,unported,,
@@ -18332,7 +18332,7 @@ worldgen_source,Dud,src/main/java/com/hbm/world/feature/Dud.java,,unported,,
 worldgen_source,DungeonToolbox,src/main/java/com/hbm/world/generator/DungeonToolbox.java,,unported,,
 worldgen_source,Geyser,src/main/java/com/hbm/world/feature/Geyser.java,,unported,,
 worldgen_source,GlyphidHive,src/main/java/com/hbm/world/feature/GlyphidHive.java,,unported,,
-worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Eleven ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
+worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Twelve ordinary Overworld ores including asbestos use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
 worldgen_source,HugeMush,src/main/java/com/hbm/world/feature/HugeMush.java,,unported,,
 worldgen_source,INBTBlockTransformable,src/main/java/com/hbm/world/gen/nbt/INBTBlockTransformable.java,,unported,,
 worldgen_source,INBTTileEntityTransformable,src/main/java/com/hbm/world/gen/nbt/INBTTileEntityTransformable.java,,unported,,

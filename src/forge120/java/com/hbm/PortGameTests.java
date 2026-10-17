@@ -1060,6 +1060,102 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void asbestosOreDropsAndOutgasses(GameTestHelper helper) {
+        BlockPos orePos = new BlockPos(1, 2, 1);
+        helper.setBlock(orePos, PortBlocks.ORE_ASBESTOS.get());
+        var level = helper.getLevel();
+        var state = helper.getBlockState(orePos);
+        var id = PortBlocks.ORE_ASBESTOS.getId();
+        if (ForgeRegistries.ITEMS.getValue(id) != PortItems.ORE_ASBESTOS.get()
+                || !level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).containsKey(id)) {
+            throw new IllegalStateException("Asbestos ore item or placed feature is missing");
+        }
+        BlockPos absolute = helper.absolutePos(orePos);
+        ItemStack pick = new ItemStack(Items.IRON_PICKAXE);
+        var player = FakePlayerFactory.getMinecraft(level);
+        var drops = Block.getDrops(state, level, absolute, null, player, pick);
+        if (drops.size() != 1 || !drops.get(0).is(PortItems.INGOT_ASBESTOS.get())
+                || drops.get(0).getCount() != 1) {
+            throw new IllegalStateException("Asbestos ore did not drop one source-equivalent sheet");
+        }
+        ItemStack silkPick = new ItemStack(Items.IRON_PICKAXE);
+        silkPick.enchant(Enchantments.SILK_TOUCH, 1);
+        var silkDrops = Block.getDrops(state, level, absolute, null, player, silkPick);
+        if (silkDrops.size() != 1 || !silkDrops.get(0).is(PortItems.ORE_ASBESTOS.get())) {
+            throw new IllegalStateException("Silk Touch did not preserve asbestos ore");
+        }
+        for (int i = 0; i < 32; i++) {
+            PortBlocks.ORE_ASBESTOS.get().randomTick(state, level, absolute, RandomSource.create(i));
+        }
+        boolean found = false;
+        for (Direction direction : Direction.values()) {
+            if (level.getBlockState(absolute.relative(direction)).is(PortBlocks.GAS_ASBESTOS.get())) {
+                found = true;
+            }
+        }
+        if (!found) throw new IllegalStateException("Asbestos ore did not emit airborne particles");
+        level.setBlock(absolute, Blocks.AIR.defaultBlockState(), 3);
+        PortBlocks.ORE_ASBESTOS.get().playerDestroy(level, player, absolute, state, null, pick);
+        if (!level.getBlockState(absolute).is(PortBlocks.GAS_ASBESTOS.get())) {
+            throw new IllegalStateException("Breaking asbestos ore did not release airborne particles");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void asbestosGasExposureAndFilter(GameTestHelper helper) {
+        BlockPos gasPos = new BlockPos(1, 2, 1);
+        helper.setBlock(gasPos, PortBlocks.GAS_ASBESTOS.get());
+        var level = helper.getLevel();
+        var gas = PortBlocks.GAS_ASBESTOS.get();
+        var cow = helper.spawnWithNoFreeWill(EntityType.COW, gasPos);
+        gas.entityInside(helper.getBlockState(gasPos), level, helper.absolutePos(gasPos), cow);
+        var exposure = PortRadiation.get(cow).orElseThrow(() ->
+                new IllegalStateException("Cow missing HBM exposure capability"));
+        if (exposure.asbestos() != 1 || exposure.radiation() != 0.0F) {
+            throw new IllegalStateException("Airborne asbestos did not apply asbestos-only exposure");
+        }
+        ItemStack mask = new ItemStack(PortItems.GAS_MASK_OLDE.get());
+        PortGasMask.installFilter(mask, new ItemStack(PortItems.GAS_MASK_FILTER_RAG.get()));
+        cow.setItemSlot(EquipmentSlot.HEAD, mask);
+        gas.entityInside(helper.getBlockState(gasPos), level, helper.absolutePos(gasPos), cow);
+        if (exposure.asbestos() != 2 || PortGasMask.filter(mask).getDamageValue() != 0) {
+            throw new IllegalStateException("Coarse-only rag filter incorrectly blocked fine asbestos");
+        }
+        PortGasMask.installFilter(mask, new ItemStack(PortItems.GAS_MASK_FILTER.get()));
+        gas.entityInside(helper.getBlockState(gasPos), level, helper.absolutePos(gasPos), cow);
+        if (exposure.asbestos() != 2 || PortGasMask.filter(mask).getDamageValue() != 1) {
+            throw new IllegalStateException("Fine filter failed to block or wear against asbestos gas");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void asbestosGasDriftsAndDecays(GameTestHelper helper) {
+        BlockPos gasPos = new BlockPos(1, 2, 1);
+        helper.setBlock(gasPos.below(), Blocks.AIR);
+        helper.setBlock(gasPos, PortBlocks.GAS_ASBESTOS.get());
+        long moveSeed = 0;
+        while (true) {
+            RandomSource candidate = RandomSource.create(moveSeed);
+            if (candidate.nextInt(50) != 0 && candidate.nextInt(5) == 0) break;
+            moveSeed++;
+        }
+        var gas = PortBlocks.GAS_ASBESTOS.get();
+        var level = helper.getLevel();
+        gas.tick(helper.getBlockState(gasPos), level, helper.absolutePos(gasPos),
+                RandomSource.create(moveSeed));
+        helper.assertBlockPresent(gas, gasPos.below());
+        long decaySeed = 0;
+        while (RandomSource.create(decaySeed).nextInt(50) != 0) decaySeed++;
+        BlockPos destination = gasPos.below();
+        gas.tick(helper.getBlockState(destination), level, helper.absolutePos(destination),
+                RandomSource.create(decaySeed));
+        helper.assertBlockPresent(Blocks.AIR, destination);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void radonMovesDown(GameTestHelper helper) {
         BlockPos gasPos = new BlockPos(1, 2, 1);
         helper.setBlock(gasPos.below(), Blocks.AIR);
@@ -1498,13 +1594,30 @@ public final class PortGameTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 300)
+    public static void asbestosOreGeneratesInFreshChunks(GameTestHelper helper) {
+        if (!System.getProperty("hbm.port.ore.config.phase", "").isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos origin = helper.absolutePos(BlockPos.ZERO);
+        int chunkX = (origin.getX() >> 4) + ThreadLocalRandom.current().nextInt(40_000, 44_000);
+        int chunkZ = (origin.getZ() >> 4) + ThreadLocalRandom.current().nextInt(40_000, 44_000);
+        if (countOresInFreshChunks(level, chunkX, chunkZ,
+                new Block[] {PortBlocks.ORE_ASBESTOS.get()}) == 0) {
+            throw new IllegalStateException("No asbestos ore generated in fresh Overworld chunks");
+        }
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 600)
     public static void oreSpawnSettingsControlFreshChunks(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         String phase = System.getProperty("hbm.port.ore.config.phase", "");
         for (String ore : new String[] {
                 "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium",
-                "sulfur", "fluorite", "niter", "aluminium"
+                "sulfur", "fluorite", "niter", "aluminium", "asbestos"
         }) {
             int expected = PortConfig.ENABLE_OVERWORLD_ORES.get() ? PortConfig.oreCount(ore) : 0;
             if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != expected) {
@@ -1517,7 +1630,7 @@ public final class PortGameTests {
                 PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(),
                 PortBlocks.ORE_BERYLLIUM.get(), PortBlocks.ORE_SULFUR.get(),
                 PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get(),
-                PortBlocks.ORE_ALUMINIUM.get()
+                PortBlocks.ORE_ALUMINIUM.get(), PortBlocks.ORE_ASBESTOS.get()
         };
         if (phase.equals("master-off")) {
             int chunkX = ThreadLocalRandom.current().nextInt(20_000, 24_000);
@@ -1543,6 +1656,16 @@ public final class PortGameTests {
                     || countOresInFreshChunks(level, chunkX, chunkZ,
                             new Block[] {PortBlocks.ORE_COPPER.get()}) == 0) {
                 throw new IllegalStateException("Positive copper spawn count failed in fresh chunks");
+            }
+        } else if (phase.equals("asbestos-off")) {
+            int chunkX = ThreadLocalRandom.current().nextInt(44_000, 48_000);
+            int chunkZ = ThreadLocalRandom.current().nextInt(44_000, 48_000);
+            if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.ORE_ASBESTOS_COUNT.get() != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.ORE_ASBESTOS.get()}) != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.ORE_URANIUM.get()}) == 0) {
+                throw new IllegalStateException("Asbestos-only disable setting failed in fresh chunks");
             }
         } else if (!phase.isEmpty()) {
             throw new IllegalStateException("Unknown ore config test phase: " + phase);

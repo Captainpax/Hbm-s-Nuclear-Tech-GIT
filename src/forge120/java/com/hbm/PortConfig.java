@@ -21,6 +21,7 @@ public final class PortConfig {
     public static final ForgeConfigSpec.IntValue ORE_FLUORITE_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_NITER_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_ALUMINIUM_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_ASBESTOS_COUNT;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -55,6 +56,7 @@ public final class PortConfig {
         ORE_FLUORITE_COUNT = oreCount(builder, "2.05_fluoriteSpawnrate", 6);
         ORE_NITER_COUNT = oreCount(builder, "2.06_niterSpawnrate", 6);
         ORE_ALUMINIUM_COUNT = oreCount(builder, "2.03_aluminiumSpawnrate", 7);
+        ORE_ASBESTOS_COUNT = oreCount(builder, "2.12_asbestosSpawnRate", 2);
         builder.pop();
         SPEC = builder.build();
     }
@@ -83,6 +85,7 @@ public final class PortConfig {
             case "fluorite" -> ORE_FLUORITE_COUNT;
             case "niter" -> ORE_NITER_COUNT;
             case "aluminium" -> ORE_ALUMINIUM_COUNT;
+            case "asbestos" -> ORE_ASBESTOS_COUNT;
             default -> throw new IllegalArgumentException("Unknown HBM ore placement: " + ore);
         };
     }

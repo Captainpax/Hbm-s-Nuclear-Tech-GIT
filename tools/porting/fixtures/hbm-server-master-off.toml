@@ -50,3 +50,6 @@
 		#Ore vein placement attempts per new Overworld chunk; zero disables this ore.
 		#Range: > 0
 		03_aluminiumSpawnrate = 7
+		# Ore vein placement attempts per new Overworld chunk; zero disables this ore.
+		#Range: > 0
+		12_asbestosSpawnRate = 2
