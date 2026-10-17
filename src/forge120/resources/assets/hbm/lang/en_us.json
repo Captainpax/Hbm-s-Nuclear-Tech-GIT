@@ -11,6 +11,7 @@
   "block.hbm.ore_niter": "Niter Ore",
   "block.hbm.ore_aluminium": "Aluminium-Bearing Ore",
   "block.hbm.ore_asbestos": "Asbestos Ore",
+  "block.hbm.block_asbestos": "Block of Asbestos",
   "block.hbm.gas_asbestos": "Airborne Asbestos Particles",
   "block.hbm.machine_battery": "Energy Storage Block (LEGACY)",
   "block.hbm.machine_battery_socket": "Battery Socket",
@@ -58,6 +59,10 @@
   "item.hbm.niter": "Niter",
   "item.hbm.chunk_ore_cryolite": "Cryolite Chunk",
   "item.hbm.ingot_asbestos": "Asbestos Sheet",
+  "item.hbm.ingot_asbestos.desc": "\"Filled with life, self-doubt and asbestos. That comes with the air.\"",
+  "item.hbm.powder_asbestos": "Asbestos Powder",
+  "item.hbm.powder_asbestos.desc": "\"Sniffffffff- MHHHHHHMHHHHHHHHH\"",
+  "trait.asbestos": "Asbestos",
   "item.hbm.plate_polymer": "Insulator",
   "message.hbm.battery_readout": "%1$s / %2$s HE",
   "item.hbm.geiger_counter": "Handheld Geiger Counter",
@@ -80,5 +85,6 @@
   "itemGroup.hbm.blocks": "HBM Blocks",
   "itemGroup.hbm.consumables": "HBM Consumables",
   "itemGroup.hbm.armor": "HBM Armor",
-  "death.attack.hbm.radiation": "%1$s succumbed to radiation poisoning"
+  "death.attack.hbm.radiation": "%1$s succumbed to radiation poisoning",
+  "death.attack.hbm.asbestos": "%1$s is now entitled to financial compensation."
 }

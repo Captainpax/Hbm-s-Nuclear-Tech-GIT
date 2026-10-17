@@ -1,4 +1,4 @@
 {
   "replace": false,
-  "values": ["hbm:radiation"]
+  "values": ["hbm:radiation", "hbm:asbestos"]
 }

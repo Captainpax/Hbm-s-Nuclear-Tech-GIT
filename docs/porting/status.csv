@@ -1,13 +1,25 @@
 kind,key,status,target,notes
-block,ore_asbestos,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Stone and deepslate worldgen plus sheet drops and outgassing ported; visual and full break-event parity checks pending
+block,ore_asbestos,partial,src/forge120/java/com/hbm/PortAsbestosOutgasBlock.java,Stone and deepslate worldgen plus sheet drops and outgassing ported; visual and full break-event parity checks pending
+block,block_asbestos,partial,src/forge120/java/com/hbm/PortAsbestosOutgasBlock.java,Nine-sheet compaction self-drop and outgassing tested; in-world appearance and full break-event parity pending
 block,gas_asbestos,partial,src/forge120/java/com/hbm/PortAsbestosGas.java,Drift decay fine-particle filtered exposure and mycelium particles ported; visual comparison and full armor protection pending
-item,ingot_asbestos,partial,src/forge120/java/com/hbm/PortItems.java,Source sheet icon and ore drop ported; crafting and other sources pending
+item,ingot_asbestos,partial,src/forge120/java/com/hbm/PortItems.java,Source sheet icon ore drop nine-sheet compaction and one-block unpacking tested; other sources pending
+item,powder_asbestos,partial,src/forge120/java/com/hbm/PortItems.java,Source powder icon and smelting into one sheet tested; stalagmite drops and other sources pending
 asset,textures/blocks/ore_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_asbestos.png,Original texture copied byte-for-byte
 asset,textures/blocks/gas_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/block/gas_asbestos.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_asbestos.png,Original texture copied byte-for-byte
+asset,textures/blocks/block_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/block/block_asbestos.png,Original texture copied byte-for-byte
+asset,textures/items/powder_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/item/powder_asbestos.png,Original texture copied byte-for-byte
 config_option,WorldConfig:2.12_asbestosSpawnRate:139,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default of two attempts per fresh chunk plus zero-disable test wired through placed feature; distribution-rate testing pending
 java_source,blocks/gas/BlockGasAsbestos,partial,src/forge120/java/com/hbm/PortAsbestosGas.java,Server exposure drift and decay plus client town-aura equivalent particles ported; visual comparison pending
-java_source,blocks/generic/BlockOutgas,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Asbestos ore branch ported; other outgassing blocks remain
+java_source,blocks/generic/BlockOutgas,partial,src/forge120/java/com/hbm/PortAsbestosOutgasBlock.java,Asbestos ore and compacted-block branches ported; other outgassing blocks remain
+java_source,hazard/HazardSystem,partial,src/forge120/java/com/hbm/PortAsbestosInventoryHazard.java,Per-slot server inventory exposure for asbestos items ported; other hazard classes and nested equipment pending
+java_source,hazard/type/HazardTypeAsbestos,partial,src/forge120/java/com/hbm/PortAsbestosInventoryHazard.java,Material dose filter wear lethal threshold and asbestos tooltip ported; other equipment integrations pending
+java_source,inventory/OreDictManager,partial,src/forge120/java/com/hbm/PortAsbestosInventoryHazard.java,Asbestos ore ingot powder and block hazard multipliers ported; ore dictionary and other materials pending
+recipe_source,MineralRecipes,partial,src/forge120/resources/data/hbm/recipes,Asbestos sheet block compaction and unpacking ported; most mineral crafting remains
+java_source,crafting/MineralRecipes,partial,src/forge120/resources/data/hbm/recipes,Asbestos block and sheet crafting ported; other legacy mineral recipes pending
+recipe_site,MineralRecipes:302,partial,src/forge120/resources/data/hbm/recipes/block_asbestos.json,Nine-sheet recipe and recipe-book advancement tested; real-player unlock pending
+recipe_site,MineralRecipes:349,partial,src/forge120/resources/data/hbm/recipes/ingot_asbestos_from_block.json,One block unpacks to nine sheets and advancement loads; real-player unlock pending
+recipe_site,SmeltingRecipes:99,partial,src/forge120/resources/data/hbm/recipes/ingot_asbestos_from_powder.json,One powder smelts to one sheet at one XP and 200 ticks; real-furnace progression pending
 item,plate_polymer,partial,src/forge120/java/com/hbm/PortItems.java,Original Insulator item registered with source texture and three vanilla-material crafting paths; plastic rubber fiber and asbestos inputs plus downstream progression pending
 asset,textures/items/plate_polymer.png,verified,src/forge120/resources/assets/hbm/textures/item/plate_polymer.png,Original texture copied byte-for-byte
 recipe_source,CraftingManager,partial,src/forge120/resources/data/hbm/recipes,Three Insulator recipes ported and GameTest-verified; central crafting catalog remains largely unported
@@ -18,7 +30,7 @@ recipe_site,CraftingManager:110,partial,src/forge120/resources/data/hbm/recipes/
 block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; item and placed-block textures manually checked in client; break behavior and hazard integration still need full parity checks
 block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and fine-particle filtered-mask protection tested across all mask variants; other hazard effects pending
 item,gas_mask,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and five filters ported; custom worn model and overlay pending
-item,gas_mask_filter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and radon protection ported; sounds recipes and other hazards pending
+item,gas_mask_filter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and fine-particle protection including asbestos dose-scaled wear ported; sounds recipes and other hazards pending
 item,gas_mask_m65,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model and overlay pending
 item,gas_mask_mono,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
 item,gas_mask_olde,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
@@ -37,7 +49,7 @@ asset,textures/items/gas_mask_filter_mono.png,verified,src/forge120/resources/as
 asset,textures/items/gas_mask_filter_combo.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_combo.png,Original texture copied byte-for-byte
 asset,textures/items/gas_mask_filter_rag.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_rag.png,Original texture copied byte-for-byte
 asset,textures/items/gas_mask_filter_piss.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_piss.png,Original texture copied byte-for-byte
-java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos persist while environmental accumulation/rate are runtime-only; other living properties pending
+java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos persist with lethal asbestos threshold; environmental accumulation/rate are runtime-only and other living properties pending
 java_source,handler/radiation/ChunkRadiationManager,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar per-dimension storage and loaded-chunk diffusion ported with two-launch restart test; alternate systems and effects pending
 java_source,handler/radiation/ChunkRadiationHandlerSimple,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar field diffusion and SavedData restart persistence ported; fog and world destruction pending
 java_source,util/ContaminationUtil,partial,src/forge120/java/com/hbm/PortEnvironmentRadiation.java,Chunk and Nether exposure plus environmental accumulation ported; armor resistance and other hazard types pending
@@ -64,16 +76,17 @@ java_source,config/ClientConfig,partial,src/forge120/java/com/hbm/PortClientConf
 config_option,ClientConfig:GEIGER_OFFSET_HORIZONTAL:16,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero HUD position visually checked in-world; nonzero offset behavior pending
 config_option,ClientConfig:GEIGER_OFFSET_VERTICAL:17,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero HUD position visually checked in-world; nonzero offset behavior pending
 java_source,handler/EntityEffectHandler,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers lethal threshold and chunk/Nether exposure ported; transformations and other effects pending
-java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only
+java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_type,Asbestos and radiation damage types only
 config_option,RadiationConfig:RADIATION_00_enableContamination:52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and chunk dose; broader radiation effects not yet ported
 config_option,RadiationConfig:RADIATION_01_enableChunkRads:53,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls default scalar chunk radiation; PRISM and world effects pending
 config_option,RadiationConfig:AMBIENT_00_nether:46,partial,src/forge120/java/com/hbm/PortConfig.java,Default 0.1 RAD per second Nether ambient exposure ported; full armor resistance pending
-config_option,RadiationConfig:HAZ_00_disableAsbestos:61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and airborne asbestos dose; other asbestos sources not yet ported
+config_option,RadiationConfig:HAZ_00_disableAsbestos:61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon airborne and inventory asbestos dose; toggle behavior still needs a startup-config test
 item,ingot_uranium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and smelting added; hazard behavior pending
 asset,textures/blocks/ore_uranium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_uranium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_uranium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_uranium.png,Original texture copied byte-for-byte
 asset,textures/blocks/gas_radon.png,verified,src/forge120/resources/assets/hbm/textures/block/gas_radon.png,Original texture copied byte-for-byte
-recipe_source,SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries including aluminium to named cryolite chunk; remaining recipes pending
+recipe_source,SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries plus asbestos powder into sheet; remaining recipes pending
+java_source,crafting/SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries plus asbestos powder into sheet; remaining smelting recipes pending
 recipe_site,SmeltingRecipes:31,verified,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,GameTest checks ore input uranium ingot result 6 XP and 200-tick cooking time
 worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Twelve ordinary Overworld ores including asbestos use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
 block,ore_thorium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit

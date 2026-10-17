@@ -36,11 +36,16 @@ public final class PortBlocks {
     public static final RegistryObject<Block> ORE_NITER = ore("ore_niter", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_ALUMINIUM = ore("ore_aluminium", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_ASBESTOS = BLOCKS.register("ore_asbestos",
-            () -> new PortAsbestosOre(BlockBehaviour.Properties.of()
+            () -> new PortAsbestosOutgasBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE)
                     .strength(5.0F, 15.0F)
                     .sound(SoundType.STONE)
                     .requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> BLOCK_ASBESTOS = BLOCKS.register("block_asbestos",
+            () -> new PortAsbestosOutgasBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .strength(5.0F, 15.0F)
+                    .sound(SoundType.WOOL)));
     public static final RegistryObject<Block> GAS_ASBESTOS = BLOCKS.register("gas_asbestos",
             () -> new PortAsbestosGas(BlockBehaviour.Properties.of()
                     .strength(0.0F)

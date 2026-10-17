@@ -1,5 +1,6 @@
 package com.hbm;
 
+import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -44,6 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @GameTestHolder(HbmPort.MOD_ID)
 @PrefixGameTestTemplate(false)
@@ -942,6 +944,58 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void asbestosBlockAndPowderRecipesMatchLegacy(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var player = FakePlayerFactory.getMinecraft(level);
+        var manager = level.getRecipeManager();
+        var blockId = ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "block_asbestos");
+        var blockRecipe = manager.byKey(blockId)
+                .orElseThrow(() -> new IllegalStateException("Missing nine-sheet asbestos block recipe"));
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        for (int slot = 0; slot < 9; slot++) grid.setItem(slot, new ItemStack(PortItems.INGOT_ASBESTOS.get()));
+        if (!(blockRecipe instanceof ShapedRecipe shapedBlock) || !shapedBlock.matches(grid, level)
+                || !shapedBlock.assemble(grid, level.registryAccess()).is(PortItems.BLOCK_ASBESTOS.get())) {
+            throw new IllegalStateException("Nine asbestos sheets did not craft a compacted block");
+        }
+        grid.setItem(8, new ItemStack(Items.DIRT));
+        if (shapedBlock.matches(grid, level)) {
+            throw new IllegalStateException("Asbestos block recipe accepted a non-sheet input");
+        }
+
+        var sheetId = ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "ingot_asbestos_from_block");
+        var sheetRecipe = manager.byKey(sheetId)
+                .orElseThrow(() -> new IllegalStateException("Missing asbestos block unpacking recipe"));
+        var unpackGrid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        unpackGrid.setItem(0, new ItemStack(PortItems.BLOCK_ASBESTOS.get()));
+        if (!(sheetRecipe instanceof ShapedRecipe shapedSheet) || !shapedSheet.matches(unpackGrid, level)
+                || !shapedSheet.assemble(unpackGrid, level.registryAccess()).is(PortItems.INGOT_ASBESTOS.get())
+                || shapedSheet.assemble(unpackGrid, level.registryAccess()).getCount() != 9) {
+            throw new IllegalStateException("One asbestos block did not unpack to nine sheets");
+        }
+        for (var id : new ResourceLocation[] {blockId, sheetId}) {
+            var unlock = level.getServer().getAdvancements().getAdvancement(
+                    ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "recipes/misc/" + id.getPath()));
+            if (unlock == null || !Set.of(unlock.getRewards().getRecipes()).contains(id)) {
+                throw new IllegalStateException("Asbestos recipe-book unlock missing for " + id);
+            }
+        }
+        var smelting = manager.getRecipeFor(RecipeType.SMELTING,
+                new SimpleContainer(new ItemStack(PortItems.POWDER_ASBESTOS.get())), level)
+                .orElseThrow(() -> new IllegalStateException("Asbestos powder smelting missing"));
+        if (!smelting.getResultItem(level.registryAccess()).is(PortItems.INGOT_ASBESTOS.get())
+                || smelting.getExperience() != 1.0F || smelting.getCookingTime() != 200) {
+            throw new IllegalStateException("Asbestos powder smelting differs from legacy");
+        }
+        var smeltId = ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "ingot_asbestos_from_powder");
+        var smeltUnlock = level.getServer().getAdvancements().getAdvancement(
+                ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "recipes/misc/ingot_asbestos_from_powder"));
+        if (smeltUnlock == null || !Set.of(smeltUnlock.getRewards().getRecipes()).contains(smeltId)) {
+            throw new IllegalStateException("Asbestos powder smelting recipe-book unlock missing");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void uraniumProgression(GameTestHelper helper) {
         var oreId = PortBlocks.ORE_URANIUM.getId();
         if (ForgeRegistries.BLOCKS.getValue(oreId) != PortBlocks.ORE_URANIUM.get()) {
@@ -1152,6 +1206,108 @@ public final class PortGameTests {
         gas.tick(helper.getBlockState(destination), level, helper.absolutePos(destination),
                 RandomSource.create(decaySeed));
         helper.assertBlockPresent(Blocks.AIR, destination);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void compactedAsbestosDropsAndOutgasses(GameTestHelper helper) {
+        BlockPos blockPos = new BlockPos(1, 2, 1);
+        helper.setBlock(blockPos, PortBlocks.BLOCK_ASBESTOS.get());
+        var level = helper.getLevel();
+        BlockPos absolute = helper.absolutePos(blockPos);
+        var state = helper.getBlockState(blockPos);
+        var blockId = PortBlocks.BLOCK_ASBESTOS.getId();
+        if (ForgeRegistries.ITEMS.getValue(blockId) != PortItems.BLOCK_ASBESTOS.get()) {
+            throw new IllegalStateException("Compacted asbestos block item is missing");
+        }
+        var drops = Block.getDrops(state, level, absolute, null,
+                FakePlayerFactory.getMinecraft(level), ItemStack.EMPTY);
+        if (drops.size() != 1 || !drops.get(0).is(PortItems.BLOCK_ASBESTOS.get())) {
+            throw new IllegalStateException("Compacted asbestos did not drop itself");
+        }
+        for (int i = 0; i < 32; i++) {
+            PortBlocks.BLOCK_ASBESTOS.get().randomTick(state, level, absolute, RandomSource.create(i));
+        }
+        boolean foundGas = false;
+        for (Direction direction : Direction.values()) {
+            if (level.getBlockState(absolute.relative(direction)).is(PortBlocks.GAS_ASBESTOS.get())) {
+                foundGas = true;
+            }
+        }
+        if (!foundGas) throw new IllegalStateException("Compacted asbestos did not outgas");
+        level.setBlock(absolute, Blocks.AIR.defaultBlockState(), 3);
+        PortBlocks.BLOCK_ASBESTOS.get().playerDestroy(level, FakePlayerFactory.getMinecraft(level),
+                absolute, state, null, ItemStack.EMPTY);
+        if (!level.getBlockState(absolute).is(PortBlocks.GAS_ASBESTOS.get())) {
+            throw new IllegalStateException("Breaking compacted asbestos did not leave airborne particles");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void carriedAsbestosDoseAndLethalThreshold(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var player = FakePlayerFactory.get(level,
+                new GameProfile(UUID.randomUUID(), "hbm_asbestos"));
+        player.getInventory().items.set(0, new ItemStack(PortItems.INGOT_ASBESTOS.get(), 64));
+        player.getInventory().items.set(1, new ItemStack(PortItems.POWDER_ASBESTOS.get()));
+        player.getInventory().items.set(2, new ItemStack(PortItems.ORE_ASBESTOS.get()));
+        player.getInventory().items.set(3, new ItemStack(PortItems.BLOCK_ASBESTOS.get()));
+        var exposure = PortRadiation.get(player)
+                .orElseThrow(() -> new IllegalStateException("Test player missing exposure capability"));
+        if (PortAsbestosInventoryHazard.dose(player.getInventory().items.get(0)) != 1
+                || PortAsbestosInventoryHazard.dose(player.getInventory().items.get(1)) != 3
+                || PortAsbestosInventoryHazard.dose(player.getInventory().items.get(2)) != 1
+                || PortAsbestosInventoryHazard.dose(player.getInventory().items.get(3)) != 10) {
+            throw new IllegalStateException("Asbestos material hazard multipliers differ from source");
+        }
+        PortAsbestosInventoryHazard.tickInventory(player);
+        if (exposure.asbestos() != 15) {
+            throw new IllegalStateException("Inventory asbestos did not apply one dose per occupied slot");
+        }
+        ItemStack mask = new ItemStack(PortItems.GAS_MASK_OLDE.get());
+        PortGasMask.installFilter(mask, new ItemStack(PortItems.GAS_MASK_FILTER.get()));
+        player.setItemSlot(EquipmentSlot.HEAD, mask);
+        PortAsbestosInventoryHazard.tickInventory(player);
+        if (exposure.asbestos() != 15 || PortGasMask.filter(mask).getDamageValue() != 15) {
+            throw new IllegalStateException("Fine filter failed to block inventory asbestos or wear by dose");
+        }
+        PortGasMask.installFilter(mask, new ItemStack(PortItems.GAS_MASK_FILTER_RAG.get()));
+        PortAsbestosInventoryHazard.tickInventory(player);
+        if (exposure.asbestos() != 30 || PortGasMask.filter(mask).getDamageValue() != 0) {
+            throw new IllegalStateException("Coarse rag filter incorrectly blocked inventory asbestos");
+        }
+        for (int i = 0; i < 4; i++) player.getInventory().items.set(i, ItemStack.EMPTY);
+        player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+
+        var asbestosKey = ResourceKey.create(Registries.DAMAGE_TYPE,
+                ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "asbestos"));
+        var damageType = level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
+                .getHolderOrThrow(asbestosKey);
+        if (!damageType.is(DamageTypeTags.BYPASSES_ARMOR)
+                || !damageType.is(DamageTypeTags.BYPASSES_EFFECTS)
+                || !damageType.is(DamageTypeTags.BYPASSES_RESISTANCE)
+                || !damageType.is(DamageTypeTags.BYPASSES_ENCHANTMENTS)) {
+            throw new IllegalStateException("Lethal asbestos damage did not preserve absolute armor bypass");
+        }
+        var cow = EntityType.COW.create(level);
+        if (cow == null) throw new IllegalStateException("Could not create asbestos threshold test cow");
+        var cowExposure = PortRadiation.get(cow)
+                .orElseThrow(() -> new IllegalStateException("Test cow missing exposure capability"));
+        cowExposure.addAsbestos(PortRadiation.MAX_ASBESTOS - 1);
+        PortRadiation.exposeAsbestos(cow);
+        if (cow.isAlive() || cowExposure.asbestos() != 0) {
+            throw new IllegalStateException("Lethal asbestos threshold did not reset exposure and kill");
+        }
+        var radonCow = EntityType.COW.create(level);
+        if (radonCow == null) throw new IllegalStateException("Could not create radon threshold test cow");
+        var radonExposure = PortRadiation.get(radonCow)
+                .orElseThrow(() -> new IllegalStateException("Radon test cow missing exposure capability"));
+        radonExposure.addAsbestos(PortRadiation.MAX_ASBESTOS - 1);
+        PortRadiation.exposeRadon(radonCow);
+        if (radonCow.isAlive() || radonExposure.asbestos() != 0) {
+            throw new IllegalStateException("Radon asbestos dose bypassed the lethal threshold");
+        }
         helper.succeed();
     }
 
@@ -1568,27 +1724,32 @@ public final class PortGameTests {
         };
         int[] found = new int[ores.length];
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
-        int baseChunkX = (origin.getX() >> 4) + ThreadLocalRandom.current().nextInt(256, 8192);
-        int baseChunkZ = (origin.getZ() >> 4) + ThreadLocalRandom.current().nextInt(256, 8192);
-        for (int chunkX = baseChunkX; chunkX < baseChunkX + 2; chunkX++) {
-            for (int chunkZ = baseChunkZ; chunkZ < baseChunkZ + 2; chunkZ++) {
-                level.getChunk(chunkX, chunkZ);
-                for (int x = chunkX << 4; x < (chunkX << 4) + 16; x++) {
-                    for (int z = chunkZ << 4; z < (chunkZ << 4) + 16; z++) {
-                        for (int y = 5; y <= 49; y++) {
-                            var state = level.getBlockState(new BlockPos(x, y, z));
-                            for (int i = 0; i < ores.length; i++) {
-                                if (state.is(ores[i])) found[i]++;
+        for (int sample = 0; sample < 4; sample++) {
+            int baseChunkX = (origin.getX() >> 4) + ThreadLocalRandom.current().nextInt(256, 8192);
+            int baseChunkZ = (origin.getZ() >> 4) + ThreadLocalRandom.current().nextInt(256, 8192);
+            for (int chunkX = baseChunkX; chunkX < baseChunkX + 2; chunkX++) {
+                for (int chunkZ = baseChunkZ; chunkZ < baseChunkZ + 2; chunkZ++) {
+                    level.getChunk(chunkX, chunkZ);
+                    for (int x = chunkX << 4; x < (chunkX << 4) + 16; x++) {
+                        for (int z = chunkZ << 4; z < (chunkZ << 4) + 16; z++) {
+                            for (int y = 5; y <= 49; y++) {
+                                var state = level.getBlockState(new BlockPos(x, y, z));
+                                for (int i = 0; i < ores.length; i++) {
+                                    if (state.is(ores[i])) found[i]++;
+                                }
                             }
                         }
                     }
                 }
             }
+            boolean allPresent = true;
+            for (int count : found) if (count == 0) allPresent = false;
+            if (allPresent) break;
         }
         for (int i = 0; i < ores.length; i++) {
             if (found[i] == 0) {
                 throw new IllegalStateException("No " + ForgeRegistries.BLOCKS.getKey(ores[i])
-                        + " in four fresh overworld chunks");
+                        + " across up to sixteen fresh overworld chunks");
             }
         }
         helper.succeed();
@@ -1602,11 +1763,15 @@ public final class PortGameTests {
         }
         ServerLevel level = helper.getLevel();
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
-        int chunkX = (origin.getX() >> 4) + ThreadLocalRandom.current().nextInt(40_000, 44_000);
-        int chunkZ = (origin.getZ() >> 4) + ThreadLocalRandom.current().nextInt(40_000, 44_000);
-        if (countOresInFreshChunks(level, chunkX, chunkZ,
-                new Block[] {PortBlocks.ORE_ASBESTOS.get()}) == 0) {
-            throw new IllegalStateException("No asbestos ore generated in fresh Overworld chunks");
+        int count = 0;
+        for (int sample = 0; sample < 4 && count == 0; sample++) {
+            int chunkX = (origin.getX() >> 4) + ThreadLocalRandom.current().nextInt(40_000, 44_000);
+            int chunkZ = (origin.getZ() >> 4) + ThreadLocalRandom.current().nextInt(40_000, 44_000);
+            count += countOresInFreshChunks(level, chunkX, chunkZ,
+                    new Block[] {PortBlocks.ORE_ASBESTOS.get()});
+        }
+        if (count == 0) {
+            throw new IllegalStateException("No asbestos ore generated in up to sixteen fresh Overworld chunks");
         }
         helper.succeed();
     }

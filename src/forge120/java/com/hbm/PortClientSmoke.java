@@ -30,7 +30,8 @@ public final class PortClientSmoke {
             throw new IllegalStateException("Insulator inventory model is missing");
         }
         for (var item : new net.minecraft.world.item.Item[] {
-                PortItems.ORE_ASBESTOS.get(), PortItems.INGOT_ASBESTOS.get()
+                PortItems.ORE_ASBESTOS.get(), PortItems.BLOCK_ASBESTOS.get(),
+                PortItems.INGOT_ASBESTOS.get(), PortItems.POWDER_ASBESTOS.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {

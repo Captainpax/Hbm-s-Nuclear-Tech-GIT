@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_powder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": ["hbm:powder_asbestos"]}]}
+    }
+  },
+  "rewards": {"recipes": ["hbm:ingot_asbestos_from_powder"]}
+}

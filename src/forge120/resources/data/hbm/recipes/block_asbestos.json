@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["AAA", "AAA", "AAA"],
+  "key": {"A": {"item": "hbm:ingot_asbestos"}},
+  "result": {"item": "hbm:block_asbestos"}
+}

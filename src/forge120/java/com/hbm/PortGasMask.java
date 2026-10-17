@@ -44,11 +44,16 @@ public final class PortGasMask extends ArmorItem {
 
     /** Matches legacy radon: consume one point while protected, including the last usable point. */
     public static boolean protectFromFineParticles(LivingEntity entity) {
+        return protectFromFineParticles(entity, 1);
+    }
+
+    /** Inventory asbestos uses the source material's per-slot hazard strength as filter wear. */
+    public static boolean protectFromFineParticles(LivingEntity entity, int wear) {
         ItemStack mask = entity.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack filter = filter(mask);
         if (!filter.is(PortItems.GAS_MASK_FILTER.get())
                 && !filter.is(PortItems.GAS_MASK_FILTER_COMBO.get())) return false;
-        int newDamage = filter.getDamageValue() + 1;
+        int newDamage = filter.getDamageValue() + Math.max(0, wear);
         if (newDamage > filter.getMaxDamage()) {
             removeFilter(mask);
         } else {

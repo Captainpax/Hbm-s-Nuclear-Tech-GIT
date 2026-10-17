@@ -60,9 +60,11 @@ public final class PortItems {
     public static final RegistryObject<Item> NITER = ingot("niter");
     public static final RegistryObject<Item> ORE_ALUMINIUM = ore("ore_aluminium", PortBlocks.ORE_ALUMINIUM);
     public static final RegistryObject<Item> ORE_ASBESTOS = ore("ore_asbestos", PortBlocks.ORE_ASBESTOS);
+    public static final RegistryObject<Item> BLOCK_ASBESTOS = ore("block_asbestos", PortBlocks.BLOCK_ASBESTOS);
     public static final RegistryObject<Item> GAS_ASBESTOS = ITEMS.register("gas_asbestos",
             () -> new BlockItem(PortBlocks.GAS_ASBESTOS.get(), new Item.Properties()));
     public static final RegistryObject<Item> INGOT_ASBESTOS = ingot("ingot_asbestos");
+    public static final RegistryObject<Item> POWDER_ASBESTOS = ingot("powder_asbestos");
     public static final RegistryObject<Item> CHUNK_ORE_CRYOLITE = ingot("chunk_ore_cryolite");
     public static final RegistryObject<Item> PLATE_POLYMER = ingot("plate_polymer");
     public static final RegistryObject<Item> MACHINE_BATTERY = ITEMS.register("machine_battery",

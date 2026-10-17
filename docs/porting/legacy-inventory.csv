@@ -1403,7 +1403,7 @@ asset,textures/blocks/battery_top.png,src/main/resources/assets/hbm/textures/blo
 asset,textures/blocks/blast_door.png,src/main/resources/assets/hbm/textures/blocks/blast_door.png,,unported,,
 asset,textures/blocks/block_actinium.png,src/main/resources/assets/hbm/textures/blocks/block_actinium.png,,unported,,
 asset,textures/blocks/block_aluminium.png,src/main/resources/assets/hbm/textures/blocks/block_aluminium.png,,unported,,
-asset,textures/blocks/block_asbestos.png,src/main/resources/assets/hbm/textures/blocks/block_asbestos.png,,unported,,
+asset,textures/blocks/block_asbestos.png,src/main/resources/assets/hbm/textures/blocks/block_asbestos.png,,verified,src/forge120/resources/assets/hbm/textures/block/block_asbestos.png,Original texture copied byte-for-byte
 asset,textures/blocks/block_australium.png,src/main/resources/assets/hbm/textures/blocks/block_australium.png,,unported,,
 asset,textures/blocks/block_bakelite.png,src/main/resources/assets/hbm/textures/blocks/block_bakelite.png,,unported,,
 asset,textures/blocks/block_beryllium.png,src/main/resources/assets/hbm/textures/blocks/block_beryllium.png,,unported,,
@@ -5376,7 +5376,7 @@ asset,textures/items/pollution_detector.png,src/main/resources/assets/hbm/textur
 asset,textures/items/powder_actinium.png,src/main/resources/assets/hbm/textures/items/powder_actinium.png,,unported,,
 asset,textures/items/powder_actinium_tiny.png,src/main/resources/assets/hbm/textures/items/powder_actinium_tiny.png,,unported,,
 asset,textures/items/powder_aluminium.png,src/main/resources/assets/hbm/textures/items/powder_aluminium.png,,unported,,
-asset,textures/items/powder_asbestos.png,src/main/resources/assets/hbm/textures/items/powder_asbestos.png,,unported,,
+asset,textures/items/powder_asbestos.png,src/main/resources/assets/hbm/textures/items/powder_asbestos.png,,verified,src/forge120/resources/assets/hbm/textures/item/powder_asbestos.png,Original texture copied byte-for-byte
 asset,textures/items/powder_ash.coal.png,src/main/resources/assets/hbm/textures/items/powder_ash.coal.png,,unported,,
 asset,textures/items/powder_ash.fly.png,src/main/resources/assets/hbm/textures/items/powder_ash.fly.png,,unported,,
 asset,textures/items/powder_ash.fullerene.png,src/main/resources/assets/hbm/textures/items/powder_ash.fullerene.png,,unported,,
@@ -7193,7 +7193,7 @@ block,basalt_tiles,src/main/java/com/hbm/blocks/ModBlocks.java,2469,unported,,
 block,blast_door,src/main/java/com/hbm/blocks/ModBlocks.java,2946,unported,,
 block,block_actinium,src/main/java/com/hbm/blocks/ModBlocks.java,2559,unported,,
 block,block_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2495,unported,,
-block,block_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2530,unported,,
+block,block_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2530,partial,src/forge120/java/com/hbm/PortAsbestosOutgasBlock.java,Nine-sheet compaction self-drop and outgassing tested; in-world appearance and full break-event parity pending
 block,block_australium,src/main/java/com/hbm/blocks/ModBlocks.java,2555,unported,,
 block,block_bakelite,src/main/java/com/hbm/blocks/ModBlocks.java,2553,unported,,
 block,block_beryllium,src/main/java/com/hbm/blocks/ModBlocks.java,2497,unported,,
@@ -7788,7 +7788,7 @@ block,oil_pipe,src/main/java/com/hbm/blocks/ModBlocks.java,3444,unported,,
 block,oil_spill,src/main/java/com/hbm/blocks/ModBlocks.java,2820,unported,,
 block,ore_alexandrite,src/main/java/com/hbm/blocks/ModBlocks.java,2427,unported,,
 block,ore_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2366,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting to the named cryolite variant tested; tool tier and downstream processing pending
-block,ore_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2374,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Stone and deepslate worldgen plus sheet drops and outgassing ported; visual and full break-event parity checks pending
+block,ore_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2374,partial,src/forge120/java/com/hbm/PortAsbestosOutgasBlock.java,Stone and deepslate worldgen plus sheet drops and outgassing ported; visual and full break-event parity checks pending
 block,ore_australium,src/main/java/com/hbm/blocks/ModBlocks.java,2378,unported,,
 block,ore_basalt,src/main/java/com/hbm/blocks/ModBlocks.java,2433,unported,,
 block,ore_bedrock,src/main/java/com/hbm/blocks/ModBlocks.java,2439,unported,,
@@ -8664,7 +8664,7 @@ config_option,PotionConfig:8.S0_potionSickness:40,src/main/java/com/hbm/config/P
 config_option,RadiationConfig:AMBIENT_00_nether:46,src/main/java/com/hbm/config/RadiationConfig.java,46,partial,src/forge120/java/com/hbm/PortConfig.java,Default 0.1 RAD per second Nether ambient exposure ported; full armor resistance pending
 config_option,RadiationConfig:FOG_00_threshold:44,src/main/java/com/hbm/config/RadiationConfig.java,44,unported,,
 config_option,RadiationConfig:FOG_01_threshold:45,src/main/java/com/hbm/config/RadiationConfig.java,45,unported,,
-config_option,RadiationConfig:HAZ_00_disableAsbestos:61,src/main/java/com/hbm/config/RadiationConfig.java,61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and airborne asbestos dose; other asbestos sources not yet ported
+config_option,RadiationConfig:HAZ_00_disableAsbestos:61,src/main/java/com/hbm/config/RadiationConfig.java,61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon airborne and inventory asbestos dose; toggle behavior still needs a startup-config test
 config_option,RadiationConfig:HAZ_01_disableCoaldust:62,src/main/java/com/hbm/config/RadiationConfig.java,62,unported,,
 config_option,RadiationConfig:HAZ_02_disableHot:63,src/main/java/com/hbm/config/RadiationConfig.java,63,unported,,
 config_option,RadiationConfig:HAZ_03_disableExplosive:64,src/main/java/com/hbm/config/RadiationConfig.java,64,unported,,
@@ -9654,7 +9654,7 @@ item,gadget_wireing,src/main/java/com/hbm/items/ModItems.java,6175,unported,,
 item,gas_empty,src/main/java/com/hbm/items/ModItems.java,5139,unported,,
 item,gas_full,src/main/java/com/hbm/items/ModItems.java,5140,unported,,
 item,gas_mask,src/main/java/com/hbm/items/ModItems.java,6217,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and five filters ported; custom worn model and overlay pending
-item,gas_mask_filter,src/main/java/com/hbm/items/ModItems.java,5998,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and radon protection ported; sounds recipes and other hazards pending
+item,gas_mask_filter,src/main/java/com/hbm/items/ModItems.java,5998,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and fine-particle protection including asbestos dose-scaled wear ported; sounds recipes and other hazards pending
 item,gas_mask_filter_combo,src/main/java/com/hbm/items/ModItems.java,6000,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter blocks radon fine particles; other hazard classes pending
 item,gas_mask_filter_mono,src/main/java/com/hbm/items/ModItems.java,5999,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
 item,gas_mask_filter_piss,src/main/java/com/hbm/items/ModItems.java,6002,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
@@ -9808,7 +9808,7 @@ item,ingot_am_mix,src/main/java/com/hbm/items/ModItems.java,4471,unported,,
 item,ingot_americium_fuel,src/main/java/com/hbm/items/ModItems.java,4526,unported,,
 item,ingot_arsenic,src/main/java/com/hbm/items/ModItems.java,4494,unported,,
 item,ingot_arsenic_bronze,src/main/java/com/hbm/items/ModItems.java,4490,unported,,
-item,ingot_asbestos,src/main/java/com/hbm/items/ModItems.java,4567,partial,src/forge120/java/com/hbm/PortItems.java,Source sheet icon and ore drop ported; crafting and other sources pending
+item,ingot_asbestos,src/main/java/com/hbm/items/ModItems.java,4567,partial,src/forge120/java/com/hbm/PortItems.java,Source sheet icon ore drop nine-sheet compaction and one-block unpacking tested; other sources pending
 item,ingot_au198,src/main/java/com/hbm/items/ModItems.java,4477,unported,,
 item,ingot_australium,src/main/java/com/hbm/items/ModItems.java,4530,unported,,
 item,ingot_bakelite,src/main/java/com/hbm/items/ModItems.java,4507,unported,,
@@ -10394,7 +10394,7 @@ item,pollution_detector,src/main/java/com/hbm/items/ModItems.java,5543,unported,
 item,powder_actinium,src/main/java/com/hbm/items/ModItems.java,4719,unported,,
 item,powder_actinium_tiny,src/main/java/com/hbm/items/ModItems.java,4720,unported,,
 item,powder_aluminium,src/main/java/com/hbm/items/ModItems.java,4668,unported,,
-item,powder_asbestos,src/main/java/com/hbm/items/ModItems.java,4723,unported,,
+item,powder_asbestos,src/main/java/com/hbm/items/ModItems.java,4723,partial,src/forge120/java/com/hbm/PortItems.java,Source powder icon and smelting into one sheet tested; stalagmite drops and other sources pending
 item,powder_ash,src/main/java/com/hbm/items/ModItems.java,4742,unported,,
 item,powder_astatine,src/main/java/com/hbm/items/ModItems.java,4705,unported,,
 item,powder_at209,src/main/java/com/hbm/items/ModItems.java,4663,unported,,
@@ -11183,7 +11183,7 @@ java_source,blocks/generic/BlockNoSpawn,src/main/java/com/hbm/blocks/generic/Blo
 java_source,blocks/generic/BlockNuclearWaste,src/main/java/com/hbm/blocks/generic/BlockNuclearWaste.java,,unported,,
 java_source,blocks/generic/BlockOre,src/main/java/com/hbm/blocks/generic/BlockOre.java,,unported,,
 java_source,blocks/generic/BlockOreBasalt,src/main/java/com/hbm/blocks/generic/BlockOreBasalt.java,,unported,,
-java_source,blocks/generic/BlockOutgas,src/main/java/com/hbm/blocks/generic/BlockOutgas.java,,partial,src/forge120/java/com/hbm/PortAsbestosOre.java,Asbestos ore branch ported; other outgassing blocks remain
+java_source,blocks/generic/BlockOutgas,src/main/java/com/hbm/blocks/generic/BlockOutgas.java,,partial,src/forge120/java/com/hbm/PortAsbestosOutgasBlock.java,Asbestos ore and compacted-block branches ported; other outgassing blocks remain
 java_source,blocks/generic/BlockPedestal,src/main/java/com/hbm/blocks/generic/BlockPedestal.java,,unported,,
 java_source,blocks/generic/BlockPinkLog,src/main/java/com/hbm/blocks/generic/BlockPinkLog.java,,unported,,
 java_source,blocks/generic/BlockPinkSlab,src/main/java/com/hbm/blocks/generic/BlockPinkSlab.java,,unported,,
@@ -11661,10 +11661,10 @@ java_source,config/WeaponConfig,src/main/java/com/hbm/config/WeaponConfig.java,,
 java_source,config/WorldConfig,src/main/java/com/hbm/config/WorldConfig.java,,unported,,
 java_source,crafting/ArmorRecipes,src/main/java/com/hbm/crafting/ArmorRecipes.java,,unported,,
 java_source,crafting/ConsumableRecipes,src/main/java/com/hbm/crafting/ConsumableRecipes.java,,unported,,
-java_source,crafting/MineralRecipes,src/main/java/com/hbm/crafting/MineralRecipes.java,,unported,,
+java_source,crafting/MineralRecipes,src/main/java/com/hbm/crafting/MineralRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Asbestos block and sheet crafting ported; other legacy mineral recipes pending
 java_source,crafting/PowderRecipes,src/main/java/com/hbm/crafting/PowderRecipes.java,,unported,,
 java_source,crafting/RodRecipes,src/main/java/com/hbm/crafting/RodRecipes.java,,unported,,
-java_source,crafting/SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,unported,,
+java_source,crafting/SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries plus asbestos powder into sheet; remaining smelting recipes pending
 java_source,crafting/ToolRecipes,src/main/java/com/hbm/crafting/ToolRecipes.java,,unported,,
 java_source,crafting/WeaponRecipes,src/main/java/com/hbm/crafting/WeaponRecipes.java,,unported,,
 java_source,crafting/handlers/CargoShellCraftingHandler,src/main/java/com/hbm/crafting/handlers/CargoShellCraftingHandler.java,,unported,,
@@ -11913,7 +11913,7 @@ java_source,explosion/vanillant/standard/ExplosionEffectStandard,src/main/java/c
 java_source,explosion/vanillant/standard/ExplosionEffectTiny,src/main/java/com/hbm/explosion/vanillant/standard/ExplosionEffectTiny.java,,unported,,
 java_source,explosion/vanillant/standard/ExplosionEffectWeapon,src/main/java/com/hbm/explosion/vanillant/standard/ExplosionEffectWeapon.java,,unported,,
 java_source,explosion/vanillant/standard/PlayerProcessorStandard,src/main/java/com/hbm/explosion/vanillant/standard/PlayerProcessorStandard.java,,unported,,
-java_source,extprop/HbmLivingProps,src/main/java/com/hbm/extprop/HbmLivingProps.java,,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos persist while environmental accumulation/rate are runtime-only; other living properties pending
+java_source,extprop/HbmLivingProps,src/main/java/com/hbm/extprop/HbmLivingProps.java,,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos persist with lethal asbestos threshold; environmental accumulation/rate are runtime-only and other living properties pending
 java_source,extprop/HbmPlayerProps,src/main/java/com/hbm/extprop/HbmPlayerProps.java,,unported,,
 java_source,handler/ArmorModHandler,src/main/java/com/hbm/handler/ArmorModHandler.java,,unported,,
 java_source,handler/BlockMigrations,src/main/java/com/hbm/handler/BlockMigrations.java,,unported,,
@@ -12053,7 +12053,7 @@ java_source,handler/threading/PacketThreading,src/main/java/com/hbm/handler/thre
 java_source,hazard/HazardData,src/main/java/com/hbm/hazard/HazardData.java,,unported,,
 java_source,hazard/HazardEntry,src/main/java/com/hbm/hazard/HazardEntry.java,,unported,,
 java_source,hazard/HazardRegistry,src/main/java/com/hbm/hazard/HazardRegistry.java,,unported,,
-java_source,hazard/HazardSystem,src/main/java/com/hbm/hazard/HazardSystem.java,,unported,,
+java_source,hazard/HazardSystem,src/main/java/com/hbm/hazard/HazardSystem.java,,partial,src/forge120/java/com/hbm/PortAsbestosInventoryHazard.java,Per-slot server inventory exposure for asbestos items ported; other hazard classes and nested equipment pending
 java_source,hazard/modifier/HazardModifier,src/main/java/com/hbm/hazard/modifier/HazardModifier.java,,unported,,
 java_source,hazard/modifier/HazardModifierFuelRadiation,src/main/java/com/hbm/hazard/modifier/HazardModifierFuelRadiation.java,,unported,,
 java_source,hazard/modifier/HazardModifierRBMKHot,src/main/java/com/hbm/hazard/modifier/HazardModifierRBMKHot.java,,unported,,
@@ -12063,7 +12063,7 @@ java_source,hazard/transformer/HazardTransformerBase,src/main/java/com/hbm/hazar
 java_source,hazard/transformer/HazardTransformerRadiationContainer,src/main/java/com/hbm/hazard/transformer/HazardTransformerRadiationContainer.java,,unported,,
 java_source,hazard/transformer/HazardTransformerRadiationME,src/main/java/com/hbm/hazard/transformer/HazardTransformerRadiationME.java,,unported,,
 java_source,hazard/transformer/HazardTransformerRadiationNBT,src/main/java/com/hbm/hazard/transformer/HazardTransformerRadiationNBT.java,,unported,,
-java_source,hazard/type/HazardTypeAsbestos,src/main/java/com/hbm/hazard/type/HazardTypeAsbestos.java,,unported,,
+java_source,hazard/type/HazardTypeAsbestos,src/main/java/com/hbm/hazard/type/HazardTypeAsbestos.java,,partial,src/forge120/java/com/hbm/PortAsbestosInventoryHazard.java,Material dose filter wear lethal threshold and asbestos tooltip ported; other equipment integrations pending
 java_source,hazard/type/HazardTypeBase,src/main/java/com/hbm/hazard/type/HazardTypeBase.java,,unported,,
 java_source,hazard/type/HazardTypeBlinding,src/main/java/com/hbm/hazard/type/HazardTypeBlinding.java,,unported,,
 java_source,hazard/type/HazardTypeCoal,src/main/java/com/hbm/hazard/type/HazardTypeCoal.java,,unported,,
@@ -12091,7 +12091,7 @@ java_source,interfaces/package-info,src/main/java/com/hbm/interfaces/package-inf
 java_source,inventory/FluidContainer,src/main/java/com/hbm/inventory/FluidContainer.java,,unported,,
 java_source,inventory/FluidContainerRegistry,src/main/java/com/hbm/inventory/FluidContainerRegistry.java,,unported,,
 java_source,inventory/FluidStack,src/main/java/com/hbm/inventory/FluidStack.java,,unported,,
-java_source,inventory/OreDictManager,src/main/java/com/hbm/inventory/OreDictManager.java,,unported,,
+java_source,inventory/OreDictManager,src/main/java/com/hbm/inventory/OreDictManager.java,,partial,src/forge120/java/com/hbm/PortAsbestosInventoryHazard.java,Asbestos ore ingot powder and block hazard multipliers ported; ore dictionary and other materials pending
 java_source,inventory/RecipesCommon,src/main/java/com/hbm/inventory/RecipesCommon.java,,unported,,
 java_source,inventory/SlotCraftingOutput,src/main/java/com/hbm/inventory/SlotCraftingOutput.java,,unported,,
 java_source,inventory/SlotDeprecated,src/main/java/com/hbm/inventory/SlotDeprecated.java,,unported,,
@@ -13040,7 +13040,7 @@ java_source,lib/HbmCollection,src/main/java/com/hbm/lib/HbmCollection.java,,unpo
 java_source,lib/HbmWorld,src/main/java/com/hbm/lib/HbmWorld.java,,unported,,
 java_source,lib/HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,unported,,
 java_source,lib/Library,src/main/java/com/hbm/lib/Library.java,,unported,,
-java_source,lib/ModDamageSource,src/main/java/com/hbm/lib/ModDamageSource.java,,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only
+java_source,lib/ModDamageSource,src/main/java/com/hbm/lib/ModDamageSource.java,,partial,src/forge120/resources/data/hbm/damage_type,Asbestos and radiation damage types only
 java_source,lib/RefStrings,src/main/java/com/hbm/lib/RefStrings.java,,unported,,
 java_source,main/ClientProxy,src/main/java/com/hbm/main/ClientProxy.java,,unported,,
 java_source,main/CraftingManager,src/main/java/com/hbm/main/CraftingManager.java,,partial,src/forge120/resources/data/hbm/recipes,Three Insulator crafting paths ported; most legacy crafting behavior pending
@@ -16377,7 +16377,7 @@ recipe_site,MineralRecipes:298,src/main/java/com/hbm/crafting/MineralRecipes.jav
 recipe_site,MineralRecipes:299,src/main/java/com/hbm/crafting/MineralRecipes.java,299,unported,,"GameRegistry.addRecipe(new ItemStack(ModBlocks.block_white_phosphorus, 1), new Object[] { ""###"", ""###"", ""###"", '#', ModItems.ingot_phosphorus });"
 recipe_site,MineralRecipes:300,src/main/java/com/hbm/crafting/MineralRecipes.java,300,unported,,"GameRegistry.addRecipe(new ItemStack(ModBlocks.block_red_phosphorus, 1), new Object[] { ""###"", ""###"", ""###"", '#', ModItems.powder_fire });"
 recipe_site,MineralRecipes:301,src/main/java/com/hbm/crafting/MineralRecipes.java,301,unported,,"GameRegistry.addRecipe(new ItemStack(ModBlocks.block_insulator, 1), new Object[] { ""###"", ""###"", ""###"", '#', ModItems.plate_polymer });"
-recipe_site,MineralRecipes:302,src/main/java/com/hbm/crafting/MineralRecipes.java,302,unported,,"GameRegistry.addRecipe(new ItemStack(ModBlocks.block_asbestos, 1), new Object[] { ""###"", ""###"", ""###"", '#', ModItems.ingot_asbestos });"
+recipe_site,MineralRecipes:302,src/main/java/com/hbm/crafting/MineralRecipes.java,302,partial,src/forge120/resources/data/hbm/recipes/block_asbestos.json,Nine-sheet recipe and recipe-book advancement tested; real-player unlock pending
 recipe_site,MineralRecipes:303,src/main/java/com/hbm/crafting/MineralRecipes.java,303,unported,,"GameRegistry.addRecipe(new ItemStack(ModBlocks.block_fiberglass, 1), new Object[] { ""###"", ""###"", ""###"", '#', ModItems.ingot_fiberglass });"
 recipe_site,MineralRecipes:304,src/main/java/com/hbm/crafting/MineralRecipes.java,304,unported,,"GameRegistry.addRecipe(new ItemStack(ModBlocks.block_cobalt, 1), new Object[] { ""###"", ""###"", ""###"", '#', ModItems.ingot_cobalt });"
 recipe_site,MineralRecipes:306,src/main/java/com/hbm/crafting/MineralRecipes.java,306,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.ingot_copper, 9), new Object[] { ""#"", '#', Item.getItemFromBlock(ModBlocks.block_copper) });"
@@ -16423,7 +16423,7 @@ recipe_site,MineralRecipes:345,src/main/java/com/hbm/crafting/MineralRecipes.jav
 recipe_site,MineralRecipes:346,src/main/java/com/hbm/crafting/MineralRecipes.java,346,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.ingot_phosphorus, 9), new Object[] { ""#"", '#', ModBlocks.block_white_phosphorus });"
 recipe_site,MineralRecipes:347,src/main/java/com/hbm/crafting/MineralRecipes.java,347,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.powder_fire, 9), new Object[] { ""#"", '#', ModBlocks.block_red_phosphorus });"
 recipe_site,MineralRecipes:348,src/main/java/com/hbm/crafting/MineralRecipes.java,348,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.plate_polymer, 9), new Object[] { ""#"", '#', ModBlocks.block_insulator });"
-recipe_site,MineralRecipes:349,src/main/java/com/hbm/crafting/MineralRecipes.java,349,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.ingot_asbestos, 9), new Object[] { ""#"", '#', ModBlocks.block_asbestos });"
+recipe_site,MineralRecipes:349,src/main/java/com/hbm/crafting/MineralRecipes.java,349,partial,src/forge120/resources/data/hbm/recipes/ingot_asbestos_from_block.json,One block unpacks to nine sheets and advancement loads; real-player unlock pending
 recipe_site,MineralRecipes:350,src/main/java/com/hbm/crafting/MineralRecipes.java,350,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.ingot_fiberglass, 9), new Object[] { ""#"", '#', ModBlocks.block_fiberglass });"
 recipe_site,MineralRecipes:351,src/main/java/com/hbm/crafting/MineralRecipes.java,351,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.ingot_cobalt, 9), new Object[] { ""#"", '#', ModBlocks.block_cobalt });"
 recipe_site,MineralRecipes:353,src/main/java/com/hbm/crafting/MineralRecipes.java,353,unported,,"GameRegistry.addRecipe(new ItemStack(ModItems.ingot_plutonium, 1), new Object[] { ""###"", ""###"", ""###"", '#', ModItems.nugget_plutonium });"
@@ -17003,7 +17003,7 @@ recipe_site,SmeltingRecipes:95,src/main/java/com/hbm/crafting/SmeltingRecipes.ja
 recipe_site,SmeltingRecipes:96,src/main/java/com/hbm/crafting/SmeltingRecipes.java,96,unported,,"GameRegistry.addSmelting(ModItems.powder_boron, new ItemStack(ModItems.ingot_boron), 1.0F);"
 recipe_site,SmeltingRecipes:97,src/main/java/com/hbm/crafting/SmeltingRecipes.java,97,unported,,"GameRegistry.addSmelting(ModItems.powder_desh, new ItemStack(ModItems.ingot_desh), 1.0F);"
 recipe_site,SmeltingRecipes:98,src/main/java/com/hbm/crafting/SmeltingRecipes.java,98,unported,,"GameRegistry.addSmelting(ModItems.powder_dineutronium, new ItemStack(ModItems.ingot_dineutronium), 5.0F);"
-recipe_site,SmeltingRecipes:99,src/main/java/com/hbm/crafting/SmeltingRecipes.java,99,unported,,"GameRegistry.addSmelting(ModItems.powder_asbestos, new ItemStack(ModItems.ingot_asbestos), 1.0F);"
+recipe_site,SmeltingRecipes:99,src/main/java/com/hbm/crafting/SmeltingRecipes.java,99,partial,src/forge120/resources/data/hbm/recipes/ingot_asbestos_from_powder.json,One powder smelts to one sheet at one XP and 200 ticks; real-furnace progression pending
 recipe_site,SolderingRecipes:113,src/main/java/com/hbm/inventory/recipes/SolderingRecipes.java,113,unported,,"recipes.add(new SolderingRecipe(new ItemStack(ModItems.circuit, 1, EnumCircuitType.CONTROLLER.ordinal()), 400, 15_000,"
 recipe_site,SolderingRecipes:125,src/main/java/com/hbm/inventory/recipes/SolderingRecipes.java,125,unported,,"recipes.add(new SolderingRecipe(new ItemStack(ModItems.circuit, 1, EnumCircuitType.CONTROLLER_ADVANCED.ordinal()), 600, 25_000,"
 recipe_site,SolderingRecipes:137,src/main/java/com/hbm/inventory/recipes/SolderingRecipes.java,137,unported,,"recipes.add(new SolderingRecipe(new ItemStack(ModItems.circuit, 1, EnumCircuitType.CONTROLLER_QUANTUM.ordinal()), 600, 250_000,"
@@ -17390,7 +17390,7 @@ recipe_source,LiquefactionRecipes,src/main/java/com/hbm/inventory/recipes/Liquef
 recipe_source,MKUCraftingHandler,src/main/java/com/hbm/crafting/handlers/MKUCraftingHandler.java,,unported,,
 recipe_source,MachineRecipes,src/main/java/com/hbm/inventory/recipes/MachineRecipes.java,,unported,,
 recipe_source,MagicRecipes,src/main/java/com/hbm/inventory/recipes/MagicRecipes.java,,unported,,
-recipe_source,MineralRecipes,src/main/java/com/hbm/crafting/MineralRecipes.java,,unported,,
+recipe_source,MineralRecipes,src/main/java/com/hbm/crafting/MineralRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Asbestos sheet block compaction and unpacking ported; most mineral crafting remains
 recipe_source,MixerRecipes,src/main/java/com/hbm/inventory/recipes/MixerRecipes.java,,unported,,
 recipe_source,OutgasserRecipes,src/main/java/com/hbm/inventory/recipes/OutgasserRecipes.java,,unported,,
 recipe_source,PUREXRecipe,src/main/java/com/hbm/inventory/recipes/PUREXRecipe.java,,unported,,
@@ -17413,7 +17413,7 @@ recipe_source,SILEXRecipes,src/main/java/com/hbm/inventory/recipes/SILEXRecipes.
 recipe_source,ScrapsCraftingHandler,src/main/java/com/hbm/crafting/handlers/ScrapsCraftingHandler.java,,unported,,
 recipe_source,ShapedOreRecipeExt,src/main/java/com/hbm/crafting/handlers/ShapedOreRecipeExt.java,,unported,,
 recipe_source,ShredderRecipes,src/main/java/com/hbm/inventory/recipes/ShredderRecipes.java,,unported,,
-recipe_source,SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries including aluminium to named cryolite chunk; remaining recipes pending
+recipe_source,SmeltingRecipes,src/main/java/com/hbm/crafting/SmeltingRecipes.java,,partial,src/forge120/resources/data/hbm/recipes,Eight ordinary ore smelting entries plus asbestos powder into sheet; remaining recipes pending
 recipe_source,SolderingRecipes,src/main/java/com/hbm/inventory/recipes/SolderingRecipes.java,,unported,,
 recipe_source,SolidificationRecipes,src/main/java/com/hbm/inventory/recipes/SolidificationRecipes.java,,unported,,
 recipe_source,TestCraftingHandler,src/main/java/com/hbm/crafting/handlers/TestCraftingHandler.java,,unported,,

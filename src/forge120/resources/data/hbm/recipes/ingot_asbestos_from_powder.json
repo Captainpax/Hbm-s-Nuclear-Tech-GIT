@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {"item": "hbm:powder_asbestos"},
+  "result": "hbm:ingot_asbestos",
+  "experience": 1.0,
+  "cookingtime": 200
+}

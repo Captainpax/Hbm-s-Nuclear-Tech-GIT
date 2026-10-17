@@ -1,8 +1,12 @@
 package com.hbm;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.MushroomCow;
@@ -26,6 +30,9 @@ import org.jetbrains.annotations.Nullable;
 /** Persistent living-entity exposure data, matching the legacy RAD cap and NBT keys. */
 @Mod.EventBusSubscriber(modid = HbmPort.MOD_ID)
 public final class PortRadiation {
+    public static final int MAX_ASBESTOS = 60 * 60 * 20;
+    private static final ResourceKey<DamageType> ASBESTOS_DAMAGE = ResourceKey.create(
+            Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID, "asbestos"));
     public static final Capability<Exposure> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
     private static final ResourceLocation KEY = new ResourceLocation(HbmPort.MOD_ID, "living_exposure");
 
@@ -60,7 +67,7 @@ public final class PortRadiation {
 
         @Override
         public void addAsbestos(int amount) {
-            asbestos = (int) Math.max(0L, Math.min(60L * 60 * 20, (long) asbestos + amount));
+            asbestos = (int) Math.max(0L, Math.min(MAX_ASBESTOS, (long) asbestos + amount));
         }
 
         @Override
@@ -147,14 +154,29 @@ public final class PortRadiation {
                 data.addRadiation(0.05F);
             }
             // The original gas also adds one asbestos unit without fine-particle protection.
-            if (!PortConfig.DISABLE_ASBESTOS.get()) data.addAsbestos(1);
+            if (!PortConfig.DISABLE_ASBESTOS.get()) applyAsbestosDose(entity, data, 1);
         });
     }
 
     public static void exposeAsbestos(LivingEntity entity) {
+        exposeAsbestos(entity, 1);
+    }
+
+    public static void exposeAsbestos(LivingEntity entity, int amount) {
         if (entity.level().isClientSide || PortConfig.DISABLE_ASBESTOS.get()) return;
-        if (PortGasMask.protectFromFineParticles(entity)) return;
-        get(entity).ifPresent(data -> data.addAsbestos(1));
+        if (amount <= 0 || PortGasMask.protectFromFineParticles(entity, amount)) return;
+        get(entity).ifPresent(data -> applyAsbestosDose(entity, data, amount));
+    }
+
+    private static void applyAsbestosDose(LivingEntity entity, Exposure data, int amount) {
+        if ((long) data.asbestos() + amount >= MAX_ASBESTOS) {
+            data.addAsbestos(-data.asbestos());
+            var damageType = entity.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
+                    .getHolderOrThrow(ASBESTOS_DAMAGE);
+            entity.hurt(new DamageSource(damageType), 1000.0F);
+        } else {
+            data.addAsbestos(amount);
+        }
     }
 
     static boolean isRadiationImmune(LivingEntity entity) {

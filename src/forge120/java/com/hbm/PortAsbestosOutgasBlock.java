@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-/** The asbestos branch of legacy BlockOutgas: random, stepped-on, and break emissions. */
-public final class PortAsbestosOre extends Block {
-    public PortAsbestosOre(BlockBehaviour.Properties properties) {
+/** Asbestos branch of legacy BlockOutgas, shared by ore and compacted blocks. */
+public final class PortAsbestosOutgasBlock extends Block {
+    public PortAsbestosOutgasBlock(BlockBehaviour.Properties properties) {
         super(properties.randomTicks());
     }
 
