@@ -3804,7 +3804,7 @@ asset,textures/items/ballistite.png,src/main/resources/assets/hbm/textures/items
 asset,textures/items/bandaid.png,src/main/resources/assets/hbm/textures/items/bandaid.png,,unported,,
 asset,textures/items/bathwater.png,src/main/resources/assets/hbm/textures/items/bathwater.png,,unported,,
 asset,textures/items/bathwater_mk2.png,src/main/resources/assets/hbm/textures/items/bathwater_mk2.png,,unported,,
-asset,textures/items/battery_creative_new.png,src/main/resources/assets/hbm/textures/items/battery_creative_new.png,,unported,,
+asset,textures/items/battery_creative_new.png,src/main/resources/assets/hbm/textures/items/battery_creative_new.png,,verified,src/forge120/resources/assets/hbm/textures/item/battery_creative_new.png,Original shared pack inventory icon copied byte-for-byte
 asset,textures/items/battery_potato.png,src/main/resources/assets/hbm/textures/items/battery_potato.png,,verified,src/forge120/resources/assets/hbm/textures/item/battery_potato.png,Original texture copied byte-for-byte
 asset,textures/items/battery_potatos.png,src/main/resources/assets/hbm/textures/items/battery_potatos.png,,unported,,
 asset,textures/items/battery_sc.am241.png,src/main/resources/assets/hbm/textures/items/battery_sc.am241.png,,unported,,
@@ -6347,24 +6347,24 @@ asset,textures/models/machines/assembly_machine.png,src/main/resources/assets/hb
 asset,textures/models/machines/autocal.png,src/main/resources/assets/hbm/textures/models/machines/autocal.png,,unported,,
 asset,textures/models/machines/autosaw.png,src/main/resources/assets/hbm/textures/models/machines/autosaw.png,,unported,,
 asset,textures/models/machines/bat9000.png,src/main/resources/assets/hbm/textures/models/machines/bat9000.png,,unported,,
-asset,textures/models/machines/battery_lead.png,src/main/resources/assets/hbm/textures/models/machines/battery_lead.png,,unported,,
-asset,textures/models/machines/battery_lithium.png,src/main/resources/assets/hbm/textures/models/machines/battery_lithium.png,,unported,,
-asset,textures/models/machines/battery_quantum.png,src/main/resources/assets/hbm/textures/models/machines/battery_quantum.png,,unported,,
-asset,textures/models/machines/battery_redstone.png,src/main/resources/assets/hbm/textures/models/machines/battery_redstone.png,,unported,,
+asset,textures/models/machines/battery_lead.png,src/main/resources/assets/hbm/textures/models/machines/battery_lead.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/battery_lead.png,Original machine battery texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/battery_lithium.png,src/main/resources/assets/hbm/textures/models/machines/battery_lithium.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/battery_lithium.png,Original machine battery texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/battery_quantum.png,src/main/resources/assets/hbm/textures/models/machines/battery_quantum.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/battery_quantum.png,Original machine battery texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/battery_redstone.png,src/main/resources/assets/hbm/textures/models/machines/battery_redstone.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/battery_redstone.png,Original machine battery texture copied byte-for-byte; dynamic renderer pending
 asset,textures/models/machines/battery_sc.png,src/main/resources/assets/hbm/textures/models/machines/battery_sc.png,,unported,,
-asset,textures/models/machines/battery_schrabidium.png,src/main/resources/assets/hbm/textures/models/machines/battery_schrabidium.png,,unported,,
+asset,textures/models/machines/battery_schrabidium.png,src/main/resources/assets/hbm/textures/models/machines/battery_schrabidium.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/battery_schrabidium.png,Original machine battery texture copied byte-for-byte; dynamic renderer pending
 asset,textures/models/machines/battery_socket.png,src/main/resources/assets/hbm/textures/models/machines/battery_socket.png,,verified,src/forge120/resources/assets/hbm/textures/block/battery_socket.png,Original texture copied byte-for-byte; source 74x72 size limits mip level to one
-asset,textures/models/machines/battery_sodium.png,src/main/resources/assets/hbm/textures/models/machines/battery_sodium.png,,unported,,
+asset,textures/models/machines/battery_sodium.png,src/main/resources/assets/hbm/textures/models/machines/battery_sodium.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/battery_sodium.png,Original machine battery texture copied byte-for-byte; dynamic renderer pending
 asset,textures/models/machines/bigasstank.png,src/main/resources/assets/hbm/textures/models/machines/bigasstank.png,,unported,,
 asset,textures/models/machines/blast_furnace.png,src/main/resources/assets/hbm/textures/models/machines/blast_furnace.png,,unported,,
 asset,textures/models/machines/boiler.png,src/main/resources/assets/hbm/textures/models/machines/boiler.png,,unported,,
 asset,textures/models/machines/breeder.png,src/main/resources/assets/hbm/textures/models/machines/breeder.png,,unported,,
-asset,textures/models/machines/capacitor_bismuth.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_bismuth.png,,unported,,
-asset,textures/models/machines/capacitor_copper.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_copper.png,,unported,,
-asset,textures/models/machines/capacitor_gold.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_gold.png,,unported,,
-asset,textures/models/machines/capacitor_niobium.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_niobium.png,,unported,,
-asset,textures/models/machines/capacitor_spark.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_spark.png,,unported,,
-asset,textures/models/machines/capacitor_tantalum.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_tantalum.png,,unported,,
+asset,textures/models/machines/capacitor_bismuth.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_bismuth.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_bismuth.png,Original machine capacitor texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/capacitor_copper.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_copper.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_copper.png,Original machine capacitor texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/capacitor_gold.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_gold.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_gold.png,Original machine capacitor texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/capacitor_niobium.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_niobium.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_niobium.png,Original machine capacitor texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/capacitor_spark.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_spark.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_spark.png,Original machine capacitor texture copied byte-for-byte; dynamic renderer pending
+asset,textures/models/machines/capacitor_tantalum.png,src/main/resources/assets/hbm/textures/models/machines/capacitor_tantalum.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_tantalum.png,Original machine capacitor texture copied byte-for-byte; dynamic renderer pending
 asset,textures/models/machines/catalytic_cracker.png,src/main/resources/assets/hbm/textures/models/machines/catalytic_cracker.png,,unported,,
 asset,textures/models/machines/catalytic_reformer.png,src/main/resources/assets/hbm/textures/models/machines/catalytic_reformer.png,,unported,,
 asset,textures/models/machines/centrifuge.png,src/main/resources/assets/hbm/textures/models/machines/centrifuge.png,,unported,,
@@ -7636,7 +7636,7 @@ block,machine_bat9000,src/main/java/com/hbm/blocks/ModBlocks.java,3231,unported,
 block,machine_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3203,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,One-mega-HE facing block with comparator charged-item drops two-slot menu and classic-cable transfer; visual GUI and full harvest behavior pending
 block,machine_battery_potato,src/main/java/com/hbm/blocks/ModBlocks.java,3202,unported,,
 block,machine_battery_redd,src/main/java/com/hbm/blocks/ModBlocks.java,3201,unported,,
-block,machine_battery_socket,src/main/java/com/hbm/blocks/ModBlocks.java,3200,partial,src/forge120/java/com/hbm/PortBatterySocketBlock.java,Four-part floor footprint with core item reservoir proxy HE ports and shared proxy item automation; source dynamic model and broader pack support remain pending
+block,machine_battery_socket,src/main/java/com/hbm/blocks/ModBlocks.java,3200,partial,src/forge120/java/com/hbm/PortBatterySocketBlock.java,Four-part floor footprint with core item reservoir proxy HE ports and shared proxy item automation; source dynamic model SC and creative battery behavior remain pending
 block,machine_bigasstank,src/main/java/com/hbm/blocks/ModBlocks.java,3232,unported,,
 block,machine_blast_furnace,src/main/java/com/hbm/blocks/ModBlocks.java,3032,unported,,
 block,machine_boiler,src/main/java/com/hbm/blocks/ModBlocks.java,3018,unported,,
@@ -9202,7 +9202,7 @@ item,bandaid,src/main/java/com/hbm/items/ModItems.java,6141,unported,,
 item,bathwater,src/main/java/com/hbm/items/ModItems.java,6148,unported,,
 item,bathwater_mk2,src/main/java/com/hbm/items/ModItems.java,6149,unported,,
 item,battery_creative,src/main/java/com/hbm/items/ModItems.java,5169,unported,,
-item,battery_pack,src/main/java/com/hbm/items/ModItems.java,5167,unported,,
+item,battery_pack,src/main/java/com/hbm/items/ModItems.java,5167,partial,src/forge120/java/com/hbm/PortItems.java,All twelve metadata variants registered as named items with source HE values and explicit empty/full Creative stacks; charged quantum pack survives dedicated-server restart inside socket; recipes and dynamic socket rendering pending
 item,battery_potato,src/main/java/com/hbm/items/ModItems.java,5172,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Legacy 1000 HE full-by-default item discharges at 100 HE per tick into storage; crafting and other machine use pending
 item,battery_potatos,src/main/java/com/hbm/items/ModItems.java,5173,unported,,
 item,battery_sc,src/main/java/com/hbm/items/ModItems.java,5168,unported,,
@@ -10951,7 +10951,7 @@ java_source,api/hbm/conveyor/IConveyorBelt,src/main/java/api/hbm/conveyor/IConve
 java_source,api/hbm/conveyor/IConveyorItem,src/main/java/api/hbm/conveyor/IConveyorItem.java,,unported,,
 java_source,api/hbm/conveyor/IConveyorPackage,src/main/java/api/hbm/conveyor/IConveyorPackage.java,,unported,,
 java_source,api/hbm/conveyor/IEnterableBlock,src/main/java/api/hbm/conveyor/IEnterableBlock.java,,unported,,
-java_source,api/hbm/energymk2/IBatteryItem,src/main/java/api/hbm/energymk2/IBatteryItem.java,,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Charge and discharge rates with NBT clamping tested for two items; other implementations and machine integrations pending
+java_source,api/hbm/energymk2/IBatteryItem,src/main/java/api/hbm/energymk2/IBatteryItem.java,,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Charge discharge rates and NBT clamping tested for two existing items and twelve pack variants; other implementations and machine integrations pending
 java_source,api/hbm/energymk2/IEnergyConductorMK2,src/main/java/api/hbm/energymk2/IEnergyConductorMK2.java,,unported,,
 java_source,api/hbm/energymk2/IEnergyConnectorBlock,src/main/java/api/hbm/energymk2/IEnergyConnectorBlock.java,,unported,,
 java_source,api/hbm/energymk2/IEnergyConnectorMK2,src/main/java/api/hbm/energymk2/IEnergyConnectorMK2.java,,unported,,
@@ -12600,7 +12600,7 @@ java_source,items/IKeybindReceiver,src/main/java/com/hbm/items/IKeybindReceiver.
 java_source,items/ISatChip,src/main/java/com/hbm/items/ISatChip.java,,unported,,
 java_source,items/ItemAmmoEnums,src/main/java/com/hbm/items/ItemAmmoEnums.java,,unported,,
 java_source,items/ItemCustomLore,src/main/java/com/hbm/items/ItemCustomLore.java,,unported,,
-java_source,items/ItemEnumMulti,src/main/java/com/hbm/items/ItemEnumMulti.java,,unported,,
+java_source,items/ItemEnumMulti,src/main/java/com/hbm/items/ItemEnumMulti.java,,partial,src/forge120/java/com/hbm/PortItems.java,Battery pack metadata variants converted to named IDs in addition to CRYOLITE; other enum families pending
 java_source,items/ItemEnums,src/main/java/com/hbm/items/ItemEnums.java,,unported,,
 java_source,items/ItemGenericPart,src/main/java/com/hbm/items/ItemGenericPart.java,,unported,,
 java_source,items/ItemInventory,src/main/java/com/hbm/items/ItemInventory.java,,unported,,
@@ -12729,7 +12729,7 @@ java_source,items/machine/ItemArcElectrode,src/main/java/com/hbm/items/machine/I
 java_source,items/machine/ItemArcElectrodeBurnt,src/main/java/com/hbm/items/machine/ItemArcElectrodeBurnt.java,,unported,,
 java_source,items/machine/ItemBattery,src/main/java/com/hbm/items/machine/ItemBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Potato battery and power cube charge semantics ported; other ItemBattery instances and item behavior pending
 java_source,items/machine/ItemBatteryCreative,src/main/java/com/hbm/items/machine/ItemBatteryCreative.java,,unported,,
-java_source,items/machine/ItemBatteryPack,src/main/java/com/hbm/items/machine/ItemBatteryPack.java,,unported,,
+java_source,items/machine/ItemBatteryPack,src/main/java/com/hbm/items/machine/ItemBatteryPack.java,,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Twelve pack and capacitor capacities rates empty defaults and charge NBT plus quantum restart tested; tooltip edge cases recipes and dynamic rendering pending
 java_source,items/machine/ItemBatterySC,src/main/java/com/hbm/items/machine/ItemBatterySC.java,,unported,,
 java_source,items/machine/ItemBlades,src/main/java/com/hbm/items/machine/ItemBlades.java,,unported,,
 java_source,items/machine/ItemBlueprintFolder,src/main/java/com/hbm/items/machine/ItemBlueprintFolder.java,,unported,,

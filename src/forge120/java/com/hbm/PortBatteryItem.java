@@ -14,8 +14,14 @@ public final class PortBatteryItem extends Item {
     private final long capacity;
     private final long chargeRate;
     private final long dischargeRate;
+    private final boolean fullByDefault;
 
     public PortBatteryItem(Properties properties, long capacity, long chargeRate, long dischargeRate) {
+        this(properties, capacity, chargeRate, dischargeRate, true);
+    }
+
+    public PortBatteryItem(Properties properties, long capacity, long chargeRate, long dischargeRate,
+            boolean fullByDefault) {
         super(properties.stacksTo(1));
         if (capacity <= 0 || chargeRate < 0 || dischargeRate < 0) {
             throw new IllegalArgumentException("Invalid HE battery parameters");
@@ -23,6 +29,7 @@ public final class PortBatteryItem extends Item {
         this.capacity = capacity;
         this.chargeRate = chargeRate;
         this.dischargeRate = dischargeRate;
+        this.fullByDefault = fullByDefault;
     }
 
     public long capacity() {
@@ -37,10 +44,11 @@ public final class PortBatteryItem extends Item {
         return dischargeRate;
     }
 
-    /** Legacy ItemBattery defaults to full charge before a charge tag is written. */
+    /** ItemBattery defaults to full; ItemBatteryPack defaults to empty. */
     public long charge(ItemStack stack) {
         CompoundTag tag = stack.getTag();
-        return tag == null ? capacity : Math.max(0L, Math.min(capacity, tag.getLong("charge")));
+        return tag == null ? (fullByDefault ? capacity : 0L)
+                : Math.max(0L, Math.min(capacity, tag.getLong("charge")));
     }
 
     public void setCharge(ItemStack stack, long charge) {

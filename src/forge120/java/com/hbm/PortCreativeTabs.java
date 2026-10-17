@@ -1,5 +1,8 @@
 package com.hbm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -86,8 +89,23 @@ public final class PortCreativeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(PortItems.BATTERY_POTATO.get());
                         output.accept(PortItems.CUBE_POWER.get());
+                        for (ItemStack stack : packDisplayStacks()) output.accept(stack);
                     })
                     .build());
 
     private PortCreativeTabs() {}
+
+    static List<ItemStack> packDisplayStacks() {
+        List<ItemStack> stacks = new ArrayList<>(PortItems.BATTERY_PACKS.size() * 2);
+        for (var variant : PortItems.BATTERY_PACKS) {
+            PortBatteryItem battery = (PortBatteryItem) variant.get();
+            ItemStack empty = new ItemStack(battery);
+            battery.setCharge(empty, 0);
+            stacks.add(empty);
+            ItemStack full = new ItemStack(battery);
+            battery.setCharge(full, battery.capacity());
+            stacks.add(full);
+        }
+        return List.copyOf(stacks);
+    }
 }

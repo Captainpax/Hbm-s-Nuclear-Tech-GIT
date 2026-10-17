@@ -49,6 +49,100 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void batteryPackVariantsMatchLegacyRatesAndNBT(GameTestHelper helper) {
+        String[] ids = {
+                "battery_pack_redstone", "battery_pack_lead", "battery_pack_lithium",
+                "battery_pack_sodium", "battery_pack_schrabidium", "battery_pack_quantum",
+                "battery_pack_capacitor_copper", "battery_pack_capacitor_gold",
+                "battery_pack_capacitor_niobium", "battery_pack_capacitor_tantalum",
+                "battery_pack_capacitor_bismuth", "battery_pack_capacitor_spark"
+        };
+        long[] capacities = {
+                1_800_000L, 18_000_000L, 180_000_000L, 900_000_000L,
+                4_500_000_000L, 72_000_000_000L, 600_000L, 6_000_000L,
+                60_000_000L, 300_000_000L, 1_500_000_000L, 6_000_000_000L
+        };
+        long[] chargeRates = {
+                1_000L, 10_000L, 100_000L, 500_000L, 2_500_000L, 10_000_000L,
+                1_000L, 10_000L, 100_000L, 500_000L, 2_500_000L, 10_000_000L
+        };
+        long[] dischargeRates = {
+                100L, 1_000L, 10_000L, 50_000L, 250_000L, 1_000_000L,
+                1_000L, 10_000L, 100_000L, 500_000L, 2_500_000L, 10_000_000L
+        };
+        List<ItemStack> creativeStacks = PortCreativeTabs.packDisplayStacks();
+        if (PortItems.BATTERY_PACKS.size() != ids.length || creativeStacks.size() != ids.length * 2) {
+            throw new IllegalStateException("Battery pack metadata variants were omitted");
+        }
+        for (int i = 0; i < ids.length; i++) {
+            Item item = PortItems.BATTERY_PACKS.get(i).get();
+            if (!(item instanceof PortBatteryItem battery)
+                    || !ForgeRegistries.ITEMS.getKey(item).getPath().equals(ids[i])
+                    || battery.capacity() != capacities[i]
+                    || battery.chargeRate() != chargeRates[i]
+                    || battery.dischargeRate() != dischargeRates[i]) {
+                throw new IllegalStateException("Legacy battery pack rate or ID differs at " + ids[i]);
+            }
+            if (!creativeStacks.get(i * 2).is(item) || battery.charge(creativeStacks.get(i * 2)) != 0
+                    || !creativeStacks.get(i * 2 + 1).is(item)
+                    || battery.charge(creativeStacks.get(i * 2 + 1)) != capacities[i]) {
+                throw new IllegalStateException("Creative tab is missing empty/full pack pair: " + ids[i]);
+            }
+            ItemStack stack = new ItemStack(item);
+            if (battery.charge(stack) != 0 || !battery.isBarVisible(stack)) {
+                throw new IllegalStateException("Untagged battery pack did not start empty: " + ids[i]);
+            }
+            battery.setCharge(stack, Long.MAX_VALUE);
+            ItemStack reloaded = ItemStack.of(stack.save(new CompoundTag()));
+            if (battery.charge(reloaded) != capacities[i] || battery.isBarVisible(reloaded)) {
+                throw new IllegalStateException("Full battery pack NBT or charge clamp failed: " + ids[i]);
+            }
+            battery.setCharge(reloaded, -1);
+            if (battery.charge(reloaded) != 0) {
+                throw new IllegalStateException("Negative battery pack charge was not clamped: " + ids[i]);
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void batteryPacksChargeAndDischargeThroughSocketAtLegacyRates(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(3, 2, 3));
+        PortBatterySocketBlock block = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        var state = block.defaultBlockState().setValue(PortBatterySocketBlock.FACING, Direction.NORTH);
+        level.setBlock(pos, state, 3);
+        block.setPlacedBy(level, pos, state, null, new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get()));
+        PortBatterySocketBlockEntity socket = (PortBatterySocketBlockEntity) level.getBlockEntity(pos);
+        for (var registered : PortItems.BATTERY_PACKS) {
+            PortBatteryItem battery = (PortBatteryItem) registered.get();
+            ItemStack stack = new ItemStack(battery);
+            socket.items().setStackInSlot(0, stack);
+            PortPowerStorage source = new PortPowerStorage(battery.capacity());
+            source.setPower(battery.capacity());
+            long charged = PortPowerNetwork.transfer(
+                    List.of(new PortPowerNetwork.Provider(source, battery.capacity())),
+                    List.of(new PortPowerNetwork.Receiver(socket.reservoir(), socket.receiverSpeed(),
+                            PortPowerNetwork.Priority.NORMAL)));
+            if (charged != battery.chargeRate() || battery.charge(stack) != charged
+                    || source.power() != battery.capacity() - charged) {
+                throw new IllegalStateException("Socket charging rate differs for " + registered.getId());
+            }
+            battery.setCharge(stack, battery.capacity());
+            PortPowerStorage target = new PortPowerStorage(battery.capacity());
+            long discharged = PortPowerNetwork.transfer(
+                    List.of(new PortPowerNetwork.Provider(socket.reservoir(), socket.providerSpeed())),
+                    List.of(new PortPowerNetwork.Receiver(target, battery.capacity(),
+                            PortPowerNetwork.Priority.NORMAL)));
+            if (discharged != battery.dischargeRate() || target.power() != discharged
+                    || battery.charge(stack) != battery.capacity() - discharged) {
+                throw new IllegalStateException("Socket discharge rate differs for " + registered.getId());
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void powerNetworkConservesAndPrioritizes(GameTestHelper helper) {
         PortPowerStorage sourceA = new PortPowerStorage(100);
         PortPowerStorage sourceB = new PortPowerStorage(50);
@@ -732,6 +826,41 @@ public final class PortGameTests {
             }
         } else {
             throw new IllegalStateException("Unknown socket persistence phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void quantumBatteryPackPersistsInSocketAcrossServerRestart(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos core = new BlockPos(560, 80, 560);
+        level.getChunkAt(core);
+        PortBatterySocketBlock block = (PortBatterySocketBlock) PortBlocks.MACHINE_BATTERY_SOCKET.get();
+        if (phase.equals("seed")) {
+            var state = block.defaultBlockState().setValue(PortBatterySocketBlock.FACING, Direction.NORTH);
+            level.setBlock(core, state, 3);
+            block.setPlacedBy(level, core, state, null, new ItemStack(PortItems.MACHINE_BATTERY_SOCKET.get()));
+            PortBatterySocketBlockEntity socket = (PortBatterySocketBlockEntity) level.getBlockEntity(core);
+            ItemStack pack = new ItemStack(PortItems.BATTERY_PACK_QUANTUM.get());
+            ((PortBatteryItem) pack.getItem()).setCharge(pack, 7_654_321L);
+            socket.items().setStackInSlot(0, pack);
+            socket.setModes(PortBatteryBlockEntity.DISABLED, PortBatteryBlockEntity.DISABLED);
+        } else if (phase.equals("verify")) {
+            if (!(level.getBlockEntity(core) instanceof PortBatterySocketBlockEntity socket)
+                    || !socket.items().getStackInSlot(0).is(PortItems.BATTERY_PACK_QUANTUM.get())
+                    || socket.reservoir().power() != 7_654_321L
+                    || socket.reservoir().capacity() != 72_000_000_000L
+                    || socket.lowMode() != PortBatteryBlockEntity.DISABLED) {
+                throw new IllegalStateException("Named quantum pack lost charge or socket state on restart");
+            }
+            level.setBlock(core, Blocks.AIR.defaultBlockState(), 3);
+        } else {
+            throw new IllegalStateException("Unknown battery pack persistence phase: " + phase);
         }
         helper.succeed();
     }
