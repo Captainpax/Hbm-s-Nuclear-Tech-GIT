@@ -2,8 +2,8 @@
   "feature": "hbm:ore_beryllium",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 6
+      "type": "hbm:ore_count",
+      "ore": "beryllium"
     },
     {
       "type": "minecraft:in_square"

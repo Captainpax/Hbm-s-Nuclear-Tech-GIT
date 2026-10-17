@@ -2,8 +2,8 @@
   "feature": "hbm:ore_thorium",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 7
+      "type": "hbm:ore_count",
+      "ore": "thorium"
     },
     {
       "type": "minecraft:in_square"

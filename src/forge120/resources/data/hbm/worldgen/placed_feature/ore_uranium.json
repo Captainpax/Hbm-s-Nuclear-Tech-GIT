@@ -1,7 +1,7 @@
 {
   "feature": "hbm:ore_uranium",
   "placement": [
-    { "type": "minecraft:count", "count": 7 },
+    { "type": "hbm:ore_count", "ore": "uranium" },
     { "type": "minecraft:in_square" },
     {
       "type": "minecraft:height_range",

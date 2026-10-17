@@ -551,4 +551,81 @@ public final class PortGameTests {
         }
         helper.succeed();
     }
+
+    @GameTest(template = "empty", timeoutTicks = 300)
+    public static void oreSpawnSettingsControlFreshChunks(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        int baseChunkX = ThreadLocalRandom.current().nextInt(12000, 16000);
+        int baseChunkZ = ThreadLocalRandom.current().nextInt(12000, 16000);
+        int originalCopper = PortConfig.ORE_COPPER_COUNT.get();
+        boolean originalMaster = PortConfig.ENABLE_OVERWORLD_ORES.get();
+        try {
+            for (String ore : new String[] {
+                    "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium"
+            }) {
+                var setting = PortConfig.oreCountSetting(ore);
+                int originalCount = setting.get();
+                try {
+                    setting.set(0);
+                    if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != 0) {
+                        throw new IllegalStateException(ore + " zero spawn count did not disable placement attempts");
+                    }
+                    setting.set(3);
+                    if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != 3) {
+                        throw new IllegalStateException(ore + " placement did not read the changed spawn count");
+                    }
+                } finally {
+                    setting.set(originalCount);
+                }
+            }
+            PortConfig.ORE_COPPER_COUNT.set(0);
+            if (new PortOreCountPlacement("copper").count(RandomSource.create(1), BlockPos.ZERO) != 0) {
+                throw new IllegalStateException("Zero copper spawn setting did not disable placement attempts");
+            }
+            if (countOresInFreshChunks(level, baseChunkX, baseChunkZ,
+                    new Block[] {PortBlocks.ORE_COPPER.get()}) != 0) {
+                throw new IllegalStateException("Copper generated with its spawn count set to zero");
+            }
+
+            PortConfig.ORE_COPPER_COUNT.set(3);
+            if (new PortOreCountPlacement("copper").count(RandomSource.create(1), BlockPos.ZERO) != 3) {
+                throw new IllegalStateException("Copper placement did not read the changed spawn count");
+            }
+            PortConfig.ENABLE_OVERWORLD_ORES.set(false);
+            if (new PortOreCountPlacement("uranium").count(RandomSource.create(1), BlockPos.ZERO) != 0) {
+                throw new IllegalStateException("Overworld ore master switch did not disable placement attempts");
+            }
+            Block[] all = {
+                    PortBlocks.ORE_URANIUM.get(), PortBlocks.ORE_THORIUM.get(),
+                    PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
+                    PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(),
+                    PortBlocks.ORE_BERYLLIUM.get()
+            };
+            if (countOresInFreshChunks(level, baseChunkX + 64, baseChunkZ + 64, all) != 0) {
+                throw new IllegalStateException("HBM ore generated with the Overworld master switch disabled");
+            }
+        } finally {
+            PortConfig.ORE_COPPER_COUNT.set(originalCopper);
+            PortConfig.ENABLE_OVERWORLD_ORES.set(originalMaster);
+        }
+        helper.succeed();
+    }
+
+    private static int countOresInFreshChunks(ServerLevel level, int baseChunkX, int baseChunkZ, Block[] ores) {
+        int found = 0;
+        for (int chunkX = baseChunkX; chunkX < baseChunkX + 2; chunkX++) {
+            for (int chunkZ = baseChunkZ; chunkZ < baseChunkZ + 2; chunkZ++) {
+                level.getChunk(chunkX, chunkZ);
+                for (int x = chunkX << 4; x < (chunkX << 4) + 16; x++) {
+                    for (int z = chunkZ << 4; z < (chunkZ << 4) + 16; z++) {
+                        for (int y = 5; y <= 49; y++) {
+                            var state = level.getBlockState(new BlockPos(x, y, z));
+                            for (Block ore : ores) if (state.is(ore)) found++;
+                        }
+                    }
+                }
+            }
+        }
+        return found;
+    }
 }

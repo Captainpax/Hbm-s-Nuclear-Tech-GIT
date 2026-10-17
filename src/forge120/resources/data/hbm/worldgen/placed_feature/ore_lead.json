@@ -2,8 +2,8 @@
   "feature": "hbm:ore_lead",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 6
+      "type": "hbm:ore_count",
+      "ore": "lead"
     },
     {
       "type": "minecraft:in_square"

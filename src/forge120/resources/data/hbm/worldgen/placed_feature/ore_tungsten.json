@@ -2,8 +2,8 @@
   "feature": "hbm:ore_tungsten",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 10
+      "type": "hbm:ore_count",
+      "ore": "tungsten"
     },
     {
       "type": "minecraft:in_square"
