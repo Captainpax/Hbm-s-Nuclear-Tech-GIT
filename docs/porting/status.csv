@@ -1,5 +1,5 @@
 kind,key,status,target,notes
-block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; break behavior and hazard integration still need full parity checks
+block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; item and placed-block textures manually checked in client; break behavior and hazard integration still need full parity checks
 block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and fine-particle filtered-mask protection tested across all mask variants; other hazard effects pending
 item,gas_mask,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and five filters ported; custom worn model and overlay pending
 item,gas_mask_filter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and radon protection ported; sounds recipes and other hazards pending
@@ -27,18 +27,18 @@ java_source,handler/radiation/ChunkRadiationHandlerSimple,partial,src/forge120/j
 java_source,util/ContaminationUtil,partial,src/forge120/java/com/hbm/PortEnvironmentRadiation.java,Chunk and Nether exposure plus environmental accumulation ported; armor resistance and other hazard types pending
 packet_source,ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos fields sync server-to-client only; other extended properties pending
 java_source,packet/toclient/ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos sync only; full legacy packet data pending
-item,geiger_counter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory item enables synced personal-dose HUD and right-click chunk/environment/personal readout; resistance and sounds pending
+item,geiger_counter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory and hand model plus zero-dose HUD and right-click chunk/environment/personal readout manually checked in client; nonzero rate multiplayer resistance and sounds pending
 java_source,items/tool/ItemGeigerCounter,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Right-click chunk/environment/personal readings ported; click sounds resistance and full radioactive source coverage pending
-renderer_source,RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger personal-dose bar and rate ported; other overlays pending
-java_source,render/util/RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger personal-dose bar and rate ported; other overlays pending
+renderer_source,RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger zero-dose HUD visually checked at default position; nonzero dose/rate and other overlays pending
+java_source,render/util/RenderScreenOverlay,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger zero-dose HUD visually checked at default position; nonzero dose/rate and other overlays pending
 java_source,main/ModEventHandlerClient,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger overlay registration only; remaining client events pending
 asset,textures/items/geiger_counter.png,verified,src/forge120/resources/assets/hbm/textures/item/geiger_counter.png,Original texture copied byte-for-byte
 asset,textures/misc/overlay_misc.png,verified,src/forge120/resources/assets/hbm/textures/misc/overlay_misc.png,Original texture copied byte-for-byte
 java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and fine-particle filtered-mask protection present; other protections and visual behavior pending
 java_source,config/RadiationConfig,partial,src/forge120/java/com/hbm/PortConfig.java,Four server settings ported; PRISM fog world effects and pollution settings pending
 java_source,config/ClientConfig,partial,src/forge120/java/com/hbm/PortClientConfig.java,Geiger HUD offsets ported; remaining client options pending
-config_option,ClientConfig:GEIGER_OFFSET_HORIZONTAL:16,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero and HUD placement ported; in-world visual placement pending
-config_option,ClientConfig:GEIGER_OFFSET_VERTICAL:17,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero and HUD placement ported; in-world visual placement pending
+config_option,ClientConfig:GEIGER_OFFSET_HORIZONTAL:16,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero HUD position visually checked in-world; nonzero offset behavior pending
+config_option,ClientConfig:GEIGER_OFFSET_VERTICAL:17,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero HUD position visually checked in-world; nonzero offset behavior pending
 java_source,handler/EntityEffectHandler,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers lethal threshold and chunk/Nether exposure ported; transformations and other effects pending
 java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only
 config_option,RadiationConfig:RADIATION_00_enableContamination:52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and chunk dose; broader radiation effects not yet ported

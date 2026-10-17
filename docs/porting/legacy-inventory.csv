@@ -7639,7 +7639,7 @@ block,ore_thorium,src/main/java/com/hbm/blocks/ModBlocks.java,2360,unported,,
 block,ore_tikite,src/main/java/com/hbm/blocks/ModBlocks.java,2436,unported,,
 block,ore_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2361,unported,,
 block,ore_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2365,unported,,
-block,ore_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2358,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; break behavior and hazard integration still need full parity checks
+block,ore_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2358,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; item and placed-block textures manually checked in client; break behavior and hazard integration still need full parity checks
 block,ore_uranium_scorched,src/main/java/com/hbm/blocks/ModBlocks.java,2359,unported,,
 block,part_emitter,src/main/java/com/hbm/blocks/ModBlocks.java,2577,unported,,
 block,pedestal,src/main/java/com/hbm/blocks/ModBlocks.java,2579,unported,,
@@ -8188,8 +8188,8 @@ config_option,BombConfig:6.06_explosionAlgorithm:98,src/main/java/com/hbm/config
 config_option,ClientConfig:BADGES_HUD:41,src/main/java/com/hbm/config/ClientConfig.java,41,unported,,
 config_option,ClientConfig:COOLING_TOWER_PARTICLES:34,src/main/java/com/hbm/config/ClientConfig.java,34,unported,,
 config_option,ClientConfig:DODD_RBMK_DIAGNOSTIC:28,src/main/java/com/hbm/config/ClientConfig.java,28,unported,,
-config_option,ClientConfig:GEIGER_OFFSET_HORIZONTAL:16,src/main/java/com/hbm/config/ClientConfig.java,16,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero and HUD placement ported; in-world visual placement pending
-config_option,ClientConfig:GEIGER_OFFSET_VERTICAL:17,src/main/java/com/hbm/config/ClientConfig.java,17,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero and HUD placement ported; in-world visual placement pending
+config_option,ClientConfig:GEIGER_OFFSET_HORIZONTAL:16,src/main/java/com/hbm/config/ClientConfig.java,16,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero HUD position visually checked in-world; nonzero offset behavior pending
+config_option,ClientConfig:GEIGER_OFFSET_VERTICAL:17,src/main/java/com/hbm/config/ClientConfig.java,17,partial,src/forge120/java/com/hbm/PortClientConfig.java,Default zero HUD position visually checked in-world; nonzero offset behavior pending
 config_option,ClientConfig:GUN_ANIMATION_SPEED:24,src/main/java/com/hbm/config/ClientConfig.java,24,unported,,
 config_option,ClientConfig:GUN_ANIMS_LEGACY:21,src/main/java/com/hbm/config/ClientConfig.java,21,unported,,
 config_option,ClientConfig:GUN_MODEL_FOV:22,src/main/java/com/hbm/config/ClientConfig.java,22,unported,,
@@ -9343,7 +9343,7 @@ item,gas_mask_mono,src/main/java/com/hbm/items/ModItems.java,6219,partial,src/fo
 item,gas_mask_olde,src/main/java/com/hbm/items/ModItems.java,6220,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
 item,gas_tester,src/main/java/com/hbm/items/ModItems.java,6095,unported,,
 item,gear_large,src/main/java/com/hbm/items/ModItems.java,4967,unported,,
-item,geiger_counter,src/main/java/com/hbm/items/ModItems.java,5541,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory item enables synced personal-dose HUD and right-click chunk/environment/personal readout; resistance and sounds pending
+item,geiger_counter,src/main/java/com/hbm/items/ModItems.java,5541,partial,src/forge120/java/com/hbm/PortGeigerCounter.java,Inventory and hand model plus zero-dose HUD and right-click chunk/environment/personal readout manually checked in client; nonzero rate multiplayer resistance and sounds pending
 item,gem_alexandrite,src/main/java/com/hbm/items/ModItems.java,4809,unported,,
 item,gem_rad,src/main/java/com/hbm/items/ModItems.java,4808,unported,,
 item,gem_sodalite,src/main/java/com/hbm/items/ModItems.java,4805,unported,,
@@ -13421,7 +13421,7 @@ java_source,render/util/RenderInfoSystem,src/main/java/com/hbm/render/util/Rende
 java_source,render/util/RenderItemStack,src/main/java/com/hbm/render/util/RenderItemStack.java,,unported,,
 java_source,render/util/RenderMiscEffects,src/main/java/com/hbm/render/util/RenderMiscEffects.java,,unported,,
 java_source,render/util/RenderOverhead,src/main/java/com/hbm/render/util/RenderOverhead.java,,unported,,
-java_source,render/util/RenderScreenOverlay,src/main/java/com/hbm/render/util/RenderScreenOverlay.java,,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger personal-dose bar and rate ported; other overlays pending
+java_source,render/util/RenderScreenOverlay,src/main/java/com/hbm/render/util/RenderScreenOverlay.java,,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger zero-dose HUD visually checked at default position; nonzero dose/rate and other overlays pending
 java_source,render/util/RenderSparks,src/main/java/com/hbm/render/util/RenderSparks.java,,unported,,
 java_source,render/util/SmallBlockPronter,src/main/java/com/hbm/render/util/SmallBlockPronter.java,,unported,,
 java_source,render/util/SoyuzLauncherPronter,src/main/java/com/hbm/render/util/SoyuzLauncherPronter.java,,unported,,
@@ -16122,7 +16122,7 @@ renderer_source,RenderSILEX,src/main/java/com/hbm/render/tileentity/RenderSILEX.
 renderer_source,RenderSawblade,src/main/java/com/hbm/render/entity/projectile/RenderSawblade.java,,unported,,
 renderer_source,RenderSawmill,src/main/java/com/hbm/render/tileentity/RenderSawmill.java,,unported,,
 renderer_source,RenderScaffoldBlock,src/main/java/com/hbm/render/block/RenderScaffoldBlock.java,,unported,,
-renderer_source,RenderScreenOverlay,src/main/java/com/hbm/render/util/RenderScreenOverlay.java,,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger personal-dose bar and rate ported; other overlays pending
+renderer_source,RenderScreenOverlay,src/main/java/com/hbm/render/util/RenderScreenOverlay.java,,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger zero-dose HUD visually checked at default position; nonzero dose/rate and other overlays pending
 renderer_source,RenderSealDoor,src/main/java/com/hbm/render/tileentity/door/RenderSealDoor.java,,unported,,
 renderer_source,RenderSecureDoor,src/main/java/com/hbm/render/tileentity/door/RenderSecureDoor.java,,unported,,
 renderer_source,RenderShrapnel,src/main/java/com/hbm/render/entity/projectile/RenderShrapnel.java,,unported,,
