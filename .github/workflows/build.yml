@@ -25,6 +25,15 @@ jobs:
         run: ./gradlew build runGameTestServer -PhbmPersistencePhase=seed --no-daemon --console=plain
       - name: Restart dedicated server and verify radiation and battery state
         run: ./gradlew runGameTestServer -PhbmPersistencePhase=verify --no-daemon --console=plain
+      - name: Test master-disabled ore generation in fresh chunks
+        run: |
+          mkdir -p run-ore-config/world/serverconfig
+          cp tools/porting/fixtures/hbm-server-master-off.toml run-ore-config/world/serverconfig/hbm-server.toml
+          ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=master-off --no-daemon --console=plain
+      - name: Test copper-disabled generation with other ores enabled
+        run: |
+          cp tools/porting/fixtures/hbm-server-copper-off.toml run-ore-config/world/serverconfig/hbm-server.toml
+          ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=copper-off --no-daemon --console=plain
       - uses: actions/upload-artifact@v4
         with:
           name: hbm-forge-1.20.1-dev

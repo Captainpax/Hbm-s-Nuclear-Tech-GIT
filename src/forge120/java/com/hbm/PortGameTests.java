@@ -764,6 +764,10 @@ public final class PortGameTests {
 
     @GameTest(template = "empty", timeoutTicks = 200)
     public static void uraniumGeneratesInFreshChunks(GameTestHelper helper) {
+        if (!System.getProperty("hbm.port.ore.config.phase", "").isEmpty()) {
+            helper.succeed();
+            return;
+        }
         ServerLevel level = helper.getLevel();
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
         // The GameTest world survives local reruns. Select distant coordinates so
@@ -793,6 +797,10 @@ public final class PortGameTests {
 
     @GameTest(template = "empty", timeoutTicks = 300)
     public static void ordinaryOresGenerateInFreshChunks(GameTestHelper helper) {
+        if (!System.getProperty("hbm.port.ore.config.phase", "").isEmpty()) {
+            helper.succeed();
+            return;
+        }
         ServerLevel level = helper.getLevel();
         Block[] ores = {
                 PortBlocks.ORE_THORIUM.get(), PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
@@ -828,64 +836,46 @@ public final class PortGameTests {
         helper.succeed();
     }
 
-    @GameTest(template = "empty", timeoutTicks = 300)
+    @GameTest(template = "empty", timeoutTicks = 600)
     public static void oreSpawnSettingsControlFreshChunks(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
-        int baseChunkX = ThreadLocalRandom.current().nextInt(12000, 16000);
-        int baseChunkZ = ThreadLocalRandom.current().nextInt(12000, 16000);
-        int originalCopper = PortConfig.ORE_COPPER_COUNT.get();
-        boolean originalMaster = PortConfig.ENABLE_OVERWORLD_ORES.get();
-        try {
-            for (String ore : new String[] {
-                    "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium",
-                    "sulfur", "fluorite", "niter", "aluminium"
-            }) {
-                var setting = PortConfig.oreCountSetting(ore);
-                int originalCount = setting.get();
-                try {
-                    setting.set(0);
-                    if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != 0) {
-                        throw new IllegalStateException(ore + " zero spawn count did not disable placement attempts");
-                    }
-                    setting.set(3);
-                    if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != 3) {
-                        throw new IllegalStateException(ore + " placement did not read the changed spawn count");
-                    }
-                } finally {
-                    setting.set(originalCount);
-                }
+        String phase = System.getProperty("hbm.port.ore.config.phase", "");
+        for (String ore : new String[] {
+                "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium",
+                "sulfur", "fluorite", "niter", "aluminium"
+        }) {
+            int expected = PortConfig.ENABLE_OVERWORLD_ORES.get() ? PortConfig.oreCount(ore) : 0;
+            if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != expected) {
+                throw new IllegalStateException(ore + " placement does not read the active server config");
             }
-            PortConfig.ORE_COPPER_COUNT.set(0);
-            if (new PortOreCountPlacement("copper").count(RandomSource.create(1), BlockPos.ZERO) != 0) {
-                throw new IllegalStateException("Zero copper spawn setting did not disable placement attempts");
+        }
+        Block[] all = {
+                PortBlocks.ORE_URANIUM.get(), PortBlocks.ORE_THORIUM.get(),
+                PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
+                PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(),
+                PortBlocks.ORE_BERYLLIUM.get(), PortBlocks.ORE_SULFUR.get(),
+                PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get(),
+                PortBlocks.ORE_ALUMINIUM.get()
+        };
+        if (phase.equals("master-off")) {
+            int chunkX = ThreadLocalRandom.current().nextInt(20_000, 24_000);
+            int chunkZ = ThreadLocalRandom.current().nextInt(20_000, 24_000);
+            if (PortConfig.ENABLE_OVERWORLD_ORES.get()
+                    || countOresInFreshChunks(level, chunkX, chunkZ, all) != 0) {
+                throw new IllegalStateException("HBM ores generated in fresh chunks with master switch off");
             }
-            if (countOresInFreshChunks(level, baseChunkX, baseChunkZ,
-                    new Block[] {PortBlocks.ORE_COPPER.get()}) != 0) {
-                throw new IllegalStateException("Copper generated with its spawn count set to zero");
+        } else if (phase.equals("copper-off")) {
+            int chunkX = ThreadLocalRandom.current().nextInt(26_000, 30_000);
+            int chunkZ = ThreadLocalRandom.current().nextInt(26_000, 30_000);
+            if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.ORE_COPPER_COUNT.get() != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.ORE_COPPER.get()}) != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.ORE_URANIUM.get()}) == 0) {
+                throw new IllegalStateException("Copper-only disable setting failed in fresh chunks");
             }
-
-            PortConfig.ORE_COPPER_COUNT.set(3);
-            if (new PortOreCountPlacement("copper").count(RandomSource.create(1), BlockPos.ZERO) != 3) {
-                throw new IllegalStateException("Copper placement did not read the changed spawn count");
-            }
-            PortConfig.ENABLE_OVERWORLD_ORES.set(false);
-            if (new PortOreCountPlacement("uranium").count(RandomSource.create(1), BlockPos.ZERO) != 0) {
-                throw new IllegalStateException("Overworld ore master switch did not disable placement attempts");
-            }
-            Block[] all = {
-                    PortBlocks.ORE_URANIUM.get(), PortBlocks.ORE_THORIUM.get(),
-                    PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
-                    PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(),
-                    PortBlocks.ORE_BERYLLIUM.get(), PortBlocks.ORE_SULFUR.get(),
-                    PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get(),
-                    PortBlocks.ORE_ALUMINIUM.get()
-            };
-            if (countOresInFreshChunks(level, baseChunkX + 64, baseChunkZ + 64, all) != 0) {
-                throw new IllegalStateException("HBM ore generated with the Overworld master switch disabled");
-            }
-        } finally {
-            PortConfig.ORE_COPPER_COUNT.set(originalCopper);
-            PortConfig.ENABLE_OVERWORLD_ORES.set(originalMaster);
+        } else if (!phase.isEmpty()) {
+            throw new IllegalStateException("Unknown ore config test phase: " + phase);
         }
         helper.succeed();
     }

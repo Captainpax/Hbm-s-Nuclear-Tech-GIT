@@ -65,39 +65,39 @@ item,ingot_th232,partial,src/forge120/java/com/hbm/PortItems.java,Registered and
 asset,textures/blocks/ore_thorium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_thorium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_th232.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_th232.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:30,verified,src/forge120/resources/data/hbm/recipes/ingot_th232_from_ore.json,GameTest checks ore input output 3 XP and 200-tick cooking time
-config_option,WorldConfig:2.10_thoriumSpawnrate:137,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.10_thoriumSpawnrate:137,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 block,ore_titanium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_titanium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_titanium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_titanium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_titanium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_titanium.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:36,verified,src/forge120/resources/data/hbm/recipes/ingot_titanium_from_ore.json,GameTest checks ore input output 3 XP and 200-tick cooking time
-config_option,WorldConfig:2.01_titaniumSpawnrate:128,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.01_titaniumSpawnrate:128,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 block,ore_copper,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_copper,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_copper.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_copper.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_copper.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_copper.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:37,verified,src/forge120/resources/data/hbm/recipes/ingot_copper_from_ore.json,GameTest checks ore input output 2.5 XP and 200-tick cooking time
-config_option,WorldConfig:2.04_copperSpawnrate:131,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and zero-count absence in fresh chunks tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.04_copperSpawnrate:131,partial,src/forge120/java/com/hbm/PortConfig.java,Zero count loaded from a startup config and no copper found in fresh chunks while uranium still generated; custom positive count pending
 block,ore_tungsten,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_tungsten,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_tungsten.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_tungsten.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_tungsten.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_tungsten.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:38,verified,src/forge120/resources/data/hbm/recipes/ingot_tungsten_from_ore.json,GameTest checks ore input output 6 XP and 200-tick cooking time
-config_option,WorldConfig:2.07_tungstenSpawnrate:134,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.07_tungstenSpawnrate:134,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 block,ore_lead,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_lead,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_lead.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_lead.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_lead.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_lead.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:41,verified,src/forge120/resources/data/hbm/recipes/ingot_lead_from_ore.json,GameTest checks ore input output 3 XP and 200-tick cooking time
-config_option,WorldConfig:2.08_leadSpawnrate:135,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.08_leadSpawnrate:135,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 block,ore_beryllium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_beryllium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_beryllium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_beryllium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_beryllium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_beryllium.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:42,verified,src/forge120/resources/data/hbm/recipes/ingot_beryllium_from_ore.json,GameTest checks ore input output 2 XP and 200-tick cooking time
-config_option,WorldConfig:2.09_berylliumSpawnrate:136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.00_uraniumSpawnrate:127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off absence of all eleven ported ores in fresh chunks tested; other legacy ores not yet ported
+config_option,WorldConfig:2.09_berylliumSpawnrate:136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
+config_option,WorldConfig:2.00_uraniumSpawnrate:127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
+config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all eleven ported ores absent in fresh chunks; other legacy ores unported
 block,ore_sulfur,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 sulfur plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_fluorite,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 fluorite plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_niter,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 niter plus silk-touch drops tested; tool tier fortune and downstream recipes pending
@@ -110,16 +110,16 @@ asset,textures/blocks/ore_niter.png,verified,src/forge120/resources/assets/hbm/t
 asset,textures/items/sulfur.png,verified,src/forge120/resources/assets/hbm/textures/item/sulfur.png,Original texture copied byte-for-byte
 asset,textures/items/fluorite.png,verified,src/forge120/resources/assets/hbm/textures/item/fluorite.png,Original texture copied byte-for-byte
 asset,textures/items/salpeter.png,verified,src/forge120/resources/assets/hbm/textures/item/niter.png,Original salpeter texture copied byte-for-byte for the niter item
-config_option,WorldConfig:2.02_sulfurSpawnrate:129,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.05_fluoriteSpawnrate:132,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.06_niterSpawnrate:133,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.02_sulfurSpawnrate:129,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
+config_option,WorldConfig:2.05_fluoriteSpawnrate:132,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
+config_option,WorldConfig:2.06_niterSpawnrate:133,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 block,ore_aluminium,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting to the named cryolite variant tested; tool tier and downstream processing pending
 item,chunk_ore,partial,src/forge120/java/com/hbm/PortItems.java,CRYOLITE metadata variant represented as named chunk_ore_cryolite item; other variants and processing pending
 variant_source,ItemEnums,partial,src/forge120/java/com/hbm/PortItems.java,EnumChunkType CRYOLITE mapped to named item; other enum-backed item variants pending
 asset,textures/blocks/ore_aluminium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_aluminium.png,Original texture copied byte-for-byte
 asset,textures/items/chunk_ore.cryolite.png,verified,src/forge120/resources/assets/hbm/textures/item/chunk_ore_cryolite.png,Original cryolite variant texture copied byte-for-byte
 recipe_site,SmeltingRecipes:40,verified,src/forge120/resources/data/hbm/recipes/chunk_ore_cryolite_from_ore_aluminium.json,GameTest checks aluminium ore to named CRYOLITE chunk with 2.5 XP and 200-tick cooking time
-config_option,WorldConfig:2.03_aluminiumSpawnrate:130,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.03_aluminiumSpawnrate:130,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
 java_source,api/hbm/energymk2/IEnergyHandlerMK2,partial,src/forge120/java/com/hbm/PortPowerStorage.java,Long-valued HE storage and NBT clamping tested; world attachment and connector contract pending
 java_source,api/hbm/energymk2/IEnergyProviderMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Provider output limits and proportional depletion tested; actual block-entity providers pending
 java_source,api/hbm/energymk2/IEnergyReceiverMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Receiver input limits and priorities tested; actual block-entity receivers pending

@@ -48,6 +48,15 @@ minecraft {
                 property 'hbm.port.persistence.phase', persistencePhase.toString()
             }
         }
+        oreConfigGameTestServer {
+            parent runs.gameTestServer
+            workingDirectory project.file('run-ore-config')
+            property 'forge.enabledGameTestNamespaces', modId
+            def oreConfigPhase = project.findProperty('hbmOreConfigPhase')
+            if (oreConfigPhase != null) {
+                property 'hbm.port.ore.config.phase', oreConfigPhase.toString()
+            }
+        }
         data {
             workingDirectory project.file('run-data')
             args '--mod', modId, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/forge120/resources/')

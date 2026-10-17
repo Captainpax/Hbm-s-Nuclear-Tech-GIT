@@ -24,6 +24,7 @@
 # other
 /run
 /run-data
+/run-ore-config
 
 # CurseForge configuration
 /curseforge.properties
