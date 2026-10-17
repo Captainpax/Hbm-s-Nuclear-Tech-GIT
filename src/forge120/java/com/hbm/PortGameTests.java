@@ -1492,6 +1492,14 @@ public final class PortGameTests {
                             new Block[] {PortBlocks.ORE_URANIUM.get()}) == 0) {
                 throw new IllegalStateException("Copper-only disable setting failed in fresh chunks");
             }
+        } else if (phase.equals("copper-high")) {
+            int chunkX = ThreadLocalRandom.current().nextInt(32_000, 36_000);
+            int chunkZ = ThreadLocalRandom.current().nextInt(32_000, 36_000);
+            if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.ORE_COPPER_COUNT.get() != 48
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.ORE_COPPER.get()}) == 0) {
+                throw new IllegalStateException("Positive copper spawn count failed in fresh chunks");
+            }
         } else if (!phase.isEmpty()) {
             throw new IllegalStateException("Unknown ore config test phase: " + phase);
         }

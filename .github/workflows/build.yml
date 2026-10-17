@@ -49,6 +49,10 @@ jobs:
         run: |
           cp tools/porting/fixtures/hbm-server-copper-off.toml run-ore-config/world/serverconfig/hbm-server.toml
           ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=copper-off --no-daemon --console=plain
+      - name: Test non-default positive copper generation in fresh chunks
+        run: |
+          cp tools/porting/fixtures/hbm-server-copper-high.toml run-ore-config/world/serverconfig/hbm-server.toml
+          ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=copper-high --no-daemon --console=plain
       - uses: actions/upload-artifact@v4
         with:
           name: hbm-forge-1.20.1-dev

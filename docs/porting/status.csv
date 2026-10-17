@@ -77,7 +77,7 @@ item,ingot_copper,partial,src/forge120/java/com/hbm/PortItems.java,Registered an
 asset,textures/blocks/ore_copper.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_copper.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_copper.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_copper.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:37,verified,src/forge120/resources/data/hbm/recipes/ingot_copper_from_ore.json,GameTest checks ore input output 2.5 XP and 200-tick cooking time
-config_option,WorldConfig:2.04_copperSpawnrate:131,partial,src/forge120/java/com/hbm/PortConfig.java,Zero count loaded from a startup config and no copper found in fresh chunks while uranium still generated; custom positive count pending
+config_option,WorldConfig:2.04_copperSpawnrate:131,partial,src/forge120/java/com/hbm/PortConfig.java,Zero and non-default positive counts loaded from startup config; disabled copper absent and 48-attempt copper present in fresh chunks; distribution validation pending
 block,ore_tungsten,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_tungsten,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_tungsten.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_tungsten.png,Original texture copied byte-for-byte
