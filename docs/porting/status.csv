@@ -59,7 +59,7 @@ asset,textures/items/ingot_uranium.png,verified,src/forge120/resources/assets/hb
 asset,textures/blocks/gas_radon.png,verified,src/forge120/resources/assets/hbm/textures/block/gas_radon.png,Original texture copied byte-for-byte
 recipe_source,SmeltingRecipes,partial,src/forge120/resources/data/hbm/recipes,Seven ordinary ore smelting entries only
 recipe_site,SmeltingRecipes:31,verified,src/forge120/resources/data/hbm/recipes/ingot_uranium_from_ore.json,GameTest checks ore input uranium ingot result 6 XP and 200-tick cooking time
-worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Seven ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
+worldgen_source,HbmWorldGen,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Ten ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
 block,ore_thorium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_th232,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_thorium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_thorium.png,Original texture copied byte-for-byte
@@ -97,4 +97,19 @@ asset,textures/items/ingot_beryllium.png,verified,src/forge120/resources/assets/
 recipe_site,SmeltingRecipes:42,verified,src/forge120/resources/data/hbm/recipes/ingot_beryllium_from_ore.json,GameTest checks ore input output 2 XP and 200-tick cooking time
 config_option,WorldConfig:2.09_berylliumSpawnrate:136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.00_uraniumSpawnrate:127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off absence of all seven ported ores in fresh chunks tested; other legacy ores not yet ported
+config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off absence of all ten ported ores in fresh chunks tested; other legacy ores not yet ported
+block,ore_sulfur,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 sulfur plus silk-touch drops tested; tool tier fortune and downstream recipes pending
+block,ore_fluorite,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 fluorite plus silk-touch drops tested; tool tier fortune and downstream recipes pending
+block,ore_niter,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 niter plus silk-touch drops tested; tool tier fortune and downstream recipes pending
+item,sulfur,partial,src/forge120/java/com/hbm/PortItems.java,Mineral drop and creative access ported; downstream recipes pending
+item,fluorite,partial,src/forge120/java/com/hbm/PortItems.java,Mineral drop and creative access ported; downstream recipes pending
+item,niter,partial,src/forge120/java/com/hbm/PortItems.java,Mineral drop and creative access ported; downstream recipes pending
+asset,textures/blocks/ore_sulfur.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_sulfur.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_fluorite.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_fluorite.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_niter.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_niter.png,Original texture copied byte-for-byte
+asset,textures/items/sulfur.png,verified,src/forge120/resources/assets/hbm/textures/item/sulfur.png,Original texture copied byte-for-byte
+asset,textures/items/fluorite.png,verified,src/forge120/resources/assets/hbm/textures/item/fluorite.png,Original texture copied byte-for-byte
+asset,textures/items/salpeter.png,verified,src/forge120/resources/assets/hbm/textures/item/niter.png,Original salpeter texture copied byte-for-byte for the niter item
+config_option,WorldConfig:2.02_sulfurSpawnrate:129,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.05_fluoriteSpawnrate:132,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.06_niterSpawnrate:133,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked

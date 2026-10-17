@@ -17,6 +17,9 @@ public final class PortConfig {
     public static final ForgeConfigSpec.IntValue ORE_TUNGSTEN_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_LEAD_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_BERYLLIUM_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_SULFUR_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_FLUORITE_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_NITER_COUNT;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -47,6 +50,9 @@ public final class PortConfig {
         ORE_LEAD_COUNT = oreCount(builder, "2.08_leadSpawnrate", 6);
         ORE_BERYLLIUM_COUNT = oreCount(builder, "2.09_berylliumSpawnrate", 6);
         ORE_THORIUM_COUNT = oreCount(builder, "2.10_thoriumSpawnrate", 7);
+        ORE_SULFUR_COUNT = oreCount(builder, "2.02_sulfurSpawnrate", 5);
+        ORE_FLUORITE_COUNT = oreCount(builder, "2.05_fluoriteSpawnrate", 6);
+        ORE_NITER_COUNT = oreCount(builder, "2.06_niterSpawnrate", 6);
         builder.pop();
         SPEC = builder.build();
     }
@@ -71,6 +77,9 @@ public final class PortConfig {
             case "tungsten" -> ORE_TUNGSTEN_COUNT;
             case "lead" -> ORE_LEAD_COUNT;
             case "beryllium" -> ORE_BERYLLIUM_COUNT;
+            case "sulfur" -> ORE_SULFUR_COUNT;
+            case "fluorite" -> ORE_FLUORITE_COUNT;
+            case "niter" -> ORE_NITER_COUNT;
             default -> throw new IllegalArgumentException("Unknown HBM ore placement: " + ore);
         };
     }

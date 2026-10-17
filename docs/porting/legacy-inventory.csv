@@ -2426,7 +2426,7 @@ asset,textures/blocks/ore_depth_borax.png,src/main/resources/assets/hbm/textures
 asset,textures/blocks/ore_depth_cinnebar.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_cinnebar.png,,unported,,
 asset,textures/blocks/ore_depth_nether_neodymium.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_nether_neodymium.png,,unported,,
 asset,textures/blocks/ore_depth_zirconium.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_zirconium.png,,unported,,
-asset,textures/blocks/ore_fluorite.png,src/main/resources/assets/hbm/textures/blocks/ore_fluorite.png,,unported,,
+asset,textures/blocks/ore_fluorite.png,src/main/resources/assets/hbm/textures/blocks/ore_fluorite.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_fluorite.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_gneiss_asbestos.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_asbestos.png,,unported,,
 asset,textures/blocks/ore_gneiss_copper.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_copper.png,,unported,,
 asset,textures/blocks/ore_gneiss_gas.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_gas.png,,unported,,
@@ -2456,7 +2456,7 @@ asset,textures/blocks/ore_nether_sulfur.png,src/main/resources/assets/hbm/textur
 asset,textures/blocks/ore_nether_tungsten.png,src/main/resources/assets/hbm/textures/blocks/ore_nether_tungsten.png,,unported,,
 asset,textures/blocks/ore_nether_uranium.png,src/main/resources/assets/hbm/textures/blocks/ore_nether_uranium.png,,unported,,
 asset,textures/blocks/ore_nether_uranium_scorched.png,src/main/resources/assets/hbm/textures/blocks/ore_nether_uranium_scorched.png,,unported,,
-asset,textures/blocks/ore_niter.png,src/main/resources/assets/hbm/textures/blocks/ore_niter.png,,unported,,
+asset,textures/blocks/ore_niter.png,src/main/resources/assets/hbm/textures/blocks/ore_niter.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_niter.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_oil.png,src/main/resources/assets/hbm/textures/blocks/ore_oil.png,,unported,,
 asset,textures/blocks/ore_oil_empty.png,src/main/resources/assets/hbm/textures/blocks/ore_oil_empty.png,,unported,,
 asset,textures/blocks/ore_oil_sand.png,src/main/resources/assets/hbm/textures/blocks/ore_oil_sand.png,,unported,,
@@ -2480,7 +2480,7 @@ asset,textures/blocks/ore_random_9.png,src/main/resources/assets/hbm/textures/bl
 asset,textures/blocks/ore_rare.png,src/main/resources/assets/hbm/textures/blocks/ore_rare.png,,unported,,
 asset,textures/blocks/ore_salpeter.png,src/main/resources/assets/hbm/textures/blocks/ore_salpeter.png,,unported,,
 asset,textures/blocks/ore_schrabidium.png,src/main/resources/assets/hbm/textures/blocks/ore_schrabidium.png,,unported,,
-asset,textures/blocks/ore_sulfur.png,src/main/resources/assets/hbm/textures/blocks/ore_sulfur.png,,unported,,
+asset,textures/blocks/ore_sulfur.png,src/main/resources/assets/hbm/textures/blocks/ore_sulfur.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_sulfur.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_tektite_osmiridium.png,src/main/resources/assets/hbm/textures/blocks/ore_tektite_osmiridium.png,,unported,,
 asset,textures/blocks/ore_thorium.png,src/main/resources/assets/hbm/textures/blocks/ore_thorium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_thorium.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_tikite.png,src/main/resources/assets/hbm/textures/blocks/ore_tikite.png,,unported,,
@@ -4502,7 +4502,7 @@ asset,textures/items/fluid_tank.png,src/main/resources/assets/hbm/textures/items
 asset,textures/items/fluid_tank_lead.png,src/main/resources/assets/hbm/textures/items/fluid_tank_lead.png,,unported,,
 asset,textures/items/fluid_tank_lead_overlay.png,src/main/resources/assets/hbm/textures/items/fluid_tank_lead_overlay.png,,unported,,
 asset,textures/items/fluid_tank_overlay.png,src/main/resources/assets/hbm/textures/items/fluid_tank_overlay.png,,unported,,
-asset,textures/items/fluorite.png,src/main/resources/assets/hbm/textures/items/fluorite.png,,unported,,
+asset,textures/items/fluorite.png,src/main/resources/assets/hbm/textures/items/fluorite.png,,verified,src/forge120/resources/assets/hbm/textures/item/fluorite.png,Original texture copied byte-for-byte
 asset,textures/items/flywheel_beryllium.png,src/main/resources/assets/hbm/textures/items/flywheel_beryllium.png,,unported,,
 asset,textures/items/fooditem.png,src/main/resources/assets/hbm/textures/items/fooditem.png,,unported,,
 asset,textures/items/fragment_actinium.png,src/main/resources/assets/hbm/textures/items/fragment_actinium.png,,unported,,
@@ -5714,7 +5714,7 @@ asset,textures/items/rune_isa.png,src/main/resources/assets/hbm/textures/items/r
 asset,textures/items/rune_jera.png,src/main/resources/assets/hbm/textures/items/rune_jera.png,,unported,,
 asset,textures/items/rune_thurisaz.png,src/main/resources/assets/hbm/textures/items/rune_thurisaz.png,,unported,,
 asset,textures/items/safety_fuse.png,src/main/resources/assets/hbm/textures/items/safety_fuse.png,,unported,,
-asset,textures/items/salpeter.png,src/main/resources/assets/hbm/textures/items/salpeter.png,,unported,,
+asset,textures/items/salpeter.png,src/main/resources/assets/hbm/textures/items/salpeter.png,,verified,src/forge120/resources/assets/hbm/textures/item/niter.png,Original salpeter texture copied byte-for-byte for the niter item
 asset,textures/items/sat_base.png,src/main/resources/assets/hbm/textures/items/sat_base.png,,unported,,
 asset,textures/items/sat_chip.png,src/main/resources/assets/hbm/textures/items/sat_chip.png,,unported,,
 asset,textures/items/sat_coord.png,src/main/resources/assets/hbm/textures/items/sat_coord.png,,unported,,
@@ -5890,7 +5890,7 @@ asset,textures/items/structure_randomized.png,src/main/resources/assets/hbm/text
 asset,textures/items/structure_randomly.png,src/main/resources/assets/hbm/textures/items/structure_randomly.png,,unported,,
 asset,textures/items/structure_single.png,src/main/resources/assets/hbm/textures/items/structure_single.png,,unported,,
 asset,textures/items/structure_solid.png,src/main/resources/assets/hbm/textures/items/structure_solid.png,,unported,,
-asset,textures/items/sulfur.png,src/main/resources/assets/hbm/textures/items/sulfur.png,,unported,,
+asset,textures/items/sulfur.png,src/main/resources/assets/hbm/textures/items/sulfur.png,,verified,src/forge120/resources/assets/hbm/textures/item/sulfur.png,Original texture copied byte-for-byte
 asset,textures/items/survey_scanner.png,src/main/resources/assets/hbm/textures/items/survey_scanner.png,,unported,,
 asset,textures/items/syringe_antidote.png,src/main/resources/assets/hbm/textures/items/syringe_antidote.png,,unported,,
 asset,textures/items/syringe_awesome.png,src/main/resources/assets/hbm/textures/items/syringe_awesome.png,,unported,,
@@ -7604,7 +7604,7 @@ block,ore_depth_borax,src/main/java/com/hbm/blocks/ModBlocks.java,2423,unported,
 block,ore_depth_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2421,unported,,
 block,ore_depth_nether_neodymium,src/main/java/com/hbm/blocks/ModBlocks.java,2430,unported,,
 block,ore_depth_zirconium,src/main/java/com/hbm/blocks/ModBlocks.java,2422,unported,,
-block,ore_fluorite,src/main/java/com/hbm/blocks/ModBlocks.java,2367,unported,,
+block,ore_fluorite,src/main/java/com/hbm/blocks/ModBlocks.java,2367,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 fluorite plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_gneiss_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2414,unported,,
 block,ore_gneiss_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2413,unported,,
 block,ore_gneiss_gas,src/main/java/com/hbm/blocks/ModBlocks.java,2418,unported,,
@@ -7627,13 +7627,13 @@ block,ore_nether_sulfur,src/main/java/com/hbm/blocks/ModBlocks.java,2400,unporte
 block,ore_nether_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2399,unported,,
 block,ore_nether_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2396,unported,,
 block,ore_nether_uranium_scorched,src/main/java/com/hbm/blocks/ModBlocks.java,2397,unported,,
-block,ore_niter,src/main/java/com/hbm/blocks/ModBlocks.java,2363,unported,,
+block,ore_niter,src/main/java/com/hbm/blocks/ModBlocks.java,2363,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 niter plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_oil,src/main/java/com/hbm/blocks/ModBlocks.java,2370,unported,,
 block,ore_oil_empty,src/main/java/com/hbm/blocks/ModBlocks.java,2371,unported,,
 block,ore_oil_sand,src/main/java/com/hbm/blocks/ModBlocks.java,2372,unported,,
 block,ore_rare,src/main/java/com/hbm/blocks/ModBlocks.java,2379,unported,,
 block,ore_schrabidium,src/main/java/com/hbm/blocks/ModBlocks.java,2375,unported,,
-block,ore_sulfur,src/main/java/com/hbm/blocks/ModBlocks.java,2362,unported,,
+block,ore_sulfur,src/main/java/com/hbm/blocks/ModBlocks.java,2362,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 sulfur plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_tektite_osmiridium,src/main/java/com/hbm/blocks/ModBlocks.java,2823,unported,,
 block,ore_thorium,src/main/java/com/hbm/blocks/ModBlocks.java,2360,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 block,ore_tikite,src/main/java/com/hbm/blocks/ModBlocks.java,2436,unported,,
@@ -8450,11 +8450,11 @@ config_option,WorldConfig:17.R02_craterBiomeOuterRad:235,src/main/java/com/hbm/c
 config_option,WorldConfig:17.R03_craterBiomeWaterMult:236,src/main/java/com/hbm/config/WorldConfig.java,236,unported,,
 config_option,WorldConfig:2.00_uraniumSpawnrate:127,src/main/java/com/hbm/config/WorldConfig.java,127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.01_titaniumSpawnrate:128,src/main/java/com/hbm/config/WorldConfig.java,128,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.02_sulfurSpawnrate:129,src/main/java/com/hbm/config/WorldConfig.java,129,unported,,
+config_option,WorldConfig:2.02_sulfurSpawnrate:129,src/main/java/com/hbm/config/WorldConfig.java,129,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.03_aluminiumSpawnrate:130,src/main/java/com/hbm/config/WorldConfig.java,130,unported,,
 config_option,WorldConfig:2.04_copperSpawnrate:131,src/main/java/com/hbm/config/WorldConfig.java,131,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and zero-count absence in fresh chunks tested; custom-value restart persistence not yet checked
-config_option,WorldConfig:2.05_fluoriteSpawnrate:132,src/main/java/com/hbm/config/WorldConfig.java,132,unported,,
-config_option,WorldConfig:2.06_niterSpawnrate:133,src/main/java/com/hbm/config/WorldConfig.java,133,unported,,
+config_option,WorldConfig:2.05_fluoriteSpawnrate:132,src/main/java/com/hbm/config/WorldConfig.java,132,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+config_option,WorldConfig:2.06_niterSpawnrate:133,src/main/java/com/hbm/config/WorldConfig.java,133,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.07_tungstenSpawnrate:134,src/main/java/com/hbm/config/WorldConfig.java,134,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.08_leadSpawnrate:135,src/main/java/com/hbm/config/WorldConfig.java,135,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
 config_option,WorldConfig:2.09_berylliumSpawnrate:136,src/main/java/com/hbm/config/WorldConfig.java,136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
@@ -8500,7 +8500,7 @@ config_option,WorldConfig:2.C01_enableAsbestosCave:198,src/main/java/com/hbm/con
 config_option,WorldConfig:2.C01_titaniumClusterSpawn:177,src/main/java/com/hbm/config/WorldConfig.java,177,unported,,
 config_option,WorldConfig:2.C02_aluminiumClusterSpawn:178,src/main/java/com/hbm/config/WorldConfig.java,178,unported,,
 config_option,WorldConfig:2.C03_copperClusterSpawn:179,src/main/java/com/hbm/config/WorldConfig.java,179,unported,,
-config_option,WorldConfig:2.D00_overworldOres:123,src/main/java/com/hbm/config/WorldConfig.java,123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off absence of all seven ported ores in fresh chunks tested; other legacy ores not yet ported
+config_option,WorldConfig:2.D00_overworldOres:123,src/main/java/com/hbm/config/WorldConfig.java,123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off absence of all ten ported ores in fresh chunks tested; other legacy ores not yet ported
 config_option,WorldConfig:2.D01_netherOres:124,src/main/java/com/hbm/config/WorldConfig.java,124,unported,,
 config_option,WorldConfig:2.D02_endOres:125,src/main/java/com/hbm/config/WorldConfig.java,125,unported,,
 config_option,WorldConfig:2.E00_tikiteSpawnrate:191,src/main/java/com/hbm/config/WorldConfig.java,191,unported,,
@@ -9304,7 +9304,7 @@ item,fluid_tank_empty,src/main/java/com/hbm/items/ModItems.java,5143,unported,,
 item,fluid_tank_full,src/main/java/com/hbm/items/ModItems.java,5144,unported,,
 item,fluid_tank_lead_empty,src/main/java/com/hbm/items/ModItems.java,5145,unported,,
 item,fluid_tank_lead_full,src/main/java/com/hbm/items/ModItems.java,5146,unported,,
-item,fluorite,src/main/java/com/hbm/items/ModItems.java,4639,unported,,
+item,fluorite,src/main/java/com/hbm/items/ModItems.java,4639,partial,src/forge120/java/com/hbm/PortItems.java,Mineral drop and creative access ported; downstream recipes pending
 item,flywheel_beryllium,src/main/java/com/hbm/items/ModItems.java,4996,unported,,
 item,fmn,src/main/java/com/hbm/items/ModItems.java,5993,unported,,
 item,fooditem,src/main/java/com/hbm/items/ModItems.java,6022,unported,,
@@ -9845,7 +9845,7 @@ item,ncrpa_plate,src/main/java/com/hbm/items/ModItems.java,6275,unported,,
 item,neutrino_lens,src/main/java/com/hbm/items/ModItems.java,6094,unported,,
 item,neutron_reflector,src/main/java/com/hbm/items/ModItems.java,4891,unported,,
 item,night_vision,src/main/java/com/hbm/items/ModItems.java,6098,unported,,
-item,niter,src/main/java/com/hbm/items/ModItems.java,4636,unported,,
+item,niter,src/main/java/com/hbm/items/ModItems.java,4636,partial,src/forge120/java/com/hbm/PortItems.java,Mineral drop and creative access ported; downstream recipes pending
 item,nitra,src/main/java/com/hbm/items/ModItems.java,4637,unported,,
 item,nitra_small,src/main/java/com/hbm/items/ModItems.java,4638,unported,,
 item,no9,src/main/java/com/hbm/items/ModItems.java,6225,unported,,
@@ -10468,7 +10468,7 @@ item,structure_randomized,src/main/java/com/hbm/items/ModItems.java,6412,unporte
 item,structure_randomly,src/main/java/com/hbm/items/ModItems.java,6413,unported,,
 item,structure_single,src/main/java/com/hbm/items/ModItems.java,6409,unported,,
 item,structure_solid,src/main/java/com/hbm/items/ModItems.java,6410,unported,,
-item,sulfur,src/main/java/com/hbm/items/ModItems.java,4635,unported,,
+item,sulfur,src/main/java/com/hbm/items/ModItems.java,4635,partial,src/forge120/java/com/hbm/PortItems.java,Mineral drop and creative access ported; downstream recipes pending
 item,survey_scanner,src/main/java/com/hbm/items/ModItems.java,5529,unported,,
 item,syringe_antidote,src/main/java/com/hbm/items/ModItems.java,5970,unported,,
 item,syringe_awesome,src/main/java/com/hbm/items/ModItems.java,5972,unported,,
@@ -16538,7 +16538,7 @@ worldgen_source,Dud,src/main/java/com/hbm/world/feature/Dud.java,,unported,,
 worldgen_source,DungeonToolbox,src/main/java/com/hbm/world/generator/DungeonToolbox.java,,unported,,
 worldgen_source,Geyser,src/main/java/com/hbm/world/feature/Geyser.java,,unported,,
 worldgen_source,GlyphidHive,src/main/java/com/hbm/world/feature/GlyphidHive.java,,unported,,
-worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Seven ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
+worldgen_source,HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,partial,src/forge120/resources/data/hbm/worldgen/placed_feature,Ten ordinary Overworld ores use configurable counts and master toggle in fresh chunks; remaining ores structures and distribution-rate validation pending
 worldgen_source,HugeMush,src/main/java/com/hbm/world/feature/HugeMush.java,,unported,,
 worldgen_source,INBTBlockTransformable,src/main/java/com/hbm/world/gen/nbt/INBTBlockTransformable.java,,unported,,
 worldgen_source,INBTTileEntityTransformable,src/main/java/com/hbm/world/gen/nbt/INBTTileEntityTransformable.java,,unported,,

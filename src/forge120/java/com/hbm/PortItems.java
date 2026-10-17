@@ -50,6 +50,12 @@ public final class PortItems {
             () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
     public static final RegistryObject<Item> GEIGER_COUNTER = ITEMS.register("geiger_counter",
             () -> new PortGeigerCounter(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> ORE_SULFUR = ore("ore_sulfur", PortBlocks.ORE_SULFUR);
+    public static final RegistryObject<Item> ORE_FLUORITE = ore("ore_fluorite", PortBlocks.ORE_FLUORITE);
+    public static final RegistryObject<Item> ORE_NITER = ore("ore_niter", PortBlocks.ORE_NITER);
+    public static final RegistryObject<Item> SULFUR = ingot("sulfur");
+    public static final RegistryObject<Item> FLUORITE = ingot("fluorite");
+    public static final RegistryObject<Item> NITER = ingot("niter");
 
     private PortItems() {}
 

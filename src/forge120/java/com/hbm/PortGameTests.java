@@ -19,6 +19,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.RandomSource;
@@ -98,6 +99,36 @@ public final class PortGameTests {
                     null, FakePlayerFactory.getMinecraft(helper.getLevel()), new ItemStack(Items.IRON_PICKAXE));
             if (drops.size() != 1 || !drops.get(0).is(oreItems[i]) || drops.get(0).getCount() != 1) {
                 throw new IllegalStateException("Ore self-drop differs from legacy for " + id);
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void mineralOreDrops(GameTestHelper helper) {
+        Block[] ores = {PortBlocks.ORE_SULFUR.get(), PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get()};
+        Item[] oreItems = {PortItems.ORE_SULFUR.get(), PortItems.ORE_FLUORITE.get(), PortItems.ORE_NITER.get()};
+        Item[] minerals = {PortItems.SULFUR.get(), PortItems.FLUORITE.get(), PortItems.NITER.get()};
+        BlockPos orePos = helper.absolutePos(new BlockPos(1, 1, 1));
+        ItemStack silkPick = new ItemStack(Items.IRON_PICKAXE);
+        silkPick.enchant(Enchantments.SILK_TOUCH, 1);
+        for (int i = 0; i < ores.length; i++) {
+            var id = ForgeRegistries.BLOCKS.getKey(ores[i]);
+            if (id == null || ForgeRegistries.ITEMS.getValue(id) != oreItems[i]
+                    || !helper.getLevel().registryAccess().registryOrThrow(Registries.PLACED_FEATURE).containsKey(id)) {
+                throw new IllegalStateException("Mineral ore item or placed feature missing for " + id);
+            }
+            helper.getLevel().setBlock(orePos, ores[i].defaultBlockState(), 3);
+            var drops = Block.getDrops(ores[i].defaultBlockState(), helper.getLevel(), orePos,
+                    null, FakePlayerFactory.getMinecraft(helper.getLevel()), new ItemStack(Items.IRON_PICKAXE));
+            if (drops.size() != 1 || !drops.get(0).is(minerals[i])
+                    || drops.get(0).getCount() < 2 || drops.get(0).getCount() > 4) {
+                throw new IllegalStateException("Mineral yield differs from legacy for " + id);
+            }
+            var silkDrops = Block.getDrops(ores[i].defaultBlockState(), helper.getLevel(), orePos,
+                    null, FakePlayerFactory.getMinecraft(helper.getLevel()), silkPick);
+            if (silkDrops.size() != 1 || !silkDrops.get(0).is(oreItems[i]) || silkDrops.get(0).getCount() != 1) {
+                throw new IllegalStateException("Silk-touch ore drop differs from legacy for " + id);
             }
         }
         helper.succeed();
@@ -522,7 +553,8 @@ public final class PortGameTests {
         ServerLevel level = helper.getLevel();
         Block[] ores = {
                 PortBlocks.ORE_THORIUM.get(), PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
-                PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get()
+                PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(), PortBlocks.ORE_BERYLLIUM.get(),
+                PortBlocks.ORE_SULFUR.get(), PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get()
         };
         int[] found = new int[ores.length];
         BlockPos origin = helper.absolutePos(BlockPos.ZERO);
@@ -561,7 +593,8 @@ public final class PortGameTests {
         boolean originalMaster = PortConfig.ENABLE_OVERWORLD_ORES.get();
         try {
             for (String ore : new String[] {
-                    "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium"
+                    "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium",
+                    "sulfur", "fluorite", "niter"
             }) {
                 var setting = PortConfig.oreCountSetting(ore);
                 int originalCount = setting.get();
@@ -599,7 +632,8 @@ public final class PortGameTests {
                     PortBlocks.ORE_URANIUM.get(), PortBlocks.ORE_THORIUM.get(),
                     PortBlocks.ORE_TITANIUM.get(), PortBlocks.ORE_COPPER.get(),
                     PortBlocks.ORE_TUNGSTEN.get(), PortBlocks.ORE_LEAD.get(),
-                    PortBlocks.ORE_BERYLLIUM.get()
+                    PortBlocks.ORE_BERYLLIUM.get(), PortBlocks.ORE_SULFUR.get(),
+                    PortBlocks.ORE_FLUORITE.get(), PortBlocks.ORE_NITER.get()
             };
             if (countOresInFreshChunks(level, baseChunkX + 64, baseChunkZ + 64, all) != 0) {
                 throw new IllegalStateException("HBM ore generated with the Overworld master switch disabled");

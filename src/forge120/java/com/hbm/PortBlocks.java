@@ -26,11 +26,14 @@ public final class PortBlocks {
     public static final RegistryObject<Block> ORE_TUNGSTEN = ore("ore_tungsten", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_LEAD = ore("ore_lead", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_BERYLLIUM = ore("ore_beryllium", 5.0F, 15.0F);
-
     public static final RegistryObject<Block> GAS_RADON = BLOCKS.register("gas_radon",
             () -> new PortRadonGas(BlockBehaviour.Properties.of()
                     .strength(0.0F)
                     .noLootTable()));
+
+    public static final RegistryObject<Block> ORE_SULFUR = ore("ore_sulfur", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_FLUORITE = ore("ore_fluorite", 5.0F, 10.0F);
+    public static final RegistryObject<Block> ORE_NITER = ore("ore_niter", 5.0F, 10.0F);
 
     private PortBlocks() {}
 

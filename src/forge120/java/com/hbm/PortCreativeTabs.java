@@ -24,6 +24,9 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.INGOT_TUNGSTEN.get());
                         output.accept(PortItems.INGOT_LEAD.get());
                         output.accept(PortItems.INGOT_BERYLLIUM.get());
+                        output.accept(PortItems.SULFUR.get());
+                        output.accept(PortItems.FLUORITE.get());
+                        output.accept(PortItems.NITER.get());
                     })
                     .build());
 
@@ -39,6 +42,9 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_TUNGSTEN.get());
                         output.accept(PortItems.ORE_LEAD.get());
                         output.accept(PortItems.ORE_BERYLLIUM.get());
+                        output.accept(PortItems.ORE_SULFUR.get());
+                        output.accept(PortItems.ORE_FLUORITE.get());
+                        output.accept(PortItems.ORE_NITER.get());
                         output.accept(PortItems.GAS_RADON.get());
                     })
                     .build());
