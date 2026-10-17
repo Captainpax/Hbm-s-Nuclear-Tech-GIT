@@ -19,7 +19,21 @@ public final class PortItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> GAS_MASK = ITEMS.register("gas_mask",
             () -> new PortGasMask(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> GAS_MASK_M65 = ITEMS.register("gas_mask_m65",
+            () -> new PortGasMask(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> GAS_MASK_MONO = ITEMS.register("gas_mask_mono",
+            () -> new PortGasMask(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> GAS_MASK_OLDE = ITEMS.register("gas_mask_olde",
+            () -> new PortGasMask(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> GAS_MASK_FILTER = ITEMS.register("gas_mask_filter",
+            () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
+    public static final RegistryObject<Item> GAS_MASK_FILTER_MONO = ITEMS.register("gas_mask_filter_mono",
+            () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
+    public static final RegistryObject<Item> GAS_MASK_FILTER_COMBO = ITEMS.register("gas_mask_filter_combo",
+            () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
+    public static final RegistryObject<Item> GAS_MASK_FILTER_RAG = ITEMS.register("gas_mask_filter_rag",
+            () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
+    public static final RegistryObject<Item> GAS_MASK_FILTER_PISS = ITEMS.register("gas_mask_filter_piss",
             () -> new PortGasMaskFilter(new Item.Properties().durability(20000)));
 
     private PortItems() {}

@@ -1,14 +1,28 @@
 kind,key,status,target,notes
 block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; break behavior and hazard integration still need full parity checks
-block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and standard filtered-mask protection tested; other hazard effects pending
-item,gas_mask,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and one filter type ported; custom worn model overlay and additional mask variants pending
+block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and fine-particle filtered-mask protection tested across all mask variants; other hazard effects pending
+item,gas_mask,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and five filters ported; custom worn model and overlay pending
 item,gas_mask_filter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and radon protection ported; sounds recipes and other hazards pending
-java_source,items/armor/ArmorGasMask,partial,src/forge120/java/com/hbm/PortGasMask.java,First mask protection and filter storage ported; other mask variants and rendering pending
-java_source,items/tool/ItemFilter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Standard filter interaction ported; full item behavior pending
+item,gas_mask_m65,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model and overlay pending
+item,gas_mask_mono,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
+item,gas_mask_olde,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
+item,gas_mask_filter_mono,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
+item,gas_mask_filter_combo,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter blocks radon fine particles; other hazard classes pending
+item,gas_mask_filter_rag,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
+item,gas_mask_filter_piss,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
+java_source,items/armor/ArmorGasMask,partial,src/forge120/java/com/hbm/PortGasMask.java,Four mask variants and five filters ported for fine-particle exposure; worn rendering and other hazard classes pending
+java_source,items/tool/ItemFilter,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Five filter variants support install and swap; full hazard behavior and sound pending
 asset,textures/items/gas_mask.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask.png,Original texture copied byte-for-byte
 asset,textures/items/gas_mask_filter.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_m65.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_m65.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_mono.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_mono.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_olde.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_olde.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter_mono.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_mono.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter_combo.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_combo.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter_rag.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_rag.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter_piss.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_piss.png,Original texture copied byte-for-byte
 java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos fields persist; other living properties and effects pending
-java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and standard filtered-mask protection present; other filters and visual behavior pending
+java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and fine-particle filtered-mask protection present; other protections and visual behavior pending
 java_source,config/RadiationConfig,partial,src/forge120/java/com/hbm/PortConfig.java,Two server-synced options ported; remaining radiation and pollution settings pending
 java_source,handler/EntityEffectHandler,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers and lethal threshold ported; transformations and all other effects pending
 java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only

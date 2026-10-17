@@ -15,6 +15,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.RandomSource;
@@ -183,6 +184,43 @@ public final class PortGameTests {
         }
         player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
         player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void allGasMaskFilterVariantsFollowFineParticleRule(GameTestHelper helper) {
+        Item[] masks = {
+                PortItems.GAS_MASK.get(), PortItems.GAS_MASK_M65.get(),
+                PortItems.GAS_MASK_MONO.get(), PortItems.GAS_MASK_OLDE.get()
+        };
+        Item[] filters = {
+                PortItems.GAS_MASK_FILTER.get(), PortItems.GAS_MASK_FILTER_MONO.get(),
+                PortItems.GAS_MASK_FILTER_COMBO.get(), PortItems.GAS_MASK_FILTER_RAG.get(),
+                PortItems.GAS_MASK_FILTER_PISS.get()
+        };
+        for (Item maskItem : masks) {
+            for (Item filterItem : filters) {
+                var cow = EntityType.COW.create(helper.getLevel());
+                if (cow == null) throw new IllegalStateException("Could not create exposure test cow");
+                ItemStack mask = new ItemStack(maskItem);
+                PortGasMask.installFilter(mask, new ItemStack(filterItem));
+                cow.setItemSlot(EquipmentSlot.HEAD, mask);
+                PortRadiation.exposeRadon(cow);
+                var exposure = PortRadiation.get(cow)
+                        .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+                boolean fineFilter = filterItem == PortItems.GAS_MASK_FILTER.get()
+                        || filterItem == PortItems.GAS_MASK_FILTER_COMBO.get();
+                if (fineFilter) {
+                    if (exposure.radiation() != 0.0F || exposure.asbestos() != 0
+                            || PortGasMask.filter(mask).getDamageValue() != 1) {
+                        throw new IllegalStateException("Fine-particle filter failed in " + maskItem);
+                    }
+                } else if (Math.abs(exposure.radiation() - 0.05F) > 0.0001F
+                        || exposure.asbestos() != 1 || PortGasMask.filter(mask).getDamageValue() != 0) {
+                    throw new IllegalStateException("Non-fine filter incorrectly protected in " + maskItem);
+                }
+            }
+        }
         helper.succeed();
     }
 

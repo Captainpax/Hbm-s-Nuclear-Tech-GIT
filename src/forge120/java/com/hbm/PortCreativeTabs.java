@@ -33,14 +33,25 @@ public final class PortCreativeTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hbm.consumables"))
                     .icon(() -> new ItemStack(PortItems.GAS_MASK_FILTER.get()))
-                    .displayItems((parameters, output) -> output.accept(PortItems.GAS_MASK_FILTER.get()))
+                    .displayItems((parameters, output) -> {
+                        output.accept(PortItems.GAS_MASK_FILTER.get());
+                        output.accept(PortItems.GAS_MASK_FILTER_MONO.get());
+                        output.accept(PortItems.GAS_MASK_FILTER_COMBO.get());
+                        output.accept(PortItems.GAS_MASK_FILTER_RAG.get());
+                        output.accept(PortItems.GAS_MASK_FILTER_PISS.get());
+                    })
                     .build());
 
     public static final RegistryObject<CreativeModeTab> ARMOR = TABS.register("armor",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.hbm.armor"))
                     .icon(() -> new ItemStack(PortItems.GAS_MASK.get()))
-                    .displayItems((parameters, output) -> output.accept(PortItems.GAS_MASK.get()))
+                    .displayItems((parameters, output) -> {
+                        output.accept(PortItems.GAS_MASK.get());
+                        output.accept(PortItems.GAS_MASK_M65.get());
+                        output.accept(PortItems.GAS_MASK_MONO.get());
+                        output.accept(PortItems.GAS_MASK_OLDE.get());
+                    })
                     .build());
 
     private PortCreativeTabs() {}

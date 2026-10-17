@@ -4540,13 +4540,13 @@ asset,textures/items/gas_empty.png,src/main/resources/assets/hbm/textures/items/
 asset,textures/items/gas_label.png,src/main/resources/assets/hbm/textures/items/gas_label.png,,unported,,
 asset,textures/items/gas_mask.png,src/main/resources/assets/hbm/textures/items/gas_mask.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask.png,Original texture copied byte-for-byte
 asset,textures/items/gas_mask_filter.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter.png,Original texture copied byte-for-byte
-asset,textures/items/gas_mask_filter_combo.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_combo.png,,unported,,
-asset,textures/items/gas_mask_filter_mono.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_mono.png,,unported,,
-asset,textures/items/gas_mask_filter_piss.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_piss.png,,unported,,
-asset,textures/items/gas_mask_filter_rag.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_rag.png,,unported,,
-asset,textures/items/gas_mask_m65.png,src/main/resources/assets/hbm/textures/items/gas_mask_m65.png,,unported,,
-asset,textures/items/gas_mask_mono.png,src/main/resources/assets/hbm/textures/items/gas_mask_mono.png,,unported,,
-asset,textures/items/gas_mask_olde.png,src/main/resources/assets/hbm/textures/items/gas_mask_olde.png,,unported,,
+asset,textures/items/gas_mask_filter_combo.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_combo.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_combo.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter_mono.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_mono.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_mono.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter_piss.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_piss.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_piss.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_filter_rag.png,src/main/resources/assets/hbm/textures/items/gas_mask_filter_rag.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_rag.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_m65.png,src/main/resources/assets/hbm/textures/items/gas_mask_m65.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_m65.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_mono.png,src/main/resources/assets/hbm/textures/items/gas_mask_mono.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_mono.png,Original texture copied byte-for-byte
+asset,textures/items/gas_mask_olde.png,src/main/resources/assets/hbm/textures/items/gas_mask_olde.png,,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_olde.png,Original texture copied byte-for-byte
 asset,textures/items/gas_tester.png,src/main/resources/assets/hbm/textures/items/gas_tester.png,,unported,,
 asset,textures/items/gear_large.png,src/main/resources/assets/hbm/textures/items/gear_large.png,,unported,,
 asset,textures/items/geiger_counter.png,src/main/resources/assets/hbm/textures/items/geiger_counter.png,,unported,,
@@ -7458,7 +7458,7 @@ block,gas_explosive,src/main/java/com/hbm/blocks/ModBlocks.java,3458,unported,,
 block,gas_flammable,src/main/java/com/hbm/blocks/ModBlocks.java,3457,unported,,
 block,gas_meltdown,src/main/java/com/hbm/blocks/ModBlocks.java,3453,unported,,
 block,gas_monoxide,src/main/java/com/hbm/blocks/ModBlocks.java,3454,unported,,
-block,gas_radon,src/main/java/com/hbm/blocks/ModBlocks.java,3450,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and standard filtered-mask protection tested; other hazard effects pending
+block,gas_radon,src/main/java/com/hbm/blocks/ModBlocks.java,3450,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement unprotected exposure and fine-particle filtered-mask protection tested across all mask variants; other hazard effects pending
 block,gas_radon_dense,src/main/java/com/hbm/blocks/ModBlocks.java,3451,unported,,
 block,gas_radon_tomb,src/main/java/com/hbm/blocks/ModBlocks.java,3452,unported,,
 block,geiger,src/main/java/com/hbm/blocks/ModBlocks.java,2916,unported,,
@@ -9293,15 +9293,15 @@ item,gadget_kit,src/main/java/com/hbm/items/ModItems.java,6429,unported,,
 item,gadget_wireing,src/main/java/com/hbm/items/ModItems.java,6175,unported,,
 item,gas_empty,src/main/java/com/hbm/items/ModItems.java,5139,unported,,
 item,gas_full,src/main/java/com/hbm/items/ModItems.java,5140,unported,,
-item,gas_mask,src/main/java/com/hbm/items/ModItems.java,6217,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and one filter type ported; custom worn model overlay and additional mask variants pending
+item,gas_mask,src/main/java/com/hbm/items/ModItems.java,6217,partial,src/forge120/java/com/hbm/PortGasMask.java,Armor slot and five filters ported; custom worn model and overlay pending
 item,gas_mask_filter,src/main/java/com/hbm/items/ModItems.java,5998,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Install swap durability and radon protection ported; sounds recipes and other hazards pending
-item,gas_mask_filter_combo,src/main/java/com/hbm/items/ModItems.java,6000,unported,,
-item,gas_mask_filter_mono,src/main/java/com/hbm/items/ModItems.java,5999,unported,,
-item,gas_mask_filter_piss,src/main/java/com/hbm/items/ModItems.java,6002,unported,,
-item,gas_mask_filter_rag,src/main/java/com/hbm/items/ModItems.java,6001,unported,,
-item,gas_mask_m65,src/main/java/com/hbm/items/ModItems.java,6218,unported,,
-item,gas_mask_mono,src/main/java/com/hbm/items/ModItems.java,6219,unported,,
-item,gas_mask_olde,src/main/java/com/hbm/items/ModItems.java,6220,unported,,
+item,gas_mask_filter_combo,src/main/java/com/hbm/items/ModItems.java,6000,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter blocks radon fine particles; other hazard classes pending
+item,gas_mask_filter_mono,src/main/java/com/hbm/items/ModItems.java,5999,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
+item,gas_mask_filter_piss,src/main/java/com/hbm/items/ModItems.java,6002,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
+item,gas_mask_filter_rag,src/main/java/com/hbm/items/ModItems.java,6001,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Installable 20000-durability filter; correctly does not block radon; other hazard classes pending
+item,gas_mask_m65,src/main/java/com/hbm/items/ModItems.java,6218,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model and overlay pending
+item,gas_mask_mono,src/main/java/com/hbm/items/ModItems.java,6219,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
+item,gas_mask_olde,src/main/java/com/hbm/items/ModItems.java,6220,partial,src/forge120/java/com/hbm/PortGasMask.java,Inventory asset and fine-particle filter behavior ported; worn model pending
 item,gas_tester,src/main/java/com/hbm/items/ModItems.java,6095,unported,,
 item,gear_large,src/main/java/com/hbm/items/ModItems.java,4967,unported,,
 item,geiger_counter,src/main/java/com/hbm/items/ModItems.java,5541,unported,,
@@ -10741,7 +10741,7 @@ java_source,blocks/gas/BlockGasExplosive,src/main/java/com/hbm/blocks/gas/BlockG
 java_source,blocks/gas/BlockGasFlammable,src/main/java/com/hbm/blocks/gas/BlockGasFlammable.java,,unported,,
 java_source,blocks/gas/BlockGasMeltdown,src/main/java/com/hbm/blocks/gas/BlockGasMeltdown.java,,unported,,
 java_source,blocks/gas/BlockGasMonoxide,src/main/java/com/hbm/blocks/gas/BlockGasMonoxide.java,,unported,,
-java_source,blocks/gas/BlockGasRadon,src/main/java/com/hbm/blocks/gas/BlockGasRadon.java,,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and standard filtered-mask protection present; other filters and visual behavior pending
+java_source,blocks/gas/BlockGasRadon,src/main/java/com/hbm/blocks/gas/BlockGasRadon.java,,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay exposure and fine-particle filtered-mask protection present; other protections and visual behavior pending
 java_source,blocks/gas/BlockGasRadonDense,src/main/java/com/hbm/blocks/gas/BlockGasRadonDense.java,,unported,,
 java_source,blocks/gas/BlockGasRadonTomb,src/main/java/com/hbm/blocks/gas/BlockGasRadonTomb.java,,unported,,
 java_source,blocks/generic/BarbedWire,src/main/java/com/hbm/blocks/generic/BarbedWire.java,,unported,,
@@ -12263,7 +12263,7 @@ java_source,items/armor/ArmorEuphemium,src/main/java/com/hbm/items/armor/ArmorEu
 java_source,items/armor/ArmorFSB,src/main/java/com/hbm/items/armor/ArmorFSB.java,,unported,,
 java_source,items/armor/ArmorFSBFueled,src/main/java/com/hbm/items/armor/ArmorFSBFueled.java,,unported,,
 java_source,items/armor/ArmorFSBPowered,src/main/java/com/hbm/items/armor/ArmorFSBPowered.java,,unported,,
-java_source,items/armor/ArmorGasMask,src/main/java/com/hbm/items/armor/ArmorGasMask.java,,partial,src/forge120/java/com/hbm/PortGasMask.java,First mask protection and filter storage ported; other mask variants and rendering pending
+java_source,items/armor/ArmorGasMask,src/main/java/com/hbm/items/armor/ArmorGasMask.java,,partial,src/forge120/java/com/hbm/PortGasMask.java,Four mask variants and five filters ported for fine-particle exposure; worn rendering and other hazard classes pending
 java_source,items/armor/ArmorHEV,src/main/java/com/hbm/items/armor/ArmorHEV.java,,unported,,
 java_source,items/armor/ArmorHat,src/main/java/com/hbm/items/armor/ArmorHat.java,,unported,,
 java_source,items/armor/ArmorHazmat,src/main/java/com/hbm/items/armor/ArmorHazmat.java,,unported,,
@@ -12500,7 +12500,7 @@ java_source,items/tool/ItemDrone,src/main/java/com/hbm/items/tool/ItemDrone.java
 java_source,items/tool/ItemDroneLinker,src/main/java/com/hbm/items/tool/ItemDroneLinker.java,,unported,,
 java_source,items/tool/ItemDyatlov,src/main/java/com/hbm/items/tool/ItemDyatlov.java,,unported,,
 java_source,items/tool/ItemFertilizer,src/main/java/com/hbm/items/tool/ItemFertilizer.java,,unported,,
-java_source,items/tool/ItemFilter,src/main/java/com/hbm/items/tool/ItemFilter.java,,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Standard filter interaction ported; full item behavior pending
+java_source,items/tool/ItemFilter,src/main/java/com/hbm/items/tool/ItemFilter.java,,partial,src/forge120/java/com/hbm/PortGasMaskFilter.java,Five filter variants support install and swap; full hazard behavior and sound pending
 java_source,items/tool/ItemFusionCore,src/main/java/com/hbm/items/tool/ItemFusionCore.java,,unported,,
 java_source,items/tool/ItemGeigerCounter,src/main/java/com/hbm/items/tool/ItemGeigerCounter.java,,unported,,
 java_source,items/tool/ItemGuideBook,src/main/java/com/hbm/items/tool/ItemGuideBook.java,,unported,,

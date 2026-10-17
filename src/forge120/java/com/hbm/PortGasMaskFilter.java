@@ -17,7 +17,7 @@ public final class PortGasMaskFilter extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack mask = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (!mask.is(PortItems.GAS_MASK.get())) return InteractionResultHolder.pass(player.getItemInHand(hand));
+        if (!(mask.getItem() instanceof PortGasMask)) return InteractionResultHolder.pass(player.getItemInHand(hand));
         ItemStack held = player.getItemInHand(hand);
         if (!level.isClientSide) {
             ItemStack old = PortGasMask.filter(mask);
