@@ -22,8 +22,8 @@ asset,textures/items/gas_mask_filter_combo.png,verified,src/forge120/resources/a
 asset,textures/items/gas_mask_filter_rag.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_rag.png,Original texture copied byte-for-byte
 asset,textures/items/gas_mask_filter_piss.png,verified,src/forge120/resources/assets/hbm/textures/item/gas_mask_filter_piss.png,Original texture copied byte-for-byte
 java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos persist while environmental accumulation/rate are runtime-only; other living properties pending
-java_source,handler/radiation/ChunkRadiationManager,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar per-dimension storage and loaded-chunk diffusion ported; alternate systems and effects pending
-java_source,handler/radiation/ChunkRadiationHandlerSimple,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar field diffusion and NBT persistence ported; fog and world destruction pending
+java_source,handler/radiation/ChunkRadiationManager,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar per-dimension storage and loaded-chunk diffusion ported with two-launch restart test; alternate systems and effects pending
+java_source,handler/radiation/ChunkRadiationHandlerSimple,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar field diffusion and SavedData restart persistence ported; fog and world destruction pending
 java_source,util/ContaminationUtil,partial,src/forge120/java/com/hbm/PortEnvironmentRadiation.java,Chunk and Nether exposure plus environmental accumulation ported; armor resistance and other hazard types pending
 packet_source,ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos fields sync server-to-client only; other extended properties pending
 java_source,packet/toclient/ExtPropPacket,partial,src/forge120/java/com/hbm/PortNetwork.java,Radiation and asbestos sync only; full legacy packet data pending

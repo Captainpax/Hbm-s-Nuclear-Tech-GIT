@@ -7,9 +7,9 @@ The parity baseline is commit `9d7b7ca3bc999b7909fdb349738d305dff58bd7d` on the 
 ## Current gate
 
 - Forge 1.20.1-47.4.10 / Java 17 / ForgeGradle 6 build: passing.
-- `hbm:ore_uranium`, `hbm:gas_radon`, `hbm:ingot_uranium`, four gas masks, five filters, and a Geiger counter: registered with source inventory textures. Fifteen dedicated GameTests pass, including smelting, fresh-chunk uranium generation, ore outgassing, gas movement, exposure persistence, illness and lethal damage, filter installation/wear, fine-particle protection, packet validation, chunk-radiation NBT/diffusion/no-generation checks, Geiger server use, and Nether ambient exposure.
+- `hbm:ore_uranium`, `hbm:gas_radon`, `hbm:ingot_uranium`, four gas masks, five filters, and a Geiger counter: registered with source inventory textures. Sixteen dedicated GameTests pass, including smelting, fresh-chunk uranium generation, ore outgassing, gas movement, exposure persistence, illness and lethal damage, filter installation/wear, fine-particle protection, packet validation, chunk-radiation NBT/diffusion/no-generation checks, Geiger server use, Nether ambient exposure, and a two-launch SavedData restart check.
 - The development client reached the render thread and loaded texture atlases. Visual inspection in a world remains pending.
-- Radon decay, movement, unprotected exposure, and protection by fine-particle filters are implemented. Exposure NBT persistence and chunk-radiation NBT round-trip passed dedicated-server tests. Four server radiation/hazard settings and two client Geiger HUD offsets are wired in. The legacy 200/400/600/800 RAD illness tiers and 1000 RAD lethal threshold run server-side. The default scalar chunk radiation system persists per dimension, diffuses across loaded chunks, and doses entities; Nether ambient radiation is included. The Geiger counter reports chunk, environmental, and personal readings on right-click, and its HUD shows synced personal dose. Actual world reload, multiplayer rejoin, and in-world HUD visual checks remain pending. Other radiation sources, hazards, mob transformations, full ore-break parity, nearly all other content, and integrations remain pending.
+- Radon decay, movement, unprotected exposure, and protection by fine-particle filters are implemented. Exposure NBT persistence and chunk-radiation NBT round-trip passed dedicated-server tests. A separate seed/verify GameTest sequence also demonstrated chunk-radiation SavedData surviving a full dedicated-server stop and restart; it does not prove player or machine state across restart. Four server radiation/hazard settings and two client Geiger HUD offsets are wired in. The legacy 200/400/600/800 RAD illness tiers and 1000 RAD lethal threshold run server-side. The default scalar chunk radiation system persists per dimension, diffuses across loaded chunks, and doses entities; Nether ambient radiation is included. The Geiger counter reports chunk, environmental, and personal readings on right-click, and its HUD shows synced personal dose. Multiplayer rejoin and in-world HUD visual checks remain pending. Other radiation sources, hazards, mob transformations, full ore-break parity, nearly all other content, and integrations remain pending.
 - No 1.7.10 world conversion or generation in already generated 1.20.1 chunks is planned.
 
 ## Next gates
@@ -19,3 +19,12 @@ The parity baseline is commit `9d7b7ca3bc999b7909fdb349738d305dff58bd7d` on the 
 3. Close each inventory item with equivalent gameplay and client/server checks. Audit optional 1.20.1 integrations separately.
 
 The development JAR is intentionally versioned `1.20.1-0.1.0-dev`. It is not a gameplay-parity release.
+
+## Dedicated restart smoke
+
+Run these in order in the same checkout and `run` directory. The first process writes a radiation SavedData fixture; the second starts a new dedicated GameTest server, checks the value, then clears the fixture. CI runs the same pair.
+
+```sh
+./gradlew build runGameTestServer -PhbmPersistencePhase=seed --no-daemon
+./gradlew runGameTestServer -PhbmPersistencePhase=verify --no-daemon
+```

@@ -21,8 +21,10 @@ jobs:
       - uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582
       - name: Verify parity inventory
         run: python tools/porting/build_inventory.py --check
-      - name: Build and run dedicated GameTests
-        run: ./gradlew build runGameTestServer --no-daemon --console=plain
+      - name: Build and seed dedicated persistence GameTest
+        run: ./gradlew build runGameTestServer -PhbmPersistencePhase=seed --no-daemon --console=plain
+      - name: Restart dedicated server and verify persisted radiation
+        run: ./gradlew runGameTestServer -PhbmPersistencePhase=verify --no-daemon --console=plain
       - uses: actions/upload-artifact@v4
         with:
           name: hbm-forge-1.20.1-dev

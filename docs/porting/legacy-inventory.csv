@@ -11726,8 +11726,8 @@ java_source,handler/radiation/ChunkRadiationHandler3D,src/main/java/com/hbm/hand
 java_source,handler/radiation/ChunkRadiationHandlerBlank,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandlerBlank.java,,unported,,
 java_source,handler/radiation/ChunkRadiationHandlerNT,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandlerNT.java,,unported,,
 java_source,handler/radiation/ChunkRadiationHandlerPRISM,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandlerPRISM.java,,unported,,
-java_source,handler/radiation/ChunkRadiationHandlerSimple,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandlerSimple.java,,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar field diffusion and NBT persistence ported; fog and world destruction pending
-java_source,handler/radiation/ChunkRadiationManager,src/main/java/com/hbm/handler/radiation/ChunkRadiationManager.java,,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar per-dimension storage and loaded-chunk diffusion ported; alternate systems and effects pending
+java_source,handler/radiation/ChunkRadiationHandlerSimple,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandlerSimple.java,,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar field diffusion and SavedData restart persistence ported; fog and world destruction pending
+java_source,handler/radiation/ChunkRadiationManager,src/main/java/com/hbm/handler/radiation/ChunkRadiationManager.java,,partial,src/forge120/java/com/hbm/PortChunkRadiation.java,Default scalar per-dimension storage and loaded-chunk diffusion ported with two-launch restart test; alternate systems and effects pending
 java_source,handler/threading/PacketThreading,src/main/java/com/hbm/handler/threading/PacketThreading.java,,unported,,
 java_source,hazard/HazardData,src/main/java/com/hbm/hazard/HazardData.java,,unported,,
 java_source,hazard/HazardEntry,src/main/java/com/hbm/hazard/HazardEntry.java,,unported,,

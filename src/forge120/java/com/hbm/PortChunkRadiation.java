@@ -44,7 +44,7 @@ public final class PortChunkRadiation extends SavedData {
         get(level).set(ChunkPos.asLong(pos.getX() >> 4, pos.getZ() >> 4), amount);
     }
 
-    private void set(long chunk, float amount) {
+    void set(long chunk, float amount) {
         float clamped = Float.isFinite(amount) ? Math.max(0.0F, Math.min(MAX_RADIATION, amount)) : 0.0F;
         if (clamped == radiation.getOrDefault(chunk, 0.0F)) return;
         if (clamped == 0.0F) radiation.remove(chunk);

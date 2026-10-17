@@ -41,7 +41,13 @@ minecraft {
         }
         client {}
         server { args '--nogui' }
-        gameTestServer { property 'forge.enabledGameTestNamespaces', modId }
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', modId
+            def persistencePhase = project.findProperty('hbmPersistencePhase')
+            if (persistencePhase != null) {
+                property 'hbm.port.persistence.phase', persistencePhase.toString()
+            }
+        }
         data {
             workingDirectory project.file('run-data')
             args '--mod', modId, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/forge120/resources/')

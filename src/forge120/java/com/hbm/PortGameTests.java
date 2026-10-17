@@ -206,6 +206,31 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void chunkRadiationSurvivesServerRestart(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        System.out.println("[HBM GameTest] chunk radiation persistence phase: " + phase);
+        // A distant, never-loaded chunk prevents diffusion from changing the
+        // fixture between the seed and verify processes.
+        long fixture = ChunkPos.asLong(9000, 9000);
+        PortChunkRadiation saved = PortChunkRadiation.get(helper.getLevel());
+        if (phase.equals("seed")) {
+            saved.set(fixture, 123.5F);
+        } else if (phase.equals("verify")) {
+            if (saved.at(fixture) != 123.5F) {
+                throw new IllegalStateException("Chunk radiation did not survive a server restart");
+            }
+            saved.set(fixture, 0.0F);
+        } else {
+            throw new IllegalStateException("Unknown persistence test phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void chunkRadiationExposesLivingEntity(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
