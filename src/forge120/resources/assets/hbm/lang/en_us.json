@@ -3,5 +3,6 @@
   "block.hbm.gas_radon": "Radon Gas",
   "item.hbm.ingot_uranium": "Uranium Ingot",
   "itemGroup.hbm.parts": "HBM Parts",
-  "itemGroup.hbm.blocks": "HBM Blocks"
+  "itemGroup.hbm.blocks": "HBM Blocks",
+  "death.attack.hbm.radiation": "%1$s succumbed to radiation poisoning"
 }

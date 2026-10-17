@@ -4,6 +4,8 @@ block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement and
 java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos fields persist; other living properties and effects pending
 java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay and unprotected exposure present; protection/filter and visual behavior pending
 java_source,config/RadiationConfig,partial,src/forge120/java/com/hbm/PortConfig.java,Two server-synced options ported; remaining radiation and pollution settings pending
+java_source,handler/EntityEffectHandler,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers and lethal threshold ported; transformations and all other effects pending
+java_source,lib/ModDamageSource,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only
 config_option,RadiationConfig:RADIATION_00_enableContamination:52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon dose; broader radiation effects not yet ported
 config_option,RadiationConfig:HAZ_00_disableAsbestos:61,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon asbestos dose; other asbestos sources not yet ported
 item,ingot_uranium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and smelting added; hazard behavior pending

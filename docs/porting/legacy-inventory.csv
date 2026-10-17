@@ -11565,7 +11565,7 @@ java_source,handler/BulletConfiguration,src/main/java/com/hbm/handler/BulletConf
 java_source,handler/CasingEjector,src/main/java/com/hbm/handler/CasingEjector.java,,unported,,
 java_source,handler/CompatHandler,src/main/java/com/hbm/handler/CompatHandler.java,,unported,,
 java_source,handler/DispenserBehaviorHandler,src/main/java/com/hbm/handler/DispenserBehaviorHandler.java,,unported,,
-java_source,handler/EntityEffectHandler,src/main/java/com/hbm/handler/EntityEffectHandler.java,,unported,,
+java_source,handler/EntityEffectHandler,src/main/java/com/hbm/handler/EntityEffectHandler.java,,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers and lethal threshold ported; transformations and all other effects pending
 java_source,handler/FuelHandler,src/main/java/com/hbm/handler/FuelHandler.java,,unported,,
 java_source,handler/GUIHandler,src/main/java/com/hbm/handler/GUIHandler.java,,unported,,
 java_source,handler/HTTPHandler,src/main/java/com/hbm/handler/HTTPHandler.java,,unported,,
@@ -12680,7 +12680,7 @@ java_source,lib/HbmCollection,src/main/java/com/hbm/lib/HbmCollection.java,,unpo
 java_source,lib/HbmWorld,src/main/java/com/hbm/lib/HbmWorld.java,,unported,,
 java_source,lib/HbmWorldGen,src/main/java/com/hbm/lib/HbmWorldGen.java,,unported,,
 java_source,lib/Library,src/main/java/com/hbm/lib/Library.java,,unported,,
-java_source,lib/ModDamageSource,src/main/java/com/hbm/lib/ModDamageSource.java,,unported,,
+java_source,lib/ModDamageSource,src/main/java/com/hbm/lib/ModDamageSource.java,,partial,src/forge120/resources/data/hbm/damage_type/radiation.json,Radiation damage type only
 java_source,lib/RefStrings,src/main/java/com/hbm/lib/RefStrings.java,,unported,,
 java_source,main/ClientProxy,src/main/java/com/hbm/main/ClientProxy.java,,unported,,
 java_source,main/CraftingManager,src/main/java/com/hbm/main/CraftingManager.java,,unported,,

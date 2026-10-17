@@ -3,6 +3,9 @@ package com.hbm;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -11,6 +14,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -113,6 +117,44 @@ public final class PortGameTests {
                 .orElseThrow(() -> new IllegalStateException("Zombie radiation capability missing"));
         if (immuneExposure.radiation() != 0.0F) {
             throw new IllegalStateException("A legacy radiation-immune mob received a dose");
+        }
+        immuneExposure.addRadiation(1000.0F);
+        PortRadiationEffects.apply(zombie, immuneExposure);
+        if (zombie.getHealth() <= 0.0F) {
+            throw new IllegalStateException("A legacy radiation-immune mob got radiation sickness");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void fatalRadiationBypassesArmor(GameTestHelper helper) {
+        var damageKey = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(HbmPort.MOD_ID, "radiation"));
+        if (!helper.getLevel().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
+                .getHolderOrThrow(damageKey).is(DamageTypeTags.BYPASSES_ARMOR)) {
+            throw new IllegalStateException("Radiation damage does not bypass armor");
+        }
+        var pig = helper.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(1, 2, 1));
+        var exposure = PortRadiation.get(pig)
+                .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+        exposure.addRadiation(1000.0F);
+        PortRadiationEffects.apply(pig, exposure);
+        if (pig.getHealth() > 0.0F || exposure.radiation() != 0.0F) {
+            throw new IllegalStateException("Lethal radiation did not kill and clear the dose");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void earlyRadiationIllness(GameTestHelper helper) {
+        var pig = helper.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(1, 2, 1));
+        var exposure = PortRadiation.get(pig)
+                .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+        exposure.addRadiation(200.0F);
+        long seed = 0;
+        while (RandomSource.create(seed).nextInt(300) != 0) seed++;
+        PortRadiationEffects.apply(pig, exposure, RandomSource.create(seed));
+        if (!pig.hasEffect(MobEffects.CONFUSION)) {
+            throw new IllegalStateException("200 RAD did not trigger the nausea tier");
         }
         helper.succeed();
     }

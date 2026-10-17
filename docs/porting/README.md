@@ -7,14 +7,14 @@ The parity baseline is commit `9d7b7ca3bc999b7909fdb349738d305dff58bd7d` on the 
 ## Current gate
 
 - Forge 1.20.1-47.4.10 / Java 17 / ForgeGradle 6 build: passing.
-- `hbm:ore_uranium`, `hbm:gas_radon`, and `hbm:ingot_uranium`: registered with source textures. Five dedicated GameTests pass: smelting, fresh-chunk uranium generation, ore outgassing, downward gas movement, and radon exposure through entity NBT reload.
+- `hbm:ore_uranium`, `hbm:gas_radon`, and `hbm:ingot_uranium`: registered with source textures. Seven dedicated GameTests pass: smelting, fresh-chunk uranium generation, ore outgassing, downward gas movement, radon exposure through entity NBT reload, the first illness tier, and lethal armor-bypassing radiation.
 - The development client reached the render thread and loaded texture atlases. Visual inspection in a world remains pending.
-- Radon decay, movement, and unprotected exposure are implemented. Exposure NBT persistence passed a dedicated-server test. The first two server-synced radiation/hazard config switches are wired to radon. Protective masks, radiation illness, client sync, full ore-break parity, nearly all other content, multiplayer systems, and integrations remain pending.
+- Radon decay, movement, and unprotected exposure are implemented. Exposure NBT persistence passed a dedicated-server test. The first two server-synced radiation/hazard config switches are wired to radon. The legacy 200/400/600/800 RAD illness tiers and 1000 RAD lethal threshold now run server-side. Protective masks, mob transformations, client sync, full ore-break parity, nearly all other content, multiplayer systems, and integrations remain pending.
 - No 1.7.10 world conversion or generation in already generated 1.20.1 chunks is planned.
 
 ## Next gates
 
-1. Port radiation effects, protective equipment, and client sync, then complete and test the uranium slice.
+1. Port protective equipment, radiation-related mob transformations, and client sync, then complete and test the uranium slice.
 2. Port common energy, fluid, machine, and networking frameworks before expanding registries in feature groups.
 3. Close each inventory item with equivalent gameplay and client/server checks. Audit optional 1.20.1 integrations separately.
 

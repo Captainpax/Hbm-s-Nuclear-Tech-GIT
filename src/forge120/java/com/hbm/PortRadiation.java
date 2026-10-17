@@ -129,7 +129,7 @@ public final class PortRadiation {
         });
     }
 
-    private static boolean isRadiationImmune(LivingEntity entity) {
+    static boolean isRadiationImmune(LivingEntity entity) {
         return entity instanceof Zombie || entity instanceof AbstractSkeleton
                 || entity instanceof MushroomCow || entity instanceof Ocelot;
     }
