@@ -41,6 +41,13 @@ public final class PortBlocks {
                     .strength(5.0F, 10.0F)
                     .sound(SoundType.METAL)
                     .requiresCorrectToolForDrops(), 1_000_000L));
+    public static final RegistryObject<Block> RED_CABLE_CLASSIC = BLOCKS.register("red_cable_classic",
+            () -> new PortCableBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL)
+                    .strength(5.0F, 10.0F)
+                    .sound(SoundType.METAL)
+                    .noOcclusion()
+                    .requiresCorrectToolForDrops()));
 
     private PortBlocks() {}
 

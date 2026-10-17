@@ -2765,8 +2765,8 @@ asset,textures/blocks/rebar.png,src/main/resources/assets/hbm/textures/blocks/re
 asset,textures/blocks/rebar_base.png,src/main/resources/assets/hbm/textures/blocks/rebar_base.png,,unported,,
 asset,textures/blocks/red_cable.png,src/main/resources/assets/hbm/textures/blocks/red_cable.png,,unported,,
 asset,textures/blocks/red_cable_base.png,src/main/resources/assets/hbm/textures/blocks/red_cable_base.png,,unported,,
-asset,textures/blocks/red_cable_classic.png,src/main/resources/assets/hbm/textures/blocks/red_cable_classic.png,,unported,,
-asset,textures/blocks/red_cable_icon.png,src/main/resources/assets/hbm/textures/blocks/red_cable_icon.png,,unported,,
+asset,textures/blocks/red_cable_classic.png,src/main/resources/assets/hbm/textures/blocks/red_cable_classic.png,,verified,src/forge120/resources/assets/hbm/textures/block/red_cable_classic.png,Original cable texture copied byte-for-byte
+asset,textures/blocks/red_cable_icon.png,src/main/resources/assets/hbm/textures/blocks/red_cable_icon.png,,verified,src/forge120/resources/assets/hbm/textures/item/red_cable_classic.png,Original cable inventory icon copied byte-for-byte
 asset,textures/blocks/red_cable_overlay.png,src/main/resources/assets/hbm/textures/blocks/red_cable_overlay.png,,unported,,
 asset,textures/blocks/red_connector.png,src/main/resources/assets/hbm/textures/blocks/red_connector.png,,unported,,
 asset,textures/blocks/red_pylon.png,src/main/resources/assets/hbm/textures/blocks/red_pylon.png,,unported,,
@@ -7633,7 +7633,7 @@ block,machine_assembly_machine,src/main/java/com/hbm/blocks/ModBlocks.java,3220,
 block,machine_autocrafter,src/main/java/com/hbm/blocks/ModBlocks.java,2980,unported,,
 block,machine_autosaw,src/main/java/com/hbm/blocks/ModBlocks.java,3270,unported,,
 block,machine_bat9000,src/main/java/com/hbm/blocks/ModBlocks.java,3231,unported,,
-block,machine_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3203,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,One-mega-HE facing block with comparator charged-item drops and two-slot menu; visual GUI cable network and full harvest behavior pending
+block,machine_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3203,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,One-mega-HE facing block with comparator charged-item drops two-slot menu and classic-cable transfer; visual GUI and full harvest behavior pending
 block,machine_battery_potato,src/main/java/com/hbm/blocks/ModBlocks.java,3202,unported,,
 block,machine_battery_redd,src/main/java/com/hbm/blocks/ModBlocks.java,3201,unported,,
 block,machine_battery_socket,src/main/java/com/hbm/blocks/ModBlocks.java,3200,unported,,
@@ -7962,7 +7962,7 @@ block,rebar,src/main/java/com/hbm/blocks/ModBlocks.java,2628,unported,,
 block,red_barrel,src/main/java/com/hbm/blocks/ModBlocks.java,2902,unported,,
 block,red_cable,src/main/java/com/hbm/blocks/ModBlocks.java,3116,unported,,
 block,red_cable_box,src/main/java/com/hbm/blocks/ModBlocks.java,3120,unported,,
-block,red_cable_classic,src/main/java/com/hbm/blocks/ModBlocks.java,3117,unported,,
+block,red_cable_classic,src/main/java/com/hbm/blocks/ModBlocks.java,3117,partial,src/forge120/java/com/hbm/PortCableBlock.java,Six-way cable shape and loaded-chunk HE component transfer tested; client rendering recipe and other cable types pending
 block,red_cable_gauge,src/main/java/com/hbm/blocks/ModBlocks.java,3119,unported,,
 block,red_cable_paintable,src/main/java/com/hbm/blocks/ModBlocks.java,3118,unported,,
 block,red_connector,src/main/java/com/hbm/blocks/ModBlocks.java,3122,unported,,
@@ -8131,7 +8131,7 @@ block_entity,TileEntityBlockPWR,src/main/java/com/hbm/tileentity/TileMappings.ja
 block_entity,TileEntityBobble,src/main/java/com/hbm/tileentity/TileMappings.java,218,unported,,
 block_entity,TileEntityBombMulti,src/main/java/com/hbm/tileentity/TileMappings.java,265,unported,,
 block_entity,TileEntityBroadcaster,src/main/java/com/hbm/tileentity/TileMappings.java,134,unported,,
-block_entity,TileEntityCableBaseNT,src/main/java/com/hbm/tileentity/TileMappings.java,436,unported,,
+block_entity,TileEntityCableBaseNT,src/main/java/com/hbm/tileentity/TileMappings.java,436,partial,src/forge120/java/com/hbm/PortPowerGrid.java,Modern cable uses block states and a server-owned component traversal rather than per-cable tile entities; cross-chunk restart tested but other conductor behavior pending
 block_entity,TileEntityCableGauge,src/main/java/com/hbm/tileentity/TileMappings.java,438,unported,,
 block_entity,TileEntityCablePaintable,src/main/java/com/hbm/tileentity/TileMappings.java,437,unported,,
 block_entity,TileEntityCableSwitch,src/main/java/com/hbm/tileentity/TileMappings.java,439,unported,,
@@ -8264,7 +8264,7 @@ block_entity,TileEntityMachineAssemblyMachine,src/main/java/com/hbm/tileentity/T
 block_entity,TileEntityMachineAutocrafter,src/main/java/com/hbm/tileentity/TileMappings.java,324,unported,,
 block_entity,TileEntityMachineAutosaw,src/main/java/com/hbm/tileentity/TileMappings.java,328,unported,,
 block_entity,TileEntityMachineBAT9000,src/main/java/com/hbm/tileentity/TileMappings.java,207,unported,,
-block_entity,TileEntityMachineBattery,src/main/java/com/hbm/tileentity/TileMappings.java,88,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,HE storage redstone mode and priority controls item charging sided slot rules and inventory restart persistence tested; cable graph and full integrations pending
+block_entity,TileEntityMachineBattery,src/main/java/com/hbm/tileentity/TileMappings.java,88,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,HE modes priority items sided slots restart and classic-cable cross-chunk transfer tested; throughput logging and full integrations pending
 block_entity,TileEntityMachineBigAssTank,src/main/java/com/hbm/tileentity/TileMappings.java,208,unported,,
 block_entity,TileEntityMachineBlastFurnace,src/main/java/com/hbm/tileentity/TileMappings.java,74,unported,,
 block_entity,TileEntityMachineCatalyticCracker,src/main/java/com/hbm/tileentity/TileMappings.java,371,unported,,
@@ -10959,7 +10959,7 @@ java_source,api/hbm/energymk2/IEnergyHandlerMK2,src/main/java/api/hbm/energymk2/
 java_source,api/hbm/energymk2/IEnergyProviderMK2,src/main/java/api/hbm/energymk2/IEnergyProviderMK2.java,,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Provider output limits and proportional depletion tested; actual block-entity providers pending
 java_source,api/hbm/energymk2/IEnergyReceiverMK2,src/main/java/api/hbm/energymk2/IEnergyReceiverMK2.java,,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Receiver input limits and priorities tested; actual block-entity receivers pending
 java_source,api/hbm/energymk2/Nodespace,src/main/java/api/hbm/energymk2/Nodespace.java,,unported,,
-java_source,api/hbm/energymk2/PowerNetMK2,src/main/java/api/hbm/energymk2/PowerNetMK2.java,,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,One-tick priority distribution and HE conservation tested; topology expiry and in-world integration pending
+java_source,api/hbm/energymk2/PowerNetMK2,src/main/java/api/hbm/energymk2/PowerNetMK2.java,,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Priority and conservation tested through direct and classic-cable world networks; other conductors machines and load performance pending
 java_source,api/hbm/energymk2/package-info,src/main/java/api/hbm/energymk2/package-info.java,,unported,,
 java_source,api/hbm/entity/IRadarDetectable,src/main/java/api/hbm/entity/IRadarDetectable.java,,unported,,
 java_source,api/hbm/entity/IRadarDetectableNT,src/main/java/api/hbm/entity/IRadarDetectableNT.java,,unported,,
@@ -11514,7 +11514,7 @@ java_source,blocks/machine/rbmk/RBMKRod,src/main/java/com/hbm/blocks/machine/rbm
 java_source,blocks/machine/rbmk/RBMKRodReaSim,src/main/java/com/hbm/blocks/machine/rbmk/RBMKRodReaSim.java,,unported,,
 java_source,blocks/machine/rbmk/RBMKStorage,src/main/java/com/hbm/blocks/machine/rbmk/RBMKStorage.java,,unported,,
 java_source,blocks/machine/rbmk/RBMKTerminal,src/main/java/com/hbm/blocks/machine/rbmk/RBMKTerminal.java,,unported,,
-java_source,blocks/network/BlockCable,src/main/java/com/hbm/blocks/network/BlockCable.java,,unported,,
+java_source,blocks/network/BlockCable,src/main/java/com/hbm/blocks/network/BlockCable.java,,partial,src/forge120/java/com/hbm/PortCableBlock.java,Classic cable connection arms and collision shape ported; visual comparison and modern cable family pending
 java_source,blocks/network/BlockCableGauge,src/main/java/com/hbm/blocks/network/BlockCableGauge.java,,unported,,
 java_source,blocks/network/BlockCablePaintable,src/main/java/com/hbm/blocks/network/BlockCablePaintable.java,,unported,,
 java_source,blocks/network/BlockConveyor,src/main/java/com/hbm/blocks/network/BlockConveyor.java,,unported,,
@@ -13185,7 +13185,7 @@ java_source,render/block/RenderBlocksFixed,src/main/java/com/hbm/render/block/Re
 java_source,render/block/RenderBoxDuct,src/main/java/com/hbm/render/block/RenderBoxDuct.java,,unported,,
 java_source,render/block/RenderCRT,src/main/java/com/hbm/render/block/RenderCRT.java,,unported,,
 java_source,render/block/RenderCable,src/main/java/com/hbm/render/block/RenderCable.java,,unported,,
-java_source,render/block/RenderCableClassic,src/main/java/com/hbm/render/block/RenderCableClassic.java,,unported,,
+java_source,render/block/RenderCableClassic,src/main/java/com/hbm/render/block/RenderCableClassic.java,,partial,src/forge120/resources/assets/hbm/blockstates/red_cable_classic.json,Legacy 5-pixel core and arm UV regions mapped to multipart models; in-world visual comparison pending
 java_source,render/block/RenderCapacitor,src/main/java/com/hbm/render/block/RenderCapacitor.java,,unported,,
 java_source,render/block/RenderChain,src/main/java/com/hbm/render/block/RenderChain.java,,unported,,
 java_source,render/block/RenderConserve,src/main/java/com/hbm/render/block/RenderConserve.java,,unported,,
@@ -14077,7 +14077,7 @@ java_source,tileentity/machine/storage/TileEntityCrateSteel,src/main/java/com/hb
 java_source,tileentity/machine/storage/TileEntityCrateTungsten,src/main/java/com/hbm/tileentity/machine/storage/TileEntityCrateTungsten.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityFileCabinet,src/main/java/com/hbm/tileentity/machine/storage/TileEntityFileCabinet.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityMachineBAT9000,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBAT9000.java,,unported,,
-java_source,tileentity/machine/storage/TileEntityMachineBattery,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,One-mega-HE state item-slot rates comparator mode priority and restart tests pass; cable graph throughput logging and integrations pending
+java_source,tileentity/machine/storage/TileEntityMachineBattery,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,One-mega-HE item-slot rates comparator modes priority and cable restart tests pass; throughput logging and integrations pending
 java_source,tileentity/machine/storage/TileEntityMachineBigAssTank,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBigAssTank.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityMachineFENSU,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineFENSU.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityMachineFluidTank,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineFluidTank.java,,unported,,
@@ -14090,7 +14090,7 @@ java_source,tileentity/machine/storage/TileEntitySoyuzCapsule,src/main/java/com/
 java_source,tileentity/network/IDroneLinkable,src/main/java/com/hbm/tileentity/network/IDroneLinkable.java,,unported,,
 java_source,tileentity/network/RTTYSystem,src/main/java/com/hbm/tileentity/network/RTTYSystem.java,,unported,,
 java_source,tileentity/network/RequestNetwork,src/main/java/com/hbm/tileentity/network/RequestNetwork.java,,unported,,
-java_source,tileentity/network/TileEntityCableBaseNT,src/main/java/com/hbm/tileentity/network/TileEntityCableBaseNT.java,,unported,,
+java_source,tileentity/network/TileEntityCableBaseNT,src/main/java/com/hbm/tileentity/network/TileEntityCableBaseNT.java,,partial,src/forge120/java/com/hbm/PortPowerGrid.java,Classic cable network traversal and battery endpoints tested across a loaded chunk border; other network endpoints and unload stress pending
 java_source,tileentity/network/TileEntityCableSwitch,src/main/java/com/hbm/tileentity/network/TileEntityCableSwitch.java,,unported,,
 java_source,tileentity/network/TileEntityConnector,src/main/java/com/hbm/tileentity/network/TileEntityConnector.java,,unported,,
 java_source,tileentity/network/TileEntityConnectorSuper,src/main/java/com/hbm/tileentity/network/TileEntityConnectorSuper.java,,unported,,
@@ -16183,7 +16183,7 @@ renderer_source,RenderBulletMK4,src/main/java/com/hbm/render/entity/projectile/R
 renderer_source,RenderC130,src/main/java/com/hbm/render/entity/item/RenderC130.java,,unported,,
 renderer_source,RenderCRT,src/main/java/com/hbm/render/block/RenderCRT.java,,unported,,
 renderer_source,RenderCable,src/main/java/com/hbm/render/block/RenderCable.java,,unported,,
-renderer_source,RenderCableClassic,src/main/java/com/hbm/render/block/RenderCableClassic.java,,unported,,
+renderer_source,RenderCableClassic,src/main/java/com/hbm/render/block/RenderCableClassic.java,,partial,src/forge120/resources/assets/hbm/blockstates/red_cable_classic.json,Static six-way cable renderer replaced with multipart models using original texture atlas; visual comparison pending
 renderer_source,RenderCapacitor,src/main/java/com/hbm/render/block/RenderCapacitor.java,,unported,,
 renderer_source,RenderCapsule,src/main/java/com/hbm/render/tileentity/RenderCapsule.java,,unported,,
 renderer_source,RenderCargoDoor,src/main/java/com/hbm/render/tileentity/door/RenderCargoDoor.java,,unported,,

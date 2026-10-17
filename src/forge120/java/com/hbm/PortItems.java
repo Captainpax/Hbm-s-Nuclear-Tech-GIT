@@ -61,6 +61,8 @@ public final class PortItems {
     public static final RegistryObject<Item> MACHINE_BATTERY = ITEMS.register("machine_battery",
             () -> new PortBatteryBlockItem((PortBatteryBlock) PortBlocks.MACHINE_BATTERY.get(),
                     new Item.Properties()));
+    public static final RegistryObject<Item> RED_CABLE_CLASSIC = ITEMS.register("red_cable_classic",
+            () -> new BlockItem(PortBlocks.RED_CABLE_CLASSIC.get(), new Item.Properties()));
     public static final RegistryObject<Item> BATTERY_POTATO = ITEMS.register("battery_potato",
             () -> new PortBatteryItem(new Item.Properties(), 1_000L, 0L, 100L));
     public static final RegistryObject<Item> CUBE_POWER = ITEMS.register("cube_power",

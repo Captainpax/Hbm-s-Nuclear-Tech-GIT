@@ -10,6 +10,11 @@ import java.util.List;
 public final class PortPowerNetwork {
     public enum Priority { LOWEST, LOW, NORMAL, HIGH, HIGHEST }
 
+    @FunctionalInterface
+    public interface TransferObserver {
+        void transferred(PortPowerStorage source, PortPowerStorage destination, long amount);
+    }
+
     public record Provider(PortPowerStorage storage, long maxOutput) {
         public Provider {
             if (storage == null || maxOutput < 0) throw new IllegalArgumentException("Invalid HE provider");
@@ -28,6 +33,12 @@ public final class PortPowerNetwork {
 
     /** Distributes higher priorities first, proportionally within a priority, with no HE created or lost. */
     public static long transfer(List<Provider> providers, List<Receiver> receivers) {
+        return transfer(providers, receivers, (source, destination, amount) -> {});
+    }
+
+    /** Reports actual transfers so world networks can enforce aggregate per-tick machine rates. */
+    public static long transfer(List<Provider> providers, List<Receiver> receivers, TransferObserver observer) {
+        if (observer == null) throw new IllegalArgumentException("Missing HE transfer observer");
         rejectDuplicateStorages(providers, receivers);
         long[] outputLeft = new long[providers.size()];
         for (int i = 0; i < providers.size(); i++) {
@@ -82,6 +93,7 @@ public final class PortPowerNetwork {
                         outputLeft[sourceIndex] -= accepted;
                         providerShare[sourceIndex] = Math.max(0, providerShare[sourceIndex] - accepted);
                         needed -= accepted;
+                        if (accepted > 0) observer.transferred(source, destination, accepted);
                         moved = accepted > Long.MAX_VALUE - moved ? Long.MAX_VALUE : moved + accepted;
                     }
                 }

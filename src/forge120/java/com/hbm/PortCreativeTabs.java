@@ -48,6 +48,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_NITER.get());
                         output.accept(PortItems.ORE_ALUMINIUM.get());
                         output.accept(PortItems.GAS_RADON.get());
+                        output.accept(PortItems.RED_CABLE_CLASSIC.get());
                     })
                     .build());
 

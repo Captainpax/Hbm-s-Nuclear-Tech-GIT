@@ -167,6 +167,142 @@ public final class PortGameTests {
         helper.succeed();
     }
 
+    @GameTest(template = "empty", timeoutTicks = 100)
+    public static void classicCablePrioritizesAndDisconnects(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = helper.absolutePos(new BlockPos(1, 2, 1));
+        BlockPos firstCable = sourcePos.east();
+        BlockPos secondCable = firstCable.east();
+        BlockPos highPos = secondCable.east();
+        BlockPos lowPos = secondCable.south();
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(highPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(lowPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        PortCableBlock cable = (PortCableBlock) PortBlocks.RED_CABLE_CLASSIC.get();
+        level.setBlock(firstCable, cable.connectedState(level, firstCable), 3);
+        level.setBlock(secondCable, cable.connectedState(level, secondCable), 3);
+        if (ForgeRegistries.BLOCKS.getValue(PortBlocks.RED_CABLE_CLASSIC.getId()) != cable
+                || ForgeRegistries.ITEMS.getValue(PortItems.RED_CABLE_CLASSIC.getId())
+                        != PortItems.RED_CABLE_CLASSIC.get()) {
+            throw new IllegalStateException("Classic cable block or item registry entry is missing");
+        }
+        var cableDrops = Block.getDrops(level.getBlockState(firstCable), level, firstCable, null,
+                FakePlayerFactory.getMinecraft(level), new ItemStack(Items.IRON_PICKAXE));
+        if (cableDrops.size() != 1 || !cableDrops.get(0).is(PortItems.RED_CABLE_CLASSIC.get())) {
+            throw new IllegalStateException("Classic cable does not drop its item");
+        }
+        level.setBlock(sourcePos.west(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+        PortBatteryBlockEntity source = (PortBatteryBlockEntity) level.getBlockEntity(sourcePos);
+        PortBatteryBlockEntity high = (PortBatteryBlockEntity) level.getBlockEntity(highPos);
+        PortBatteryBlockEntity low = (PortBatteryBlockEntity) level.getBlockEntity(lowPos);
+        source.setPower(5_000);
+        high.setPriority(PortPowerNetwork.Priority.HIGH);
+        if (!level.getBlockState(firstCable).getValue(PortCableBlock.WEST)
+                || !level.getBlockState(firstCable).getValue(PortCableBlock.EAST)
+                || !level.getBlockState(secondCable).getValue(PortCableBlock.SOUTH)
+                || level.getBlockState(secondCable).getValue(PortCableBlock.UP)) {
+            throw new IllegalStateException("Classic cable failed to update its six-way connection state");
+        }
+        PortBatteryBlockEntity.tick(level, sourcePos, level.getBlockState(sourcePos), source);
+        if (source.power() != 3_334 || high.power() != 1_666 || low.power() != 0) {
+            throw new IllegalStateException("Cable network priority, rate, or HE conservation failed");
+        }
+        PortBatteryBlockEntity.tick(level, highPos, level.getBlockState(highPos), high);
+        if (source.power() != 3_334 || high.power() != 1_666) {
+            throw new IllegalStateException("Cable network transferred twice in one server tick");
+        }
+        level.setBlock(secondCable, Blocks.AIR.defaultBlockState(), 3);
+        long before = high.power() + low.power();
+        helper.runAfterDelay(2, () -> {
+            if (high.power() + low.power() != before
+                    || level.getBlockState(firstCable).getValue(PortCableBlock.EAST)) {
+                throw new IllegalStateException("Disconnected HE cable still transferred or retained its arm");
+            }
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty")
+    public static void classicCableInputDoesNotBridge(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = helper.absolutePos(new BlockPos(1, 2, 1));
+        BlockPos firstCable = sourcePos.east();
+        BlockPos middlePos = firstCable.east();
+        BlockPos secondCable = middlePos.east();
+        BlockPos targetPos = secondCable.east();
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(middlePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(targetPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        PortCableBlock cable = (PortCableBlock) PortBlocks.RED_CABLE_CLASSIC.get();
+        level.setBlock(firstCable, cable.connectedState(level, firstCable), 3);
+        level.setBlock(secondCable, cable.connectedState(level, secondCable), 3);
+        level.setBlock(sourcePos.west(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+        PortBatteryBlockEntity source = (PortBatteryBlockEntity) level.getBlockEntity(sourcePos);
+        PortBatteryBlockEntity middle = (PortBatteryBlockEntity) level.getBlockEntity(middlePos);
+        PortBatteryBlockEntity target = (PortBatteryBlockEntity) level.getBlockEntity(targetPos);
+        target.setPriority(PortPowerNetwork.Priority.HIGH);
+        source.setPower(5_000);
+        PortBatteryBlockEntity.tick(level, sourcePos, level.getBlockState(sourcePos), source);
+        if (source.power() != 3_334 || middle.power() != 1_666 || target.power() != 0) {
+            throw new IllegalStateException("Input-only battery illegally bridged two cable networks");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void classicCableBufferBridgesTwoSegments(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = helper.absolutePos(new BlockPos(1, 2, 1));
+        BlockPos firstCable = sourcePos.east();
+        BlockPos middlePos = firstCable.east();
+        BlockPos secondCable = middlePos.east();
+        BlockPos targetPos = secondCable.east();
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(middlePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(targetPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        PortCableBlock cable = (PortCableBlock) PortBlocks.RED_CABLE_CLASSIC.get();
+        level.setBlock(firstCable, cable.connectedState(level, firstCable), 3);
+        level.setBlock(secondCable, cable.connectedState(level, secondCable), 3);
+        level.setBlock(sourcePos.west(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+        PortBatteryBlockEntity source = (PortBatteryBlockEntity) level.getBlockEntity(sourcePos);
+        PortBatteryBlockEntity middle = (PortBatteryBlockEntity) level.getBlockEntity(middlePos);
+        PortBatteryBlockEntity target = (PortBatteryBlockEntity) level.getBlockEntity(targetPos);
+        middle.setModes(PortBatteryBlockEntity.BUFFER, PortBatteryBlockEntity.BUFFER);
+        target.setPriority(PortPowerNetwork.Priority.HIGH);
+        source.setPower(5_000);
+        PortBatteryBlockEntity.tick(level, sourcePos, level.getBlockState(sourcePos), source);
+        if (source.power() != 3_334 || middle.power() != 0 || target.power() != 1_666) {
+            throw new IllegalStateException("Buffer-mode battery failed to bridge separate HE cables");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void classicCableLimitsOutputAcrossBranches(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = helper.absolutePos(new BlockPos(2, 2, 2));
+        BlockPos northCable = sourcePos.north();
+        BlockPos southCable = sourcePos.south();
+        BlockPos northSinkPos = northCable.north();
+        BlockPos southSinkPos = southCable.south();
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(northSinkPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(southSinkPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        PortCableBlock cable = (PortCableBlock) PortBlocks.RED_CABLE_CLASSIC.get();
+        level.setBlock(northCable, cable.connectedState(level, northCable), 3);
+        level.setBlock(southCable, cable.connectedState(level, southCable), 3);
+        level.setBlock(sourcePos.west(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+        PortBatteryBlockEntity source = (PortBatteryBlockEntity) level.getBlockEntity(sourcePos);
+        PortBatteryBlockEntity northSink = (PortBatteryBlockEntity) level.getBlockEntity(northSinkPos);
+        PortBatteryBlockEntity southSink = (PortBatteryBlockEntity) level.getBlockEntity(southSinkPos);
+        source.setPower(5_000);
+        PortBatteryBlockEntity.tick(level, sourcePos, level.getBlockState(sourcePos), source);
+        if (source.power() != 3_334 || northSink.power() + southSink.power() != 1_666) {
+            throw new IllegalStateException("Separate cable branches exceeded aggregate battery output rate");
+        }
+        helper.succeed();
+    }
+
     @GameTest(template = "empty")
     public static void batteryItemSlotsAndMenuControls(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
@@ -275,6 +411,53 @@ public final class PortGameTests {
             level.setBlock(fixture, Blocks.AIR.defaultBlockState(), 3);
         } else {
             throw new IllegalStateException("Unknown battery persistence phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void classicCableTransfersAfterServerRestartAcrossChunkBorder(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = new BlockPos(527, 80, 512);
+        BlockPos cablePos = sourcePos.east();
+        BlockPos targetPos = cablePos.east();
+        level.getChunkAt(sourcePos);
+        level.getChunkAt(cablePos);
+        if (sourcePos.getX() >> 4 == cablePos.getX() >> 4) {
+            throw new IllegalStateException("Cable restart fixture does not cross a chunk border");
+        }
+        if (phase.equals("seed")) {
+            level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+            level.setBlock(targetPos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+            PortCableBlock cable = (PortCableBlock) PortBlocks.RED_CABLE_CLASSIC.get();
+            level.setBlock(cablePos, cable.connectedState(level, cablePos), 3);
+            PortBatteryBlockEntity source = (PortBatteryBlockEntity) level.getBlockEntity(sourcePos);
+            source.setModes(PortBatteryBlockEntity.DISABLED, PortBatteryBlockEntity.DISABLED);
+            source.setPower(4_000);
+        } else if (phase.equals("verify")) {
+            if (!(level.getBlockEntity(sourcePos) instanceof PortBatteryBlockEntity source)
+                    || !(level.getBlockEntity(targetPos) instanceof PortBatteryBlockEntity target)
+                    || !level.getBlockState(cablePos).is(PortBlocks.RED_CABLE_CLASSIC.get())
+                    || !level.getBlockState(cablePos).getValue(PortCableBlock.WEST)
+                    || !level.getBlockState(cablePos).getValue(PortCableBlock.EAST)
+                    || source.power() != 4_000 || target.power() != 0) {
+                throw new IllegalStateException("Cross-chunk HE cable or disabled battery failed restart");
+            }
+            source.setModes(PortBatteryBlockEntity.OUTPUT, PortBatteryBlockEntity.OUTPUT);
+            PortBatteryBlockEntity.tick(level, sourcePos, level.getBlockState(sourcePos), source);
+            if (source.power() != 2_334 || target.power() != 1_666) {
+                throw new IllegalStateException("Reloaded cross-chunk cable did not transfer at legacy HE rate");
+            }
+            level.setBlock(sourcePos, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(cablePos, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), 3);
+        } else {
+            throw new IllegalStateException("Unknown cable persistence phase: " + phase);
         }
         helper.succeed();
     }

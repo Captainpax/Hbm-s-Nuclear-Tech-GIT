@@ -1,8 +1,5 @@
 package com.hbm;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +14,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,7 +23,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-/** Server-owned HE, two item slots, modes, and direct-neighbor transfer. */
+/** Server-owned HE, two item slots, modes, and classic-cable network transfer. */
 public final class PortBatteryBlockEntity extends BlockEntity implements MenuProvider {
     public static final short INPUT = 0;
     public static final short BUFFER = 1;
@@ -88,6 +86,14 @@ public final class PortBatteryBlockEntity extends BlockEntity implements MenuPro
         return storage.capacity();
     }
 
+    PortPowerStorage storage() {
+        return storage;
+    }
+
+    void onPowerTransferred() {
+        changed();
+    }
+
     public ItemStackHandler items() {
         return items;
     }
@@ -139,30 +145,7 @@ public final class PortBatteryBlockEntity extends BlockEntity implements MenuPro
 
     public static void tick(Level level, BlockPos pos, BlockState state, PortBatteryBlockEntity battery) {
         battery.chargeItemFromStorage();
-        short mode = battery.mode(level.hasNeighborSignal(pos));
-        if (mode == OUTPUT || mode == BUFFER) {
-            List<PortPowerNetwork.Receiver> receivers = new ArrayList<>();
-            List<PortBatteryBlockEntity> destinations = new ArrayList<>();
-            for (Direction direction : Direction.values()) {
-                BlockPos neighbor = pos.relative(direction);
-                if (!level.hasChunkAt(neighbor)) continue;
-                if (!(level.getBlockEntity(neighbor) instanceof PortBatteryBlockEntity other)) continue;
-                short otherMode = other.mode(level.hasNeighborSignal(neighbor));
-                if (otherMode != INPUT && otherMode != BUFFER) continue;
-                destinations.add(other);
-                receivers.add(new PortPowerNetwork.Receiver(other.storage, Math.max(1, other.capacity() / 200),
-                        other.priority));
-            }
-            if (!receivers.isEmpty()) {
-                long moved = PortPowerNetwork.transfer(
-                        List.of(new PortPowerNetwork.Provider(battery.storage, Math.max(1, battery.capacity() / 600))),
-                        receivers);
-                if (moved > 0) {
-                    battery.changed();
-                    for (PortBatteryBlockEntity destination : destinations) destination.changed();
-                }
-            }
-        }
+        if (level instanceof ServerLevel serverLevel) PortPowerGrid.tick(serverLevel, battery);
         battery.chargeStorageFromItem();
     }
 
