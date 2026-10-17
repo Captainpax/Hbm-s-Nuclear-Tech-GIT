@@ -13,6 +13,7 @@ import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
@@ -27,9 +28,11 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.registries.ForgeRegistries;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.List;
@@ -143,6 +146,8 @@ public final class PortGameTests {
                 || source.comparatorPower() != 1 || target.comparatorPower() != 1) {
             throw new IllegalStateException("Battery direct transfer speed, conservation, or comparator failed");
         }
+        source.setModes(PortBatteryBlockEntity.BUFFER, PortBatteryBlockEntity.OUTPUT);
+        source.setPriority(PortPowerNetwork.Priority.HIGH);
         var drops = Block.getDrops(level.getBlockState(sourcePos), level, sourcePos, source,
                 FakePlayerFactory.getMinecraft(level), new ItemStack(Items.IRON_PICKAXE));
         if (drops.size() != 1 || !drops.get(0).is(PortItems.MACHINE_BATTERY.get())
@@ -155,8 +160,82 @@ public final class PortGameTests {
         PortBlocks.MACHINE_BATTERY.get().setPlacedBy(level, sourcePos, level.getBlockState(sourcePos),
                 null, drops.get(0));
         if (!(level.getBlockEntity(sourcePos) instanceof PortBatteryBlockEntity restored)
-                || restored.power() != 3334) {
-            throw new IllegalStateException("Placed battery did not restore item HE");
+                || restored.power() != 3334 || restored.lowMode() != PortBatteryBlockEntity.BUFFER
+                || restored.priority() != PortPowerNetwork.Priority.HIGH) {
+            throw new IllegalStateException("Placed battery did not restore item HE or controls");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void batteryItemSlotsAndMenuControls(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
+        level.setBlock(pos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        if (!(level.getBlockEntity(pos) instanceof PortBatteryBlockEntity battery)) {
+            throw new IllegalStateException("Battery item-slot fixture missing");
+        }
+        PortBatteryItem potato = (PortBatteryItem) PortItems.BATTERY_POTATO.get();
+        ItemStack potatoStack = new ItemStack(potato);
+        if (potato.charge(potatoStack) != 1000 || potato.chargeRate() != 0 || potato.dischargeRate() != 100) {
+            throw new IllegalStateException("Potato battery legacy values differ");
+        }
+        battery.items().setStackInSlot(0, potatoStack);
+        PortBatteryBlockEntity.tick(level, pos, level.getBlockState(pos), battery);
+        if (battery.power() != 100 || potato.charge(potatoStack) != 900) {
+            throw new IllegalStateException("Input item failed to charge the storage at 100 HE/t");
+        }
+        battery.items().setStackInSlot(0, ItemStack.EMPTY);
+        PortBatteryItem cube = (PortBatteryItem) PortItems.CUBE_POWER.get();
+        if (cube.capacity() != 1_000_000_000_000_000_000L
+                || cube.chargeRate() != 1_000_000_000_000_000L
+                || cube.dischargeRate() != 1_000_000_000_000_000L) {
+            throw new IllegalStateException("Power cube legacy HE values differ");
+        }
+        ItemStack cubeStack = new ItemStack(cube);
+        cube.setCharge(cubeStack, 0);
+        battery.items().setStackInSlot(1, cubeStack);
+        battery.setPower(500_000);
+        PortBatteryBlockEntity.tick(level, pos, level.getBlockState(pos), battery);
+        if (battery.power() != 0 || cube.charge(cubeStack) != 500_000) {
+            throw new IllegalStateException("Output item failed to receive HE without loss");
+        }
+        var top = battery.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).resolve().orElseThrow();
+        var bottom = battery.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).resolve().orElseThrow();
+        var side = battery.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.NORTH).resolve().orElseThrow();
+        if (top.getSlots() != 1 || bottom.getSlots() != 2 || side.getSlots() != 1
+                || !side.extractItem(0, 1, false).isEmpty()) {
+            throw new IllegalStateException("Battery sided slots or partial-charge extraction differ from legacy");
+        }
+        cube.setCharge(cubeStack, cube.capacity());
+        if (!side.extractItem(0, 1, true).is(PortItems.CUBE_POWER.get())) {
+            throw new IllegalStateException("Fully charged output item was not extractable from the side");
+        }
+        battery.items().setStackInSlot(0, potatoStack);
+        if (!bottom.extractItem(0, 1, false).isEmpty()) {
+            throw new IllegalStateException("Partially charged input item was prematurely extractable");
+        }
+        potato.setCharge(potatoStack, 0);
+        if (!bottom.extractItem(0, 1, true).is(PortItems.BATTERY_POTATO.get())) {
+            throw new IllegalStateException("Empty input item was not extractable from below");
+        }
+        var fake = FakePlayerFactory.getMinecraft(level);
+        fake.moveTo(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
+        battery.setPower(777_777);
+        PortBatteryMenu menu = new PortBatteryMenu(1, fake.getInventory(), battery);
+        if (menu.power() != 777_777 || !menu.stillValid(fake)
+                || !menu.clickMenuButton(fake, 0) || !menu.clickMenuButton(fake, 1)
+                || !menu.clickMenuButton(fake, 2) || menu.clickMenuButton(fake, 99)
+                || battery.lowMode() != PortBatteryBlockEntity.BUFFER
+                || battery.highMode() != PortBatteryBlockEntity.DISABLED
+                || battery.priority() != PortPowerNetwork.Priority.NORMAL) {
+            throw new IllegalStateException("Battery menu controls failed server validation or mode cycling");
+        }
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        List<ItemEntity> dropped = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2));
+        if (dropped.stream().noneMatch(entity -> entity.getItem().is(PortItems.BATTERY_POTATO.get()))
+                || dropped.stream().noneMatch(entity -> entity.getItem().is(PortItems.CUBE_POWER.get()))) {
+            throw new IllegalStateException("Breaking the battery lost its two inventory items");
         }
         helper.succeed();
     }
@@ -177,10 +256,21 @@ public final class PortGameTests {
                 throw new IllegalStateException("Battery restart fixture was not created");
             }
             battery.setPower(123_456);
+            battery.setModes(PortBatteryBlockEntity.BUFFER, PortBatteryBlockEntity.DISABLED);
+            battery.setPriority(PortPowerNetwork.Priority.HIGH);
+            PortBatteryItem potato = (PortBatteryItem) PortItems.BATTERY_POTATO.get();
+            ItemStack stack = new ItemStack(potato);
+            potato.setCharge(stack, 333);
+            battery.items().setStackInSlot(1, stack);
         } else if (phase.equals("verify")) {
             if (!(level.getBlockEntity(fixture) instanceof PortBatteryBlockEntity battery)
-                    || battery.power() != 123_456) {
-                throw new IllegalStateException("Battery charge did not survive a dedicated-server restart");
+                    || battery.power() != 123_456
+                    || battery.lowMode() != PortBatteryBlockEntity.BUFFER
+                    || battery.highMode() != PortBatteryBlockEntity.DISABLED
+                    || battery.priority() != PortPowerNetwork.Priority.HIGH
+                    || !(battery.items().getStackInSlot(1).getItem() instanceof PortBatteryItem item)
+                    || item.charge(battery.items().getStackInSlot(1)) != 333) {
+                throw new IllegalStateException("Battery HE, controls, or inventory did not survive restart");
             }
             level.setBlock(fixture, Blocks.AIR.defaultBlockState(), 3);
         } else {

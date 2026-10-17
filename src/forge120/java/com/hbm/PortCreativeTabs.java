@@ -77,5 +77,15 @@ public final class PortCreativeTabs {
                     })
                     .build());
 
+    public static final RegistryObject<CreativeModeTab> CONTROL = TABS.register("control",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.hbm.control"))
+                    .icon(() -> new ItemStack(PortItems.BATTERY_POTATO.get()))
+                    .displayItems((parameters, output) -> {
+                        output.accept(PortItems.BATTERY_POTATO.get());
+                        output.accept(PortItems.CUBE_POWER.get());
+                    })
+                    .build());
+
     private PortCreativeTabs() {}
 }

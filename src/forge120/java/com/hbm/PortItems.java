@@ -58,7 +58,14 @@ public final class PortItems {
     public static final RegistryObject<Item> NITER = ingot("niter");
     public static final RegistryObject<Item> ORE_ALUMINIUM = ore("ore_aluminium", PortBlocks.ORE_ALUMINIUM);
     public static final RegistryObject<Item> CHUNK_ORE_CRYOLITE = ingot("chunk_ore_cryolite");
-    public static final RegistryObject<Item> MACHINE_BATTERY = ore("machine_battery", PortBlocks.MACHINE_BATTERY);
+    public static final RegistryObject<Item> MACHINE_BATTERY = ITEMS.register("machine_battery",
+            () -> new PortBatteryBlockItem((PortBatteryBlock) PortBlocks.MACHINE_BATTERY.get(),
+                    new Item.Properties()));
+    public static final RegistryObject<Item> BATTERY_POTATO = ITEMS.register("battery_potato",
+            () -> new PortBatteryItem(new Item.Properties(), 1_000L, 0L, 100L));
+    public static final RegistryObject<Item> CUBE_POWER = ITEMS.register("cube_power",
+            () -> new PortBatteryItem(new Item.Properties(),
+                    1_000_000_000_000_000_000L, 1_000_000_000_000_000L, 1_000_000_000_000_000L));
 
     private PortItems() {}
 

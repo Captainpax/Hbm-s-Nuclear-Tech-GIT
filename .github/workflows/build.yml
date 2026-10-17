@@ -4,7 +4,7 @@ on:
   push:
     branches: [captainpax/forge-1.20.1]
   pull_request:
-    branches: [captainpax/forge-1.20.1]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
         run: python tools/porting/build_inventory.py --check
       - name: Build and seed dedicated persistence GameTest
         run: ./gradlew build runGameTestServer -PhbmPersistencePhase=seed --no-daemon --console=plain
-      - name: Restart dedicated server and verify persisted radiation
+      - name: Restart dedicated server and verify radiation and battery state
         run: ./gradlew runGameTestServer -PhbmPersistencePhase=verify --no-daemon --console=plain
       - uses: actions/upload-artifact@v4
         with:

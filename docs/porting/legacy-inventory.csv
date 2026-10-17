@@ -3490,7 +3490,7 @@ asset,textures/gui/reactors/gui_zirnox.png,src/main/resources/assets/hbm/texture
 asset,textures/gui/satellites/gui_sat_coord.png,src/main/resources/assets/hbm/textures/gui/satellites/gui_sat_coord.png,,unported,,
 asset,textures/gui/satellites/gui_sat_interface.png,src/main/resources/assets/hbm/textures/gui/satellites/gui_sat_interface.png,,unported,,
 asset,textures/gui/storage/gui_barrel.png,src/main/resources/assets/hbm/textures/gui/storage/gui_barrel.png,,unported,,
-asset,textures/gui/storage/gui_battery.png,src/main/resources/assets/hbm/textures/gui/storage/gui_battery.png,,unported,,
+asset,textures/gui/storage/gui_battery.png,src/main/resources/assets/hbm/textures/gui/storage/gui_battery.png,,verified,src/forge120/resources/assets/hbm/textures/gui/storage/gui_battery.png,Original texture copied byte-for-byte
 asset,textures/gui/storage/gui_battery_redd.png,src/main/resources/assets/hbm/textures/gui/storage/gui_battery_redd.png,,unported,,
 asset,textures/gui/storage/gui_battery_socket.png,src/main/resources/assets/hbm/textures/gui/storage/gui_battery_socket.png,,unported,,
 asset,textures/gui/storage/gui_crane_box_router.png,src/main/resources/assets/hbm/textures/gui/storage/gui_crane_box_router.png,,unported,,
@@ -3805,7 +3805,7 @@ asset,textures/items/bandaid.png,src/main/resources/assets/hbm/textures/items/ba
 asset,textures/items/bathwater.png,src/main/resources/assets/hbm/textures/items/bathwater.png,,unported,,
 asset,textures/items/bathwater_mk2.png,src/main/resources/assets/hbm/textures/items/bathwater_mk2.png,,unported,,
 asset,textures/items/battery_creative_new.png,src/main/resources/assets/hbm/textures/items/battery_creative_new.png,,unported,,
-asset,textures/items/battery_potato.png,src/main/resources/assets/hbm/textures/items/battery_potato.png,,unported,,
+asset,textures/items/battery_potato.png,src/main/resources/assets/hbm/textures/items/battery_potato.png,,verified,src/forge120/resources/assets/hbm/textures/item/battery_potato.png,Original texture copied byte-for-byte
 asset,textures/items/battery_potatos.png,src/main/resources/assets/hbm/textures/items/battery_potatos.png,,unported,,
 asset,textures/items/battery_sc.am241.png,src/main/resources/assets/hbm/textures/items/battery_sc.am241.png,,unported,,
 asset,textures/items/battery_sc.au198.png,src/main/resources/assets/hbm/textures/items/battery_sc.au198.png,,unported,,
@@ -4319,7 +4319,7 @@ asset,textures/items/crystal_tungsten.png,src/main/resources/assets/hbm/textures
 asset,textures/items/crystal_uranium.png,src/main/resources/assets/hbm/textures/items/crystal_uranium.png,,unported,,
 asset,textures/items/crystal_xen.png,src/main/resources/assets/hbm/textures/items/crystal_xen.png,,unported,,
 asset,textures/items/cube.png,src/main/resources/assets/hbm/textures/items/cube.png,,unported,,
-asset,textures/items/cube_power.png,src/main/resources/assets/hbm/textures/items/cube_power.png,,unported,,
+asset,textures/items/cube_power.png,src/main/resources/assets/hbm/textures/items/cube_power.png,,verified,src/forge120/resources/assets/hbm/textures/item/cube_power.png,Original texture copied byte-for-byte
 asset,textures/items/cursed_shovel.png,src/main/resources/assets/hbm/textures/items/cursed_shovel.png,,unported,,
 asset,textures/items/custom_amat.png,src/main/resources/assets/hbm/textures/items/custom_amat.png,,unported,,
 asset,textures/items/custom_dirty.png,src/main/resources/assets/hbm/textures/items/custom_dirty.png,,unported,,
@@ -7633,7 +7633,7 @@ block,machine_assembly_machine,src/main/java/com/hbm/blocks/ModBlocks.java,3220,
 block,machine_autocrafter,src/main/java/com/hbm/blocks/ModBlocks.java,2980,unported,,
 block,machine_autosaw,src/main/java/com/hbm/blocks/ModBlocks.java,3270,unported,,
 block,machine_bat9000,src/main/java/com/hbm/blocks/ModBlocks.java,3231,unported,,
-block,machine_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3203,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,One-mega-HE battery registered with facing model comparator and charged-item drops; GUI slots cable network and full mode interaction pending
+block,machine_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3203,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,One-mega-HE facing block with comparator charged-item drops and two-slot menu; visual GUI cable network and full harvest behavior pending
 block,machine_battery_potato,src/main/java/com/hbm/blocks/ModBlocks.java,3202,unported,,
 block,machine_battery_redd,src/main/java/com/hbm/blocks/ModBlocks.java,3201,unported,,
 block,machine_battery_socket,src/main/java/com/hbm/blocks/ModBlocks.java,3200,unported,,
@@ -8264,7 +8264,7 @@ block_entity,TileEntityMachineAssemblyMachine,src/main/java/com/hbm/tileentity/T
 block_entity,TileEntityMachineAutocrafter,src/main/java/com/hbm/tileentity/TileMappings.java,324,unported,,
 block_entity,TileEntityMachineAutosaw,src/main/java/com/hbm/tileentity/TileMappings.java,328,unported,,
 block_entity,TileEntityMachineBAT9000,src/main/java/com/hbm/tileentity/TileMappings.java,207,unported,,
-block_entity,TileEntityMachineBattery,src/main/java/com/hbm/tileentity/TileMappings.java,88,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,Long HE storage redstone mode defaults adjacent transfer and dedicated-server restart persistence tested; item slots cable topology and client GUI pending
+block_entity,TileEntityMachineBattery,src/main/java/com/hbm/tileentity/TileMappings.java,88,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,HE storage redstone mode and priority controls item charging sided slot rules and inventory restart persistence tested; cable graph and full integrations pending
 block_entity,TileEntityMachineBigAssTank,src/main/java/com/hbm/tileentity/TileMappings.java,208,unported,,
 block_entity,TileEntityMachineBlastFurnace,src/main/java/com/hbm/tileentity/TileMappings.java,74,unported,,
 block_entity,TileEntityMachineCatalyticCracker,src/main/java/com/hbm/tileentity/TileMappings.java,371,unported,,
@@ -9203,7 +9203,7 @@ item,bathwater,src/main/java/com/hbm/items/ModItems.java,6148,unported,,
 item,bathwater_mk2,src/main/java/com/hbm/items/ModItems.java,6149,unported,,
 item,battery_creative,src/main/java/com/hbm/items/ModItems.java,5169,unported,,
 item,battery_pack,src/main/java/com/hbm/items/ModItems.java,5167,unported,,
-item,battery_potato,src/main/java/com/hbm/items/ModItems.java,5172,unported,,
+item,battery_potato,src/main/java/com/hbm/items/ModItems.java,5172,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Legacy 1000 HE full-by-default item discharges at 100 HE per tick into storage; crafting and other machine use pending
 item,battery_potatos,src/main/java/com/hbm/items/ModItems.java,5173,unported,,
 item,battery_sc,src/main/java/com/hbm/items/ModItems.java,5168,unported,,
 item,battery_spark,src/main/java/com/hbm/items/ModItems.java,5164,unported,,
@@ -9502,7 +9502,7 @@ item,crystal_trixite,src/main/java/com/hbm/items/ModItems.java,4803,unported,,
 item,crystal_tungsten,src/main/java/com/hbm/items/ModItems.java,4790,unported,,
 item,crystal_uranium,src/main/java/com/hbm/items/ModItems.java,4783,unported,,
 item,crystal_xen,src/main/java/com/hbm/items/ModItems.java,5125,unported,,
-item,cube_power,src/main/java/com/hbm/items/ModItems.java,5170,unported,,
+item,cube_power,src/main/java/com/hbm/items/ModItems.java,5170,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Long-valued 1e18 HE battery with 1e15 HE charge and discharge rates; crafting and broader machine use pending
 item,custom_amat,src/main/java/com/hbm/items/ModItems.java,6244,unported,,
 item,custom_dirty,src/main/java/com/hbm/items/ModItems.java,6245,unported,,
 item,custom_fall,src/main/java/com/hbm/items/ModItems.java,6247,unported,,
@@ -10951,7 +10951,7 @@ java_source,api/hbm/conveyor/IConveyorBelt,src/main/java/api/hbm/conveyor/IConve
 java_source,api/hbm/conveyor/IConveyorItem,src/main/java/api/hbm/conveyor/IConveyorItem.java,,unported,,
 java_source,api/hbm/conveyor/IConveyorPackage,src/main/java/api/hbm/conveyor/IConveyorPackage.java,,unported,,
 java_source,api/hbm/conveyor/IEnterableBlock,src/main/java/api/hbm/conveyor/IEnterableBlock.java,,unported,,
-java_source,api/hbm/energymk2/IBatteryItem,src/main/java/api/hbm/energymk2/IBatteryItem.java,,unported,,
+java_source,api/hbm/energymk2/IBatteryItem,src/main/java/api/hbm/energymk2/IBatteryItem.java,,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Charge and discharge rates with NBT clamping tested for two items; other implementations and machine integrations pending
 java_source,api/hbm/energymk2/IEnergyConductorMK2,src/main/java/api/hbm/energymk2/IEnergyConductorMK2.java,,unported,,
 java_source,api/hbm/energymk2/IEnergyConnectorBlock,src/main/java/api/hbm/energymk2/IEnergyConnectorBlock.java,,unported,,
 java_source,api/hbm/energymk2/IEnergyConnectorMK2,src/main/java/api/hbm/energymk2/IEnergyConnectorMK2.java,,unported,,
@@ -11320,7 +11320,7 @@ java_source,blocks/machine/MachineAssemblyFactory,src/main/java/com/hbm/blocks/m
 java_source,blocks/machine/MachineAssemblyMachine,src/main/java/com/hbm/blocks/machine/MachineAssemblyMachine.java,,unported,,
 java_source,blocks/machine/MachineAutocrafter,src/main/java/com/hbm/blocks/machine/MachineAutocrafter.java,,unported,,
 java_source,blocks/machine/MachineAutosaw,src/main/java/com/hbm/blocks/machine/MachineAutosaw.java,,unported,,
-java_source,blocks/machine/MachineBattery,src/main/java/com/hbm/blocks/machine/MachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,Block placement and charged-item drop round-trip tested; GUI WAILA details and full harvest behavior pending
+java_source,blocks/machine/MachineBattery,src/main/java/com/hbm/blocks/machine/MachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,Placement charged-item drop and control-menu open path ported; WAILA details custom names visual GUI and full harvest behavior pending
 java_source,blocks/machine/MachineBigAssTank,src/main/java/com/hbm/blocks/machine/MachineBigAssTank.java,,unported,,
 java_source,blocks/machine/MachineBigAssTank9000,src/main/java/com/hbm/blocks/machine/MachineBigAssTank9000.java,,unported,,
 java_source,blocks/machine/MachineBlastFurnace,src/main/java/com/hbm/blocks/machine/MachineBlastFurnace.java,,unported,,
@@ -12175,7 +12175,7 @@ java_source,inventory/container/ContainerMachineArcFurnaceLarge,src/main/java/co
 java_source,inventory/container/ContainerMachineArcWelder,src/main/java/com/hbm/inventory/container/ContainerMachineArcWelder.java,,unported,,
 java_source,inventory/container/ContainerMachineAssemblyFactory,src/main/java/com/hbm/inventory/container/ContainerMachineAssemblyFactory.java,,unported,,
 java_source,inventory/container/ContainerMachineAssemblyMachine,src/main/java/com/hbm/inventory/container/ContainerMachineAssemblyMachine.java,,unported,,
-java_source,inventory/container/ContainerMachineBattery,src/main/java/com/hbm/inventory/container/ContainerMachineBattery.java,,unported,,
+java_source,inventory/container/ContainerMachineBattery,src/main/java/com/hbm/inventory/container/ContainerMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryMenu.java,Two slots player inventory shift-click and server-authoritative button handling ported; client interaction and multiplayer check pending
 java_source,inventory/container/ContainerMachineCatalyticReformer,src/main/java/com/hbm/inventory/container/ContainerMachineCatalyticReformer.java,,unported,,
 java_source,inventory/container/ContainerMachineChemicalFactory,src/main/java/com/hbm/inventory/container/ContainerMachineChemicalFactory.java,,unported,,
 java_source,inventory/container/ContainerMachineChemicalPlant,src/main/java/com/hbm/inventory/container/ContainerMachineChemicalPlant.java,,unported,,
@@ -12364,7 +12364,7 @@ java_source,inventory/gui/GUIMachineArcFurnaceLarge,src/main/java/com/hbm/invent
 java_source,inventory/gui/GUIMachineArcWelder,src/main/java/com/hbm/inventory/gui/GUIMachineArcWelder.java,,unported,,
 java_source,inventory/gui/GUIMachineAssemblyFactory,src/main/java/com/hbm/inventory/gui/GUIMachineAssemblyFactory.java,,unported,,
 java_source,inventory/gui/GUIMachineAssemblyMachine,src/main/java/com/hbm/inventory/gui/GUIMachineAssemblyMachine.java,,unported,,
-java_source,inventory/gui/GUIMachineBattery,src/main/java/com/hbm/inventory/gui/GUIMachineBattery.java,,unported,,
+java_source,inventory/gui/GUIMachineBattery,src/main/java/com/hbm/inventory/gui/GUIMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryScreen.java,Original texture and charge mode priority controls rendered; visual and multiplayer interaction checks pending
 java_source,inventory/gui/GUIMachineCatalyticReformer,src/main/java/com/hbm/inventory/gui/GUIMachineCatalyticReformer.java,,unported,,
 java_source,inventory/gui/GUIMachineCentrifuge,src/main/java/com/hbm/inventory/gui/GUIMachineCentrifuge.java,,unported,,
 java_source,inventory/gui/GUIMachineChemicalFactory,src/main/java/com/hbm/inventory/gui/GUIMachineChemicalFactory.java,,unported,,
@@ -12727,7 +12727,7 @@ java_source,items/food/ItemWaffle,src/main/java/com/hbm/items/food/ItemWaffle.ja
 java_source,items/machine/IItemFluidIdentifier,src/main/java/com/hbm/items/machine/IItemFluidIdentifier.java,,unported,,
 java_source,items/machine/ItemArcElectrode,src/main/java/com/hbm/items/machine/ItemArcElectrode.java,,unported,,
 java_source,items/machine/ItemArcElectrodeBurnt,src/main/java/com/hbm/items/machine/ItemArcElectrodeBurnt.java,,unported,,
-java_source,items/machine/ItemBattery,src/main/java/com/hbm/items/machine/ItemBattery.java,,unported,,
+java_source,items/machine/ItemBattery,src/main/java/com/hbm/items/machine/ItemBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Potato battery and power cube charge semantics ported; other ItemBattery instances and item behavior pending
 java_source,items/machine/ItemBatteryCreative,src/main/java/com/hbm/items/machine/ItemBatteryCreative.java,,unported,,
 java_source,items/machine/ItemBatteryPack,src/main/java/com/hbm/items/machine/ItemBatteryPack.java,,unported,,
 java_source,items/machine/ItemBatterySC,src/main/java/com/hbm/items/machine/ItemBatterySC.java,,unported,,
@@ -14077,7 +14077,7 @@ java_source,tileentity/machine/storage/TileEntityCrateSteel,src/main/java/com/hb
 java_source,tileentity/machine/storage/TileEntityCrateTungsten,src/main/java/com/hbm/tileentity/machine/storage/TileEntityCrateTungsten.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityFileCabinet,src/main/java/com/hbm/tileentity/machine/storage/TileEntityFileCabinet.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityMachineBAT9000,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBAT9000.java,,unported,,
-java_source,tileentity/machine/storage/TileEntityMachineBattery,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,One-mega-HE state comparator redstone modes and transfer rates tested; priority controls inventory slots cable graph and FE integration pending
+java_source,tileentity/machine/storage/TileEntityMachineBattery,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,One-mega-HE state item-slot rates comparator mode priority and restart tests pass; cable graph throughput logging and integrations pending
 java_source,tileentity/machine/storage/TileEntityMachineBigAssTank,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineBigAssTank.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityMachineFENSU,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineFENSU.java,,unported,,
 java_source,tileentity/machine/storage/TileEntityMachineFluidTank,src/main/java/com/hbm/tileentity/machine/storage/TileEntityMachineFluidTank.java,,unported,,
@@ -16604,7 +16604,7 @@ screen_source,GUIMachineArcFurnaceLarge,src/main/java/com/hbm/inventory/gui/GUIM
 screen_source,GUIMachineArcWelder,src/main/java/com/hbm/inventory/gui/GUIMachineArcWelder.java,,unported,,
 screen_source,GUIMachineAssemblyFactory,src/main/java/com/hbm/inventory/gui/GUIMachineAssemblyFactory.java,,unported,,
 screen_source,GUIMachineAssemblyMachine,src/main/java/com/hbm/inventory/gui/GUIMachineAssemblyMachine.java,,unported,,
-screen_source,GUIMachineBattery,src/main/java/com/hbm/inventory/gui/GUIMachineBattery.java,,unported,,
+screen_source,GUIMachineBattery,src/main/java/com/hbm/inventory/gui/GUIMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryScreen.java,176x166 screen with original texture ported; visual and multiplayer checks pending
 screen_source,GUIMachineCatalyticReformer,src/main/java/com/hbm/inventory/gui/GUIMachineCatalyticReformer.java,,unported,,
 screen_source,GUIMachineCentrifuge,src/main/java/com/hbm/inventory/gui/GUIMachineCentrifuge.java,,unported,,
 screen_source,GUIMachineChemicalFactory,src/main/java/com/hbm/inventory/gui/GUIMachineChemicalFactory.java,,unported,,
