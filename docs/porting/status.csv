@@ -120,3 +120,7 @@ asset,textures/blocks/ore_aluminium.png,verified,src/forge120/resources/assets/h
 asset,textures/items/chunk_ore.cryolite.png,verified,src/forge120/resources/assets/hbm/textures/item/chunk_ore_cryolite.png,Original cryolite variant texture copied byte-for-byte
 recipe_site,SmeltingRecipes:40,verified,src/forge120/resources/data/hbm/recipes/chunk_ore_cryolite_from_ore_aluminium.json,GameTest checks aluminium ore to named CRYOLITE chunk with 2.5 XP and 200-tick cooking time
 config_option,WorldConfig:2.03_aluminiumSpawnrate:130,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default and live count override tested; custom-value restart persistence not yet checked
+java_source,api/hbm/energymk2/IEnergyHandlerMK2,partial,src/forge120/java/com/hbm/PortPowerStorage.java,Long-valued HE storage and NBT clamping tested; world attachment and connector contract pending
+java_source,api/hbm/energymk2/IEnergyProviderMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Provider output limits and proportional depletion tested; actual block-entity providers pending
+java_source,api/hbm/energymk2/IEnergyReceiverMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Receiver input limits and priorities tested; actual block-entity receivers pending
+java_source,api/hbm/energymk2/PowerNetMK2,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,One-tick priority distribution and HE conservation tested; topology expiry and in-world integration pending

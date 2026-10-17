@@ -32,12 +32,94 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
 import java.util.Set;
 
 @GameTestHolder(HbmPort.MOD_ID)
 @PrefixGameTestTemplate(false)
 public final class PortGameTests {
     private PortGameTests() {}
+
+    @GameTest(template = "empty")
+    public static void powerNetworkConservesAndPrioritizes(GameTestHelper helper) {
+        PortPowerStorage sourceA = new PortPowerStorage(100);
+        PortPowerStorage sourceB = new PortPowerStorage(50);
+        PortPowerStorage highA = new PortPowerStorage(100);
+        PortPowerStorage highB = new PortPowerStorage(100);
+        PortPowerStorage low = new PortPowerStorage(50);
+        sourceA.setPower(100);
+        sourceB.setPower(50);
+        long before = sourceA.power() + sourceB.power() + highA.power() + highB.power() + low.power();
+        long moved = PortPowerNetwork.transfer(
+                List.of(new PortPowerNetwork.Provider(sourceA, 100),
+                        new PortPowerNetwork.Provider(sourceB, 50)),
+                List.of(new PortPowerNetwork.Receiver(highA, 100, PortPowerNetwork.Priority.HIGH),
+                        new PortPowerNetwork.Receiver(highB, 100, PortPowerNetwork.Priority.HIGH),
+                        new PortPowerNetwork.Receiver(low, 50, PortPowerNetwork.Priority.LOW)));
+        long after = sourceA.power() + sourceB.power() + highA.power() + highB.power() + low.power();
+        if (moved != 150 || before != after || highA.power() != 75 || highB.power() != 75
+                || low.power() != 0 || sourceA.power() != 0 || sourceB.power() != 0) {
+            throw new IllegalStateException("HE priority distribution or conservation failed");
+        }
+        PortPowerStorage equalA = new PortPowerStorage(100);
+        PortPowerStorage equalB = new PortPowerStorage(100);
+        PortPowerStorage equalSink = new PortPowerStorage(100);
+        equalA.setPower(100);
+        equalB.setPower(100);
+        long equalMoved = PortPowerNetwork.transfer(
+                List.of(new PortPowerNetwork.Provider(equalA, 100),
+                        new PortPowerNetwork.Provider(equalB, 100)),
+                List.of(new PortPowerNetwork.Receiver(equalSink, 100, PortPowerNetwork.Priority.NORMAL)));
+        if (equalMoved != 100 || equalA.power() != 50 || equalB.power() != 50
+                || equalSink.power() != 100) {
+            throw new IllegalStateException("HE providers did not share load proportionally");
+        }
+        PortPowerStorage buffer = new PortPowerStorage(100);
+        buffer.setPower(50);
+        if (PortPowerNetwork.transfer(List.of(new PortPowerNetwork.Provider(buffer, 50)),
+                List.of(new PortPowerNetwork.Receiver(buffer, 50, PortPowerNetwork.Priority.NORMAL))) != 0
+                || buffer.power() != 50) {
+            throw new IllegalStateException("HE buffer supplied itself");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void powerStorageRatesAndPersistence(GameTestHelper helper) {
+        PortPowerStorage source = new PortPowerStorage(1_000_000_000_000L);
+        PortPowerStorage high = new PortPowerStorage(100);
+        PortPowerStorage low = new PortPowerStorage(100);
+        source.setPower(source.capacity());
+        long moved = PortPowerNetwork.transfer(
+                List.of(new PortPowerNetwork.Provider(source, 40)),
+                List.of(new PortPowerNetwork.Receiver(high, 25, PortPowerNetwork.Priority.HIGH),
+                        new PortPowerNetwork.Receiver(low, 100, PortPowerNetwork.Priority.LOW)));
+        if (moved != 40 || source.power() != source.capacity() - 40
+                || high.power() != 25 || low.power() != 15) {
+            throw new IllegalStateException("HE rate limits or priority order failed");
+        }
+        CompoundTag tag = new CompoundTag();
+        source.save(tag, "power");
+        PortPowerStorage reloaded = new PortPowerStorage(source.capacity());
+        reloaded.load(tag, "power");
+        if (reloaded.power() != source.power()) throw new IllegalStateException("Long HE NBT round-trip failed");
+        tag.putLong("power", Long.MAX_VALUE);
+        reloaded.load(tag, "power");
+        if (reloaded.power() != reloaded.capacity()) throw new IllegalStateException("HE load exceeded capacity");
+        tag.putLong("power", -1);
+        reloaded.load(tag, "power");
+        if (reloaded.power() != 0) throw new IllegalStateException("Negative HE persisted");
+        PortPowerStorage hugeSource = new PortPowerStorage(Long.MAX_VALUE);
+        PortPowerStorage hugeSink = new PortPowerStorage(Long.MAX_VALUE);
+        hugeSource.setPower(Long.MAX_VALUE);
+        if (PortPowerNetwork.transfer(List.of(new PortPowerNetwork.Provider(hugeSource, Long.MAX_VALUE)),
+                List.of(new PortPowerNetwork.Receiver(hugeSink, Long.MAX_VALUE,
+                        PortPowerNetwork.Priority.NORMAL))) != Long.MAX_VALUE
+                || hugeSource.power() != 0 || hugeSink.power() != Long.MAX_VALUE) {
+            throw new IllegalStateException("Long HE transfer overflowed");
+        }
+        helper.succeed();
+    }
 
     @GameTest(template = "empty")
     public static void uraniumProgression(GameTestHelper helper) {

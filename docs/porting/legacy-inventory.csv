@@ -10634,11 +10634,11 @@ java_source,api/hbm/energymk2/IBatteryItem,src/main/java/api/hbm/energymk2/IBatt
 java_source,api/hbm/energymk2/IEnergyConductorMK2,src/main/java/api/hbm/energymk2/IEnergyConductorMK2.java,,unported,,
 java_source,api/hbm/energymk2/IEnergyConnectorBlock,src/main/java/api/hbm/energymk2/IEnergyConnectorBlock.java,,unported,,
 java_source,api/hbm/energymk2/IEnergyConnectorMK2,src/main/java/api/hbm/energymk2/IEnergyConnectorMK2.java,,unported,,
-java_source,api/hbm/energymk2/IEnergyHandlerMK2,src/main/java/api/hbm/energymk2/IEnergyHandlerMK2.java,,unported,,
-java_source,api/hbm/energymk2/IEnergyProviderMK2,src/main/java/api/hbm/energymk2/IEnergyProviderMK2.java,,unported,,
-java_source,api/hbm/energymk2/IEnergyReceiverMK2,src/main/java/api/hbm/energymk2/IEnergyReceiverMK2.java,,unported,,
+java_source,api/hbm/energymk2/IEnergyHandlerMK2,src/main/java/api/hbm/energymk2/IEnergyHandlerMK2.java,,partial,src/forge120/java/com/hbm/PortPowerStorage.java,Long-valued HE storage and NBT clamping tested; world attachment and connector contract pending
+java_source,api/hbm/energymk2/IEnergyProviderMK2,src/main/java/api/hbm/energymk2/IEnergyProviderMK2.java,,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Provider output limits and proportional depletion tested; actual block-entity providers pending
+java_source,api/hbm/energymk2/IEnergyReceiverMK2,src/main/java/api/hbm/energymk2/IEnergyReceiverMK2.java,,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,Receiver input limits and priorities tested; actual block-entity receivers pending
 java_source,api/hbm/energymk2/Nodespace,src/main/java/api/hbm/energymk2/Nodespace.java,,unported,,
-java_source,api/hbm/energymk2/PowerNetMK2,src/main/java/api/hbm/energymk2/PowerNetMK2.java,,unported,,
+java_source,api/hbm/energymk2/PowerNetMK2,src/main/java/api/hbm/energymk2/PowerNetMK2.java,,partial,src/forge120/java/com/hbm/PortPowerNetwork.java,One-tick priority distribution and HE conservation tested; topology expiry and in-world integration pending
 java_source,api/hbm/energymk2/package-info,src/main/java/api/hbm/energymk2/package-info.java,,unported,,
 java_source,api/hbm/entity/IRadarDetectable,src/main/java/api/hbm/entity/IRadarDetectable.java,,unported,,
 java_source,api/hbm/entity/IRadarDetectableNT,src/main/java/api/hbm/entity/IRadarDetectableNT.java,,unported,,
