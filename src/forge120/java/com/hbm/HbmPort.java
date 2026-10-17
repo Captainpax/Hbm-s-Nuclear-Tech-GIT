@@ -14,5 +14,6 @@ public final class HbmPort {
         PortBlocks.BLOCKS.register(modBus);
         PortItems.ITEMS.register(modBus);
         PortCreativeTabs.TABS.register(modBus);
+        modBus.addListener(PortRadiation::registerCapabilities);
     }
 }

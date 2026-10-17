@@ -16,7 +16,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-JAVA = ROOT / "src" / "main" / "java" / "com" / "hbm"
+LEGACY_JAVA = ROOT / "src" / "main" / "java"
+JAVA = LEGACY_JAVA / "com" / "hbm"
 ASSETS = ROOT / "src" / "main" / "resources" / "assets" / "hbm"
 OUTPUT = ROOT / "docs" / "porting" / "legacy-inventory.csv"
 STATUS = ROOT / "docs" / "porting" / "status.csv"
@@ -77,6 +78,9 @@ def scan_recipe_sites(rows: list[dict[str, str]], path: Path) -> None:
 
 def inventory() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
+    for path in sorted(LEGACY_JAVA.rglob("*.java")):
+        key_root = JAVA if path.is_relative_to(JAVA) else LEGACY_JAVA
+        add(rows, "java_source", path.relative_to(key_root).with_suffix("").as_posix(), path)
     scan_calls(rows, JAVA / "blocks" / "ModBlocks.java", "block", r"GameRegistry\.registerBlock\(\s*(\w+)")
     scan_calls(rows, JAVA / "items" / "ModItems.java", "item", r"GameRegistry\.registerItem\(\s*(\w+)")
     scan_calls(rows, JAVA / "tileentity" / "TileMappings.java", "block_entity", r"^\s*put\(\s*(\w+)\.class")

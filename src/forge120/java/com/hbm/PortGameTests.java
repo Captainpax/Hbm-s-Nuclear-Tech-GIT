@@ -3,9 +3,11 @@ package com.hbm;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -80,6 +82,38 @@ public final class PortGameTests {
         PortBlocks.GAS_RADON.get().tick(helper.getBlockState(gasPos), helper.getLevel(),
                 helper.absolutePos(gasPos), RandomSource.create(seed));
         helper.assertBlockPresent(PortBlocks.GAS_RADON.get(), gasPos.below());
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void radonExposurePersists(GameTestHelper helper) {
+        BlockPos gasPos = new BlockPos(1, 2, 1);
+        helper.setBlock(gasPos, PortBlocks.GAS_RADON.get());
+        var cow = helper.spawnWithNoFreeWill(EntityType.COW, gasPos);
+        PortBlocks.GAS_RADON.get().entityInside(helper.getBlockState(gasPos), helper.getLevel(),
+                helper.absolutePos(gasPos), cow);
+        var exposure = PortRadiation.get(cow)
+                .orElseThrow(() -> new IllegalStateException("Radiation capability missing"));
+        if (Math.abs(exposure.radiation() - 0.05F) > 0.0001F || exposure.asbestos() != 1) {
+            throw new IllegalStateException("Radon did not apply its legacy exposure amounts");
+        }
+        CompoundTag saved = cow.saveWithoutId(new CompoundTag());
+        var restored = EntityType.COW.create(helper.getLevel());
+        if (restored == null) throw new IllegalStateException("Could not create a cow for NBT reload");
+        restored.load(saved);
+        var reloaded = PortRadiation.get(restored)
+                .orElseThrow(() -> new IllegalStateException("Reloaded radiation capability missing"));
+        if (Math.abs(reloaded.radiation() - 0.05F) > 0.0001F || reloaded.asbestos() != 1) {
+            throw new IllegalStateException("Exposure did not survive entity NBT reload");
+        }
+        var zombie = helper.spawnWithNoFreeWill(EntityType.ZOMBIE, gasPos);
+        PortBlocks.GAS_RADON.get().entityInside(helper.getBlockState(gasPos), helper.getLevel(),
+                helper.absolutePos(gasPos), zombie);
+        var immuneExposure = PortRadiation.get(zombie)
+                .orElseThrow(() -> new IllegalStateException("Zombie radiation capability missing"));
+        if (immuneExposure.radiation() != 0.0F) {
+            throw new IllegalStateException("A legacy radiation-immune mob received a dose");
+        }
         helper.succeed();
     }
 

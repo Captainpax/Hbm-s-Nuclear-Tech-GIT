@@ -1,6 +1,8 @@
 kind,key,status,target,notes
 block,ore_uranium,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; break behavior and hazard integration still need full parity checks
-block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement and decay tested; radiation exposure and mask behavior pending
+block,gas_radon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement and unprotected exposure tested; masks and full hazard effects pending
+java_source,extprop/HbmLivingProps,partial,src/forge120/java/com/hbm/PortRadiation.java,Radiation and asbestos fields persist; other living properties and effects pending
+java_source,blocks/gas/BlockGasRadon,partial,src/forge120/java/com/hbm/PortRadonGas.java,Movement decay and unprotected exposure present; protection/filter and visual behavior pending
 item,ingot_uranium,partial,src/forge120/java/com/hbm/PortItems.java,Registered and smelting added; hazard behavior pending
 asset,textures/blocks/ore_uranium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_uranium.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_uranium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_uranium.png,Original texture copied byte-for-byte
