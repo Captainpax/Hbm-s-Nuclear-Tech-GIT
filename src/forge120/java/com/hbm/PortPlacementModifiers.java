@@ -12,6 +12,8 @@ public final class PortPlacementModifiers {
 
     public static final RegistryObject<PlacementModifierType<PortOreCountPlacement>> ORE_COUNT =
             TYPES.register("ore_count", () -> () -> PortOreCountPlacement.CODEC);
+    public static final RegistryObject<PlacementModifierType<PortOverworldPlacement>> OVERWORLD_ONLY =
+            TYPES.register("overworld_only", () -> () -> PortOverworldPlacement.CODEC);
 
     private PortPlacementModifiers() {}
 }

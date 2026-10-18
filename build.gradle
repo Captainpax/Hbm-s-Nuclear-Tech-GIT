@@ -64,6 +64,11 @@ minecraft {
                 property 'hbm.port.ore.config.phase', oreConfigPhase.toString()
             }
         }
+        gneissSeedGameTestServer {
+            parent runs.gameTestServer
+            workingDirectory project.file('run-gneiss-seed')
+            property 'forge.enabledGameTestNamespaces', modId
+        }
         data {
             workingDirectory project.file('run-data')
             args '--mod', modId, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/forge120/resources/')

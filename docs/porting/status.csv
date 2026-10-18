@@ -45,7 +45,7 @@ asset,textures/items/fragment_cobalt.png,verified,src/forge120/resources/assets/
 asset,textures/items/ingot_cobalt.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_cobalt.png,Original texture copied byte-for-byte
 asset,textures/items/chunk_ore.rare.png,verified,src/forge120/resources/assets/hbm/textures/item/chunk_ore_rare.png,Original RARE variant texture copied byte-for-byte
 config_option,WorldConfig:2.11_ligniteSpawnrate:138,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default two attempts in source Y35-59 band; distribution check pending
-config_option,WorldConfig:2.14_rareEarthSpawnRate:141,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default six attempts in source Y5-24 band; distribution check pending
+config_option,WorldConfig:2.14_rareEarthSpawnRate:141,partial,src/forge120/java/com/hbm/PortConfig.java,Ordinary rare earth and schist rare earth each use six attempts in their source height bands; distribution check pending
 config_option,WorldConfig:2.18_cinnebarSpawnRate:144,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default one attempt in source Y8-23 band; distribution check pending
 config_option,WorldConfig:2.18_cobaltSpawnRate:145,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default two attempts in source Y4-11 band and startup zero-disable in fresh chunks; distribution check pending
 recipe_site,SmeltingRecipes:45,partial,src/forge120/resources/data/hbm/recipes/ingot_cobalt_from_ore.json,Cobalt ore to ingot at two XP and 200 ticks; real furnace check pending
@@ -59,7 +59,7 @@ asset,textures/blocks/gas_asbestos.png,verified,src/forge120/resources/assets/hb
 asset,textures/items/ingot_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_asbestos.png,Original texture copied byte-for-byte
 asset,textures/blocks/block_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/block/block_asbestos.png,Original texture copied byte-for-byte
 asset,textures/items/powder_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/item/powder_asbestos.png,Original texture copied byte-for-byte
-config_option,WorldConfig:2.12_asbestosSpawnRate:139,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default of two attempts per fresh chunk plus zero-disable test wired through placed feature; distribution-rate testing pending
+config_option,WorldConfig:2.12_asbestosSpawnRate:139,partial,src/forge120/java/com/hbm/PortConfig.java,Ordinary asbestos uses two attempts and schist asbestos uses triple that count; startup zero-disable test passes; distribution-rate testing pending
 java_source,blocks/gas/BlockGasAsbestos,partial,src/forge120/java/com/hbm/PortAsbestosGas.java,Server exposure drift and decay plus client town-aura equivalent particles ported; visual comparison pending
 java_source,blocks/generic/BlockOutgas,partial,src/forge120/java/com/hbm/PortAsbestosOutgasBlock.java,Asbestos ore and compacted-block branches ported; other outgassing blocks remain
 java_source,hazard/HazardSystem,partial,src/forge120/java/com/hbm/PortAsbestosInventoryHazard.java,Per-slot server inventory exposure for asbestos items ported; other hazard classes and nested equipment pending
@@ -156,7 +156,7 @@ item,ingot_copper,partial,src/forge120/java/com/hbm/PortItems.java,Registered an
 asset,textures/blocks/ore_copper.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_copper.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_copper.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_copper.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:37,verified,src/forge120/resources/data/hbm/recipes/ingot_copper_from_ore.json,GameTest checks ore input output 2.5 XP and 200-tick cooking time
-config_option,WorldConfig:2.04_copperSpawnrate:131,partial,src/forge120/java/com/hbm/PortConfig.java,Zero and non-default positive counts loaded from startup config; disabled copper absent and 48-attempt copper present in fresh chunks; distribution validation pending
+config_option,WorldConfig:2.04_copperSpawnrate:131,partial,src/forge120/java/com/hbm/PortConfig.java,Ordinary copper uses configured count and schist copper uses triple; zero and positive startup tests pass; distribution validation pending
 block,ore_tungsten,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
 item,ingot_tungsten,partial,src/forge120/java/com/hbm/PortItems.java,Registered and ore smelting tested; material hazards and downstream recipes pending
 asset,textures/blocks/ore_tungsten.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_tungsten.png,Original texture copied byte-for-byte
@@ -175,8 +175,8 @@ asset,textures/blocks/ore_beryllium.png,verified,src/forge120/resources/assets/h
 asset,textures/items/ingot_beryllium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_beryllium.png,Original texture copied byte-for-byte
 recipe_site,SmeltingRecipes:42,verified,src/forge120/resources/data/hbm/recipes/ingot_beryllium_from_ore.json,GameTest checks ore input output 2 XP and 200-tick cooking time
 config_option,WorldConfig:2.09_berylliumSpawnrate:136,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
-config_option,WorldConfig:2.00_uraniumSpawnrate:127,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default read by the fresh-chunk placement modifier; custom count restart and distribution pending
-config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all twenty ported deposits absent in fresh chunks; other legacy worldgen unported
+config_option,WorldConfig:2.00_uraniumSpawnrate:127,partial,src/forge120/java/com/hbm/PortConfig.java,Ordinary uranium uses configured count and schist uranium uses triple; custom count restart and distribution pending
+config_option,WorldConfig:2.D00_overworldOres:123,partial,src/forge120/java/com/hbm/PortConfig.java,Master-off loaded at dedicated startup and all twenty-eight ported deposits absent in fresh chunks while Graphitic Schist stone remains; other legacy worldgen unported
 block,ore_sulfur,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 sulfur plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_fluorite,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 fluorite plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_niter,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 niter plus silk-touch drops tested; tool tier fortune and downstream recipes pending
@@ -258,3 +258,42 @@ asset,textures/models/machines/capacitor_niobium.png,verified,src/forge120/resou
 asset,textures/models/machines/capacitor_tantalum.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_tantalum.png,Original machine capacitor texture copied byte-for-byte and stitched for socket OBJ; visual comparison pending
 asset,textures/models/machines/capacitor_bismuth.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_bismuth.png,Original machine capacitor texture copied byte-for-byte and stitched for socket OBJ; visual comparison pending
 asset,textures/models/machines/capacitor_spark.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/capacitor_spark.png,Original machine capacitor texture copied byte-for-byte and stitched for socket OBJ; visual comparison pending
+block,stone_gneiss,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_iron,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_gold,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_uranium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_uranium_scorched,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_copper,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_asbestos,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_lithium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_schrabidium,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_rare,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+block,ore_gneiss_gas,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
+item,lithium,partial,src/forge120/java/com/hbm/PortItems.java,Source texture and schist smelting output ported; downstream processing pending
+item,ingot_schrabidium,partial,src/forge120/java/com/hbm/PortItems.java,Source texture and schist smelting output ported; downstream processing pending
+asset,textures/blocks/stone_gneiss_var.png,verified,src/forge120/resources/assets/hbm/textures/block/stone_gneiss_var.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_iron.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_iron.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_gold.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_gold.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_uranium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_uranium.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_uranium_scorched.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_uranium_scorched.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_copper.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_copper.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_asbestos.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_asbestos.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_lithium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_lithium.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_schrabidium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_schrabidium.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_rare.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_rare.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_gneiss_gas.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_gas.png,Original texture copied byte-for-byte
+asset,textures/items/lithium.png,verified,src/forge120/resources/assets/hbm/textures/item/lithium.png,Original texture copied byte-for-byte
+asset,textures/items/ingot_schrabidium.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_schrabidium.png,Original texture copied byte-for-byte
+config_option,WorldConfig:2.13_lithiumSpawnRate:140,partial,src/forge120/java/com/hbm/PortConfig.java,Six default attempts per chunk at Y30-39 and startup zero-disable test; distribution validation pending
+config_option,WorldConfig:2.16_gasShaleSpawnRate:142,partial,src/forge120/java/com/hbm/PortConfig.java,Five default attempts tripled for gas shale at Y30-39 and startup zero-disable test; distribution validation pending
+recipe_site,SmeltingRecipes:54,partial,src/forge120/resources/data/hbm/recipes,Input output XP and 200 ticks checked in GameTest; real furnace progression pending
+recipe_site,SmeltingRecipes:55,partial,src/forge120/resources/data/hbm/recipes,Input output XP and 200 ticks checked in GameTest; real furnace progression pending
+recipe_site,SmeltingRecipes:56,partial,src/forge120/resources/data/hbm/recipes,Input output XP and 200 ticks checked in GameTest; real furnace progression pending
+recipe_site,SmeltingRecipes:57,partial,src/forge120/resources/data/hbm/recipes,Input output XP and 200 ticks checked in GameTest; real furnace progression pending
+recipe_site,SmeltingRecipes:58,partial,src/forge120/resources/data/hbm/recipes,Input output XP and 200 ticks checked in GameTest; real furnace progression pending
+recipe_site,SmeltingRecipes:59,partial,src/forge120/resources/data/hbm/recipes,Input output XP and 200 ticks checked in GameTest; real furnace progression pending
+recipe_site,SmeltingRecipes:60,partial,src/forge120/resources/data/hbm/recipes,Input output XP and 200 ticks checked in GameTest; real furnace progression pending
+recipe_site,CraftingManager:946,partial,src/forge120/resources/data/hbm/recipes,Scorched schist plus water bucket recipe checked; real player crafting and recipe-book unlock pending
+recipe_site,CraftingManager:947,partial,src/forge120/resources/data/hbm/recipes,Scorched schist plus water bucket recipe checked; real player crafting and recipe-book unlock pending
+java_source,world/feature/SchistStratum,partial,src/forge120/java/com/hbm/PortGneissStratumFeature.java,Four octave seed-shaped stratum in fresh Overworld chunks; cross-chunk write removed and distribution comparison pending
+worldgen_source,SchistStratum,partial,src/forge120/java/com/hbm/PortGneissStratumFeature.java,Stratum independent of ore master switch and eight schist ores generated after it; two clean seeds and restart no-regeneration marker pass; distribution comparison pending

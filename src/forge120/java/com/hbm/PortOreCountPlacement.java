@@ -17,7 +17,7 @@ public final class PortOreCountPlacement extends RepeatingPlacement {
 
     public PortOreCountPlacement(String ore) {
         // Reject typos when datapack features decode, rather than silently skipping an ore.
-        PortConfig.oreCountSetting(ore);
+        PortConfig.validateOreCountKey(ore);
         this.ore = ore;
     }
 

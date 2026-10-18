@@ -42,6 +42,13 @@ jobs:
         run: ./gradlew build runGameTestServer -PhbmPersistencePhase=seed --no-daemon --console=plain
       - name: Restart dedicated server and verify radiation battery cable socket and charged pack state
         run: ./gradlew runGameTestServer -PhbmPersistencePhase=verify --no-daemon --console=plain
+      - name: Test fresh worldgen with two independent seeds
+        run: |
+          mkdir -p run-gneiss-seed
+          cp tools/porting/fixtures/gneiss-seed-one.properties run-gneiss-seed/server.properties
+          ./gradlew runGneissSeedGameTestServer --no-daemon --console=plain
+          cp tools/porting/fixtures/gneiss-seed-two.properties run-gneiss-seed/server.properties
+          ./gradlew runGneissSeedGameTestServer --no-daemon --console=plain
       - name: Test master-disabled ore generation in fresh chunks
         run: |
           mkdir -p run-ore-config/world/serverconfig
@@ -67,6 +74,14 @@ jobs:
         run: |
           cp tools/porting/fixtures/hbm-server-cluster-titanium-off.toml run-ore-config/world/serverconfig/hbm-server.toml
           ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=cluster-titanium-off --no-daemon --console=plain
+      - name: Test schist lithium disabled in fresh chunks
+        run: |
+          cp tools/porting/fixtures/hbm-server-gneiss-lithium-off.toml run-ore-config/world/serverconfig/hbm-server.toml
+          ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=gneiss-lithium-off --no-daemon --console=plain
+      - name: Test gas shale disabled in fresh chunks
+        run: |
+          cp tools/porting/fixtures/hbm-server-gneiss-gas-off.toml run-ore-config/world/serverconfig/hbm-server.toml
+          ./gradlew runOreConfigGameTestServer -PhbmOreConfigPhase=gneiss-gas-off --no-daemon --console=plain
       - uses: actions/upload-artifact@v4
         with:
           name: hbm-forge-1.20.1-dev

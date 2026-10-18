@@ -44,6 +44,8 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.CRYSTAL_ALUMINIUM.get());
                         output.accept(PortItems.CRYSTAL_COPPER.get());
                         output.accept(PortItems.INGOT_ALUMINIUM.get());
+                        output.accept(PortItems.LITHIUM.get());
+                        output.accept(PortItems.INGOT_SCHRABIDIUM.get());
                     })
                     .build());
 
@@ -72,6 +74,17 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.CLUSTER_TITANIUM.get());
                         output.accept(PortItems.CLUSTER_ALUMINIUM.get());
                         output.accept(PortItems.CLUSTER_COPPER.get());
+                        output.accept(PortItems.STONE_GNEISS.get());
+                        output.accept(PortItems.ORE_GNEISS_IRON.get());
+                        output.accept(PortItems.ORE_GNEISS_GOLD.get());
+                        output.accept(PortItems.ORE_GNEISS_URANIUM.get());
+                        output.accept(PortItems.ORE_GNEISS_URANIUM_SCORCHED.get());
+                        output.accept(PortItems.ORE_GNEISS_COPPER.get());
+                        output.accept(PortItems.ORE_GNEISS_ASBESTOS.get());
+                        output.accept(PortItems.ORE_GNEISS_LITHIUM.get());
+                        output.accept(PortItems.ORE_GNEISS_SCHRABIDIUM.get());
+                        output.accept(PortItems.ORE_GNEISS_RARE.get());
+                        output.accept(PortItems.ORE_GNEISS_GAS.get());
                         output.accept(PortItems.BLOCK_ASBESTOS.get());
                         output.accept(PortItems.GAS_RADON.get());
                         output.accept(PortItems.GAS_ASBESTOS.get());

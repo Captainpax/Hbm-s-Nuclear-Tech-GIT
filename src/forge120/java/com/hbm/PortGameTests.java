@@ -29,12 +29,14 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -1886,7 +1888,9 @@ public final class PortGameTests {
                 "uranium", "thorium", "titanium", "copper", "tungsten", "lead", "beryllium",
                 "sulfur", "fluorite", "niter", "aluminium", "asbestos",
                 "rare", "lignite", "cinnebar", "cobalt",
-                "cluster_iron", "cluster_titanium", "cluster_aluminium", "cluster_copper"
+                "cluster_iron", "cluster_titanium", "cluster_aluminium", "cluster_copper",
+                "gneiss_iron", "gneiss_gold", "gneiss_uranium", "gneiss_copper",
+                "gneiss_asbestos", "gneiss_lithium", "gneiss_rare", "gneiss_gas"
         }) {
             int expected = PortConfig.ENABLE_OVERWORLD_ORES.get() ? PortConfig.oreCount(ore) : 0;
             if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != expected) {
@@ -1903,7 +1907,11 @@ public final class PortGameTests {
                 PortBlocks.ORE_RARE.get(), PortBlocks.ORE_LIGNITE.get(),
                 PortBlocks.ORE_CINNEBAR.get(), PortBlocks.ORE_COBALT.get(),
                 PortBlocks.CLUSTER_IRON.get(), PortBlocks.CLUSTER_TITANIUM.get(),
-                PortBlocks.CLUSTER_ALUMINIUM.get(), PortBlocks.CLUSTER_COPPER.get()
+                PortBlocks.CLUSTER_ALUMINIUM.get(), PortBlocks.CLUSTER_COPPER.get(),
+                PortBlocks.ORE_GNEISS_IRON.get(), PortBlocks.ORE_GNEISS_GOLD.get(),
+                PortBlocks.ORE_GNEISS_URANIUM.get(), PortBlocks.ORE_GNEISS_COPPER.get(),
+                PortBlocks.ORE_GNEISS_ASBESTOS.get(), PortBlocks.ORE_GNEISS_LITHIUM.get(),
+                PortBlocks.ORE_GNEISS_RARE.get(), PortBlocks.ORE_GNEISS_GAS.get()
         };
         if (phase.equals("master-off")) {
             int chunkX = ThreadLocalRandom.current().nextInt(20_000, 24_000);
@@ -1912,12 +1920,17 @@ public final class PortGameTests {
                     || countOresInFreshChunks(level, chunkX, chunkZ, all) != 0) {
                 throw new IllegalStateException("HBM ores generated in fresh chunks with master switch off");
             }
+            if (!freshGneissPresent(level)) {
+                throw new IllegalStateException("Gneiss stratum disappeared with Overworld ores disabled");
+            }
         } else if (phase.equals("copper-off")) {
             int chunkX = ThreadLocalRandom.current().nextInt(26_000, 30_000);
             int chunkZ = ThreadLocalRandom.current().nextInt(26_000, 30_000);
             if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.ORE_COPPER_COUNT.get() != 0
                     || countOresInFreshChunks(level, chunkX, chunkZ,
                             new Block[] {PortBlocks.ORE_COPPER.get()}) != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.ORE_GNEISS_COPPER.get()}) != 0
                     || countOresInFreshChunks(level, chunkX, chunkZ,
                             new Block[] {PortBlocks.ORE_URANIUM.get()}) == 0) {
                 throw new IllegalStateException("Copper-only disable setting failed in fresh chunks");
@@ -1936,6 +1949,8 @@ public final class PortGameTests {
             if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.ORE_ASBESTOS_COUNT.get() != 0
                     || countOresInFreshChunks(level, chunkX, chunkZ,
                             new Block[] {PortBlocks.ORE_ASBESTOS.get()}) != 0
+                    || countOresInFreshChunks(level, chunkX, chunkZ,
+                            new Block[] {PortBlocks.ORE_GNEISS_ASBESTOS.get()}) != 0
                     || countOresInFreshChunks(level, chunkX, chunkZ,
                             new Block[] {PortBlocks.ORE_URANIUM.get()}) == 0) {
                 throw new IllegalStateException("Asbestos-only disable setting failed in fresh chunks");
@@ -1960,10 +1975,308 @@ public final class PortGameTests {
                             new Block[] {PortBlocks.CLUSTER_IRON.get()}) == 0) {
                 throw new IllegalStateException("Titanium-cluster disable setting failed in fresh chunks");
             }
+        } else if (phase.equals("gneiss-lithium-off")) {
+            if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.ORE_GNEISS_LITHIUM_COUNT.get() != 0) {
+                throw new IllegalStateException("Schist lithium config did not load before worldgen");
+            }
+            for (ChunkPos chunk : gneissCandidates(level, 8)) {
+                if (countOresInFreshChunks(level, chunk.x, chunk.z,
+                        new Block[] {PortBlocks.ORE_GNEISS_LITHIUM.get()}) != 0) {
+                    throw new IllegalStateException("Schist lithium generated with its count set to zero");
+                }
+            }
+            if (!freshGneissPresent(level)) throw new IllegalStateException("Lithium switch disabled the stratum");
+        } else if (phase.equals("gneiss-gas-off")) {
+            if (!PortConfig.ENABLE_OVERWORLD_ORES.get() || PortConfig.ORE_GNEISS_GAS_COUNT.get() != 0) {
+                throw new IllegalStateException("Gas shale config did not load before worldgen");
+            }
+            for (ChunkPos chunk : gneissCandidates(level, 8)) {
+                if (countOresInFreshChunks(level, chunk.x, chunk.z,
+                        new Block[] {PortBlocks.ORE_GNEISS_GAS.get()}) != 0) {
+                    throw new IllegalStateException("Gas shale generated with its count set to zero");
+                }
+            }
+            if (!freshGneissPresent(level)) throw new IllegalStateException("Gas switch disabled the stratum");
         } else if (!phase.isEmpty()) {
             throw new IllegalStateException("Unknown ore config test phase: " + phase);
         }
         helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void gneissContentAndRecipes(GameTestHelper helper) {
+        Block[] blocks = {
+                PortBlocks.STONE_GNEISS.get(), PortBlocks.ORE_GNEISS_IRON.get(),
+                PortBlocks.ORE_GNEISS_GOLD.get(), PortBlocks.ORE_GNEISS_URANIUM.get(),
+                PortBlocks.ORE_GNEISS_URANIUM_SCORCHED.get(), PortBlocks.ORE_GNEISS_COPPER.get(),
+                PortBlocks.ORE_GNEISS_ASBESTOS.get(), PortBlocks.ORE_GNEISS_LITHIUM.get(),
+                PortBlocks.ORE_GNEISS_SCHRABIDIUM.get(), PortBlocks.ORE_GNEISS_RARE.get(),
+                PortBlocks.ORE_GNEISS_GAS.get()
+        };
+        Item[] items = {
+                PortItems.STONE_GNEISS.get(), PortItems.ORE_GNEISS_IRON.get(),
+                PortItems.ORE_GNEISS_GOLD.get(), PortItems.ORE_GNEISS_URANIUM.get(),
+                PortItems.ORE_GNEISS_URANIUM_SCORCHED.get(), PortItems.ORE_GNEISS_COPPER.get(),
+                PortItems.ORE_GNEISS_ASBESTOS.get(), PortItems.ORE_GNEISS_LITHIUM.get(),
+                PortItems.ORE_GNEISS_SCHRABIDIUM.get(), PortItems.ORE_GNEISS_RARE.get(),
+                PortItems.ORE_GNEISS_GAS.get()
+        };
+        for (int i = 0; i < blocks.length; i++) {
+            ResourceLocation id = ForgeRegistries.BLOCKS.getKey(blocks[i]);
+            if (id == null || ForgeRegistries.ITEMS.getValue(id) != items[i]) {
+                throw new IllegalStateException("Missing gneiss block item: " + id);
+            }
+        }
+        var features = helper.getLevel().registryAccess().registryOrThrow(Registries.PLACED_FEATURE);
+        if (!features.containsKey(ResourceLocation.fromNamespaceAndPath("hbm", "gneiss_stratum"))) {
+            throw new IllegalStateException("Gneiss stratum feature missing");
+        }
+        for (int i : new int[] {1, 2, 3, 5, 6, 7, 9, 10}) {
+            if (!features.containsKey(ForgeRegistries.BLOCKS.getKey(blocks[i]))) {
+                throw new IllegalStateException("Gneiss ore feature missing: " + blocks[i]);
+            }
+        }
+        if (features.containsKey(PortBlocks.ORE_GNEISS_URANIUM_SCORCHED.getId())
+                || features.containsKey(PortBlocks.ORE_GNEISS_SCHRABIDIUM.getId())) {
+            throw new IllegalStateException("Crafted/rare gneiss variant generated naturally");
+        }
+        Item[] smeltInputs = {
+                PortItems.ORE_GNEISS_IRON.get(), PortItems.ORE_GNEISS_GOLD.get(),
+                PortItems.ORE_GNEISS_URANIUM.get(), PortItems.ORE_GNEISS_URANIUM_SCORCHED.get(),
+                PortItems.ORE_GNEISS_COPPER.get(), PortItems.ORE_GNEISS_LITHIUM.get(),
+                PortItems.ORE_GNEISS_SCHRABIDIUM.get()
+        };
+        Item[] products = {
+                Items.IRON_INGOT, Items.GOLD_INGOT, PortItems.INGOT_URANIUM.get(),
+                PortItems.INGOT_URANIUM.get(), PortItems.INGOT_COPPER.get(),
+                PortItems.LITHIUM.get(), PortItems.INGOT_SCHRABIDIUM.get()
+        };
+        float[] xp = {5.0F, 5.0F, 12.0F, 12.0F, 5.0F, 10.0F, 256.0F};
+        for (int i = 0; i < smeltInputs.length; i++) {
+            var recipe = helper.getLevel().getRecipeManager()
+                    .getRecipeFor(RecipeType.SMELTING, new SimpleContainer(new ItemStack(smeltInputs[i])), helper.getLevel())
+                    .orElseThrow(() -> new IllegalStateException("Missing gneiss smelt recipe"));
+            if (!recipe.getResultItem(helper.getLevel().registryAccess()).is(products[i])
+                    || recipe.getExperience() != xp[i] || recipe.getCookingTime() != 200) {
+                throw new IllegalStateException("Gneiss smelt differs from legacy for " + smeltInputs[i]);
+            }
+        }
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
+        ItemStack pick = new ItemStack(Items.IRON_PICKAXE);
+        ItemStack silk = pick.copy();
+        silk.enchant(Enchantments.SILK_TOUCH, 1);
+        for (int i = 0; i < blocks.length; i++) {
+            helper.getLevel().setBlock(pos, blocks[i].defaultBlockState(), 3);
+            Item expected = i == 6 ? PortItems.INGOT_ASBESTOS.get()
+                    : i == 9 ? PortItems.CHUNK_ORE_RARE.get() : items[i];
+            var drops = Block.getDrops(blocks[i].defaultBlockState(), helper.getLevel(), pos,
+                    null, FakePlayerFactory.getMinecraft(helper.getLevel()), pick);
+            var silkDrops = Block.getDrops(blocks[i].defaultBlockState(), helper.getLevel(), pos,
+                    null, FakePlayerFactory.getMinecraft(helper.getLevel()), silk);
+            if (drops.size() != 1 || !drops.get(0).is(expected) || drops.get(0).getCount() != 1
+                    || silkDrops.size() != 1 || !silkDrops.get(0).is(items[i])) {
+                throw new IllegalStateException("Gneiss drop/Silk Touch differs for " + blocks[i]);
+            }
+        }
+        if (PortAsbestosInventoryHazard.dose(new ItemStack(PortItems.ORE_GNEISS_ASBESTOS.get())) != 1) {
+            throw new IllegalStateException("Gneiss asbestos inventory hazard missing");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void gneissUraniumRehydrationAndHazards(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var player = FakePlayerFactory.getMinecraft(level);
+        var manager = level.getRecipeManager();
+        var one = manager.byKey(ResourceLocation.fromNamespaceAndPath("hbm", "gneiss_uranium_rehydrate_one"))
+                .orElseThrow(() -> new IllegalStateException("Single scorched schist recipe missing"));
+        var eight = manager.byKey(ResourceLocation.fromNamespaceAndPath("hbm", "gneiss_uranium_rehydrate_eight"))
+                .orElseThrow(() -> new IllegalStateException("Eight scorched schist recipe missing"));
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        grid.setItem(0, new ItemStack(PortItems.ORE_GNEISS_URANIUM_SCORCHED.get()));
+        grid.setItem(1, new ItemStack(Items.WATER_BUCKET));
+        if (!(one instanceof ShapelessRecipe shapeless) || !shapeless.matches(grid, level)
+                || !shapeless.assemble(grid, level.registryAccess()).is(PortItems.ORE_GNEISS_URANIUM.get())) {
+            throw new IllegalStateException("One scorched schist did not rehydrate");
+        }
+        grid.setItem(0, ItemStack.EMPTY);
+        grid.setItem(1, ItemStack.EMPTY);
+        for (int slot = 0; slot < 9; slot++) {
+            grid.setItem(slot, new ItemStack(slot == 4 ? Items.WATER_BUCKET
+                    : PortItems.ORE_GNEISS_URANIUM_SCORCHED.get()));
+        }
+        if (!(eight instanceof ShapedRecipe shaped) || !shaped.matches(grid, level)
+                || !shaped.assemble(grid, level.registryAccess()).is(PortItems.ORE_GNEISS_URANIUM.get())
+                || shaped.assemble(grid, level.registryAccess()).getCount() != 8) {
+            throw new IllegalStateException("Eight scorched schist did not rehydrate");
+        }
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        for (Block block : new Block[] {PortBlocks.ORE_GNEISS_URANIUM.get(),
+                PortBlocks.ORE_GNEISS_URANIUM_SCORCHED.get(), PortBlocks.ORE_GNEISS_ASBESTOS.get()}) {
+            level.setBlock(pos, block.defaultBlockState(), 3);
+            for (int i = 0; i < 32; i++) block.randomTick(block.defaultBlockState(), level, pos, RandomSource.create(i));
+            Block gas = block == PortBlocks.ORE_GNEISS_ASBESTOS.get()
+                    ? PortBlocks.GAS_ASBESTOS.get() : PortBlocks.GAS_RADON.get();
+            boolean emitted = false;
+            for (Direction direction : Direction.values()) {
+                if (level.getBlockState(pos.relative(direction)).is(gas)) emitted = true;
+            }
+            if (!emitted) throw new IllegalStateException("Schist ore did not emit its gas: " + block);
+            for (Direction direction : Direction.values()) {
+                level.setBlock(pos.relative(direction), Blocks.AIR.defaultBlockState(), 3);
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void gneissGeneratesInsideStratumInFreshChunks(GameTestHelper helper) {
+        if (!System.getProperty("hbm.port.ore.config.phase", "").isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        Block[] ores = {
+                PortBlocks.ORE_GNEISS_IRON.get(), PortBlocks.ORE_GNEISS_GOLD.get(),
+                PortBlocks.ORE_GNEISS_URANIUM.get(), PortBlocks.ORE_GNEISS_COPPER.get(),
+                PortBlocks.ORE_GNEISS_ASBESTOS.get(), PortBlocks.ORE_GNEISS_LITHIUM.get(),
+                PortBlocks.ORE_GNEISS_RARE.get(), PortBlocks.ORE_GNEISS_GAS.get()
+        };
+        int stone = 0;
+        int ore = 0;
+        for (ChunkPos chunk : gneissCandidates(level, 12)) {
+            level.getChunk(chunk.x, chunk.z);
+            for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
+                for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {
+                    int range = PortGneissStratumFeature.range(level.getSeed(), x, z);
+                    for (int y = 20; y <= 40; y++) {
+                        var state = level.getBlockState(new BlockPos(x, y, z));
+                        boolean isOre = false;
+                        for (Block block : ores) if (state.is(block)) isOre = true;
+                        if (state.is(PortBlocks.STONE_GNEISS.get())) stone++;
+                        if (isOre) ore++;
+                        if ((state.is(PortBlocks.STONE_GNEISS.get()) || isOre)
+                                && (range < 0 || y < 30 - range || y > 30 + range)) {
+                            throw new IllegalStateException("Gneiss escaped its noise-shaped layer at " + x + "," + y + "," + z);
+                        }
+                    }
+                }
+            }
+        }
+        if (stone == 0 || ore == 0) {
+            throw new IllegalStateException("Fresh chunks lacked gneiss stone or ore: " + stone + "/" + ore);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void gneissChunkDoesNotRegenerateAfterServerRestart(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        GneissRestartData data = GneissRestartData.get(level);
+        if (phase.equals("seed")) {
+            BlockPos marker = null;
+            for (ChunkPos chunk : gneissCandidates(level, 8)) {
+                level.getChunk(chunk.x, chunk.z);
+                for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX() && marker == null; x++) {
+                    for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ() && marker == null; z++) {
+                        for (int y = 25; y <= 35; y++) {
+                            BlockPos pos = new BlockPos(x, y, z);
+                            if (level.getBlockState(pos).is(PortBlocks.STONE_GNEISS.get())) {
+                                marker = pos;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (marker != null) break;
+            }
+            if (marker == null) throw new IllegalStateException("No schist block for restart marker");
+            data.setMarker(marker);
+            level.setBlock(marker, Blocks.STONE.defaultBlockState(), 3);
+        } else if (phase.equals("verify")) {
+            BlockPos marker = data.marker();
+            if (marker == null) throw new IllegalStateException("Schist restart marker data was not saved");
+            level.getChunk(marker.getX() >> 4, marker.getZ() >> 4);
+            if (!level.getBlockState(marker).is(Blocks.STONE)
+                    || PortGneissStratumFeature.range(level.getSeed(), marker.getX(), marker.getZ()) < 0) {
+                throw new IllegalStateException("Previously generated schist chunk changed on restart: " + marker);
+            }
+            data.setMarker(null);
+        } else {
+            throw new IllegalStateException("Unknown schist restart phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    public static final class GneissRestartData extends SavedData {
+        private static final String NAME = "hbm_gneiss_restart_test";
+        private BlockPos marker;
+
+        static GneissRestartData get(ServerLevel level) {
+            return level.getDataStorage().computeIfAbsent(GneissRestartData::load, GneissRestartData::new, NAME);
+        }
+
+        static GneissRestartData load(CompoundTag tag) {
+            GneissRestartData data = new GneissRestartData();
+            if (tag.getBoolean("active")) {
+                data.marker = new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
+            }
+            return data;
+        }
+
+        BlockPos marker() {
+            return marker;
+        }
+
+        void setMarker(BlockPos pos) {
+            marker = pos;
+            setDirty();
+        }
+
+        @Override
+        public CompoundTag save(CompoundTag tag) {
+            tag.putBoolean("active", marker != null);
+            if (marker != null) {
+                tag.putInt("x", marker.getX());
+                tag.putInt("y", marker.getY());
+                tag.putInt("z", marker.getZ());
+            }
+            return tag;
+        }
+    }
+
+    private static boolean freshGneissPresent(ServerLevel level) {
+        for (ChunkPos chunk : gneissCandidates(level, 8)) {
+            if (countOresInFreshChunks(level, chunk.x, chunk.z,
+                    new Block[] {PortBlocks.STONE_GNEISS.get()}) > 0) return true;
+        }
+        return false;
+    }
+
+    private static List<ChunkPos> gneissCandidates(ServerLevel level, int count) {
+        var candidates = new java.util.ArrayList<ChunkPos>();
+        // Config phases share one test world. A fresh random search region prevents
+        // a later phase from inspecting chunks generated under an earlier config.
+        RandomSource random = RandomSource.create(level.getSeed() ^ 0x4A2C91E7L
+                ^ ThreadLocalRandom.current().nextLong());
+        for (int attempt = 0; attempt < 50_000 && candidates.size() < count; attempt++) {
+            int x = random.nextInt(100_000, 10_000_000);
+            int z = random.nextInt(100_000, 10_000_000);
+            if (PortGneissStratumFeature.range(level.getSeed(), x, z) >= 0) {
+                ChunkPos chunk = new ChunkPos(x >> 4, z >> 4);
+                if (!candidates.contains(chunk)) candidates.add(chunk);
+            }
+        }
+        if (candidates.size() < count) {
+            throw new IllegalStateException("Could not find predicted gneiss chunks for world seed " + level.getSeed());
+        }
+        return candidates;
     }
 
     private static int countOresInFreshChunks(ServerLevel level, int baseChunkX, int baseChunkZ, Block[] ores) {

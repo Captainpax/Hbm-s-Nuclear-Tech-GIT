@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "hbm:ore_gneiss_schrabidium"
+  },
+  "result": "hbm:ingot_schrabidium",
+  "experience": 256,
+  "cookingtime": 200
+}

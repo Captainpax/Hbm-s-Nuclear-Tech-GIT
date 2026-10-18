@@ -1,0 +1,11 @@
+{
+  "feature": "hbm:gneiss_stratum",
+  "placement": [
+    {
+      "type": "hbm:overworld_only"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

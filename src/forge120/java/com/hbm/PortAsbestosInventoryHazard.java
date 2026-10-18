@@ -54,7 +54,8 @@ public final class PortAsbestosInventoryHazard {
     }
 
     static int dose(ItemStack stack) {
-        if (stack.is(PortItems.INGOT_ASBESTOS.get()) || stack.is(PortItems.ORE_ASBESTOS.get())) return 1;
+        if (stack.is(PortItems.INGOT_ASBESTOS.get()) || stack.is(PortItems.ORE_ASBESTOS.get())
+                || stack.is(PortItems.ORE_GNEISS_ASBESTOS.get())) return 1;
         if (stack.is(PortItems.POWDER_ASBESTOS.get())) return 3;
         if (stack.is(PortItems.BLOCK_ASBESTOS.get())) return 10;
         return 0;

@@ -120,6 +120,20 @@ public final class PortItems {
     public static final RegistryObject<Item> CRYSTAL_ALUMINIUM = ingot("crystal_aluminium");
     public static final RegistryObject<Item> CRYSTAL_COPPER = ingot("crystal_copper");
     public static final RegistryObject<Item> INGOT_ALUMINIUM = ingot("ingot_aluminium");
+    public static final RegistryObject<Item> STONE_GNEISS = ore("stone_gneiss", PortBlocks.STONE_GNEISS);
+    public static final RegistryObject<Item> ORE_GNEISS_IRON = ore("ore_gneiss_iron", PortBlocks.ORE_GNEISS_IRON);
+    public static final RegistryObject<Item> ORE_GNEISS_GOLD = ore("ore_gneiss_gold", PortBlocks.ORE_GNEISS_GOLD);
+    public static final RegistryObject<Item> ORE_GNEISS_URANIUM = ore("ore_gneiss_uranium", PortBlocks.ORE_GNEISS_URANIUM);
+    public static final RegistryObject<Item> ORE_GNEISS_URANIUM_SCORCHED =
+            ore("ore_gneiss_uranium_scorched", PortBlocks.ORE_GNEISS_URANIUM_SCORCHED);
+    public static final RegistryObject<Item> ORE_GNEISS_COPPER = ore("ore_gneiss_copper", PortBlocks.ORE_GNEISS_COPPER);
+    public static final RegistryObject<Item> ORE_GNEISS_ASBESTOS = ore("ore_gneiss_asbestos", PortBlocks.ORE_GNEISS_ASBESTOS);
+    public static final RegistryObject<Item> ORE_GNEISS_LITHIUM = ore("ore_gneiss_lithium", PortBlocks.ORE_GNEISS_LITHIUM);
+    public static final RegistryObject<Item> ORE_GNEISS_SCHRABIDIUM = ore("ore_gneiss_schrabidium", PortBlocks.ORE_GNEISS_SCHRABIDIUM);
+    public static final RegistryObject<Item> ORE_GNEISS_RARE = ore("ore_gneiss_rare", PortBlocks.ORE_GNEISS_RARE);
+    public static final RegistryObject<Item> ORE_GNEISS_GAS = ore("ore_gneiss_gas", PortBlocks.ORE_GNEISS_GAS);
+    public static final RegistryObject<Item> LITHIUM = ingot("lithium");
+    public static final RegistryObject<Item> INGOT_SCHRABIDIUM = ingot("ingot_schrabidium");
 
     /** Legacy ItemBatteryPack enum order, now represented by stable named item IDs. */
     public static final List<RegistryObject<Item>> BATTERY_PACKS = List.of(

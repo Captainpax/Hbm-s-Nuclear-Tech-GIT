@@ -26,6 +26,8 @@ public final class PortConfig {
     public static final ForgeConfigSpec.IntValue ORE_LIGNITE_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_CINNEBAR_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_COBALT_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_GNEISS_LITHIUM_COUNT;
+    public static final ForgeConfigSpec.IntValue ORE_GNEISS_GAS_COUNT;
     public static final ForgeConfigSpec.IntValue CLUSTER_IRON_COUNT;
     public static final ForgeConfigSpec.IntValue CLUSTER_TITANIUM_COUNT;
     public static final ForgeConfigSpec.IntValue CLUSTER_ALUMINIUM_COUNT;
@@ -69,6 +71,8 @@ public final class PortConfig {
         ORE_RARE_COUNT = oreCount(builder, "2.14_rareEarthSpawnRate", 6);
         ORE_CINNEBAR_COUNT = oreCount(builder, "2.18_cinnebarSpawnRate", 1);
         ORE_COBALT_COUNT = oreCount(builder, "2.18_cobaltSpawnRate", 2);
+        ORE_GNEISS_LITHIUM_COUNT = oreCount(builder, "2.13_lithiumSpawnRate", 6);
+        ORE_GNEISS_GAS_COUNT = oreCount(builder, "2.16_gasShaleSpawnRate", 5);
         CLUSTER_IRON_COUNT = oreCount(builder, "2.C00_ironClusterSpawn", 4);
         CLUSTER_TITANIUM_COUNT = oreCount(builder, "2.C01_titaniumClusterSpawn", 2);
         CLUSTER_ALUMINIUM_COUNT = oreCount(builder, "2.C02_aluminiumClusterSpawn", 3);
@@ -85,7 +89,29 @@ public final class PortConfig {
     }
 
     static int oreCount(String ore) {
-        return oreCountSetting(ore).get();
+        return switch (ore) {
+            case "gneiss_iron" -> 25;
+            case "gneiss_gold" -> 10;
+            case "gneiss_uranium" -> triple(ORE_URANIUM_COUNT.get());
+            case "gneiss_copper" -> triple(ORE_COPPER_COUNT.get());
+            case "gneiss_asbestos" -> triple(ORE_ASBESTOS_COUNT.get());
+            case "gneiss_lithium" -> ORE_GNEISS_LITHIUM_COUNT.get();
+            case "gneiss_rare" -> ORE_RARE_COUNT.get();
+            case "gneiss_gas" -> triple(ORE_GNEISS_GAS_COUNT.get());
+            default -> oreCountSetting(ore).get();
+        };
+    }
+
+    static void validateOreCountKey(String ore) {
+        switch (ore) {
+            case "gneiss_iron", "gneiss_gold", "gneiss_uranium", "gneiss_copper",
+                    "gneiss_asbestos", "gneiss_lithium", "gneiss_rare", "gneiss_gas" -> { return; }
+            default -> oreCountSetting(ore);
+        }
+    }
+
+    private static int triple(int count) {
+        return (int) Math.min((long) count * 3L, Integer.MAX_VALUE);
     }
 
     static ForgeConfigSpec.IntValue oreCountSetting(String ore) {

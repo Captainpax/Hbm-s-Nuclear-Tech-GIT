@@ -23,6 +23,8 @@
 		12_asbestosSpawnRate = 2
 		11_ligniteSpawnrate = 2
 		14_rareEarthSpawnRate = 6
+		13_lithiumSpawnRate = 6
+		16_gasShaleSpawnRate = 5
 		18_cinnebarSpawnRate = 1
 		18_cobaltSpawnRate = 2
 		C00_ironClusterSpawn = 4

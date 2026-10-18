@@ -78,14 +78,32 @@ public final class PortBlocks {
     public static final RegistryObject<Block> CLUSTER_TITANIUM = ore("cluster_titanium", 5.0F, 15.0F);
     public static final RegistryObject<Block> CLUSTER_ALUMINIUM = ore("cluster_aluminium", 5.0F, 15.0F);
     public static final RegistryObject<Block> CLUSTER_COPPER = ore("cluster_copper", 5.0F, 15.0F);
+    public static final RegistryObject<Block> STONE_GNEISS = ore("stone_gneiss", 1.5F, 10.0F);
+    public static final RegistryObject<Block> ORE_GNEISS_IRON = ore("ore_gneiss_iron", 1.5F, 10.0F);
+    public static final RegistryObject<Block> ORE_GNEISS_GOLD = ore("ore_gneiss_gold", 1.5F, 10.0F);
+    public static final RegistryObject<Block> ORE_GNEISS_URANIUM = BLOCKS.register("ore_gneiss_uranium",
+            () -> new PortUraniumOre(oreProperties(1.5F, 10.0F)));
+    public static final RegistryObject<Block> ORE_GNEISS_URANIUM_SCORCHED = BLOCKS.register("ore_gneiss_uranium_scorched",
+            () -> new PortUraniumOre(oreProperties(1.5F, 10.0F)));
+    public static final RegistryObject<Block> ORE_GNEISS_COPPER = ore("ore_gneiss_copper", 1.5F, 10.0F);
+    public static final RegistryObject<Block> ORE_GNEISS_ASBESTOS = BLOCKS.register("ore_gneiss_asbestos",
+            () -> new PortAsbestosOutgasBlock(oreProperties(1.5F, 10.0F)));
+    public static final RegistryObject<Block> ORE_GNEISS_LITHIUM = ore("ore_gneiss_lithium", 1.5F, 10.0F);
+    public static final RegistryObject<Block> ORE_GNEISS_SCHRABIDIUM = ore("ore_gneiss_schrabidium", 1.5F, 10.0F);
+    public static final RegistryObject<Block> ORE_GNEISS_RARE = ore("ore_gneiss_rare", 1.5F, 10.0F);
+    public static final RegistryObject<Block> ORE_GNEISS_GAS = ore("ore_gneiss_gas", 1.5F, 10.0F);
 
     private PortBlocks() {}
 
     private static RegistryObject<Block> ore(String name, float hardness, float resistance) {
-        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
+        return BLOCKS.register(name, () -> new Block(oreProperties(hardness, resistance)));
+    }
+
+    private static BlockBehaviour.Properties oreProperties(float hardness, float resistance) {
+        return BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
                 .strength(hardness, resistance)
                 .sound(SoundType.STONE)
-                .requiresCorrectToolForDrops()));
+                .requiresCorrectToolForDrops();
     }
 }
