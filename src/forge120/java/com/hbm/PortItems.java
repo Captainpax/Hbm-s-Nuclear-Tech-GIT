@@ -76,6 +76,16 @@ public final class PortItems {
     public static final RegistryObject<Item> MACHINE_BATTERY_SOCKET = ITEMS.register("machine_battery_socket",
             () -> new BlockItem(PortBlocks.MACHINE_BATTERY_SOCKET.get(), new Item.Properties()));
     public static final RegistryObject<Item> MACHINE_ELECTRIC_FURNACE = ore("machine_electric_furnace", PortBlocks.MACHINE_ELECTRIC_FURNACE);
+    public static final RegistryObject<Item> MACHINE_PRESS = ore("machine_press", PortBlocks.MACHINE_PRESS);
+    public static final RegistryObject<Item> STAMP_IRON_FLAT = stamp("stamp_iron_flat");
+    public static final RegistryObject<Item> STAMP_IRON_PLATE = stamp("stamp_iron_plate");
+    public static final RegistryObject<Item> STAMP_IRON_WIRE = stamp("stamp_iron_wire");
+    public static final RegistryObject<Item> WIRE_FINE_TUNGSTEN = ingot("wire_fine_tungsten");
+    public static final RegistryObject<Item> WIRE_FINE_COPPER = ingot("wire_fine_copper");
+    public static final RegistryObject<Item> WIRE_FINE_ALUMINIUM = ingot("wire_fine_aluminium");
+    public static final RegistryObject<Item> COIL_TUNGSTEN = ingot("coil_tungsten");
+    public static final RegistryObject<Item> PLATE_COPPER = ingot("plate_copper");
+    public static final RegistryObject<Item> PLATE_ALUMINIUM = ingot("plate_aluminium");
     public static final RegistryObject<Item> BATTERY_POTATO = ITEMS.register("battery_potato",
             () -> new PortBatteryItem(new Item.Properties(), 1_000L, 0L, 100L));
     public static final RegistryObject<Item> CUBE_POWER = ITEMS.register("cube_power",
@@ -165,6 +175,10 @@ public final class PortItems {
 
     private static RegistryObject<Item> ingot(String name) {
         return ITEMS.register(name, () -> new Item(new Item.Properties()));
+    }
+
+    private static RegistryObject<Item> stamp(String name) {
+        return ITEMS.register(name, () -> new Item(new Item.Properties().durability(64)));
     }
 
     private static RegistryObject<Item> pack(String name, long dischargeRate, boolean capacitor) {

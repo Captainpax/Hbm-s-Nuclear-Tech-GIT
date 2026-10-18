@@ -1,0 +1,1 @@
+{"parent":"minecraft:recipes/root","criteria":{"has_nether_brick":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"items":["minecraft:nether_brick"]}]}}},"rewards":{"recipes":["hbm:stamp_iron_flat_nether_brick"]}}

@@ -1,4 +1,15 @@
 kind,key,status,target,notes
+block,machine_press,partial,src/forge120/java/com/hbm/PortPressBlock.java,Three-high placed press with teardown and temporary block model; source animated model and preheater pending
+block_entity,TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,First fuel and stamped-wire operation with NBT test; proxy automation and two-launch restart pending
+item,stamp_iron_flat,partial,src/forge120/resources/data/hbm/recipes/stamp_iron_flat_brick.json,Source brick or nether-brick crafting recipe and 64 durability
+item,stamp_iron_plate,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source press behavior and 64 durability; iron-anvil conversion pending
+item,stamp_iron_wire,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source press behavior and 64 durability; iron-anvil conversion pending
+item,wire_fine,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Tungsten copper and aluminium named fine wires with eight-per-ingot press yield; other materials and tint pending
+item,coil_tungsten,partial,src/forge120/resources/data/hbm/recipes/coil_tungsten.json,Eight tungsten fine wires around iron ingot; steel alternative pending
+item,plate_copper,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate only; foundry cast plate is a separate pending item
+item,plate_aluminium,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate only; other plate pathways pending
+java_source,inventory/recipes/PressRecipes,partial,src/forge120/java/com/hbm/PortPressRecipes.java,First three wire and two plate mappings ported; full recipe table pending
+java_source,tileentity/machine/TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics ported; preheater and animation pending
 block,stone_resource,partial,src/forge120/java/com/hbm/PortBlocks.java,Limestone named variant and new-chunk placement ported; other stone-resource variants pending
 block,stone_depth,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld depth filler ported as unbreakable; special deep mining tools pending
 block,cluster_depth_iron,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending

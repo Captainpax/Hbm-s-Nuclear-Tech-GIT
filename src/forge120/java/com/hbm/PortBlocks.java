@@ -74,6 +74,10 @@ public final class PortBlocks {
             () -> new PortElectricFurnaceBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.METAL).strength(5.0F, 10.0F)
                     .sound(SoundType.METAL).requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MACHINE_PRESS = BLOCKS.register("machine_press",
+            () -> new PortPressBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL).strength(5.0F, 10.0F)
+                    .sound(SoundType.METAL).noOcclusion().requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ORE_RARE = ore("ore_rare", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_LIGNITE = ore("ore_lignite", 5.0F, 15.0F);
     public static final RegistryObject<Block> ORE_CINNEBAR = ore("ore_cinnebar", 5.0F, 10.0F);

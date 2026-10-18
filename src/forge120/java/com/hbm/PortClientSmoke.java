@@ -54,7 +54,12 @@ public final class PortClientSmoke {
                 PortItems.ORE_DEPTH_ZIRCONIUM.get(), PortItems.ORE_DEPTH_BORAX.get(),
                 PortItems.CRYSTAL_TUNGSTEN.get(), PortItems.NUGGET_ZIRCONIUM.get(),
                 PortItems.POWDER_BORAX.get(), PortItems.BALL_FIRECLAY.get(),
-                PortItems.INGOT_FIREBRICK.get(), PortItems.MACHINE_ELECTRIC_FURNACE.get()
+                PortItems.INGOT_FIREBRICK.get(), PortItems.MACHINE_ELECTRIC_FURNACE.get(),
+                PortItems.MACHINE_PRESS.get(), PortItems.STAMP_IRON_FLAT.get(),
+                PortItems.STAMP_IRON_PLATE.get(), PortItems.STAMP_IRON_WIRE.get(),
+                PortItems.WIRE_FINE_TUNGSTEN.get(), PortItems.WIRE_FINE_COPPER.get(),
+                PortItems.WIRE_FINE_ALUMINIUM.get(), PortItems.COIL_TUNGSTEN.get(),
+                PortItems.PLATE_COPPER.get(), PortItems.PLATE_ALUMINIUM.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {
@@ -62,7 +67,7 @@ public final class PortClientSmoke {
             }
         }
         finished = true;
-        LOGGER.info("HBM client smoke passed: menu loaded, Insulator and ore/resource inventory models, socket OBJ layers validated");
+        LOGGER.info("HBM client smoke passed: menu loaded, Insulator, ore/resource and press-part inventory models, socket OBJ layers validated");
         minecraft.stop();
     }
 }

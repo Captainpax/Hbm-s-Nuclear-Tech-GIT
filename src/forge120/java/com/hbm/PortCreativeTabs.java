@@ -51,6 +51,12 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.POWDER_BORAX.get());
                         output.accept(PortItems.BALL_FIRECLAY.get());
                         output.accept(PortItems.INGOT_FIREBRICK.get());
+                        output.accept(PortItems.WIRE_FINE_TUNGSTEN.get());
+                        output.accept(PortItems.WIRE_FINE_COPPER.get());
+                        output.accept(PortItems.WIRE_FINE_ALUMINIUM.get());
+                        output.accept(PortItems.COIL_TUNGSTEN.get());
+                        output.accept(PortItems.PLATE_COPPER.get());
+                        output.accept(PortItems.PLATE_ALUMINIUM.get());
                     })
                     .build());
 
@@ -99,6 +105,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_DEPTH_ZIRCONIUM.get());
                         output.accept(PortItems.ORE_DEPTH_BORAX.get());
                         output.accept(PortItems.MACHINE_ELECTRIC_FURNACE.get());
+                        output.accept(PortItems.MACHINE_PRESS.get());
                         output.accept(PortItems.BLOCK_ASBESTOS.get());
                         output.accept(PortItems.GAS_RADON.get());
                         output.accept(PortItems.GAS_ASBESTOS.get());
@@ -139,6 +146,9 @@ public final class PortCreativeTabs {
                     .icon(() -> new ItemStack(PortItems.BATTERY_POTATO.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(PortItems.BATTERY_POTATO.get());
+                        output.accept(PortItems.STAMP_IRON_FLAT.get());
+                        output.accept(PortItems.STAMP_IRON_PLATE.get());
+                        output.accept(PortItems.STAMP_IRON_WIRE.get());
                         output.accept(PortItems.CUBE_POWER.get());
                         for (ItemStack stack : packDisplayStacks()) output.accept(stack);
                     })

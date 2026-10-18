@@ -56,6 +56,88 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void fuelPressProducesEightWiresAndPersists(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        PortPressBlock block = (PortPressBlock) PortBlocks.MACHINE_PRESS.get();
+        var state = block.defaultBlockState();
+        level.setBlock(pos, state, 3);
+        block.setPlacedBy(level, pos, state, FakePlayerFactory.getMinecraft(level),
+                new ItemStack(PortItems.MACHINE_PRESS.get()));
+        if (!(level.getBlockEntity(pos) instanceof PortPressBlockEntity press)
+                || level.getBlockState(pos.above()).getValue(PortPressBlock.PART) != 1
+                || level.getBlockState(pos.above(2)).getValue(PortPressBlock.PART) != 2) {
+            throw new IllegalStateException("Three-high press footprint missing");
+        }
+        var north = press.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.NORTH).resolve().orElseThrow();
+        if (north.getSlots() != 4 || !north.insertItem(3, new ItemStack(Items.STICK), true).is(Items.STICK)
+                || !north.insertItem(1, new ItemStack(Items.STICK), true).is(Items.STICK)) {
+            throw new IllegalStateException("Press automation allowed output insertion or invalid stamp");
+        }
+        press.items().setStackInSlot(0, new ItemStack(Items.COAL));
+        press.items().setStackInSlot(1, new ItemStack(PortItems.STAMP_IRON_WIRE.get()));
+        press.items().setStackInSlot(2, new ItemStack(PortItems.INGOT_TUNGSTEN.get()));
+        for (int tick = 0; tick < 700 && press.items().getStackInSlot(3).isEmpty(); tick++) {
+            PortPressBlockEntity.tick(level, pos, state, press);
+        }
+        if (!press.items().getStackInSlot(3).is(PortItems.WIRE_FINE_TUNGSTEN.get())
+                || press.items().getStackInSlot(3).getCount() != 8
+                || !press.items().getStackInSlot(2).isEmpty()
+                || press.items().getStackInSlot(1).getDamageValue() != 1
+                || press.burnTime() != 1400) {
+            throw new IllegalStateException("Press wire yield, stamp wear or 200-tick fuel charge differs from source");
+        }
+        PortPressBlockEntity restored = new PortPressBlockEntity(pos, state);
+        restored.load(press.saveWithFullMetadata());
+        if (restored.burnTime() != press.burnTime() || restored.speed() != press.speed()
+                || restored.press() != press.press() || restored.items().getStackInSlot(3).getCount() != 8) {
+            throw new IllegalStateException("Press state did not survive NBT reload");
+        }
+        level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
+        if (!level.getBlockState(pos).isAir() || !level.getBlockState(pos.above(2)).isAir()) {
+            throw new IllegalStateException("Breaking press middle left orphaned blocks");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void pressAndCoilRecipesMatchSource(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        for (String path : new String[] {"machine_press", "stamp_iron_flat_brick",
+                "stamp_iron_flat_nether_brick", "coil_tungsten"}) {
+            var id = ResourceLocation.fromNamespaceAndPath("hbm", path);
+            if (level.getRecipeManager().byKey(id).isEmpty()) {
+                throw new IllegalStateException("Missing source progression recipe " + path);
+            }
+            var unlock = level.getServer().getAdvancements().getAdvancement(
+                    ResourceLocation.fromNamespaceAndPath("hbm", "recipes/misc/" + path));
+            if (unlock == null || !Set.of(unlock.getRewards().getRecipes()).contains(id)) {
+                throw new IllegalStateException("Missing press progression recipe-book unlock " + path);
+            }
+        }
+        var player = FakePlayerFactory.getMinecraft(level);
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        for (int index = 0; index < 9; index++) {
+            grid.setItem(index, new ItemStack(index == 4 ? Items.IRON_INGOT : PortItems.WIRE_FINE_TUNGSTEN.get()));
+        }
+        var recipe = level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("hbm", "coil_tungsten"))
+                .orElseThrow();
+        if (!(recipe instanceof ShapedRecipe shaped) || !shaped.matches(grid, level)
+                || !shaped.assemble(grid, level.registryAccess()).is(PortItems.COIL_TUNGSTEN.get())) {
+            throw new IllegalStateException("Tungsten coil did not require eight wires around iron");
+        }
+        if (!PortPressRecipes.output(new ItemStack(PortItems.INGOT_COPPER.get()),
+                new ItemStack(PortItems.STAMP_IRON_WIRE.get())).is(PortItems.WIRE_FINE_COPPER.get())
+                || PortPressRecipes.output(new ItemStack(PortItems.INGOT_COPPER.get()),
+                new ItemStack(PortItems.STAMP_IRON_PLATE.get())).isEmpty()
+                || !PortPressRecipes.output(new ItemStack(PortItems.INGOT_TUNGSTEN.get()),
+                new ItemStack(PortItems.STAMP_IRON_PLATE.get())).isEmpty()) {
+            throw new IllegalStateException("First press mappings are missing or invent a tungsten plate");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void radiationArmorUsesLegacyAttenuation(GameTestHelper helper) {
         var player = FakePlayerFactory.getMinecraft(helper.getLevel());
         for (EquipmentSlot slot : new EquipmentSlot[] {

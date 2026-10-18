@@ -1,0 +1,1 @@
+{"parent":"minecraft:recipes/root","criteria":{"has_brick":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"items":["minecraft:brick"]}]}}},"rewards":{"recipes":["hbm:stamp_iron_flat_brick"]}}
