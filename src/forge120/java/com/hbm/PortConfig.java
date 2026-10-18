@@ -32,6 +32,7 @@ public final class PortConfig {
     public static final ForgeConfigSpec.IntValue CLUSTER_TITANIUM_COUNT;
     public static final ForgeConfigSpec.IntValue CLUSTER_ALUMINIUM_COUNT;
     public static final ForgeConfigSpec.IntValue CLUSTER_COPPER_COUNT;
+    public static final ForgeConfigSpec.IntValue LIMESTONE_COUNT;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -77,6 +78,7 @@ public final class PortConfig {
         CLUSTER_TITANIUM_COUNT = oreCount(builder, "2.C01_titaniumClusterSpawn", 2);
         CLUSTER_ALUMINIUM_COUNT = oreCount(builder, "2.C02_aluminiumClusterSpawn", 3);
         CLUSTER_COPPER_COUNT = oreCount(builder, "2.C03_copperClusterSpawn", 4);
+        LIMESTONE_COUNT = oreCount(builder, "2.L02_limestoneSpawn", 1);
         builder.pop();
         SPEC = builder.build();
     }
@@ -98,6 +100,7 @@ public final class PortConfig {
             case "gneiss_lithium" -> ORE_GNEISS_LITHIUM_COUNT.get();
             case "gneiss_rare" -> ORE_RARE_COUNT.get();
             case "gneiss_gas" -> triple(ORE_GNEISS_GAS_COUNT.get());
+            case "limestone" -> LIMESTONE_COUNT.get();
             default -> oreCountSetting(ore).get();
         };
     }
@@ -105,7 +108,7 @@ public final class PortConfig {
     static void validateOreCountKey(String ore) {
         switch (ore) {
             case "gneiss_iron", "gneiss_gold", "gneiss_uranium", "gneiss_copper",
-                    "gneiss_asbestos", "gneiss_lithium", "gneiss_rare", "gneiss_gas" -> { return; }
+                    "gneiss_asbestos", "gneiss_lithium", "gneiss_rare", "gneiss_gas", "limestone" -> { return; }
             default -> oreCountSetting(ore);
         }
     }

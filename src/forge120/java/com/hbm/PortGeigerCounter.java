@@ -61,6 +61,11 @@ public final class PortGeigerCounter extends Item {
                     .append(Component.translatable("geiger.title"))
                     .append(" ☢ =====").withStyle(ChatFormatting.GOLD));
             player.sendSystemMessage(reading("geiger.chunkRad", chunk, " RAD/s"));
+            player.sendSystemMessage(Component.translatable("geiger.resistance",
+                    String.format(java.util.Locale.ROOT, "%.2f", PortRadiationProtection.resistance(player)),
+                    String.format(java.util.Locale.ROOT, "%.2f",
+                            (1.0D - PortRadiationProtection.doseMultiplier(player)) * 100.0D))
+                    .withStyle(ChatFormatting.AQUA));
             PortRadiation.get(player).ifPresent(data -> {
                 player.sendSystemMessage(reading("geiger.envRad", data.environmentRate(), " RAD/s"));
                 float personal = PortConfig.ENABLE_CONTAMINATION.get() ? data.radiation() : 0.0F;

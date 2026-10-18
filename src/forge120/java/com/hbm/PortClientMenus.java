@@ -15,6 +15,7 @@ public final class PortClientMenus {
         event.enqueueWork(() -> {
             MenuScreens.register(PortMenus.BATTERY.get(), PortBatteryScreen::new);
             MenuScreens.register(PortMenus.BATTERY_SOCKET.get(), PortBatterySocketScreen::new);
+            MenuScreens.register(PortMenus.ELECTRIC_FURNACE.get(), PortElectricFurnaceScreen::new);
         });
     }
 }

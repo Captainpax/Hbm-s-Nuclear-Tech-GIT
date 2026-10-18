@@ -1,0 +1,9 @@
+{
+  "feature": "hbm:stone_resource_limestone",
+  "placement": [
+    {"type": "hbm:ore_count", "ore": "limestone"},
+    {"type": "minecraft:in_square"},
+    {"type": "minecraft:height_range", "height": {"type": "minecraft:uniform", "min_inclusive": {"absolute": 25}, "max_inclusive": {"absolute": 54}}},
+    {"type": "minecraft:biome"}
+  ]
+}

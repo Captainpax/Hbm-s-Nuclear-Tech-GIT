@@ -12,6 +12,8 @@ public final class PortWorldgenFeatures {
 
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> GNEISS_STRATUM =
             FEATURES.register("gneiss_stratum", PortGneissStratumFeature::new);
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> DEPTH_DEPOSITS =
+            FEATURES.register("depth_deposits", PortDepthDepositsFeature::new);
 
     private PortWorldgenFeatures() {}
 }

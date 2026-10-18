@@ -24,7 +24,7 @@ public final class PortEnvironmentRadiation {
             data.addEnvironmentalRadiation(dose);
             if (PortConfig.ENABLE_CONTAMINATION.get()
                     && !(entity instanceof Player player && (player.isCreative() || player.tickCount < 200))) {
-                data.addRadiation(dose);
+                data.addRadiation(dose * PortRadiationProtection.doseMultiplier(entity));
             }
         });
     }

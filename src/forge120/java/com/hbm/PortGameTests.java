@@ -56,6 +56,224 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void radiationArmorUsesLegacyAttenuation(GameTestHelper helper) {
+        var player = FakePlayerFactory.getMinecraft(helper.getLevel());
+        for (EquipmentSlot slot : new EquipmentSlot[] {
+                EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
+            player.setItemSlot(slot, ItemStack.EMPTY);
+        }
+        if (PortRadiationProtection.resistance(player) != 0.0D
+                || PortRadiationProtection.doseMultiplier(player) != 1.0F) {
+            throw new IllegalStateException("Unarmored radiation dose differs from source");
+        }
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
+        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
+        player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
+        player.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));
+        if (Math.abs(PortRadiationProtection.resistance(player) - 0.0225D) > 1.0E-6D
+                || Math.abs(PortRadiationProtection.doseMultiplier(player)
+                        - Math.pow(10.0D, -0.0225D)) > 1.0E-6D) {
+            throw new IllegalStateException("Iron armor resistance differs from HazmatRegistry");
+        }
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(PortItems.GAS_MASK_M65.get()));
+        if (Math.abs(PortRadiationProtection.resistance(player) - (0.095D + 0.0225D * 0.8D)) > 1.0E-6D) {
+            throw new IllegalStateException("M65 mask radiation resistance differs from HazmatRegistry");
+        }
+        for (EquipmentSlot slot : new EquipmentSlot[] {
+                EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET}) {
+            player.setItemSlot(slot, ItemStack.EMPTY);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void limestoneAndDepthContentRegistered(GameTestHelper helper) {
+        var features = helper.getLevel().registryAccess().registryOrThrow(Registries.PLACED_FEATURE);
+        if (!features.containsKey(PortBlocks.STONE_RESOURCE_LIMESTONE.getId())
+                || !features.containsKey(ResourceLocation.fromNamespaceAndPath("hbm", "depth_deposits"))
+                || PortConfig.LIMESTONE_COUNT.get() < 0) {
+            throw new IllegalStateException("Limestone or depth-deposit worldgen is missing");
+        }
+        Block[] blocks = {PortBlocks.STONE_RESOURCE_LIMESTONE.get(), PortBlocks.STONE_DEPTH.get(),
+                PortBlocks.CLUSTER_DEPTH_IRON.get(), PortBlocks.CLUSTER_DEPTH_TITANIUM.get(),
+                PortBlocks.CLUSTER_DEPTH_TUNGSTEN.get(), PortBlocks.ORE_DEPTH_CINNEBAR.get(),
+                PortBlocks.ORE_DEPTH_ZIRCONIUM.get(), PortBlocks.ORE_DEPTH_BORAX.get()};
+        for (Block block : blocks) {
+            ResourceLocation id = ForgeRegistries.BLOCKS.getKey(block);
+            if (id == null || ForgeRegistries.ITEMS.getValue(id) == Items.AIR) {
+                throw new IllegalStateException("Missing depth block item: " + block);
+            }
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 600)
+    public static void limestoneAndDepthDepositsGenerateInFreshChunks(GameTestHelper helper) {
+        if (!System.getProperty("hbm.port.ore.config.phase", "").isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        int chunkX = ThreadLocalRandom.current().nextInt(700_000, 720_000);
+        int chunkZ = ThreadLocalRandom.current().nextInt(700_000, 720_000);
+        int limestone = 0;
+        int depthStone = 0;
+        int depthOre = 0;
+        Block[] ores = {PortBlocks.CLUSTER_DEPTH_IRON.get(), PortBlocks.CLUSTER_DEPTH_TITANIUM.get(),
+                PortBlocks.CLUSTER_DEPTH_TUNGSTEN.get(), PortBlocks.ORE_DEPTH_CINNEBAR.get(),
+                PortBlocks.ORE_DEPTH_ZIRCONIUM.get(), PortBlocks.ORE_DEPTH_BORAX.get()};
+        for (int dx = 0; dx < 8; dx++) {
+            for (int dz = 0; dz < 8; dz++) {
+                ChunkPos chunk = new ChunkPos(chunkX + dx, chunkZ + dz);
+                level.getChunk(chunk.x, chunk.z);
+                for (int x = chunk.getMinBlockX(); x <= chunk.getMaxBlockX(); x++) {
+                    for (int z = chunk.getMinBlockZ(); z <= chunk.getMaxBlockZ(); z++) {
+                        for (int y = level.getMinBuildHeight() + 1; y <= level.getMinBuildHeight() + 8; y++) {
+                            var state = level.getBlockState(new BlockPos(x, y, z));
+                            if (state.is(PortBlocks.STONE_DEPTH.get())) depthStone++;
+                            for (Block ore : ores) if (state.is(ore)) depthOre++;
+                        }
+                        for (int y = 25; y <= 54; y++) {
+                            if (level.getBlockState(new BlockPos(x, y, z))
+                                    .is(PortBlocks.STONE_RESOURCE_LIMESTONE.get())) limestone++;
+                        }
+                    }
+                }
+            }
+        }
+        if (limestone == 0 || depthStone == 0 || depthOre == 0) {
+            throw new IllegalStateException("Fresh chunks lacked limestone, depth rock, or deep ore: "
+                    + limestone + "/" + depthStone + "/" + depthOre);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void electricFurnaceConsumesExactPowerAndSmelts(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(1, 2, 1));
+        level.setBlock(pos, PortBlocks.MACHINE_ELECTRIC_FURNACE.get().defaultBlockState(), 3);
+        if (!(level.getBlockEntity(pos) instanceof PortElectricFurnaceBlockEntity furnace)) {
+            throw new IllegalStateException("Electric furnace block entity missing");
+        }
+        var sided = furnace.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.NORTH).resolve().orElseThrow();
+        if (sided.getSlots() != 3
+                || !sided.insertItem(1, new ItemStack(Items.STICK), true).is(Items.STICK)
+                || !sided.insertItem(1, new ItemStack(PortItems.ORE_GNEISS_IRON.get()), true).isEmpty()) {
+            throw new IllegalStateException("Furnace sided automation accepted invalid input or rejected smeltable ore");
+        }
+        furnace.setPower(5_000L);
+        furnace.items().setStackInSlot(1, new ItemStack(PortItems.ORE_GNEISS_IRON.get()));
+        for (int i = 0; i < 100; i++) {
+            PortElectricFurnaceBlockEntity.tick(level, pos, level.getBlockState(pos), furnace);
+        }
+        if (furnace.power() != 0L || !furnace.items().getStackInSlot(1).isEmpty()
+                || !furnace.items().getStackInSlot(2).is(Items.IRON_INGOT)
+                || furnace.items().getStackInSlot(2).getCount() != 1) {
+            throw new IllegalStateException("Electric furnace did not convert 5000 HE and one ore to one ingot");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void electricFurnaceReceivesDirectBatteryPower(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos sourcePos = helper.absolutePos(new BlockPos(1, 2, 1));
+        BlockPos furnacePos = sourcePos.east();
+        level.setBlock(sourcePos, PortBlocks.MACHINE_BATTERY.get().defaultBlockState(), 3);
+        level.setBlock(furnacePos, PortBlocks.MACHINE_ELECTRIC_FURNACE.get().defaultBlockState(), 3);
+        var battery = (PortBatteryBlockEntity) level.getBlockEntity(sourcePos);
+        var furnace = (PortElectricFurnaceBlockEntity) level.getBlockEntity(furnacePos);
+        battery.setPower(10_000L);
+        battery.setModes(PortBatteryBlockEntity.OUTPUT, PortBatteryBlockEntity.OUTPUT);
+        PortPowerGrid.tick(level, battery);
+        if (furnace.power() != battery.providerSpeed()
+                || battery.power() != 10_000L - furnace.power()) {
+            throw new IllegalStateException("Electric furnace did not receive HE from an adjacent battery");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void firebrickPathMatchesLegacyRecipe(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var manager = level.getRecipeManager();
+        var fireclay = manager.byKey(ResourceLocation.fromNamespaceAndPath("hbm", "ball_fireclay_from_limestone"))
+                .orElseThrow(() -> new IllegalStateException("Limestone fireclay recipe missing"));
+        for (String recipe : new String[] {"ball_fireclay_from_limestone", "ingot_firebrick_from_fireclay"}) {
+            var id = ResourceLocation.fromNamespaceAndPath("hbm", recipe);
+            var unlock = level.getServer().getAdvancements().getAdvancement(
+                    ResourceLocation.fromNamespaceAndPath("hbm", "recipes/misc/" + recipe));
+            if (unlock == null || !Set.of(unlock.getRewards().getRecipes()).contains(id)) {
+                throw new IllegalStateException("Firebrick progression recipe-book unlock missing: " + recipe);
+            }
+        }
+        var player = FakePlayerFactory.getMinecraft(level);
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        grid.setItem(0, new ItemStack(Items.CLAY_BALL));
+        grid.setItem(1, new ItemStack(Items.CLAY_BALL));
+        grid.setItem(2, new ItemStack(PortItems.STONE_RESOURCE_LIMESTONE.get()));
+        grid.setItem(3, new ItemStack(Items.SAND));
+        if (!(fireclay instanceof ShapelessRecipe shapeless) || !shapeless.matches(grid, level)
+                || !shapeless.assemble(grid, level.registryAccess()).is(PortItems.BALL_FIRECLAY.get())
+                || shapeless.assemble(grid, level.registryAccess()).getCount() != 4) {
+            throw new IllegalStateException("Source limestone recipe did not make four fireclay balls");
+        }
+        var smelting = manager.getRecipeFor(RecipeType.SMELTING,
+                new SimpleContainer(new ItemStack(PortItems.BALL_FIRECLAY.get())), level)
+                .orElseThrow(() -> new IllegalStateException("Fireclay smelting recipe missing"));
+        if (!smelting.getResultItem(level.registryAccess()).is(PortItems.INGOT_FIREBRICK.get())
+                || smelting.getCookingTime() != 200 || Math.abs(smelting.getExperience() - 0.1F) > 0.0001F) {
+            throw new IllegalStateException("Fireclay smelting differs from the source recipe");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 200)
+    public static void electricFurnaceSmeltSurvivesServerRestart(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos fixture = new BlockPos(560, 80, 512);
+        level.getChunkAt(fixture);
+        if (phase.equals("seed")) {
+            level.setBlock(fixture, PortBlocks.MACHINE_ELECTRIC_FURNACE.get().defaultBlockState(), 3);
+            var furnace = (PortElectricFurnaceBlockEntity) level.getBlockEntity(fixture);
+            furnace.setPower(20_000L);
+            furnace.items().setStackInSlot(1, new ItemStack(PortItems.ORE_GNEISS_IRON.get()));
+            for (int i = 0; i < 37; i++) {
+                PortElectricFurnaceBlockEntity.tick(level, fixture, level.getBlockState(fixture), furnace);
+            }
+            if (furnace.progress() != 37 || furnace.power() != 18_150L) {
+                throw new IllegalStateException("Furnace restart fixture did not reach the expected active state");
+            }
+        } else if (phase.equals("verify")) {
+            if (!(level.getBlockEntity(fixture) instanceof PortElectricFurnaceBlockEntity furnace)) {
+                throw new IllegalStateException("Electric furnace block entity was not restored");
+            }
+            if (furnace.items().getStackInSlot(2).isEmpty() && furnace.progress() < 37) {
+                throw new IllegalStateException("Active furnace progress was lost on restart");
+            }
+            for (int i = 0; i < 100 && furnace.items().getStackInSlot(2).isEmpty(); i++) {
+                PortElectricFurnaceBlockEntity.tick(level, fixture, level.getBlockState(fixture), furnace);
+            }
+            if (furnace.power() != 15_000L
+                    || !furnace.items().getStackInSlot(1).isEmpty()
+                    || !furnace.items().getStackInSlot(2).is(Items.IRON_INGOT)
+                    || furnace.items().getStackInSlot(2).getCount() != 1) {
+                throw new IllegalStateException("Reloaded furnace lost or duplicated material or HE");
+            }
+            level.setBlock(fixture, Blocks.AIR.defaultBlockState(), 3);
+        } else {
+            throw new IllegalStateException("Unknown furnace persistence phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void batteryPackVariantsMatchLegacyRatesAndNBT(GameTestHelper helper) {
         String[] ids = {
                 "battery_pack_redstone", "battery_pack_lead", "battery_pack_lithium",
@@ -1890,7 +2108,7 @@ public final class PortGameTests {
                 "rare", "lignite", "cinnebar", "cobalt",
                 "cluster_iron", "cluster_titanium", "cluster_aluminium", "cluster_copper",
                 "gneiss_iron", "gneiss_gold", "gneiss_uranium", "gneiss_copper",
-                "gneiss_asbestos", "gneiss_lithium", "gneiss_rare", "gneiss_gas"
+                "gneiss_asbestos", "gneiss_lithium", "gneiss_rare", "gneiss_gas", "limestone"
         }) {
             int expected = PortConfig.ENABLE_OVERWORLD_ORES.get() ? PortConfig.oreCount(ore) : 0;
             if (new PortOreCountPlacement(ore).count(RandomSource.create(1), BlockPos.ZERO) != expected) {
@@ -1911,7 +2129,8 @@ public final class PortGameTests {
                 PortBlocks.ORE_GNEISS_IRON.get(), PortBlocks.ORE_GNEISS_GOLD.get(),
                 PortBlocks.ORE_GNEISS_URANIUM.get(), PortBlocks.ORE_GNEISS_COPPER.get(),
                 PortBlocks.ORE_GNEISS_ASBESTOS.get(), PortBlocks.ORE_GNEISS_LITHIUM.get(),
-                PortBlocks.ORE_GNEISS_RARE.get(), PortBlocks.ORE_GNEISS_GAS.get()
+                PortBlocks.ORE_GNEISS_RARE.get(), PortBlocks.ORE_GNEISS_GAS.get(),
+                PortBlocks.STONE_RESOURCE_LIMESTONE.get()
         };
         if (phase.equals("master-off")) {
             int chunkX = ThreadLocalRandom.current().nextInt(20_000, 24_000);

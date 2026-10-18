@@ -151,7 +151,7 @@ public final class PortRadiation {
             data.addEnvironmentalRadiation(0.05F);
             if (PortConfig.ENABLE_CONTAMINATION.get() && !isRadiationImmune(entity)
                     && !(entity instanceof Player player && (player.isCreative() || player.tickCount < 200))) {
-                data.addRadiation(0.05F);
+                data.addRadiation(0.05F * PortRadiationProtection.doseMultiplier(entity));
             }
             // The original gas also adds one asbestos unit without fine-particle protection.
             if (!PortConfig.DISABLE_ASBESTOS.get()) applyAsbestosDose(entity, data, 1);

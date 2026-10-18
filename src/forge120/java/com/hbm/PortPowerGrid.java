@@ -55,13 +55,14 @@ public final class PortPowerGrid {
 
         // Legacy machines also connect directly without a cable. An unordered
         // edge is processed once even when both block entities tick this frame.
-        if (endpoint instanceof PortBatteryBlockEntity battery) {
+        if (!(endpoint instanceof PortBatterySocketBlockEntity)) {
             for (Direction direction : Direction.values()) {
                 BlockPos neighbor = pos.relative(direction);
                 if (!level.hasChunkAt(neighbor)
-                        || !(level.getBlockEntity(neighbor) instanceof PortBatteryBlockEntity other)) continue;
+                        || !(level.getBlockEntity(neighbor) instanceof PortPowerEndpoint other)
+                        || other instanceof PortBatterySocketBlockEntity) continue;
                 DirectEdge edge = DirectEdge.of(pos, neighbor);
-                if (state.processedDirectEdges.add(edge)) transfer(level, state, List.of(battery, other));
+                if (state.processedDirectEdges.add(edge)) transfer(level, state, List.of(endpoint, other));
             }
         }
     }
@@ -110,9 +111,8 @@ public final class PortPowerGrid {
                                 || level.getBlockState(neighbor).getBlock() instanceof PortBatterySocketBlock)) continue;
                 if (isConductor(level, neighbor)) {
                     if (conductors.add(neighbor)) frontier.add(neighbor);
-                } else if (level.getBlockState(neighbor).getBlock() instanceof PortBatteryBlock
-                        && level.getBlockEntity(neighbor) instanceof PortBatteryBlockEntity battery) {
-                    endpoints.add(battery);
+                } else if (level.getBlockEntity(neighbor) instanceof PortPowerEndpoint machine) {
+                    endpoints.add(machine);
                 }
             }
         }

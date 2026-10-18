@@ -46,6 +46,11 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.INGOT_ALUMINIUM.get());
                         output.accept(PortItems.LITHIUM.get());
                         output.accept(PortItems.INGOT_SCHRABIDIUM.get());
+                        output.accept(PortItems.CRYSTAL_TUNGSTEN.get());
+                        output.accept(PortItems.NUGGET_ZIRCONIUM.get());
+                        output.accept(PortItems.POWDER_BORAX.get());
+                        output.accept(PortItems.BALL_FIRECLAY.get());
+                        output.accept(PortItems.INGOT_FIREBRICK.get());
                     })
                     .build());
 
@@ -85,6 +90,15 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_GNEISS_SCHRABIDIUM.get());
                         output.accept(PortItems.ORE_GNEISS_RARE.get());
                         output.accept(PortItems.ORE_GNEISS_GAS.get());
+                        output.accept(PortItems.STONE_RESOURCE_LIMESTONE.get());
+                        output.accept(PortItems.STONE_DEPTH.get());
+                        output.accept(PortItems.CLUSTER_DEPTH_IRON.get());
+                        output.accept(PortItems.CLUSTER_DEPTH_TITANIUM.get());
+                        output.accept(PortItems.CLUSTER_DEPTH_TUNGSTEN.get());
+                        output.accept(PortItems.ORE_DEPTH_CINNEBAR.get());
+                        output.accept(PortItems.ORE_DEPTH_ZIRCONIUM.get());
+                        output.accept(PortItems.ORE_DEPTH_BORAX.get());
+                        output.accept(PortItems.MACHINE_ELECTRIC_FURNACE.get());
                         output.accept(PortItems.BLOCK_ASBESTOS.get());
                         output.accept(PortItems.GAS_RADON.get());
                         output.accept(PortItems.GAS_ASBESTOS.get());

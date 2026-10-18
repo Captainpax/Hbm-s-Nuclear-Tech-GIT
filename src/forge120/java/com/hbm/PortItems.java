@@ -75,6 +75,7 @@ public final class PortItems {
             () -> new BlockItem(PortBlocks.RED_CABLE_CLASSIC.get(), new Item.Properties()));
     public static final RegistryObject<Item> MACHINE_BATTERY_SOCKET = ITEMS.register("machine_battery_socket",
             () -> new BlockItem(PortBlocks.MACHINE_BATTERY_SOCKET.get(), new Item.Properties()));
+    public static final RegistryObject<Item> MACHINE_ELECTRIC_FURNACE = ore("machine_electric_furnace", PortBlocks.MACHINE_ELECTRIC_FURNACE);
     public static final RegistryObject<Item> BATTERY_POTATO = ITEMS.register("battery_potato",
             () -> new PortBatteryItem(new Item.Properties(), 1_000L, 0L, 100L));
     public static final RegistryObject<Item> CUBE_POWER = ITEMS.register("cube_power",
@@ -134,6 +135,19 @@ public final class PortItems {
     public static final RegistryObject<Item> ORE_GNEISS_GAS = ore("ore_gneiss_gas", PortBlocks.ORE_GNEISS_GAS);
     public static final RegistryObject<Item> LITHIUM = ingot("lithium");
     public static final RegistryObject<Item> INGOT_SCHRABIDIUM = ingot("ingot_schrabidium");
+    public static final RegistryObject<Item> STONE_RESOURCE_LIMESTONE = ore("stone_resource_limestone", PortBlocks.STONE_RESOURCE_LIMESTONE);
+    public static final RegistryObject<Item> STONE_DEPTH = ore("stone_depth", PortBlocks.STONE_DEPTH);
+    public static final RegistryObject<Item> CLUSTER_DEPTH_IRON = ore("cluster_depth_iron", PortBlocks.CLUSTER_DEPTH_IRON);
+    public static final RegistryObject<Item> CLUSTER_DEPTH_TITANIUM = ore("cluster_depth_titanium", PortBlocks.CLUSTER_DEPTH_TITANIUM);
+    public static final RegistryObject<Item> CLUSTER_DEPTH_TUNGSTEN = ore("cluster_depth_tungsten", PortBlocks.CLUSTER_DEPTH_TUNGSTEN);
+    public static final RegistryObject<Item> ORE_DEPTH_CINNEBAR = ore("ore_depth_cinnebar", PortBlocks.ORE_DEPTH_CINNEBAR);
+    public static final RegistryObject<Item> ORE_DEPTH_ZIRCONIUM = ore("ore_depth_zirconium", PortBlocks.ORE_DEPTH_ZIRCONIUM);
+    public static final RegistryObject<Item> ORE_DEPTH_BORAX = ore("ore_depth_borax", PortBlocks.ORE_DEPTH_BORAX);
+    public static final RegistryObject<Item> CRYSTAL_TUNGSTEN = ingot("crystal_tungsten");
+    public static final RegistryObject<Item> NUGGET_ZIRCONIUM = ingot("nugget_zirconium");
+    public static final RegistryObject<Item> POWDER_BORAX = ingot("powder_borax");
+    public static final RegistryObject<Item> BALL_FIRECLAY = ingot("ball_fireclay");
+    public static final RegistryObject<Item> INGOT_FIREBRICK = ingot("ingot_firebrick");
 
     /** Legacy ItemBatteryPack enum order, now represented by stable named item IDs. */
     public static final List<RegistryObject<Item>> BATTERY_PACKS = List.of(

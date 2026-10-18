@@ -1715,9 +1715,9 @@ asset,textures/blocks/chlorine_gas.png,src/main/resources/assets/hbm/textures/bl
 asset,textures/blocks/cluster_aluminium.png,src/main/resources/assets/hbm/textures/blocks/cluster_aluminium.png,,verified,src/forge120/resources/assets/hbm/textures/block/cluster_aluminium.png,Original texture copied byte-for-byte
 asset,textures/blocks/cluster_blank.png,src/main/resources/assets/hbm/textures/blocks/cluster_blank.png,,unported,,
 asset,textures/blocks/cluster_copper.png,src/main/resources/assets/hbm/textures/blocks/cluster_copper.png,,verified,src/forge120/resources/assets/hbm/textures/block/cluster_copper.png,Original texture copied byte-for-byte
-asset,textures/blocks/cluster_depth_iron.png,src/main/resources/assets/hbm/textures/blocks/cluster_depth_iron.png,,unported,,
-asset,textures/blocks/cluster_depth_titanium.png,src/main/resources/assets/hbm/textures/blocks/cluster_depth_titanium.png,,unported,,
-asset,textures/blocks/cluster_depth_tungsten.png,src/main/resources/assets/hbm/textures/blocks/cluster_depth_tungsten.png,,unported,,
+asset,textures/blocks/cluster_depth_iron.png,src/main/resources/assets/hbm/textures/blocks/cluster_depth_iron.png,,verified,src/forge120/resources/assets/hbm/textures/block/cluster_depth_iron.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_depth_titanium.png,src/main/resources/assets/hbm/textures/blocks/cluster_depth_titanium.png,,verified,src/forge120/resources/assets/hbm/textures/block/cluster_depth_titanium.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_depth_tungsten.png,src/main/resources/assets/hbm/textures/blocks/cluster_depth_tungsten.png,,verified,src/forge120/resources/assets/hbm/textures/block/cluster_depth_tungsten.png,Original texture copied byte-for-byte
 asset,textures/blocks/cluster_iron.png,src/main/resources/assets/hbm/textures/blocks/cluster_iron.png,,verified,src/forge120/resources/assets/hbm/textures/block/cluster_iron.png,Original texture copied byte-for-byte
 asset,textures/blocks/cluster_overlay.png,src/main/resources/assets/hbm/textures/blocks/cluster_overlay.png,,unported,,
 asset,textures/blocks/cluster_titanium.png,src/main/resources/assets/hbm/textures/blocks/cluster_titanium.png,,verified,src/forge120/resources/assets/hbm/textures/block/cluster_titanium.png,Original texture copied byte-for-byte
@@ -2285,11 +2285,11 @@ asset,textures/blocks/machine_crystallizer.png,src/main/resources/assets/hbm/tex
 asset,textures/blocks/machine_detector.png,src/main/resources/assets/hbm/textures/blocks/machine_detector.png,,unported,,
 asset,textures/blocks/machine_detector_off.png,src/main/resources/assets/hbm/textures/blocks/machine_detector_off.png,,unported,,
 asset,textures/blocks/machine_electric_furnace.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace.png,,unported,,
-asset,textures/blocks/machine_electric_furnace_bottom.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_bottom.png,,unported,,
-asset,textures/blocks/machine_electric_furnace_front_off.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_front_off.png,,unported,,
-asset,textures/blocks/machine_electric_furnace_front_on.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_front_on.png,,unported,,
-asset,textures/blocks/machine_electric_furnace_side.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_side.png,,unported,,
-asset,textures/blocks/machine_electric_furnace_top.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_top.png,,unported,,
+asset,textures/blocks/machine_electric_furnace_bottom.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_bottom.png,,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_bottom.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_front_off.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_front_off.png,,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_front_off.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_front_on.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_front_on.png,,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_front_on.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_side.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_side.png,,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_side.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_top.png,src/main/resources/assets/hbm/textures/blocks/machine_electric_furnace_top.png,,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_top.png,Original texture copied byte-for-byte
 asset,textures/blocks/machine_epress.png,src/main/resources/assets/hbm/textures/blocks/machine_epress.png,,unported,,
 asset,textures/blocks/machine_fensu.png,src/main/resources/assets/hbm/textures/blocks/machine_fensu.png,,unported,,
 asset,textures/blocks/machine_fluidtank.png,src/main/resources/assets/hbm/textures/blocks/machine_fluidtank.png,,unported,,
@@ -2422,10 +2422,10 @@ asset,textures/blocks/ore_coal_oil_burning.png,src/main/resources/assets/hbm/tex
 asset,textures/blocks/ore_cobalt.png,src/main/resources/assets/hbm/textures/blocks/ore_cobalt.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_cobalt.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_coltan.png,src/main/resources/assets/hbm/textures/blocks/ore_coltan.png,,unported,,
 asset,textures/blocks/ore_copper.png,src/main/resources/assets/hbm/textures/blocks/ore_copper.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_copper.png,Original texture copied byte-for-byte
-asset,textures/blocks/ore_depth_borax.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_borax.png,,unported,,
-asset,textures/blocks/ore_depth_cinnebar.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_cinnebar.png,,unported,,
+asset,textures/blocks/ore_depth_borax.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_borax.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_depth_borax.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_depth_cinnebar.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_cinnebar.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_depth_cinnebar.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_depth_nether_neodymium.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_nether_neodymium.png,,unported,,
-asset,textures/blocks/ore_depth_zirconium.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_zirconium.png,,unported,,
+asset,textures/blocks/ore_depth_zirconium.png,src/main/resources/assets/hbm/textures/blocks/ore_depth_zirconium.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_depth_zirconium.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_fluorite.png,src/main/resources/assets/hbm/textures/blocks/ore_fluorite.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_fluorite.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_gneiss_asbestos.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_asbestos.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_asbestos.png,Original texture copied byte-for-byte
 asset,textures/blocks/ore_gneiss_copper.png,src/main/resources/assets/hbm/textures/blocks/ore_gneiss_copper.png,,verified,src/forge120/resources/assets/hbm/textures/block/ore_gneiss_copper.png,Original texture copied byte-for-byte
@@ -2892,7 +2892,7 @@ asset,textures/blocks/stone_biome_top.desert.png,src/main/resources/assets/hbm/t
 asset,textures/blocks/stone_biome_top.woodland.png,src/main/resources/assets/hbm/textures/blocks/stone_biome_top.woodland.png,,unported,,
 asset,textures/blocks/stone_cracked.png,src/main/resources/assets/hbm/textures/blocks/stone_cracked.png,,unported,,
 asset,textures/blocks/stone_deep_base.png,src/main/resources/assets/hbm/textures/blocks/stone_deep_base.png,,unported,,
-asset,textures/blocks/stone_depth.png,src/main/resources/assets/hbm/textures/blocks/stone_depth.png,,unported,,
+asset,textures/blocks/stone_depth.png,src/main/resources/assets/hbm/textures/blocks/stone_depth.png,,verified,src/forge120/resources/assets/hbm/textures/block/stone_depth.png,Original texture copied byte-for-byte
 asset,textures/blocks/stone_depth_nether.png,src/main/resources/assets/hbm/textures/blocks/stone_depth_nether.png,,unported,,
 asset,textures/blocks/stone_depth_var.png,src/main/resources/assets/hbm/textures/blocks/stone_depth_var.png,,unported,,
 asset,textures/blocks/stone_gneiss.png,src/main/resources/assets/hbm/textures/blocks/stone_gneiss.png,,unported,,
@@ -2908,7 +2908,7 @@ asset,textures/blocks/stone_porous.png,src/main/resources/assets/hbm/textures/bl
 asset,textures/blocks/stone_resource.asbestos.png,src/main/resources/assets/hbm/textures/blocks/stone_resource.asbestos.png,,unported,,
 asset,textures/blocks/stone_resource.bauxite.png,src/main/resources/assets/hbm/textures/blocks/stone_resource.bauxite.png,,unported,,
 asset,textures/blocks/stone_resource.hematite.png,src/main/resources/assets/hbm/textures/blocks/stone_resource.hematite.png,,unported,,
-asset,textures/blocks/stone_resource.limestone.png,src/main/resources/assets/hbm/textures/blocks/stone_resource.limestone.png,,unported,,
+asset,textures/blocks/stone_resource.limestone.png,src/main/resources/assets/hbm/textures/blocks/stone_resource.limestone.png,,verified,src/forge120/resources/assets/hbm/textures/block/stone_resource_limestone.png,Original texture copied byte-for-byte
 asset,textures/blocks/stone_resource.malachite.png,src/main/resources/assets/hbm/textures/blocks/stone_resource.malachite.png,,unported,,
 asset,textures/blocks/stone_resource.sulfur.png,src/main/resources/assets/hbm/textures/blocks/stone_resource.sulfur.png,,unported,,
 asset,textures/blocks/stone_resource_base.png,src/main/resources/assets/hbm/textures/blocks/stone_resource_base.png,,unported,,
@@ -3095,7 +3095,7 @@ asset,textures/entity/ufo.png,src/main/resources/assets/hbm/textures/entity/ufo.
 asset,textures/entity/zombie.png,src/main/resources/assets/hbm/textures/entity/zombie.png,,unported,,
 asset,textures/gui/GUIDiFurnace.png,src/main/resources/assets/hbm/textures/gui/GUIDiFurnace.png,,unported,,
 asset,textures/gui/GUIDiesel.png,src/main/resources/assets/hbm/textures/gui/GUIDiesel.png,,unported,,
-asset,textures/gui/GUIElectricFurnace.png,src/main/resources/assets/hbm/textures/gui/GUIElectricFurnace.png,,unported,,
+asset,textures/gui/GUIElectricFurnace.png,src/main/resources/assets/hbm/textures/gui/GUIElectricFurnace.png,,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_electric_furnace.png,Original texture copied byte-for-byte
 asset,textures/gui/RTGfurnace.png,src/main/resources/assets/hbm/textures/gui/RTGfurnace.png,,unported,,
 asset,textures/gui/bobmazon.png,src/main/resources/assets/hbm/textures/gui/bobmazon.png,,unported,,
 asset,textures/gui/book/book.png,src/main/resources/assets/hbm/textures/gui/book/book.png,,unported,,
@@ -3795,7 +3795,7 @@ asset,textures/items/balefire_and_ham.png,src/main/resources/assets/hbm/textures
 asset,textures/items/balefire_and_steel.png,src/main/resources/assets/hbm/textures/items/balefire_and_steel.png,,unported,,
 asset,textures/items/balefire_scrambled.png,src/main/resources/assets/hbm/textures/items/balefire_scrambled.png,,unported,,
 asset,textures/items/ball_dynamite.png,src/main/resources/assets/hbm/textures/items/ball_dynamite.png,,unported,,
-asset,textures/items/ball_fireclay.png,src/main/resources/assets/hbm/textures/items/ball_fireclay.png,,unported,,
+asset,textures/items/ball_fireclay.png,src/main/resources/assets/hbm/textures/items/ball_fireclay.png,,verified,src/forge120/resources/assets/hbm/textures/item/ball_fireclay.png,Original texture copied byte-for-byte
 asset,textures/items/ball_resin.png,src/main/resources/assets/hbm/textures/items/ball_resin.png,,unported,,
 asset,textures/items/ball_tatb.png,src/main/resources/assets/hbm/textures/items/ball_tatb.png,,unported,,
 asset,textures/items/ball_tnt.png,src/main/resources/assets/hbm/textures/items/ball_tnt.png,,unported,,
@@ -4315,7 +4315,7 @@ asset,textures/items/crystal_sulfur.png,src/main/resources/assets/hbm/textures/i
 asset,textures/items/crystal_thorium.png,src/main/resources/assets/hbm/textures/items/crystal_thorium.png,,unported,,
 asset,textures/items/crystal_titanium.png,src/main/resources/assets/hbm/textures/items/crystal_titanium.png,,verified,src/forge120/resources/assets/hbm/textures/item/crystal_titanium.png,Original texture copied byte-for-byte
 asset,textures/items/crystal_trixite.png,src/main/resources/assets/hbm/textures/items/crystal_trixite.png,,unported,,
-asset,textures/items/crystal_tungsten.png,src/main/resources/assets/hbm/textures/items/crystal_tungsten.png,,unported,,
+asset,textures/items/crystal_tungsten.png,src/main/resources/assets/hbm/textures/items/crystal_tungsten.png,,verified,src/forge120/resources/assets/hbm/textures/item/crystal_tungsten.png,Original texture copied byte-for-byte
 asset,textures/items/crystal_uranium.png,src/main/resources/assets/hbm/textures/items/crystal_uranium.png,,unported,,
 asset,textures/items/crystal_xen.png,src/main/resources/assets/hbm/textures/items/crystal_xen.png,,unported,,
 asset,textures/items/cube.png,src/main/resources/assets/hbm/textures/items/cube.png,,unported,,
@@ -4740,7 +4740,7 @@ asset,textures/items/ingot_electronium.png.mcmeta,src/main/resources/assets/hbm/
 asset,textures/items/ingot_euphemium.png,src/main/resources/assets/hbm/textures/items/ingot_euphemium.png,,unported,,
 asset,textures/items/ingot_ferrouranium.png,src/main/resources/assets/hbm/textures/items/ingot_ferrouranium.png,,unported,,
 asset,textures/items/ingot_fiberglass.png,src/main/resources/assets/hbm/textures/items/ingot_fiberglass.png,,unported,,
-asset,textures/items/ingot_firebrick.png,src/main/resources/assets/hbm/textures/items/ingot_firebrick.png,,unported,,
+asset,textures/items/ingot_firebrick.png,src/main/resources/assets/hbm/textures/items/ingot_firebrick.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_firebrick.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_gh336.png,src/main/resources/assets/hbm/textures/items/ingot_gh336.png,,unported,,
 asset,textures/items/ingot_graphene.png,src/main/resources/assets/hbm/textures/items/ingot_graphene.png,,unported,,
 asset,textures/items/ingot_graphite.png,src/main/resources/assets/hbm/textures/items/ingot_graphite.png,,unported,,
@@ -5150,7 +5150,7 @@ asset,textures/items/nugget_u235.png,src/main/resources/assets/hbm/textures/item
 asset,textures/items/nugget_u238.png,src/main/resources/assets/hbm/textures/items/nugget_u238.png,,unported,,
 asset,textures/items/nugget_uranium.png,src/main/resources/assets/hbm/textures/items/nugget_uranium.png,,unported,,
 asset,textures/items/nugget_uranium_fuel.png,src/main/resources/assets/hbm/textures/items/nugget_uranium_fuel.png,,unported,,
-asset,textures/items/nugget_zirconium.png,src/main/resources/assets/hbm/textures/items/nugget_zirconium.png,,unported,,
+asset,textures/items/nugget_zirconium.png,src/main/resources/assets/hbm/textures/items/nugget_zirconium.png,,verified,src/forge120/resources/assets/hbm/textures/item/nugget_zirconium.png,Original texture copied byte-for-byte
 asset,textures/items/nuke_advanced_kit.png,src/main/resources/assets/hbm/textures/items/nuke_advanced_kit.png,,unported,,
 asset,textures/items/nuke_commercially_kit.png,src/main/resources/assets/hbm/textures/items/nuke_commercially_kit.png,,unported,,
 asset,textures/items/nuke_electric_kit.png,src/main/resources/assets/hbm/textures/items/nuke_electric_kit.png,,unported,,
@@ -5391,7 +5391,7 @@ asset,textures/items/powder_bakelite.png,src/main/resources/assets/hbm/textures/
 asset,textures/items/powder_balefire.png,src/main/resources/assets/hbm/textures/items/powder_balefire.png,,unported,,
 asset,textures/items/powder_beryllium.png,src/main/resources/assets/hbm/textures/items/powder_beryllium.png,,unported,,
 asset,textures/items/powder_bismuth.png,src/main/resources/assets/hbm/textures/items/powder_bismuth.png,,unported,,
-asset,textures/items/powder_borax.png,src/main/resources/assets/hbm/textures/items/powder_borax.png,,unported,,
+asset,textures/items/powder_borax.png,src/main/resources/assets/hbm/textures/items/powder_borax.png,,verified,src/forge120/resources/assets/hbm/textures/item/powder_borax.png,Original texture copied byte-for-byte
 asset,textures/items/powder_boron.png,src/main/resources/assets/hbm/textures/items/powder_boron.png,,unported,,
 asset,textures/items/powder_boron_tiny.png,src/main/resources/assets/hbm/textures/items/powder_boron_tiny.png,,unported,,
 asset,textures/items/powder_bromine.png,src/main/resources/assets/hbm/textures/items/powder_bromine.png,,unported,,
@@ -7352,9 +7352,9 @@ block,chimney_industrial,src/main/java/com/hbm/blocks/ModBlocks.java,3260,unport
 block,chlorine_gas,src/main/java/com/hbm/blocks/ModBlocks.java,3449,unported,,
 block,cluster_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2387,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
 block,cluster_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2388,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
-block,cluster_depth_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2424,unported,,
-block,cluster_depth_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2425,unported,,
-block,cluster_depth_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2426,unported,,
+block,cluster_depth_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2424,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,cluster_depth_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2425,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,cluster_depth_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2426,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
 block,cluster_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2385,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
 block,cluster_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2386,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
 block,cm_anchor,src/main/java/com/hbm/blocks/ModBlocks.java,3319,unported,,
@@ -7671,8 +7671,8 @@ block,machine_difurnace_rtg_off,src/main/java/com/hbm/blocks/ModBlocks.java,3033
 block,machine_difurnace_rtg_on,src/main/java/com/hbm/blocks/ModBlocks.java,3034,unported,,
 block,machine_dineutronium_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3206,unported,,
 block,machine_drain,src/main/java/com/hbm/blocks/ModBlocks.java,3147,unported,,
-block,machine_electric_furnace_off,src/main/java/com/hbm/blocks/ModBlocks.java,3217,unported,,
-block,machine_electric_furnace_on,src/main/java/com/hbm/blocks/ModBlocks.java,3218,unported,,
+block,machine_electric_furnace_off,src/main/java/com/hbm/blocks/ModBlocks.java,3217,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified off-on block state and base-rate processing ported; upgrades pollution source recipe and live client checks pending
+block,machine_electric_furnace_on,src/main/java/com/hbm/blocks/ModBlocks.java,3218,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified lit state ported; live client checks pending
 block,machine_electrolyser,src/main/java/com/hbm/blocks/ModBlocks.java,3251,unported,,
 block,machine_epress,src/main/java/com/hbm/blocks/ModBlocks.java,2998,unported,,
 block,machine_excavator,src/main/java/com/hbm/blocks/ModBlocks.java,3272,unported,,
@@ -7798,10 +7798,10 @@ block,ore_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2381,partial,src/
 block,ore_cobalt,src/main/java/com/hbm/blocks/ModBlocks.java,2380,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk source-height placement with four-to-nine fragment drops and cobalt smelting ported; downstream processing pending
 block,ore_coltan,src/main/java/com/hbm/blocks/ModBlocks.java,2382,unported,,
 block,ore_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2364,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
-block,ore_depth_borax,src/main/java/com/hbm/blocks/ModBlocks.java,2423,unported,,
-block,ore_depth_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2421,unported,,
+block,ore_depth_borax,src/main/java/com/hbm/blocks/ModBlocks.java,2423,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,ore_depth_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2421,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
 block,ore_depth_nether_neodymium,src/main/java/com/hbm/blocks/ModBlocks.java,2430,unported,,
-block,ore_depth_zirconium,src/main/java/com/hbm/blocks/ModBlocks.java,2422,unported,,
+block,ore_depth_zirconium,src/main/java/com/hbm/blocks/ModBlocks.java,2422,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
 block,ore_fluorite,src/main/java/com/hbm/blocks/ModBlocks.java,2367,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 fluorite plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_gneiss_asbestos,src/main/java/com/hbm/blocks/ModBlocks.java,2414,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
 block,ore_gneiss_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2413,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
@@ -8037,13 +8037,13 @@ block,steel_scaffold,src/main/java/com/hbm/blocks/ModBlocks.java,2752,unported,,
 block,steel_wall,src/main/java/com/hbm/blocks/ModBlocks.java,2748,unported,,
 block,stone_biome,src/main/java/com/hbm/blocks/ModBlocks.java,2450,unported,,
 block,stone_cracked,src/main/java/com/hbm/blocks/ModBlocks.java,2815,unported,,
-block,stone_depth,src/main/java/com/hbm/blocks/ModBlocks.java,2458,unported,,
+block,stone_depth,src/main/java/com/hbm/blocks/ModBlocks.java,2458,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld depth filler ported as unbreakable; special deep mining tools pending
 block,stone_depth_nether,src/main/java/com/hbm/blocks/ModBlocks.java,2461,unported,,
 block,stone_gneiss,src/main/java/com/hbm/blocks/ModBlocks.java,2454,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
 block,stone_keyhole,src/main/java/com/hbm/blocks/ModBlocks.java,2443,unported,,
 block,stone_keyhole_meta,src/main/java/com/hbm/blocks/ModBlocks.java,2444,unported,,
 block,stone_porous,src/main/java/com/hbm/blocks/ModBlocks.java,2453,unported,,
-block,stone_resource,src/main/java/com/hbm/blocks/ModBlocks.java,2447,unported,,
+block,stone_resource,src/main/java/com/hbm/blocks/ModBlocks.java,2447,partial,src/forge120/java/com/hbm/PortBlocks.java,Limestone named variant and new-chunk placement ported; other stone-resource variants pending
 block,stones_double_slab,src/main/java/com/hbm/blocks/ModBlocks.java,2659,unported,,
 block,stones_slab,src/main/java/com/hbm/blocks/ModBlocks.java,2658,unported,,
 block,struct_icf_core,src/main/java/com/hbm/blocks/ModBlocks.java,3299,unported,,
@@ -8828,7 +8828,7 @@ config_option,WorldConfig:2.E00_tikiteSpawnrate:191,src/main/java/com/hbm/config
 config_option,WorldConfig:2.L00_enableHematite:193,src/main/java/com/hbm/config/WorldConfig.java,193,unported,,
 config_option,WorldConfig:2.L01_enableMalachite:194,src/main/java/com/hbm/config/WorldConfig.java,194,unported,,
 config_option,WorldConfig:2.L02_enableBauxite:195,src/main/java/com/hbm/config/WorldConfig.java,195,unported,,
-config_option,WorldConfig:2.L02_limestoneSpawn:181,src/main/java/com/hbm/config/WorldConfig.java,181,unported,,
+config_option,WorldConfig:2.L02_limestoneSpawn:181,src/main/java/com/hbm/config/WorldConfig.java,181,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default one vein per new Overworld chunk ported; independent startup toggle test pending
 config_option,WorldConfig:2.N00_uraniumSpawnrate:183,src/main/java/com/hbm/config/WorldConfig.java,183,unported,,
 config_option,WorldConfig:2.N01_tungstenSpawnrate:184,src/main/java/com/hbm/config/WorldConfig.java,184,unported,,
 config_option,WorldConfig:2.N02_sulfurSpawnrate:185,src/main/java/com/hbm/config/WorldConfig.java,185,unported,,
@@ -9192,7 +9192,7 @@ item,balefire_and_ham,src/main/java/com/hbm/items/ModItems.java,6016,unported,,
 item,balefire_and_steel,src/main/java/com/hbm/items/ModItems.java,5943,unported,,
 item,balefire_scrambled,src/main/java/com/hbm/items/ModItems.java,6015,unported,,
 item,ball_dynamite,src/main/java/com/hbm/items/ModItems.java,4754,unported,,
-item,ball_fireclay,src/main/java/com/hbm/items/ModItems.java,4758,unported,,
+item,ball_fireclay,src/main/java/com/hbm/items/ModItems.java,4758,partial,src/forge120/resources/data/hbm/recipes/ball_fireclay_from_limestone.json,Limestone route to four balls ported; alternate aluminium routes pending
 item,ball_resin,src/main/java/com/hbm/items/ModItems.java,4757,unported,,
 item,ball_tatb,src/main/java/com/hbm/items/ModItems.java,4756,unported,,
 item,ball_tnt,src/main/java/com/hbm/items/ModItems.java,4755,unported,,
@@ -9835,7 +9835,7 @@ item,ingot_electronium,src/main/java/com/hbm/items/ModItems.java,4541,unported,,
 item,ingot_euphemium,src/main/java/com/hbm/items/ModItems.java,4539,unported,,
 item,ingot_ferrouranium,src/main/java/com/hbm/items/ModItems.java,4534,unported,,
 item,ingot_fiberglass,src/main/java/com/hbm/items/ModItems.java,4566,unported,,
-item,ingot_firebrick,src/main/java/com/hbm/items/ModItems.java,4504,unported,,
+item,ingot_firebrick,src/main/java/com/hbm/items/ModItems.java,4504,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,Vanilla-furnace smelting path ported; downstream anvil and foundry uses pending
 item,ingot_gh336,src/main/java/com/hbm/items/ModItems.java,4520,unported,,
 item,ingot_graphite,src/main/java/com/hbm/items/ModItems.java,4503,unported,,
 item,ingot_gunmetal,src/main/java/com/hbm/items/ModItems.java,4536,unported,,
@@ -11929,7 +11929,7 @@ java_source,handler/EntityEffectHandler,src/main/java/com/hbm/handler/EntityEffe
 java_source,handler/FuelHandler,src/main/java/com/hbm/handler/FuelHandler.java,,partial,src/forge120/java/com/hbm/PortLigniteItem.java,Lignite 1200-tick furnace fuel behavior ported; other custom fuels remain
 java_source,handler/GUIHandler,src/main/java/com/hbm/handler/GUIHandler.java,,unported,,
 java_source,handler/HTTPHandler,src/main/java/com/hbm/handler/HTTPHandler.java,,unported,,
-java_source,handler/HazmatRegistry,src/main/java/com/hbm/handler/HazmatRegistry.java,,unported,,
+java_source,handler/HazmatRegistry,src/main/java/com/hbm/handler/HazmatRegistry.java,,partial,src/forge120/java/com/hbm/PortRadiationProtection.java,Iron and gold armor plus two mask RAD attenuation ported; other armor and hazard classes pending
 java_source,handler/HbmKeybinds,src/main/java/com/hbm/handler/HbmKeybinds.java,,unported,,
 java_source,handler/HbmKeybindsServer,src/main/java/com/hbm/handler/HbmKeybindsServer.java,,unported,,
 java_source,handler/Identity,src/main/java/com/hbm/handler/Identity.java,,unported,,
@@ -13924,7 +13924,7 @@ java_source,tileentity/machine/TileEntityMachineDetector,src/main/java/com/hbm/t
 java_source,tileentity/machine/TileEntityMachineDiesel,src/main/java/com/hbm/tileentity/machine/TileEntityMachineDiesel.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineDrain,src/main/java/com/hbm/tileentity/machine/TileEntityMachineDrain.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineEPress,src/main/java/com/hbm/tileentity/machine/TileEntityMachineEPress.java,,unported,,
-java_source,tileentity/machine/TileEntityMachineElectricFurnace,src/main/java/com/hbm/tileentity/machine/TileEntityMachineElectricFurnace.java,,unported,,
+java_source,tileentity/machine/TileEntityMachineElectricFurnace,src/main/java/com/hbm/tileentity/machine/TileEntityMachineElectricFurnace.java,,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlockEntity.java,Base HE input smelting GUI inventory and NBT ported; upgrades pollution and source craft progression pending
 java_source,tileentity/machine/TileEntityMachineExcavator,src/main/java/com/hbm/tileentity/machine/TileEntityMachineExcavator.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineExposureChamber,src/main/java/com/hbm/tileentity/machine/TileEntityMachineExposureChamber.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineFunnel,src/main/java/com/hbm/tileentity/machine/TileEntityMachineFunnel.java,,unported,,
@@ -14278,7 +14278,7 @@ java_source,world/dungeon/Spaceship,src/main/java/com/hbm/world/dungeon/Spaceshi
 java_source,world/dungeon/Spaceship2,src/main/java/com/hbm/world/dungeon/Spaceship2.java,,unported,,
 java_source,world/feature/BedrockOre,src/main/java/com/hbm/world/feature/BedrockOre.java,,unported,,
 java_source,world/feature/BiomeCave,src/main/java/com/hbm/world/feature/BiomeCave.java,,unported,,
-java_source,world/feature/DepthDeposit,src/main/java/com/hbm/world/feature/DepthDeposit.java,,unported,,
+java_source,world/feature/DepthDeposit,src/main/java/com/hbm/world/feature/DepthDeposit.java,,partial,src/forge120/java/com/hbm/PortDepthDepositsFeature.java,Six Overworld deposits ported with chunk-local clipping; Nether and source distribution comparison pending
 java_source,world/feature/Dud,src/main/java/com/hbm/world/feature/Dud.java,,unported,,
 java_source,world/feature/Geyser,src/main/java/com/hbm/world/feature/Geyser.java,,unported,,
 java_source,world/feature/GlyphidHive,src/main/java/com/hbm/world/feature/GlyphidHive.java,,unported,,
@@ -16512,7 +16512,7 @@ recipe_site,MineralRecipes:449,src/main/java/com/hbm/crafting/MineralRecipes.jav
 recipe_site,MineralRecipes:450,src/main/java/com/hbm/crafting/MineralRecipes.java,450,unported,,"GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(ModItems.ingot_am_mix, 1), new Object[] { ""tinyAm241"", ""tinyAm241"", ""tinyAm241"", ""tinyAm242"", ""tinyAm242"", ""tinyAm242"", ""tinyAm242"", ""tinyAm"
 recipe_site,MineralRecipes:452,src/main/java/com/hbm/crafting/MineralRecipes.java,452,unported,,"CraftingManager.addShapelessAuto(new ItemStack(ModItems.ball_fireclay, 4), new Object[] { Items.clay_ball, Items.clay_ball, Items.clay_ball, AL.dust() });"
 recipe_site,MineralRecipes:453,src/main/java/com/hbm/crafting/MineralRecipes.java,453,unported,,"CraftingManager.addShapelessAuto(new ItemStack(ModItems.ball_fireclay, 4), new Object[] { Items.clay_ball, Items.clay_ball, Items.clay_ball, AL.ore() });"
-recipe_site,MineralRecipes:454,src/main/java/com/hbm/crafting/MineralRecipes.java,454,unported,,"CraftingManager.addShapelessAuto(new ItemStack(ModItems.ball_fireclay, 4), new Object[] { Items.clay_ball, Items.clay_ball, DictFrame.fromOne(ModBlocks.stone_resource, EnumStoneType.LIMESTONE), KEY_SA"
+recipe_site,MineralRecipes:454,src/main/java/com/hbm/crafting/MineralRecipes.java,454,partial,src/forge120/resources/data/hbm/recipes/ball_fireclay_from_limestone.json,Two clay balls plus limestone plus sand yield four fireclay balls
 recipe_site,MineralRecipes:515,src/main/java/com/hbm/crafting/MineralRecipes.java,515,unported,,"GameRegistry.addRecipe(nine, new Object[] { ""#"", '#', one });"
 recipe_site,MineralRecipes:532,src/main/java/com/hbm/crafting/MineralRecipes.java,532,unported,,"GameRegistry.addRecipe(one, new Object[] { ""###"", ""###"", ""###"", '#', nine });"
 recipe_site,MineralRecipes:536,src/main/java/com/hbm/crafting/MineralRecipes.java,536,unported,,"for(String o : ore) GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(billet), new Object[] { ""###"", ""###"", '#', o }));"
@@ -16890,7 +16890,7 @@ recipe_site,SmeltingRecipes:117,src/main/java/com/hbm/crafting/SmeltingRecipes.j
 recipe_site,SmeltingRecipes:118,src/main/java/com/hbm/crafting/SmeltingRecipes.java,118,unported,,"GameRegistry.addSmelting(ModItems.rag_damp, new ItemStack(ModItems.rag), 0.1F);"
 recipe_site,SmeltingRecipes:119,src/main/java/com/hbm/crafting/SmeltingRecipes.java,119,unported,,"GameRegistry.addSmelting(ModItems.rag_piss, new ItemStack(ModItems.rag), 0.1F);"
 recipe_site,SmeltingRecipes:120,src/main/java/com/hbm/crafting/SmeltingRecipes.java,120,unported,,"GameRegistry.addSmelting(DictFrame.fromOne(ModBlocks.plant_flower, EnumFlowerType.TOBACCO), DictFrame.fromOne(ModItems.plant_item, EnumPlantType.TOBACCO), 0.1F);"
-recipe_site,SmeltingRecipes:121,src/main/java/com/hbm/crafting/SmeltingRecipes.java,121,unported,,"GameRegistry.addSmelting(ModItems.ball_fireclay, new ItemStack(ModItems.ingot_firebrick), 0.1F);"
+recipe_site,SmeltingRecipes:121,src/main/java/com/hbm/crafting/SmeltingRecipes.java,121,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,One fireclay ball smelts to one firebrick at source XP; real Survival run pending
 recipe_site,SmeltingRecipes:125,src/main/java/com/hbm/crafting/SmeltingRecipes.java,125,unported,,"GameRegistry.addSmelting(new ItemStack(Blocks.gravel, 1), new ItemStack(Blocks.cobblestone, 1), 0.0F);"
 recipe_site,SmeltingRecipes:126,src/main/java/com/hbm/crafting/SmeltingRecipes.java,126,unported,,"GameRegistry.addSmelting(new ItemStack(ModBlocks.gravel_obsidian), new ItemStack(Blocks.obsidian), 0.0F);"
 recipe_site,SmeltingRecipes:127,src/main/java/com/hbm/crafting/SmeltingRecipes.java,127,unported,,"GameRegistry.addSmelting(new ItemStack(ModBlocks.gravel_diamond), new ItemStack(Items.diamond), 3.0F);"

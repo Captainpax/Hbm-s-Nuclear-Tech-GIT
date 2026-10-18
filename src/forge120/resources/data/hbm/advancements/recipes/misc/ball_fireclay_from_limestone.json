@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_limestone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {"items": [{"items": ["hbm:stone_resource_limestone"]}]}
+    }
+  },
+  "rewards": {"recipes": ["hbm:ball_fireclay_from_limestone"]}
+}

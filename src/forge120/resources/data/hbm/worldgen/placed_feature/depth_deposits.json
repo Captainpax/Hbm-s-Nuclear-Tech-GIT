@@ -1,0 +1,4 @@
+{
+  "feature": "hbm:depth_deposits",
+  "placement": [{"type": "hbm:overworld_only"}, {"type": "minecraft:biome"}]
+}

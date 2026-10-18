@@ -47,7 +47,14 @@ public final class PortClientSmoke {
                 PortItems.ORE_GNEISS_ASBESTOS.get(), PortItems.ORE_GNEISS_LITHIUM.get(),
                 PortItems.ORE_GNEISS_SCHRABIDIUM.get(), PortItems.ORE_GNEISS_RARE.get(),
                 PortItems.ORE_GNEISS_GAS.get(), PortItems.LITHIUM.get(),
-                PortItems.INGOT_SCHRABIDIUM.get()
+                PortItems.INGOT_SCHRABIDIUM.get(),
+                PortItems.STONE_RESOURCE_LIMESTONE.get(), PortItems.STONE_DEPTH.get(),
+                PortItems.CLUSTER_DEPTH_IRON.get(), PortItems.CLUSTER_DEPTH_TITANIUM.get(),
+                PortItems.CLUSTER_DEPTH_TUNGSTEN.get(), PortItems.ORE_DEPTH_CINNEBAR.get(),
+                PortItems.ORE_DEPTH_ZIRCONIUM.get(), PortItems.ORE_DEPTH_BORAX.get(),
+                PortItems.CRYSTAL_TUNGSTEN.get(), PortItems.NUGGET_ZIRCONIUM.get(),
+                PortItems.POWDER_BORAX.get(), PortItems.BALL_FIRECLAY.get(),
+                PortItems.INGOT_FIREBRICK.get(), PortItems.MACHINE_ELECTRIC_FURNACE.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {

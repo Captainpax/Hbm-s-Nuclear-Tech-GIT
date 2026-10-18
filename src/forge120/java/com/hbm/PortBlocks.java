@@ -70,6 +70,10 @@ public final class PortBlocks {
                     .sound(SoundType.METAL)
                     .noOcclusion()
                     .requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> MACHINE_ELECTRIC_FURNACE = BLOCKS.register("machine_electric_furnace",
+            () -> new PortElectricFurnaceBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL).strength(5.0F, 10.0F)
+                    .sound(SoundType.METAL).requiresCorrectToolForDrops()));
     public static final RegistryObject<Block> ORE_RARE = ore("ore_rare", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_LIGNITE = ore("ore_lignite", 5.0F, 15.0F);
     public static final RegistryObject<Block> ORE_CINNEBAR = ore("ore_cinnebar", 5.0F, 10.0F);
@@ -92,11 +96,25 @@ public final class PortBlocks {
     public static final RegistryObject<Block> ORE_GNEISS_SCHRABIDIUM = ore("ore_gneiss_schrabidium", 1.5F, 10.0F);
     public static final RegistryObject<Block> ORE_GNEISS_RARE = ore("ore_gneiss_rare", 1.5F, 10.0F);
     public static final RegistryObject<Block> ORE_GNEISS_GAS = ore("ore_gneiss_gas", 1.5F, 10.0F);
+    public static final RegistryObject<Block> STONE_RESOURCE_LIMESTONE = ore("stone_resource_limestone", 5.0F, 10.0F);
+    public static final RegistryObject<Block> STONE_DEPTH = depth("stone_depth");
+    public static final RegistryObject<Block> CLUSTER_DEPTH_IRON = depth("cluster_depth_iron");
+    public static final RegistryObject<Block> CLUSTER_DEPTH_TITANIUM = depth("cluster_depth_titanium");
+    public static final RegistryObject<Block> CLUSTER_DEPTH_TUNGSTEN = depth("cluster_depth_tungsten");
+    public static final RegistryObject<Block> ORE_DEPTH_CINNEBAR = depth("ore_depth_cinnebar");
+    public static final RegistryObject<Block> ORE_DEPTH_ZIRCONIUM = depth("ore_depth_zirconium");
+    public static final RegistryObject<Block> ORE_DEPTH_BORAX = depth("ore_depth_borax");
 
     private PortBlocks() {}
 
     private static RegistryObject<Block> ore(String name, float hardness, float resistance) {
         return BLOCKS.register(name, () -> new Block(oreProperties(hardness, resistance)));
+    }
+
+    private static RegistryObject<Block> depth(String name) {
+        // Legacy BlockDepth is unbreakable until an IDepthRockTool is held.
+        return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE).strength(-1.0F, 10.0F).sound(SoundType.STONE)));
     }
 
     private static BlockBehaviour.Properties oreProperties(float hardness, float resistance) {

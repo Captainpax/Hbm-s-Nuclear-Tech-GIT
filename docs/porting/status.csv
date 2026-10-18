@@ -1,4 +1,41 @@
 kind,key,status,target,notes
+block,stone_resource,partial,src/forge120/java/com/hbm/PortBlocks.java,Limestone named variant and new-chunk placement ported; other stone-resource variants pending
+block,stone_depth,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld depth filler ported as unbreakable; special deep mining tools pending
+block,cluster_depth_iron,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,cluster_depth_titanium,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,cluster_depth_tungsten,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,ore_depth_cinnebar,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,ore_depth_zirconium,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,ore_depth_borax,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
+block,machine_electric_furnace_off,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified off-on block state and base-rate processing ported; upgrades pollution source recipe and live client checks pending
+block,machine_electric_furnace_on,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified lit state ported; live client checks pending
+item,ball_fireclay,partial,src/forge120/resources/data/hbm/recipes/ball_fireclay_from_limestone.json,Limestone route to four balls ported; alternate aluminium routes pending
+item,ingot_firebrick,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,Vanilla-furnace smelting path ported; downstream anvil and foundry uses pending
+asset,textures/blocks/stone_resource.limestone.png,verified,src/forge120/resources/assets/hbm/textures/block/stone_resource_limestone.png,Original texture copied byte-for-byte
+asset,textures/blocks/stone_depth.png,verified,src/forge120/resources/assets/hbm/textures/block/stone_depth.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_depth_iron.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_depth_iron.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_depth_titanium.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_depth_titanium.png,Original texture copied byte-for-byte
+asset,textures/blocks/cluster_depth_tungsten.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_depth_tungsten.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_depth_cinnebar.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_depth_cinnebar.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_depth_zirconium.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_depth_zirconium.png,Original texture copied byte-for-byte
+asset,textures/blocks/ore_depth_borax.png,verified,src/forge120/resources/assets/hbm/textures/block/ore_depth_borax.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_bottom.png,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_bottom.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_front_off.png,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_front_off.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_front_on.png,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_front_on.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_side.png,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_side.png,Original texture copied byte-for-byte
+asset,textures/blocks/machine_electric_furnace_top.png,verified,src/forge120/resources/assets/hbm/textures/block/machine_electric_furnace_top.png,Original texture copied byte-for-byte
+asset,textures/gui/GUIElectricFurnace.png,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_electric_furnace.png,Original texture copied byte-for-byte
+asset,textures/items/crystal_tungsten.png,verified,src/forge120/resources/assets/hbm/textures/item/crystal_tungsten.png,Original texture copied byte-for-byte
+asset,textures/items/nugget_zirconium.png,verified,src/forge120/resources/assets/hbm/textures/item/nugget_zirconium.png,Original texture copied byte-for-byte
+asset,textures/items/powder_borax.png,verified,src/forge120/resources/assets/hbm/textures/item/powder_borax.png,Original texture copied byte-for-byte
+asset,textures/items/ball_fireclay.png,verified,src/forge120/resources/assets/hbm/textures/item/ball_fireclay.png,Original texture copied byte-for-byte
+asset,textures/items/ingot_firebrick.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_firebrick.png,Original texture copied byte-for-byte
+config_option,WorldConfig:2.L02_limestoneSpawn:181,partial,src/forge120/java/com/hbm/PortConfig.java,Legacy default one vein per new Overworld chunk ported; independent startup toggle test pending
+java_source,world/feature/DepthDeposit,partial,src/forge120/java/com/hbm/PortDepthDepositsFeature.java,Six Overworld deposits ported with chunk-local clipping; Nether and source distribution comparison pending
+java_source,tileentity/machine/TileEntityMachineElectricFurnace,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlockEntity.java,Base HE input smelting GUI inventory and NBT ported; upgrades pollution and source craft progression pending
+java_source,handler/HazmatRegistry,partial,src/forge120/java/com/hbm/PortRadiationProtection.java,Iron and gold armor plus two mask RAD attenuation ported; other armor and hazard classes pending
+recipe_site,MineralRecipes:454,partial,src/forge120/resources/data/hbm/recipes/ball_fireclay_from_limestone.json,Two clay balls plus limestone plus sand yield four fireclay balls
+recipe_site,SmeltingRecipes:121,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,One fireclay ball smelts to one firebrick at source XP; real Survival run pending
 block,cluster_iron,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
 block,cluster_titanium,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
 block,cluster_aluminium,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
