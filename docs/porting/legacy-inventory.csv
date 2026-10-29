@@ -5757,7 +5757,7 @@ asset,textures/items/scraps.png,src/main/resources/assets/hbm/textures/items/scr
 asset,textures/items/scraps_additive.png,src/main/resources/assets/hbm/textures/items/scraps_additive.png,,unported,,
 asset,textures/items/scraps_bismuth.png,src/main/resources/assets/hbm/textures/items/scraps_bismuth.png,,unported,,
 asset,textures/items/scraps_liquid.png,src/main/resources/assets/hbm/textures/items/scraps_liquid.png,,unported,,
-asset,textures/items/screwdriver.png,src/main/resources/assets/hbm/textures/items/screwdriver.png,,unported,,
+asset,textures/items/screwdriver.png,src/main/resources/assets/hbm/textures/items/screwdriver.png,,verified,src/forge120/resources/assets/hbm/textures/item/screwdriver.png,SHA-256 matches source icon; hotbar and handheld appearance checked in maximized Creative QA
 asset,textures/items/screwdriver_desh.png,src/main/resources/assets/hbm/textures/items/screwdriver_desh.png,,unported,,
 asset,textures/items/scrumpy.png,src/main/resources/assets/hbm/textures/items/scrumpy.png,,unported,,
 asset,textures/items/security_boots.png,src/main/resources/assets/hbm/textures/items/security_boots.png,,unported,,
@@ -7526,7 +7526,7 @@ block,fluid_valve,src/main/java/com/hbm/blocks/ModBlocks.java,3143,unported,,
 block,foam_layer,src/main/java/com/hbm/blocks/ModBlocks.java,2817,unported,,
 block,foundry_basin,src/main/java/com/hbm/blocks/ModBlocks.java,3021,unported,,
 block,foundry_channel,src/main/java/com/hbm/blocks/ModBlocks.java,3022,unported,,
-block,foundry_mold,src/main/java/com/hbm/blocks/ModBlocks.java,3020,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Reusable copper plate mold; source hollow collision static faces and synchronized mold/metal/casting display; shovel and teardown conservation tested; screwdriver gesture other molds and multiplayer pending
+block,foundry_mold,src/main/java/com/hbm/blocks/ModBlocks.java,3020,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Reusable copper mold with source hollow collision and synced display; screwdriver removes only empty molds with source click ordering and wear; offhand and conservation tests pass; other molds and multiplayer pending
 block,foundry_outlet,src/main/java/com/hbm/blocks/ModBlocks.java,3024,unported,,
 block,foundry_slagtap,src/main/java/com/hbm/blocks/ModBlocks.java,3025,unported,,
 block,foundry_tank,src/main/java/com/hbm/blocks/ModBlocks.java,3023,unported,,
@@ -10673,7 +10673,7 @@ item,scrap_nuclear,src/main/java/com/hbm/items/ModItems.java,5497,unported,,
 item,scrap_oil,src/main/java/com/hbm/items/ModItems.java,5496,unported,,
 item,scrap_plastic,src/main/java/com/hbm/items/ModItems.java,5494,unported,,
 item,scraps,src/main/java/com/hbm/items/ModItems.java,5223,partial,src/forge120/java/com/hbm/PortScrapsItem.java,Named non-liquid copper scraps retain per-item amount NBT and one-ingot default; exact recovery/remelting and malformed quantities tested; other materials and liquid variants pending
-item,screwdriver,src/main/java/com/hbm/items/ModItems.java,5267,unported,,
+item,screwdriver,src/main/java/com/hbm/items/ModItems.java,5267,partial,src/forge120/java/com/hbm/PortToolingItem.java,Original 100 max damage and diagonal iron/steel recipe; source above-max break threshold and crafting remainder; full inventories offhand failed actions and source tool ordering tested; icon hand model normal removal offhand installation and offhand removal checked in Creative QA; other toolable blocks and multiplayer pending
 item,screwdriver_desh,src/main/java/com/hbm/items/ModItems.java,5268,unported,,
 item,scrumpy,src/main/java/com/hbm/items/ModItems.java,6158,unported,,
 item,security_boots,src/main/java/com/hbm/items/ModItems.java,6358,unported,,
@@ -10946,7 +10946,7 @@ java_source,api/hbm/block/ILaserable,src/main/java/api/hbm/block/ILaserable.java
 java_source,api/hbm/block/IMiningDrill,src/main/java/api/hbm/block/IMiningDrill.java,,unported,,
 java_source,api/hbm/block/IPileNeutronReceiver,src/main/java/api/hbm/block/IPileNeutronReceiver.java,,unported,,
 java_source,api/hbm/block/IRadioControllable,src/main/java/api/hbm/block/IRadioControllable.java,,unported,,
-java_source,api/hbm/block/IToolable,src/main/java/api/hbm/block/IToolable.java,,unported,,
+java_source,api/hbm/block/IToolable,src/main/java/api/hbm/block/IToolable.java,,partial,src/forge120/java/api/hbm/block/IToolable.java,Modern UseOnContext carries source tool action; six source types retain named-item registration and display stacks after registries load; screwdriver small-mold dispatch tested; other consumers integrations and tools pending
 java_source,api/hbm/conveyor/IConveyorBelt,src/main/java/api/hbm/conveyor/IConveyorBelt.java,,unported,,
 java_source,api/hbm/conveyor/IConveyorItem,src/main/java/api/hbm/conveyor/IConveyorItem.java,,unported,,
 java_source,api/hbm/conveyor/IConveyorPackage,src/main/java/api/hbm/conveyor/IConveyorPackage.java,,unported,,
@@ -11294,7 +11294,7 @@ java_source,blocks/machine/DummyOldBase,src/main/java/com/hbm/blocks/machine/Dum
 java_source,blocks/machine/Floodlight,src/main/java/com/hbm/blocks/machine/Floodlight.java,,unported,,
 java_source,blocks/machine/FloodlightBeam,src/main/java/com/hbm/blocks/machine/FloodlightBeam.java,,unported,,
 java_source,blocks/machine/FoundryBasin,src/main/java/com/hbm/blocks/machine/FoundryBasin.java,,unported,,
-java_source,blocks/machine/FoundryCastingBase,src/main/java/com/hbm/blocks/machine/FoundryCastingBase.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Small copper mold shovel recovery and exact partial/cooling/finished teardown tested; full-mold smoke and visible recovery/casting collection checked live; screwdriver gesture other molds overlay and multiplayer pending
+java_source,blocks/machine/FoundryCastingBase,src/main/java/com/hbm/blocks/machine/FoundryCastingBase.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Small copper mold shovel recovery teardown cooling smoke and display checked; source screwdriver removal and output-first versus sneak-tool ordering plus full inventories and offhand tested; other molds overlay and multiplayer pending
 java_source,blocks/machine/FoundryChannel,src/main/java/com/hbm/blocks/machine/FoundryChannel.java,,unported,,
 java_source,blocks/machine/FoundryMold,src/main/java/com/hbm/blocks/machine/FoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Source floor and four hollow walls with half-block selection tested; source textures and eleven baked faces audited; full mold classes pending
 java_source,blocks/machine/FoundryOutlet,src/main/java/com/hbm/blocks/machine/FoundryOutlet.java,,unported,,
@@ -12846,7 +12846,7 @@ java_source,items/tool/ItemConveyorWand,src/main/java/com/hbm/items/tool/ItemCon
 java_source,items/tool/ItemCoordinateBase,src/main/java/com/hbm/items/tool/ItemCoordinateBase.java,,unported,,
 java_source,items/tool/ItemCounterfeitKeys,src/main/java/com/hbm/items/tool/ItemCounterfeitKeys.java,,unported,,
 java_source,items/tool/ItemCouplingTool,src/main/java/com/hbm/items/tool/ItemCouplingTool.java,,unported,,
-java_source,items/tool/ItemCraftingDegradation,src/main/java/com/hbm/items/tool/ItemCraftingDegradation.java,,unported,,
+java_source,items/tool/ItemCraftingDegradation,src/main/java/com/hbm/items/tool/ItemCraftingDegradation.java,,partial,src/forge120/java/com/hbm/PortCraftingToolItem.java,Non-repairable one-stack tool; NBT-preserving copied crafting remainder and source above-max destruction boundary tested for screwdriver; other crafting tool families pending
 java_source,items/tool/ItemDefuser,src/main/java/com/hbm/items/tool/ItemDefuser.java,,unported,,
 java_source,items/tool/ItemDesignatorArtyRange,src/main/java/com/hbm/items/tool/ItemDesignatorArtyRange.java,,unported,,
 java_source,items/tool/ItemDesingator,src/main/java/com/hbm/items/tool/ItemDesingator.java,,unported,,
@@ -12907,7 +12907,7 @@ java_source,items/tool/ItemToolAbility,src/main/java/com/hbm/items/tool/ItemTool
 java_source,items/tool/ItemToolAbilityFueled,src/main/java/com/hbm/items/tool/ItemToolAbilityFueled.java,,unported,,
 java_source,items/tool/ItemToolAbilityPower,src/main/java/com/hbm/items/tool/ItemToolAbilityPower.java,,unported,,
 java_source,items/tool/ItemToolBox,src/main/java/com/hbm/items/tool/ItemToolBox.java,,unported,,
-java_source,items/tool/ItemTooling,src/main/java/com/hbm/items/tool/ItemTooling.java,,unported,,
+java_source,items/tool/ItemTooling,src/main/java/com/hbm/items/tool/ItemTooling.java,,partial,src/forge120/java/com/hbm/PortToolingItem.java,First screwdriver dispatch through modern block-use context and source ToolType contract; successful-action wear creative exemption and source strict break threshold; other tool types pending
 java_source,items/tool/ItemToolingWeapon,src/main/java/com/hbm/items/tool/ItemToolingWeapon.java,,unported,,
 java_source,items/tool/ItemWand,src/main/java/com/hbm/items/tool/ItemWand.java,,unported,,
 java_source,items/tool/ItemWandD,src/main/java/com/hbm/items/tool/ItemWandD.java,,unported,,
@@ -17059,7 +17059,7 @@ recipe_site,ToolRecipes:134,src/main/java/com/hbm/crafting/ToolRecipes.java,134,
 recipe_site,ToolRecipes:135,src/main/java/com/hbm/crafting/ToolRecipes.java,135,unported,,"CraftingManager.addRecipeAuto(new ItemStack(ModItems.power_net_tool), new Object[] { ""WRW"", "" I "", "" B "", 'W', MINGRADE.wireFine(), 'R', REDSTONE.dust(), 'I', IRON.ingot(), 'B', EnumBatteryPack.BATTER"
 recipe_site,ToolRecipes:136,src/main/java/com/hbm/crafting/ToolRecipes.java,136,unported,,"CraftingManager.addRecipeAuto(new ItemStack(ModItems.analysis_tool), new Object[] { ""  G"", "" S "", ""S  "", 'G', KEY_ANYPANE, 'S', STEEL.ingot() });"
 recipe_site,ToolRecipes:138,src/main/java/com/hbm/crafting/ToolRecipes.java,138,unported,,"CraftingManager.addRecipeAuto(new ItemStack(ModItems.toolbox), new Object[] { ""CCC"", ""CIC"", 'C', CU.plate(), 'I', IRON.ingot() });"
-recipe_site,ToolRecipes:140,src/main/java/com/hbm/crafting/ToolRecipes.java,140,unported,,"CraftingManager.addRecipeAuto(new ItemStack(ModItems.screwdriver, 1), new Object[] { ""  I"", "" I "", ""S  "", 'S', STEEL.ingot(), 'I', IRON.ingot() });"
+recipe_site,ToolRecipes:140,src/main/java/com/hbm/crafting/ToolRecipes.java,140,partial,src/forge120/resources/data/hbm/recipes/screwdriver.json,Source diagonal two iron ingots and one steel ingot through Forge tags; registered shaped recipe and recipe-book unlock checked; live crafting pending
 recipe_site,ToolRecipes:141,src/main/java/com/hbm/crafting/ToolRecipes.java,141,unported,,"CraftingManager.addRecipeAuto(new ItemStack(ModItems.screwdriver_desh, 1), new Object[] { ""  I"", "" I "", ""S  "", 'S', ANY_PLASTIC.ingot(), 'I', DESH.ingot() });"
 recipe_site,ToolRecipes:142,src/main/java/com/hbm/crafting/ToolRecipes.java,142,unported,,"CraftingManager.addRecipeAuto(new ItemStack(ModItems.hand_drill), new Object[] { "" D"", ""S "", "" S"", 'D', DURA.ingot(), 'S', KEY_STICK });"
 recipe_site,ToolRecipes:143,src/main/java/com/hbm/crafting/ToolRecipes.java,143,unported,,"CraftingManager.addRecipeAuto(new ItemStack(ModItems.hand_drill_desh), new Object[] { "" D"", ""S "", "" S"", 'D', DESH.ingot(), 'S', ANY_PLASTIC.ingot() });"

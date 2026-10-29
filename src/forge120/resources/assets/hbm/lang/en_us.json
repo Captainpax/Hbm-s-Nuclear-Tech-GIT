@@ -165,5 +165,6 @@
   "itemGroup.hbm.consumables": "HBM Consumables",
   "itemGroup.hbm.armor": "HBM Armor",
   "death.attack.hbm.radiation": "%1$s succumbed to radiation poisoning",
-  "death.attack.hbm.asbestos": "%1$s is now entitled to financial compensation."
+  "death.attack.hbm.asbestos": "%1$s is now entitled to financial compensation.",
+  "item.hbm.screwdriver": "Screwdriver"
 }

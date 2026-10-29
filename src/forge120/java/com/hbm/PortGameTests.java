@@ -56,6 +56,158 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void screwdriverRecipeAndCraftingRemainderMatchSource(GameTestHelper helper) {
+        var player = FakePlayerFactory.get(helper.getLevel(), new GameProfile(
+                UUID.fromString("c94eb3b4-0276-4cd5-8347-27d4308c15af"), "ToolRecipeTest"));
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        grid.setItem(2, new ItemStack(Items.IRON_INGOT));
+        grid.setItem(4, new ItemStack(Items.IRON_INGOT));
+        grid.setItem(6, new ItemStack(PortItems.INGOT_STEEL.get()));
+        var id = ResourceLocation.fromNamespaceAndPath("hbm", "screwdriver");
+        var recipe = helper.getLevel().getRecipeManager().byKey(id).orElseThrow();
+        var unlock = helper.getLevel().getServer().getAdvancements().getAdvancement(
+                ResourceLocation.fromNamespaceAndPath("hbm", "recipes/misc/screwdriver"));
+        if (!(recipe instanceof ShapedRecipe shaped) || !shaped.matches(grid, helper.getLevel())
+                || unlock == null || !Set.of(unlock.getRewards().getRecipes()).contains(id)) {
+            throw new IllegalStateException("Screwdriver source iron/steel diagonal or recipe unlock is missing");
+        }
+        ItemStack tool = shaped.assemble(grid, helper.getLevel().registryAccess());
+        if (!tool.is(PortItems.SCREWDRIVER.get()) || tool.getCount() != 1 || tool.getMaxDamage() != 100
+                || tool.getMaxStackSize() != 1 || tool.getItem().isRepairable(tool)
+                || api.hbm.block.IToolable.ToolType.getType(tool) != api.hbm.block.IToolable.ToolType.SCREWDRIVER) {
+            throw new IllegalStateException("Screwdriver type durability stacking or non-repairable behavior changed");
+        }
+        tool.getOrCreateTag().putString("testMarker", "kept");
+        ItemStack remainder = tool.getCraftingRemainingItem();
+        if (!tool.hasCraftingRemainingItem() || !remainder.is(tool.getItem()) || remainder.getDamageValue() != 1
+                || tool.getDamageValue() != 0 || !"kept".equals(remainder.getTag().getString("testMarker"))) {
+            throw new IllegalStateException("Crafting tool remainder mutated the input or lost its NBT");
+        }
+        tool.setDamageValue(99);
+        remainder = tool.getCraftingRemainingItem();
+        if (remainder.isEmpty() || remainder.getDamageValue() != 100 || tool.getDamageValue() != 99) {
+            throw new IllegalStateException("Source crafting tool must survive at damage equal to maxDamage");
+        }
+        tool.setDamageValue(100);
+        if (!tool.getCraftingRemainingItem().isEmpty() || tool.getDamageValue() != 100) {
+            throw new IllegalStateException("Exhausted crafting tool returned a broken reusable remainder");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void screwdriverUsesSourceFoundryOrderingAndWear(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        var state = PortBlocks.FOUNDRY_MOLD.get().defaultBlockState();
+        level.setBlock(pos, state, 3);
+        var mold = (PortFoundryMoldBlockEntity) level.getBlockEntity(pos);
+        var player = FakePlayerFactory.get(level, new GameProfile(
+                UUID.fromString("ff273328-2574-4c97-b06c-798e2eb566c9"), "ToolUseTest"));
+        player.getInventory().clearContent();
+        player.getAbilities().instabuild = false;
+        player.setShiftKeyDown(false);
+        player.setPos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
+        player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+        player.setItemInHand(InteractionHand.OFF_HAND, new ItemStack(PortItems.MOLD_PLATE_CAST.get(), 2));
+        var result = player.gameMode.useItemOn(player, level, player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+        if (result.consumesAction() || !mold.items().getStackInSlot(0).isEmpty()) {
+            throw new IllegalStateException("Empty main hand blocked the offhand mold");
+        }
+        result = player.gameMode.useItemOn(player, level, player.getOffhandItem(), InteractionHand.OFF_HAND, hit);
+        if (!result.consumesAction() || player.getOffhandItem().getCount() != 1
+                || !mold.items().getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get())) {
+            throw new IllegalStateException("Offhand mold installation failed or did not consume exactly one mold");
+        }
+        player.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
+        player.setShiftKeyDown(true);
+        player.gameMode.useItemOn(player, level, player.getMainHandItem(), InteractionHand.MAIN_HAND, hit);
+        if (mold.items().getStackInSlot(0).isEmpty()) {
+            throw new IllegalStateException("Temporary empty-hand gesture still removes the source screwdriver mold");
+        }
+        player.setShiftKeyDown(false);
+        ItemStack tool = new ItemStack(PortItems.SCREWDRIVER.get());
+        tool.setDamageValue(7);
+        player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+        mold.acceptCopper(24);
+        result = player.gameMode.useItemOn(player, level, tool, InteractionHand.MAIN_HAND, hit);
+        if (result.consumesAction() || tool.getDamageValue() != 7 || mold.copperQuanta() != 24
+                || mold.items().getStackInSlot(0).isEmpty()) {
+            throw new IllegalStateException("Screwdriver removed a filled mold or wore on a rejected action");
+        }
+        mold.takeCopperScraps();
+        mold.items().setStackInSlot(1, new ItemStack(PortItems.PLATE_CAST_COPPER.get()));
+        player.gameMode.useItemOn(player, level, tool, InteractionHand.MAIN_HAND, hit);
+        if (!mold.items().getStackInSlot(1).isEmpty() || mold.items().getStackInSlot(0).isEmpty()
+                || tool.getDamageValue() != 7 || countInventory(player, PortItems.PLATE_CAST_COPPER.get()) != 1) {
+            throw new IllegalStateException("Normal screwdriver click must collect the casting before tooling without wear");
+        }
+        mold.items().setStackInSlot(1, new ItemStack(PortItems.PLATE_CAST_COPPER.get()));
+        player.setShiftKeyDown(true);
+        player.gameMode.useItemOn(player, level, tool, InteractionHand.MAIN_HAND, hit);
+        if (!mold.items().getStackInSlot(0).isEmpty() || mold.items().getStackInSlot(1).isEmpty()
+                || tool.getDamageValue() != 8 || countInventory(player, PortItems.MOLD_PLATE_CAST.get()) != 1) {
+            throw new IllegalStateException("Sneaking source tool action must remove only the empty mold and wear once");
+        }
+        player.gameMode.useItemOn(player, level, tool, InteractionHand.MAIN_HAND, hit);
+        if (tool.getDamageValue() != 8 || countInventory(player, PortItems.MOLD_PLATE_CAST.get()) != 1) {
+            throw new IllegalStateException("Repeated screwdriver action duplicated a mold or wore without success");
+        }
+        player.setShiftKeyDown(false);
+        player.getInventory().clearContent();
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        level.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2), ItemEntity::isAlive).forEach(ItemEntity::discard);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void screwdriverHandlesFullInventoryBreakageAndOffhand(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        var state = PortBlocks.FOUNDRY_MOLD.get().defaultBlockState();
+        level.setBlock(pos, state, 3);
+        var mold = (PortFoundryMoldBlockEntity) level.getBlockEntity(pos);
+        var player = FakePlayerFactory.get(level, new GameProfile(
+                UUID.fromString("bcb2c1ee-8f0e-434f-bbd7-1be5146fe615"), "ToolFullTest"));
+        player.getInventory().clearContent();
+        player.getAbilities().instabuild = false;
+        player.setShiftKeyDown(false);
+        player.setPos(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+        var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
+        mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+        for (int slot = 0; slot < 36; slot++) player.getInventory().setItem(slot, new ItemStack(Items.STONE, 64));
+        ItemStack lastUse = new ItemStack(PortItems.SCREWDRIVER.get());
+        lastUse.setDamageValue(99);
+        player.setItemInHand(InteractionHand.MAIN_HAND, lastUse);
+        player.gameMode.useItemOn(player, level, lastUse, InteractionHand.MAIN_HAND, hit);
+        if (player.getMainHandItem().isEmpty() || lastUse.getDamageValue() != 100) {
+            throw new IllegalStateException("Modern equality threshold broke the source screwdriver one use early");
+        }
+        mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+        player.gameMode.useItemOn(player, level, lastUse, InteractionHand.MAIN_HAND, hit);
+        var drops = level.getEntitiesOfClass(ItemEntity.class, new AABB(pos).inflate(2), ItemEntity::isAlive);
+        int droppedMolds = drops.stream().filter(drop -> drop.getItem().is(PortItems.MOLD_PLATE_CAST.get()))
+                .mapToInt(drop -> drop.getItem().getCount()).sum();
+        if (!player.getMainHandItem().isEmpty() || !mold.items().getStackInSlot(0).isEmpty() || droppedMolds != 2) {
+            throw new IllegalStateException("Last screwdriver uses did not break once and preserve both molds with a full inventory");
+        }
+        drops.forEach(ItemEntity::discard);
+        player.getInventory().clearContent();
+        mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+        ItemStack offhand = new ItemStack(PortItems.SCREWDRIVER.get());
+        player.setItemInHand(InteractionHand.OFF_HAND, offhand);
+        var result = player.gameMode.useItemOn(player, level, offhand, InteractionHand.OFF_HAND, hit);
+        if (!result.consumesAction() || offhand.getDamageValue() != 1 || !mold.items().getStackInSlot(0).isEmpty()
+                || countInventory(player, PortItems.MOLD_PLATE_CAST.get()) != 1) {
+            throw new IllegalStateException("Offhand screwdriver did not remove one mold with one durability of wear");
+        }
+        player.getInventory().clearContent();
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void foundryMoldHasHollowSourceCollision(GameTestHelper helper) {
         var state = PortBlocks.FOUNDRY_MOLD.get().defaultBlockState();
         BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));

@@ -1,5 +1,6 @@
 package com.hbm;
 
+import api.hbm.block.IToolable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -8,6 +9,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -24,7 +26,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolActions;
 
 /** Source small mold: click to install a mold or collect the cooled casting. */
-public final class PortFoundryMoldBlock extends BaseEntityBlock {
+public final class PortFoundryMoldBlock extends BaseEntityBlock implements IToolable {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 8, 16);
     private static final VoxelShape COLLISION = Shapes.or(
             Block.box(0, 0, 0, 16, 2, 16),
@@ -61,14 +63,19 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock {
     @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
         if (!(level.getBlockEntity(pos) instanceof PortFoundryMoldBlockEntity mold)) return InteractionResult.PASS;
-        if (level.isClientSide) return InteractionResult.SUCCESS;
+        ItemStack held = player.getItemInHand(hand);
+        if (level.isClientSide) {
+            // Let item tooling and the other hand run when this block has no action.
+            return mold.displayCasting() || held.canPerformAction(ToolActions.SHOVEL_DIG)
+                    || held.is(PortItems.MOLD_PLATE_CAST.get()) && !mold.displayMold()
+                    ? InteractionResult.SUCCESS : InteractionResult.PASS;
+        }
         ItemStack output = mold.items().getStackInSlot(1);
         if (!output.isEmpty()) {
             ItemStack taken = mold.items().extractItem(1, output.getCount(), false);
             if (!player.getInventory().add(taken)) player.drop(taken, false);
             return InteractionResult.CONSUME;
         }
-        ItemStack held = player.getItemInHand(hand);
         if (held.is(PortItems.MOLD_PLATE_CAST.get()) && mold.items().getStackInSlot(0).isEmpty()) {
             mold.items().setStackInSlot(0, held.copyWithCount(1));
             if (!player.getAbilities().instabuild) held.shrink(1);
@@ -79,13 +86,20 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock {
             if (!recovered.isEmpty() && !player.getInventory().add(recovered)) player.drop(recovered, false);
             return InteractionResult.CONSUME;
         }
-        if (player.isShiftKeyDown() && held.isEmpty() && mold.copperQuanta() == 0
-                && !mold.items().getStackInSlot(0).isEmpty()) {
-            ItemStack removed = mold.items().extractItem(0, 1, false);
-            if (!player.getInventory().add(removed)) player.drop(removed, false);
-            return InteractionResult.CONSUME;
-        }
         return InteractionResult.PASS;
+    }
+
+    @Override public boolean onScrew(UseOnContext context, ToolType tool) {
+        Level level = context.getLevel();
+        Player player = context.getPlayer();
+        if (tool != ToolType.SCREWDRIVER || player == null
+                || !(level.getBlockEntity(context.getClickedPos()) instanceof PortFoundryMoldBlockEntity mold)
+                || mold.copperQuanta() > 0) return false;
+        if (level.isClientSide) return mold.displayMold();
+        if (mold.items().getStackInSlot(0).isEmpty()) return false;
+        ItemStack removed = mold.items().extractItem(0, 1, false);
+        if (!player.getInventory().add(removed)) player.drop(removed, false);
+        return true;
     }
 
     @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState replacement, boolean moving) {

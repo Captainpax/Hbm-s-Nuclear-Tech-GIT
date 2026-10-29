@@ -165,6 +165,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.STAMP_IRON_FLAT.get());
                         output.accept(PortItems.STAMP_IRON_PLATE.get());
                         output.accept(PortItems.STAMP_IRON_WIRE.get());
+                        output.accept(PortItems.SCREWDRIVER.get());
                         output.accept(PortItems.CUBE_POWER.get());
                         for (ItemStack stack : packDisplayStacks()) output.accept(stack);
                     })

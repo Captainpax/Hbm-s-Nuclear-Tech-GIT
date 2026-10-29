@@ -175,6 +175,8 @@ public final class PortItems {
     public static final RegistryObject<Item> PLATE_CAST_COPPER = ingot("plate_cast_copper");
     public static final RegistryObject<Item> MOLD_BASE = ingot("mold_base");
     public static final RegistryObject<Item> MOLD_PLATE_CAST = ingot("mold_plate_cast");
+    public static final RegistryObject<Item> SCREWDRIVER = ITEMS.register("screwdriver",
+            () -> new PortToolingItem(api.hbm.block.IToolable.ToolType.SCREWDRIVER, 100));
 
     /** Legacy ItemBatteryPack enum order, now represented by stable named item IDs. */
     public static final List<RegistryObject<Item>> BATTERY_PACKS = List.of(
