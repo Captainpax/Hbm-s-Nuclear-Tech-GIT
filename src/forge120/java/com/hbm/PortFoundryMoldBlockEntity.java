@@ -3,6 +3,8 @@ package com.hbm;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -17,7 +19,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public final class PortFoundryMoldBlockEntity extends BlockEntity {
     public static final int CAST_PLATE_QUANTA = 216;
     private final ItemStackHandler items = new ItemStackHandler(2) {
-        @Override protected void onContentsChanged(int slot) { setChanged(); }
+        @Override protected void onContentsChanged(int slot) { visualStateChanged(); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             return slot == 0 && stack.is(PortItems.MOLD_PLATE_CAST.get());
         }
@@ -26,6 +28,8 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     private LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> new SidedItems(items));
     private int copperQuanta;
     private int cooloff = 200;
+    private boolean displayMold;
+    private boolean displayCasting;
 
     public PortFoundryMoldBlockEntity(BlockPos pos, BlockState state) {
         super(PortBlockEntities.FOUNDRY_MOLD.get(), pos, state);
@@ -34,12 +38,42 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     public ItemStackHandler items() { return items; }
     public int copperQuanta() { return copperQuanta; }
     public int cooloff() { return cooloff; }
+    public boolean displayMold() { return displayMold; }
+    public boolean displayCasting() { return displayCasting; }
+
+    private void visualStateChanged() {
+        setChanged();
+        if (level != null && !level.isClientSide && !isRemoved()) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
+    }
+
+    // Display state is separate from the authoritative inventory and cooling timer.
+    @Override public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        tag.putBoolean("displayMold", items.getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get()));
+        tag.putBoolean("displayCasting", items.getStackInSlot(1).is(PortItems.PLATE_CAST_COPPER.get()));
+        tag.putInt("copperQuanta", copperQuanta);
+        return tag;
+    }
+    @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+        if (packet.getTag() != null) handleUpdateTag(packet.getTag());
+    }
+    @Override public void handleUpdateTag(CompoundTag tag) {
+        displayMold = tag.getBoolean("displayMold");
+        displayCasting = tag.getBoolean("displayCasting");
+        copperQuanta = Math.max(0, Math.min(CAST_PLATE_QUANTA, tag.getInt("copperQuanta")));
+    }
 
     ItemStack takeCopperScraps() {
         ItemStack recovered = PortScrapsItem.copper(copperQuanta);
         copperQuanta = 0;
         cooloff = 200;
-        setChanged();
+        if (!recovered.isEmpty()) visualStateChanged();
+        else setChanged();
         return recovered;
     }
 
@@ -49,7 +83,7 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
         int accepted = Math.min(offered, CAST_PLATE_QUANTA - copperQuanta);
         if (accepted > 0) {
             copperQuanta += accepted;
-            setChanged();
+            visualStateChanged();
         }
         return accepted;
     }

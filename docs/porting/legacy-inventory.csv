@@ -2101,7 +2101,7 @@ asset,textures/blocks/foundry_channel_inner.png,src/main/resources/assets/hbm/te
 asset,textures/blocks/foundry_channel_side.png,src/main/resources/assets/hbm/textures/blocks/foundry_channel_side.png,,unported,,
 asset,textures/blocks/foundry_channel_top.png,src/main/resources/assets/hbm/textures/blocks/foundry_channel_top.png,,unported,,
 asset,textures/blocks/foundry_mold_bottom.png,src/main/resources/assets/hbm/textures/blocks/foundry_mold_bottom.png,,verified,src/forge120/resources/assets/hbm/textures/block/foundry_mold_bottom.png,SHA-256 matches the source texture
-asset,textures/blocks/foundry_mold_inner.png,src/main/resources/assets/hbm/textures/blocks/foundry_mold_inner.png,,unported,,
+asset,textures/blocks/foundry_mold_inner.png,src/main/resources/assets/hbm/textures/blocks/foundry_mold_inner.png,,verified,src/forge120/resources/assets/hbm/textures/block/foundry_mold_inner.png,SHA-256 matches source texture; hollow model baked sprite audit passes
 asset,textures/blocks/foundry_mold_side.png,src/main/resources/assets/hbm/textures/blocks/foundry_mold_side.png,,verified,src/forge120/resources/assets/hbm/textures/block/foundry_mold_side.png,SHA-256 matches the source texture
 asset,textures/blocks/foundry_mold_top.png,src/main/resources/assets/hbm/textures/blocks/foundry_mold_top.png,,verified,src/forge120/resources/assets/hbm/textures/block/foundry_mold_top.png,SHA-256 matches the source texture
 asset,textures/blocks/foundry_outlet_bottom.png,src/main/resources/assets/hbm/textures/blocks/foundry_outlet_bottom.png,,unported,,
@@ -6439,7 +6439,7 @@ asset,textures/models/machines/industrial_boiler.png,src/main/resources/assets/h
 asset,textures/models/machines/industrial_turbine.png,src/main/resources/assets/hbm/textures/models/machines/industrial_turbine.png,,unported,,
 asset,textures/models/machines/intake.png,src/main/resources/assets/hbm/textures/models/machines/intake.png,,unported,,
 asset,textures/models/machines/lava.png,src/main/resources/assets/hbm/textures/models/machines/lava.png,,unported,,
-asset,textures/models/machines/lava_gray.png,src/main/resources/assets/hbm/textures/models/machines/lava_gray.png,,unported,,
+asset,textures/models/machines/lava_gray.png,src/main/resources/assets/hbm/textures/models/machines/lava_gray.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/lava_gray.png,SHA-256 matches source molten texture; client resource audit passes
 asset,textures/models/machines/liquefactor.png,src/main/resources/assets/hbm/textures/models/machines/liquefactor.png,,unported,,
 asset,textures/models/machines/lpw2.png,src/main/resources/assets/hbm/textures/models/machines/lpw2.png,,unported,,
 asset,textures/models/machines/lpw2_term.png,src/main/resources/assets/hbm/textures/models/machines/lpw2_term.png,,unported,,
@@ -7526,7 +7526,7 @@ block,fluid_valve,src/main/java/com/hbm/blocks/ModBlocks.java,3143,unported,,
 block,foam_layer,src/main/java/com/hbm/blocks/ModBlocks.java,2817,unported,,
 block,foundry_basin,src/main/java/com/hbm/blocks/ModBlocks.java,3021,unported,,
 block,foundry_channel,src/main/java/com/hbm/blocks/ModBlocks.java,3022,unported,,
-block,foundry_mold,src/main/java/com/hbm/blocks/ModBlocks.java,3020,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Reusable copper plate mold with blocked output cooling shovel recovery and exact copper teardown; full source rendering other molds and multiplayer pending
+block,foundry_mold,src/main/java/com/hbm/blocks/ModBlocks.java,3020,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Reusable copper plate mold; source hollow collision static faces and synchronized mold/metal/casting display; shovel and teardown conservation tested; screwdriver gesture other molds and multiplayer pending
 block,foundry_outlet,src/main/java/com/hbm/blocks/ModBlocks.java,3024,unported,,
 block,foundry_slagtap,src/main/java/com/hbm/blocks/ModBlocks.java,3025,unported,,
 block,foundry_tank,src/main/java/com/hbm/blocks/ModBlocks.java,3023,unported,,
@@ -8214,7 +8214,7 @@ block_entity,TileEntityFluidValve,src/main/java/com/hbm/tileentity/TileMappings.
 block_entity,TileEntityForceField,src/main/java/com/hbm/tileentity/TileMappings.java,149,unported,,
 block_entity,TileEntityFoundryBasin,src/main/java/com/hbm/tileentity/TileMappings.java,316,unported,,
 block_entity,TileEntityFoundryChannel,src/main/java/com/hbm/tileentity/TileMappings.java,317,unported,,
-block_entity,TileEntityFoundryMold,src/main/java/com/hbm/tileentity/TileMappings.java,315,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,Copper plate cooling mold reuse blocked-output conservation and NBT checks; other molds and materials pending
+block_entity,TileEntityFoundryMold,src/main/java/com/hbm/tileentity/TileMappings.java,315,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,Copper plate cooling reuse blocked-output conservation NBT and bounded display-only update packets tested; other molds materials and multiplayer pending
 block_entity,TileEntityFoundryOutlet,src/main/java/com/hbm/tileentity/TileMappings.java,319,unported,,
 block_entity,TileEntityFoundrySlagtap,src/main/java/com/hbm/tileentity/TileMappings.java,320,unported,,
 block_entity,TileEntityFoundryTank,src/main/java/com/hbm/tileentity/TileMappings.java,318,unported,,
@@ -11294,9 +11294,9 @@ java_source,blocks/machine/DummyOldBase,src/main/java/com/hbm/blocks/machine/Dum
 java_source,blocks/machine/Floodlight,src/main/java/com/hbm/blocks/machine/Floodlight.java,,unported,,
 java_source,blocks/machine/FloodlightBeam,src/main/java/com/hbm/blocks/machine/FloodlightBeam.java,,unported,,
 java_source,blocks/machine/FoundryBasin,src/main/java/com/hbm/blocks/machine/FoundryBasin.java,,unported,,
-java_source,blocks/machine/FoundryCastingBase,src/main/java/com/hbm/blocks/machine/FoundryCastingBase.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Small copper mold shovel recovery and exact partial/cooling/finished teardown tested; screwdriver gesture other molds and presentation pending
+java_source,blocks/machine/FoundryCastingBase,src/main/java/com/hbm/blocks/machine/FoundryCastingBase.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Small copper mold shovel recovery and exact partial/cooling/finished teardown tested; full-mold smoke and visible recovery/casting collection checked live; screwdriver gesture other molds overlay and multiplayer pending
 java_source,blocks/machine/FoundryChannel,src/main/java/com/hbm/blocks/machine/FoundryChannel.java,,unported,,
-java_source,blocks/machine/FoundryMold,src/main/java/com/hbm/blocks/machine/FoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Install and retrieve mold and cast output with source crafting route; full mold classes pending
+java_source,blocks/machine/FoundryMold,src/main/java/com/hbm/blocks/machine/FoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Source floor and four hollow walls with half-block selection tested; source textures and eleven baked faces audited; full mold classes pending
 java_source,blocks/machine/FoundryOutlet,src/main/java/com/hbm/blocks/machine/FoundryOutlet.java,,unported,,
 java_source,blocks/machine/FoundrySlagtap,src/main/java/com/hbm/blocks/machine/FoundrySlagtap.java,,unported,,
 java_source,blocks/machine/FoundryTank,src/main/java/com/hbm/blocks/machine/FoundryTank.java,,unported,,
@@ -13198,7 +13198,7 @@ java_source,render/block/RenderDiode,src/main/java/com/hbm/render/block/RenderDi
 java_source,render/block/RenderFence,src/main/java/com/hbm/render/block/RenderFence.java,,unported,,
 java_source,render/block/RenderFoundryBasin,src/main/java/com/hbm/render/block/RenderFoundryBasin.java,,unported,,
 java_source,render/block/RenderFoundryChannel,src/main/java/com/hbm/render/block/RenderFoundryChannel.java,,unported,,
-java_source,render/block/RenderFoundryMold,src/main/java/com/hbm/render/block/RenderFoundryMold.java,,unported,,
+java_source,render/block/RenderFoundryMold,src/main/java/com/hbm/render/block/RenderFoundryMold.java,,partial,src/forge120/resources/assets/hbm/models/block/foundry_mold.json,Source eleven faces floor rim inner and outer textures ported to cutout JSON; baked geometry and texture audit passes; empty and installed mold checked in maximized Creative QA; multiplayer pending
 java_source,render/block/RenderFoundryOutlet,src/main/java/com/hbm/render/block/RenderFoundryOutlet.java,,unported,,
 java_source,render/block/RenderFoundryTank,src/main/java/com/hbm/render/block/RenderFoundryTank.java,,unported,,
 java_source,render/block/RenderGrate,src/main/java/com/hbm/render/block/RenderGrate.java,,unported,,
@@ -13560,7 +13560,7 @@ java_source,render/tileentity/RenderFluidBarrel,src/main/java/com/hbm/render/til
 java_source,render/tileentity/RenderFluidPump,src/main/java/com/hbm/render/tileentity/RenderFluidPump.java,,unported,,
 java_source,render/tileentity/RenderFluidTank,src/main/java/com/hbm/render/tileentity/RenderFluidTank.java,,unported,,
 java_source,render/tileentity/RenderForceField,src/main/java/com/hbm/render/tileentity/RenderForceField.java,,unported,,
-java_source,render/tileentity/RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,unported,,
+java_source,render/tileentity/RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldRenderer.java,Small copper mold flat item heights copper-tinted full-bright surface and additive glow; night half-fill restart daylight full-fill smoke cooling collection and recovery checked in Creative QA; other casting blocks block outputs and materials pending
 java_source,render/tileentity/RenderFrackingTower,src/main/java/com/hbm/render/tileentity/RenderFrackingTower.java,,unported,,
 java_source,render/tileentity/RenderFractionTower,src/main/java/com/hbm/render/tileentity/RenderFractionTower.java,,unported,,
 java_source,render/tileentity/RenderFurnaceCombination,src/main/java/com/hbm/render/tileentity/RenderFurnaceCombination.java,,unported,,
@@ -13879,7 +13879,7 @@ java_source,tileentity/machine/TileEntityFoundryBase,src/main/java/com/hbm/tilee
 java_source,tileentity/machine/TileEntityFoundryBasin,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryBasin.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryCastingBase,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryCastingBase.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryChannel,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryChannel.java,,unported,,
-java_source,tileentity/machine/TileEntityFoundryMold,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,First copper plate route with conserved quanta and reusable mold; full materials and visual state pending
+java_source,tileentity/machine/TileEntityFoundryMold,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,First copper plate route with conserved quanta reusable mold and display-only updates for fill cooling completion output collection and recovery; full materials pending
 java_source,tileentity/machine/TileEntityFoundryOutlet,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryOutlet.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundrySlagtap,src/main/java/com/hbm/tileentity/machine/TileEntityFoundrySlagtap.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryTank,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryTank.java,,unported,,
@@ -17746,10 +17746,10 @@ renderer_source,RenderFluidBarrel,src/main/java/com/hbm/render/tileentity/Render
 renderer_source,RenderFluidPump,src/main/java/com/hbm/render/tileentity/RenderFluidPump.java,,unported,,
 renderer_source,RenderFluidTank,src/main/java/com/hbm/render/tileentity/RenderFluidTank.java,,unported,,
 renderer_source,RenderForceField,src/main/java/com/hbm/render/tileentity/RenderForceField.java,,unported,,
-renderer_source,RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,unported,,
+renderer_source,RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldRenderer.java,Small copper mold and molten levels plus finished plate checked live through cooling collection and recovery; night glow corrected for modern ONE/ONE blending and restart checked; other materials casting blocks and multiplayer pending
 renderer_source,RenderFoundryBasin,src/main/java/com/hbm/render/block/RenderFoundryBasin.java,,unported,,
 renderer_source,RenderFoundryChannel,src/main/java/com/hbm/render/block/RenderFoundryChannel.java,,unported,,
-renderer_source,RenderFoundryMold,src/main/java/com/hbm/render/block/RenderFoundryMold.java,,unported,,
+renderer_source,RenderFoundryMold,src/main/java/com/hbm/render/block/RenderFoundryMold.java,,partial,src/forge120/resources/assets/hbm/models/block/foundry_mold.json,Small hollow source mold static model; source face count textures floor and rim heights audited; empty and installed mold checked in maximized Creative QA; multiplayer pending
 renderer_source,RenderFoundryOutlet,src/main/java/com/hbm/render/block/RenderFoundryOutlet.java,,unported,,
 renderer_source,RenderFoundryTank,src/main/java/com/hbm/render/block/RenderFoundryTank.java,,unported,,
 renderer_source,RenderFrackingTower,src/main/java/com/hbm/render/tileentity/RenderFrackingTower.java,,unported,,

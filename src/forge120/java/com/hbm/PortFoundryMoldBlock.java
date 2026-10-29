@@ -1,7 +1,8 @@
 package com.hbm;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,17 +19,34 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolActions;
 
 /** Source small mold: click to install a mold or collect the cooled casting. */
 public final class PortFoundryMoldBlock extends BaseEntityBlock {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 8, 16);
+    private static final VoxelShape COLLISION = Shapes.or(
+            Block.box(0, 0, 0, 16, 2, 16),
+            Block.box(0, 0, 0, 16, 8, 2), Block.box(0, 0, 0, 2, 8, 16),
+            Block.box(14, 0, 0, 16, 8, 16), Block.box(0, 0, 14, 16, 8, 16));
 
     public PortFoundryMoldBlock(Properties properties) { super(properties); }
 
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+    @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos,
+            CollisionContext context) {
+        return COLLISION;
+    }
+    @Override public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+        if (level.getBlockEntity(pos) instanceof PortFoundryMoldBlockEntity mold
+                && mold.copperQuanta() == PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA) {
+            level.addParticle(ParticleTypes.SMOKE,
+                    pos.getX() + 0.25 + random.nextDouble() * 0.5, pos.getY() + 0.5,
+                    pos.getZ() + 0.25 + random.nextDouble() * 0.5, 0, 0, 0);
+        }
     }
     @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

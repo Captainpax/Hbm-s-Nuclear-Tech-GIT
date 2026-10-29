@@ -56,6 +56,84 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void foundryMoldHasHollowSourceCollision(GameTestHelper helper) {
+        var state = PortBlocks.FOUNDRY_MOLD.get().defaultBlockState();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        var collision = state.getCollisionShape(helper.getLevel(), pos);
+        // A dropped item can occupy the bowl above its two-pixel floor. All four rims remain solid.
+        for (AABB solid : collision.toAabbs()) {
+            if (solid.intersects(new AABB(0.2, 0.13, 0.2, 0.8, 0.49, 0.8))) {
+                throw new IllegalStateException("Foundry mold collision fills its source hollow bowl");
+            }
+        }
+        for (AABB probe : new AABB[] {
+                new AABB(0.2, 0, 0.2, 0.8, 0.12, 0.8),
+                new AABB(0.01, 0.2, 0.2, 0.12, 0.49, 0.8),
+                new AABB(0.88, 0.2, 0.2, 0.99, 0.49, 0.8),
+                new AABB(0.2, 0.2, 0.01, 0.8, 0.49, 0.12),
+                new AABB(0.2, 0.2, 0.88, 0.8, 0.49, 0.99)}) {
+            if (collision.toAabbs().stream().noneMatch(solid -> solid.intersects(probe))) {
+                throw new IllegalStateException("Foundry mold is missing a source floor or wall");
+            }
+        }
+        if (!state.getShape(helper.getLevel(), pos).bounds().equals(new AABB(0, 0, 0, 1, 0.5, 1))) {
+            throw new IllegalStateException("Foundry selection must retain the source half-block bounds");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void foundryVisualStateFollowsCastingWithoutInventorySync(GameTestHelper helper) {
+        var state = PortBlocks.FOUNDRY_MOLD.get().defaultBlockState();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        var server = new PortFoundryMoldBlockEntity(pos, state);
+        var client = new PortFoundryMoldBlockEntity(pos, state);
+        client.handleUpdateTag(server.getUpdateTag());
+        if (client.displayMold() || client.displayCasting() || client.copperQuanta() != 0) {
+            throw new IllegalStateException("Empty foundry received a stale visual");
+        }
+        server.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+        server.acceptCopper(24);
+        CompoundTag tag = server.getUpdateTag();
+        if (!tag.getAllKeys().equals(Set.of("displayMold", "displayCasting", "copperQuanta"))
+                || !tag.equals(server.getUpdatePacket().getTag())) {
+            throw new IllegalStateException("Foundry display packet exposed its inventory or cooling state");
+        }
+        client.handleUpdateTag(tag);
+        if (!client.displayMold() || client.displayCasting() || client.copperQuanta() != 24) {
+            throw new IllegalStateException("Partial foundry pour was not visible");
+        }
+        server.acceptCopper(192);
+        client.handleUpdateTag(server.getUpdateTag());
+        if (client.copperQuanta() != 216) throw new IllegalStateException("Full foundry level did not sync");
+        for (int tick = 0; tick < 200; tick++) PortFoundryMoldBlockEntity.tick(helper.getLevel(), pos, state, server);
+        client.handleUpdateTag(server.getUpdateTag());
+        if (!client.displayMold() || !client.displayCasting() || client.copperQuanta() != 0) {
+            throw new IllegalStateException("Finished foundry did not replace the molten surface with its casting");
+        }
+        server.items().extractItem(1, 1, false);
+        server.acceptCopper(47);
+        server.takeCopperScraps();
+        client.handleUpdateTag(server.getUpdateTag());
+        if (!client.displayMold() || client.displayCasting() || client.copperQuanta() != 0) {
+            throw new IllegalStateException("Collection/recovery left a stale finished or molten surface");
+        }
+        server.items().extractItem(0, 1, false);
+        client.handleUpdateTag(server.getUpdateTag());
+        if (client.displayMold() || !client.items().getStackInSlot(0).isEmpty()
+                || !client.items().getStackInSlot(1).isEmpty() || client.cooloff() != 200) {
+            throw new IllegalStateException("Visual sync replaced client inventory or retained a removed mold");
+        }
+        tag.putInt("copperQuanta", Integer.MAX_VALUE);
+        client.handleUpdateTag(tag);
+        if (client.copperQuanta() != 216) throw new IllegalStateException("Foundry visual level exceeded its bowl");
+        tag.putInt("copperQuanta", -1);
+        client.handleUpdateTag(tag);
+        if (client.copperQuanta() != 0) throw new IllegalStateException("Foundry visual level went below its floor");
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void castingTeardownReturnsEveryQuantum(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos core = helper.absolutePos(new BlockPos(3, 2, 3));

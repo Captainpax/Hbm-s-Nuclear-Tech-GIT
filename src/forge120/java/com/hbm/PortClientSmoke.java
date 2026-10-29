@@ -22,7 +22,8 @@ public final class PortClientSmoke {
         if (finished || event.phase != TickEvent.Phase.END
                 || !Boolean.getBoolean("hbm.port.clientSmoke")
                 || !PortBatterySocketRenderer.modelsAudited()
-                || !PortMachineObjRenderer.modelsAudited()) return;
+                || !PortMachineObjRenderer.modelsAudited()
+                || !PortFoundryMoldRenderer.modelsAudited()) return;
         Minecraft minecraft = Minecraft.getInstance();
         // A fresh game directory opens the accessibility onboarding screen before the title screen.
         if (minecraft.screen == null || minecraft.level != null) return;
@@ -76,7 +77,7 @@ public final class PortClientSmoke {
             }
         }
         finished = true;
-        LOGGER.info("HBM client smoke passed: menu loaded, ore/resource and progression inventory models, socket, casting, blast-furnace, press and anvil OBJ layers validated");
+        LOGGER.info("HBM client smoke passed: menu loaded, ore/resource and progression inventory models, hollow foundry mold, socket, casting, blast-furnace, press and anvil OBJ layers validated");
         minecraft.stop();
     }
 }
