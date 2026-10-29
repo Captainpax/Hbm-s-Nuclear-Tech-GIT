@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +14,6 @@ import net.minecraftforge.items.SlotItemHandler;
 /** Original furnace slot positions and server-authoritative progress/power data. */
 public final class PortElectricFurnaceMenu extends AbstractContainerMenu {
     private final PortElectricFurnaceBlockEntity furnace;
-    private final ContainerLevelAccess access;
     private final ContainerData data;
 
     public PortElectricFurnaceMenu(int id, Inventory inventory, FriendlyByteBuf extra) {
@@ -29,7 +27,6 @@ public final class PortElectricFurnaceMenu extends AbstractContainerMenu {
     private PortElectricFurnaceMenu(int id, Inventory inventory, PortElectricFurnaceBlockEntity furnace, ContainerData data) {
         super(PortMenus.ELECTRIC_FURNACE.get(), id);
         this.furnace = furnace;
-        this.access = ContainerLevelAccess.create(inventory.player.level(), furnace.getBlockPos());
         this.data = data;
         addSlot(new SlotItemHandler(furnace.items(), 0, 152, 54));
         addSlot(new SlotItemHandler(furnace.items(), 1, 20, 35));
@@ -58,7 +55,7 @@ public final class PortElectricFurnaceMenu extends AbstractContainerMenu {
     public int cooldown() { return data.get(3); }
 
     @Override public boolean stillValid(Player player) {
-        return stillValid(access, player, PortBlocks.MACHINE_ELECTRIC_FURNACE.get());
+        return PortMenuValidity.isUsable(player, furnace);
     }
 
     @Override public ItemStack quickMoveStack(Player player, int index) {

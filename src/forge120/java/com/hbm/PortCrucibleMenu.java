@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +13,6 @@ import net.minecraftforge.items.SlotItemHandler;
 import java.util.List;
 
 public final class PortCrucibleMenu extends AbstractContainerMenu {
-    private final ContainerLevelAccess access;
     private final ContainerData data;
     private final PortCrucibleBlockEntity machine;
 
@@ -26,7 +24,6 @@ public final class PortCrucibleMenu extends AbstractContainerMenu {
     }
     private PortCrucibleMenu(int id, Inventory inventory, PortCrucibleBlockEntity machine, ContainerData data) {
         super(PortMenus.CRUCIBLE.get(), id);
-        access = ContainerLevelAccess.create(inventory.player.level(), machine.getBlockPos());
         this.data = data;
         this.machine = machine;
         for (int row = 0; row < 3; row++) for (int col = 0; col < 3; col++) {
@@ -72,7 +69,7 @@ public final class PortCrucibleMenu extends AbstractContainerMenu {
         return selected;
     }
     @Override public boolean stillValid(Player player) {
-        return stillValid(access, player, PortBlocks.MACHINE_CRUCIBLE.get());
+        return PortMenuValidity.isUsable(player, machine);
     }
     @Override public ItemStack quickMoveStack(Player player, int index) {
         if (index < 0 || index >= slots.size()) return ItemStack.EMPTY;

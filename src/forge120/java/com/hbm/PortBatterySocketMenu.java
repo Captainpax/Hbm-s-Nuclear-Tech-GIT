@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +14,6 @@ import net.minecraftforge.items.SlotItemHandler;
 /** One item slot and server-authoritative control buttons for the 2x2 socket. */
 public final class PortBatterySocketMenu extends AbstractContainerMenu {
     private final PortBatterySocketBlockEntity socket;
-    private final ContainerLevelAccess access;
     private final ContainerData data;
 
     public PortBatterySocketMenu(int containerId, Inventory playerInventory, FriendlyByteBuf extraData) {
@@ -31,7 +29,6 @@ public final class PortBatterySocketMenu extends AbstractContainerMenu {
             ContainerData data) {
         super(PortMenus.BATTERY_SOCKET.get(), containerId);
         this.socket = socket;
-        this.access = ContainerLevelAccess.create(playerInventory.player.level(), socket.getBlockPos());
         this.data = data;
         addSlot(new SlotItemHandler(socket.items(), 0, 35, 35));
         for (int row = 0; row < 3; row++) {
@@ -78,7 +75,7 @@ public final class PortBatterySocketMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(access, player, PortBlocks.MACHINE_BATTERY_SOCKET.get());
+        return PortMenuValidity.isUsable(player, socket);
     }
 
     @Override

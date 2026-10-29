@@ -47,9 +47,26 @@ minecraft {
             workingDirectory project.file('run-client-smoke')
             property 'hbm.port.clientSmoke', 'true'
         }
-        server { args '--nogui' }
+        server {
+            args '--nogui'
+            if (project.hasProperty('hbmMultiplayer')) {
+                workingDirectory project.file('run-multiplayer')
+            }
+        }
+        multiplayerClient {
+            parent runs.client
+            workingDirectory project.file('run-multiplayer-client')
+            jvmArgs '-Xmx2G'
+            args '--username', 'HbmObserver'
+            if (project.hasProperty('hbmAutoJoin')) {
+                args '--quickPlayMultiplayer', '127.0.0.1:25566'
+            }
+        }
         gameTestServer {
             property 'forge.enabledGameTestNamespaces', modId
+            if (project.hasProperty('hbmMultiplayer')) {
+                workingDirectory project.file('run-multiplayer-tests')
+            }
             def persistencePhase = project.findProperty('hbmPersistencePhase')
             if (persistencePhase != null) {
                 property 'hbm.port.persistence.phase', persistencePhase.toString()

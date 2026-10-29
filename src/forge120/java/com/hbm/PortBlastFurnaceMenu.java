@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -14,8 +13,8 @@ import net.minecraftforge.items.SlotItemHandler;
 
 /** Source five-slot blast furnace GUI with server-owned state. */
 public final class PortBlastFurnaceMenu extends AbstractContainerMenu {
-    private final ContainerLevelAccess access;
     private final ContainerData data;
+    private final PortBlastFurnaceBlockEntity machine;
 
     public PortBlastFurnaceMenu(int id, Inventory inventory, FriendlyByteBuf extra) {
         this(id, inventory, find(inventory, extra.readBlockPos()), new SimpleContainerData(6));
@@ -27,8 +26,8 @@ public final class PortBlastFurnaceMenu extends AbstractContainerMenu {
 
     private PortBlastFurnaceMenu(int id, Inventory inventory, PortBlastFurnaceBlockEntity machine, ContainerData data) {
         super(PortMenus.BLAST_FURNACE.get(), id);
-        access = ContainerLevelAccess.create(inventory.player.level(), machine.getBlockPos());
         this.data = data;
+        this.machine = machine;
         addSlot(new SlotItemHandler(machine.items(), 0, 80, 81));
         addSlot(new SlotItemHandler(machine.items(), 1, 80, 27));
         addSlot(new SlotItemHandler(machine.items(), 2, 80, 45));
@@ -57,7 +56,7 @@ public final class PortBlastFurnaceMenu extends AbstractContainerMenu {
     public int airblast() { return data.get(5); }
 
     @Override public boolean stillValid(Player player) {
-        return stillValid(access, player, PortBlocks.MACHINE_BLAST_FURNACE.get());
+        return PortMenuValidity.isUsable(player, machine);
     }
 
     @Override public ItemStack quickMoveStack(Player player, int index) {

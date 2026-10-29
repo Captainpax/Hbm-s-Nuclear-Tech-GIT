@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +14,6 @@ import net.minecraftforge.items.SlotItemHandler;
 /** Source press slot layout, with server-owned progress and fuel state. */
 public final class PortPressMenu extends AbstractContainerMenu {
     private final PortPressBlockEntity press;
-    private final ContainerLevelAccess access;
     private final ContainerData data;
 
     public PortPressMenu(int id, Inventory inventory, FriendlyByteBuf extra) {
@@ -29,7 +27,6 @@ public final class PortPressMenu extends AbstractContainerMenu {
     private PortPressMenu(int id, Inventory inventory, PortPressBlockEntity press, ContainerData data) {
         super(PortMenus.PRESS.get(), id);
         this.press = press;
-        this.access = ContainerLevelAccess.create(inventory.player.level(), press.getBlockPos());
         this.data = data;
         addSlot(new SlotItemHandler(press.items(), 0, 26, 53));
         addSlot(new SlotItemHandler(press.items(), 1, 80, 17));
@@ -57,7 +54,7 @@ public final class PortPressMenu extends AbstractContainerMenu {
     public int press() { return data.get(2); }
 
     @Override public boolean stillValid(Player player) {
-        return stillValid(access, player, PortBlocks.MACHINE_PRESS.get());
+        return PortMenuValidity.isUsable(player, press);
     }
 
     @Override public ItemStack quickMoveStack(Player player, int index) {

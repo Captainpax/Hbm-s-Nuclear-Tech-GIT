@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +14,6 @@ import net.minecraftforge.items.SlotItemHandler;
 /** The legacy two-slot battery menu, with server-authoritative mode buttons. */
 public final class PortBatteryMenu extends AbstractContainerMenu {
     private final PortBatteryBlockEntity battery;
-    private final ContainerLevelAccess access;
     private final ContainerData data;
 
     public PortBatteryMenu(int containerId, Inventory playerInventory, FriendlyByteBuf extraData) {
@@ -31,7 +29,6 @@ public final class PortBatteryMenu extends AbstractContainerMenu {
             ContainerData data) {
         super(PortMenus.BATTERY.get(), containerId);
         this.battery = battery;
-        this.access = ContainerLevelAccess.create(playerInventory.player.level(), battery.getBlockPos());
         this.data = data;
         addSlot(new SlotItemHandler(battery.items(), 0, 26, 17));
         addSlot(new SlotItemHandler(battery.items(), 1, 26, 53));
@@ -75,7 +72,7 @@ public final class PortBatteryMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(access, player, PortBlocks.MACHINE_BATTERY.get());
+        return PortMenuValidity.isUsable(player, battery);
     }
 
     @Override

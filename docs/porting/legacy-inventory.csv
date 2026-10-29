@@ -12109,8 +12109,8 @@ java_source,inventory/container/ContainerAutocrafter,src/main/java/com/hbm/inven
 java_source,inventory/container/ContainerBarrel,src/main/java/com/hbm/inventory/container/ContainerBarrel.java,,unported,,
 java_source,inventory/container/ContainerBase,src/main/java/com/hbm/inventory/container/ContainerBase.java,,unported,,
 java_source,inventory/container/ContainerBatteryREDD,src/main/java/com/hbm/inventory/container/ContainerBatteryREDD.java,,unported,,
-java_source,inventory/container/ContainerBatterySocket,src/main/java/com/hbm/inventory/container/ContainerBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketMenu.java,One slot player inventory 64-bit HE sync and server-authoritative controls; multiplayer interaction pending
-java_source,inventory/container/ContainerBlastFurnace,src/main/java/com/hbm/inventory/container/ContainerBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceMenu.java,Source five-slot positions and server-owned data ported; in-world interaction pending
+java_source,inventory/container/ContainerBatterySocket,src/main/java/com/hbm/inventory/container/ContainerBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketMenu.java,Inventory slots shift-click and menu data ported; live-core identity and source 128-square interaction range tested across controller replacement; full source slot variants and two-client acceptance pending
+java_source,inventory/container/ContainerBlastFurnace,src/main/java/com/hbm/inventory/container/ContainerBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceMenu.java,Inventory slots shift-click and menu data ported; live-core identity and source 128-square interaction range tested across controller replacement; full source slot variants and two-client acceptance pending
 java_source,inventory/container/ContainerBombMulti,src/main/java/com/hbm/inventory/container/ContainerBombMulti.java,,unported,,
 java_source,inventory/container/ContainerBook,src/main/java/com/hbm/inventory/container/ContainerBook.java,,unported,,
 java_source,inventory/container/ContainerCartDestroyer,src/main/java/com/hbm/inventory/container/ContainerCartDestroyer.java,,unported,,
@@ -12136,20 +12136,20 @@ java_source,inventory/container/ContainerCrateDesh,src/main/java/com/hbm/invento
 java_source,inventory/container/ContainerCrateIron,src/main/java/com/hbm/inventory/container/ContainerCrateIron.java,,unported,,
 java_source,inventory/container/ContainerCrateSteel,src/main/java/com/hbm/inventory/container/ContainerCrateSteel.java,,unported,,
 java_source,inventory/container/ContainerCrateTungsten,src/main/java/com/hbm/inventory/container/ContainerCrateTungsten.java,,unported,,
-java_source,inventory/container/ContainerCrucible,src/main/java/com/hbm/inventory/container/ContainerCrucible.java,,unported,,
+java_source,inventory/container/ContainerCrucible,src/main/java/com/hbm/inventory/container/ContainerCrucible.java,,partial,src/forge120/java/com/hbm/PortCrucibleMenu.java,Inventory slots shift-click and menu data ported; live-core identity and source 128-square interaction range tested across controller replacement; full source slot variants and two-client acceptance pending
 java_source,inventory/container/ContainerCrystallizer,src/main/java/com/hbm/inventory/container/ContainerCrystallizer.java,,unported,,
 java_source,inventory/container/ContainerDiFurnace,src/main/java/com/hbm/inventory/container/ContainerDiFurnace.java,,unported,,
 java_source,inventory/container/ContainerDroneCrate,src/main/java/com/hbm/inventory/container/ContainerDroneCrate.java,,unported,,
 java_source,inventory/container/ContainerDroneDock,src/main/java/com/hbm/inventory/container/ContainerDroneDock.java,,unported,,
 java_source,inventory/container/ContainerDroneProvider,src/main/java/com/hbm/inventory/container/ContainerDroneProvider.java,,unported,,
 java_source,inventory/container/ContainerDroneRequester,src/main/java/com/hbm/inventory/container/ContainerDroneRequester.java,,unported,,
-java_source,inventory/container/ContainerElectricFurnace,src/main/java/com/hbm/inventory/container/ContainerElectricFurnace.java,,unported,,
+java_source,inventory/container/ContainerElectricFurnace,src/main/java/com/hbm/inventory/container/ContainerElectricFurnace.java,,partial,src/forge120/java/com/hbm/PortElectricFurnaceMenu.java,Inventory slots shift-click and menu data ported; live-core identity and source 128-square interaction range tested across controller replacement; full source slot variants and two-client acceptance pending
 java_source,inventory/container/ContainerElectrolyser,src/main/java/com/hbm/inventory/container/ContainerElectrolyser.java,,unported,,
 java_source,inventory/container/ContainerElectrolyserFluid,src/main/java/com/hbm/inventory/container/ContainerElectrolyserFluid.java,,unported,,
 java_source,inventory/container/ContainerElectrolyserMetal,src/main/java/com/hbm/inventory/container/ContainerElectrolyserMetal.java,,unported,,
 java_source,inventory/container/ContainerFEL,src/main/java/com/hbm/inventory/container/ContainerFEL.java,,unported,,
 java_source,inventory/container/ContainerFileCabinet,src/main/java/com/hbm/inventory/container/ContainerFileCabinet.java,,unported,,
-java_source,inventory/container/ContainerFirebox,src/main/java/com/hbm/inventory/container/ContainerFirebox.java,,unported,,
+java_source,inventory/container/ContainerFirebox,src/main/java/com/hbm/inventory/container/ContainerFirebox.java,,partial,src/forge120/java/com/hbm/PortFireboxMenu.java,Inventory slots shift-click and menu data ported; live-core identity and source 128-square interaction range tested across controller replacement; full source slot variants and two-client acceptance pending
 java_source,inventory/container/ContainerForceField,src/main/java/com/hbm/inventory/container/ContainerForceField.java,,unported,,
 java_source,inventory/container/ContainerFunnel,src/main/java/com/hbm/inventory/container/ContainerFunnel.java,,unported,,
 java_source,inventory/container/ContainerFurnaceBrick,src/main/java/com/hbm/inventory/container/ContainerFurnaceBrick.java,,unported,,
@@ -12175,7 +12175,7 @@ java_source,inventory/container/ContainerMachineArcFurnaceLarge,src/main/java/co
 java_source,inventory/container/ContainerMachineArcWelder,src/main/java/com/hbm/inventory/container/ContainerMachineArcWelder.java,,unported,,
 java_source,inventory/container/ContainerMachineAssemblyFactory,src/main/java/com/hbm/inventory/container/ContainerMachineAssemblyFactory.java,,unported,,
 java_source,inventory/container/ContainerMachineAssemblyMachine,src/main/java/com/hbm/inventory/container/ContainerMachineAssemblyMachine.java,,unported,,
-java_source,inventory/container/ContainerMachineBattery,src/main/java/com/hbm/inventory/container/ContainerMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryMenu.java,Two slots player inventory shift-click and server-authoritative button handling ported; client interaction and multiplayer check pending
+java_source,inventory/container/ContainerMachineBattery,src/main/java/com/hbm/inventory/container/ContainerMachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryMenu.java,Inventory slots shift-click and menu data ported; live-core identity and source 128-square interaction range tested across controller replacement; full source slot variants and two-client acceptance pending
 java_source,inventory/container/ContainerMachineCatalyticReformer,src/main/java/com/hbm/inventory/container/ContainerMachineCatalyticReformer.java,,unported,,
 java_source,inventory/container/ContainerMachineChemicalFactory,src/main/java/com/hbm/inventory/container/ContainerMachineChemicalFactory.java,,unported,,
 java_source,inventory/container/ContainerMachineChemicalPlant,src/main/java/com/hbm/inventory/container/ContainerMachineChemicalPlant.java,,unported,,
@@ -12198,7 +12198,7 @@ java_source,inventory/container/ContainerMachineOilWell,src/main/java/com/hbm/in
 java_source,inventory/container/ContainerMachinePUREX,src/main/java/com/hbm/inventory/container/ContainerMachinePUREX.java,,unported,,
 java_source,inventory/container/ContainerMachinePlasmaForge,src/main/java/com/hbm/inventory/container/ContainerMachinePlasmaForge.java,,unported,,
 java_source,inventory/container/ContainerMachinePrecAss,src/main/java/com/hbm/inventory/container/ContainerMachinePrecAss.java,,unported,,
-java_source,inventory/container/ContainerMachinePress,src/main/java/com/hbm/inventory/container/ContainerMachinePress.java,,unported,,
+java_source,inventory/container/ContainerMachinePress,src/main/java/com/hbm/inventory/container/ContainerMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressMenu.java,Inventory slots shift-click and menu data ported; live-core identity and source 128-square interaction range tested across controller replacement; full source slot variants and two-client acceptance pending
 java_source,inventory/container/ContainerMachineRTG,src/main/java/com/hbm/inventory/container/ContainerMachineRTG.java,,unported,,
 java_source,inventory/container/ContainerMachineRadGen,src/main/java/com/hbm/inventory/container/ContainerMachineRadGen.java,,unported,,
 java_source,inventory/container/ContainerMachineRadarNT,src/main/java/com/hbm/inventory/container/ContainerMachineRadarNT.java,,unported,,
@@ -13791,7 +13791,7 @@ java_source,tileentity/TileEntityData,src/main/java/com/hbm/tileentity/TileEntit
 java_source,tileentity/TileEntityDoorGeneric,src/main/java/com/hbm/tileentity/TileEntityDoorGeneric.java,,unported,,
 java_source,tileentity/TileEntityInventoryBase,src/main/java/com/hbm/tileentity/TileEntityInventoryBase.java,,unported,,
 java_source,tileentity/TileEntityLoadedBase,src/main/java/com/hbm/tileentity/TileEntityLoadedBase.java,,unported,,
-java_source,tileentity/TileEntityMachineBase,src/main/java/com/hbm/tileentity/TileEntityMachineBase.java,,unported,,
+java_source,tileentity/TileEntityMachineBase,src/main/java/com/hbm/tileentity/TileEntityMachineBase.java,,partial,src/forge120/java/com/hbm/PortMenuValidity.java,Source isUseableByPlayer live-controller identity and 128-square range restored for seven ported machine menus; remaining shared inventory and machine framework pending
 java_source,tileentity/TileEntityMachinePolluting,src/main/java/com/hbm/tileentity/TileEntityMachinePolluting.java,,unported,,
 java_source,tileentity/TileEntityProxyBase,src/main/java/com/hbm/tileentity/TileEntityProxyBase.java,,unported,,
 java_source,tileentity/TileEntityProxyCombo,src/main/java/com/hbm/tileentity/TileEntityProxyCombo.java,,partial,src/forge120/java/com/hbm/PortBatterySocketProxyBlockEntity.java,Socket-specific inventory delegation and capability lifecycle ported; generic power fluid heat and integration proxy roles pending
