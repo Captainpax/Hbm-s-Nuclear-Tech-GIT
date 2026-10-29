@@ -76,7 +76,7 @@ public final class PortClientSmoke {
             }
         }
         finished = true;
-        LOGGER.info("HBM client smoke passed: menu loaded, ore/resource and progression inventory models, socket and casting/blast-furnace OBJ layers validated");
+        LOGGER.info("HBM client smoke passed: menu loaded, ore/resource and progression inventory models, socket, casting, blast-furnace, press and anvil OBJ layers validated");
         minecraft.stop();
     }
 }

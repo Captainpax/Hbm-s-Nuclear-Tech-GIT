@@ -55,6 +55,92 @@ import java.util.UUID;
 public final class PortGameTests {
     private PortGameTests() {}
 
+    @GameTest(template = "empty", timeoutTicks = 30)
+    public static void crucibleCollectsDropsWithoutLosingOverflow(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(3, 2, 3));
+        level.setBlock(pos, PortBlocks.MACHINE_CRUCIBLE.get().defaultBlockState(), 3);
+        PortBlocks.MACHINE_CRUCIBLE.get().setPlacedBy(level, pos, level.getBlockState(pos), null,
+                new ItemStack(PortItems.MACHINE_CRUCIBLE.get()));
+        PortCrucibleBlockEntity crucible = (PortCrucibleBlockEntity) level.getBlockEntity(pos);
+        if (level.getBlockState(pos).getCollisionShape(level, pos).max(Direction.Axis.Y) != 0.5
+                || !level.getBlockState(pos.above()).getCollisionShape(level, pos.above()).isEmpty()
+                || level.getBlockState(pos.east()).getCollisionShape(level, pos.east()).max(Direction.Axis.Y) != 1) {
+            throw new IllegalStateException("Crucible collision does not leave a hollow basin above its half-block floor");
+        }
+        ItemEntity copper = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.7,
+                pos.getZ() + 0.5, new ItemStack(PortItems.INGOT_COPPER.get(), 12));
+        ItemEntity iron = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.7,
+                pos.getZ() + 0.5, new ItemStack(Items.IRON_INGOT, 4));
+        ItemEntity outside = new ItemEntity(level, pos.getX() + 4, pos.getY() + 0.7,
+                pos.getZ() + 0.5, new ItemStack(PortItems.INGOT_COPPER.get(), 2));
+        for (ItemEntity item : List.of(copper, iron, outside)) {
+            item.setNoGravity(true);
+            item.setDeltaMovement(Vec3.ZERO);
+            level.addFreshEntity(item);
+        }
+        helper.runAtTickTime(6, () -> {
+            if (!copper.isAlive() || copper.getItem().getCount() != 3
+                    || !crucible.items().getStackInSlot(0).isEmpty()
+                    || !iron.isAlive() || iron.getItem().getCount() != 4
+                    || !outside.isAlive() || outside.getItem().getCount() != 2) {
+                throw new IllegalStateException("Crucible lost overflow, touched its template slot or collected invalid/outside drops");
+            }
+            for (int slot = 1; slot < 10; slot++) {
+                ItemStack stack = crucible.items().getStackInSlot(slot);
+                if (!stack.is(PortItems.INGOT_COPPER.get()) || stack.getCount() != 1) {
+                    throw new IllegalStateException("Crucible did not distribute one copper ingot into each of nine buffers");
+                }
+            }
+            crucible.collectDroppedItems();
+            if (copper.getItem().getCount() != 3) throw new IllegalStateException("Full basin consumed excess copper");
+            for (int slot = 1; slot <= 3; slot++) crucible.items().extractItem(slot, 1, false);
+            crucible.collectDroppedItems();
+            if (copper.isAlive()) throw new IllegalStateException("Consumed copper drop was not removed");
+            for (int slot = 1; slot <= 3; slot++) {
+                if (crucible.items().getStackInSlot(slot).getCount() != 1) {
+                    throw new IllegalStateException("Refilled basin duplicated or lost copper");
+                }
+            }
+            helper.succeed();
+        });
+    }
+
+    @GameTest(template = "empty")
+    public static void pressAnimationUsesBoundedTwoTickState(GameTestHelper helper) {
+        var state = PortBlocks.MACHINE_PRESS.get().defaultBlockState();
+        var server = new PortPressBlockEntity(helper.absolutePos(new BlockPos(2, 2, 2)), state);
+        server.items().setStackInSlot(2, new ItemStack(PortItems.INGOT_TUNGSTEN.get(), 64));
+        server.items().setStackInSlot(4, new ItemStack(Items.DIAMOND, 64));
+        CompoundTag frame = server.getUpdateTag();
+        if (frame.contains("items") || frame.getAllKeys().size() != 2
+                || ItemStack.of(frame.getCompound("displayInput")).getCount() != 1) {
+            throw new IllegalStateException("Press render update exposed machine inventory or a full input stack");
+        }
+        var client = new PortPressBlockEntity(server.getBlockPos(), state);
+        client.handleUpdateTag(frame);
+        frame.putInt("press", 120);
+        client.handleUpdateTag(frame);
+        client.animateClient();
+        if (client.renderPress(1) != 60 || client.renderPress(0.5F) != 30) {
+            throw new IllegalStateException("Press client did not interpolate the first of two source smoothing ticks");
+        }
+        client.animateClient();
+        if (client.renderPress(1) != 120 || !client.displayInput().is(PortItems.INGOT_TUNGSTEN.get())
+                || !client.items().getStackInSlot(2).isEmpty()) {
+            throw new IllegalStateException("Press client did not reach target or altered its inventory from display state");
+        }
+        frame.putInt("press", Integer.MAX_VALUE);
+        frame.put("displayInput", new CompoundTag());
+        client.handleUpdateTag(frame);
+        client.animateClient();
+        client.animateClient();
+        if (client.renderPress(1) != PortPressBlockEntity.MAX_PRESS || !client.displayInput().isEmpty()) {
+            throw new IllegalStateException("Press client failed to bound the ram or clear a consumed visible input");
+        }
+        helper.succeed();
+    }
+
     @GameTest(template = "empty")
     public static void castingAndElectricFurnaceRecipesMatchSource(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();

@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -76,6 +78,8 @@ public final class PortCrucibleBlockEntity extends BlockEntity implements MenuPr
             heat = Math.max(0, heat - Math.max(heat / 1000, 1));
         }
 
+        if (level.getGameTime() % 5 == 0) collectDroppedItems();
+
         int slot = -1;
         for (int index = 1; index < 10; index++) {
             if (items.getStackInSlot(index).is(PortItems.INGOT_COPPER.get())) { slot = index; break; }
@@ -105,6 +109,24 @@ public final class PortCrucibleBlockEntity extends BlockEntity implements MenuPr
             moltenCopper -= accepted;
         }
         if (heat > 0 || progress > 0 || moltenCopper > 0) setChanged();
+    }
+
+    void collectDroppedItems() {
+        // The source collects smeltable drops inside the basin every five ticks.
+        // Copper is the only material supported by this first casting slice.
+        AABB basin = new AABB(worldPosition.getX() - 0.5, worldPosition.getY() + 0.5,
+                worldPosition.getZ() - 0.5, worldPosition.getX() + 1.5,
+                worldPosition.getY() + 1, worldPosition.getZ() + 1.5);
+        for (ItemEntity entity : level.getEntitiesOfClass(ItemEntity.class, basin, item -> item.isAlive())) {
+            if (!entity.getItem().is(PortItems.INGOT_COPPER.get())) continue;
+            ItemStack remaining = entity.getItem().copy();
+            for (int slot = 1; slot < 10 && !remaining.isEmpty(); slot++) {
+                if (!items.getStackInSlot(slot).isEmpty()) continue;
+                items.setStackInSlot(slot, remaining.split(1));
+            }
+            if (remaining.isEmpty()) entity.discard();
+            else entity.setItem(remaining);
+        }
     }
 
     @Override public void load(CompoundTag tag) {

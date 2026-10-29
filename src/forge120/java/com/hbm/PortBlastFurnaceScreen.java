@@ -5,13 +5,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.BufferUploader;
-import net.minecraft.client.renderer.GameRenderer;
-import com.mojang.math.Axis;
 
 /** Source blast-furnace background with fuel and steel-operation indicators. */
 public final class PortBlastFurnaceScreen extends AbstractContainerScreen<PortBlastFurnaceMenu> {
@@ -34,29 +27,8 @@ public final class PortBlastFurnaceScreen extends AbstractContainerScreen<PortBl
         if (fuel > 0) graphics.blit(TEXTURE, leftPos + 62, topPos + 106 - fuel,
                 176, 128 - fuel, 56, fuel);
         if (menu.progressing()) graphics.blit(TEXTURE, leftPos + 81, topPos + 64, 176, 0, 14, 14);
-        drawGauge(graphics, leftPos + 34, topPos + 80, menu.airblast() / 4_000.0F);
-        drawGauge(graphics, leftPos + 34, topPos + 26, menu.flueGas() / 1_000.0F);
-    }
-
-    /** The source gauge's 270-degree triangular needle with a black outline. */
-    private static void drawGauge(GuiGraphics graphics, int x, int y, float fill) {
-        graphics.flush();
-        var pose = graphics.pose();
-        pose.pushPose();
-        pose.translate(x, y, 0);
-        pose.mulPose(Axis.ZP.rotationDegrees(-Math.max(0, Math.min(1, fill)) * 270 - 45));
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        var buffer = Tesselator.getInstance().getBuilder();
-        buffer.begin(VertexFormat.Mode.TRIANGLES, DefaultVertexFormat.POSITION_COLOR);
-        for (int layer = 0; layer < 2; layer++) {
-            float scale = layer == 0 ? 1.5F : 1.0F;
-            int red = layer == 0 ? 0 : 128;
-            buffer.vertex(pose.last().pose(), 0, 5 * scale, 0).color(red, 0, 0, 255).endVertex();
-            buffer.vertex(pose.last().pose(), scale, -2 * scale, 0).color(red, 0, 0, 255).endVertex();
-            buffer.vertex(pose.last().pose(), -scale, -2 * scale, 0).color(red, 0, 0, 255).endVertex();
-        }
-        BufferUploader.drawWithShader(buffer.end());
-        pose.popPose();
+        PortGuiGauge.draw(graphics, leftPos + 34, topPos + 80, menu.airblast() / 4_000.0F);
+        PortGuiGauge.draw(graphics, leftPos + 34, topPos + 26, menu.flueGas() / 1_000.0F);
     }
 
     @Override protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {

@@ -22,8 +22,8 @@ public final class PortPressScreen extends AbstractContainerScreen<PortPressMenu
         if (menu.burnTime() >= 20) graphics.blit(TEXTURE, leftPos + 27, topPos + 36, 0, 202, 14, 14);
         int ram = Math.max(0, Math.min(16, menu.press() * 16 / PortPressBlockEntity.MAX_PRESS));
         if (ram > 0) graphics.blit(TEXTURE, leftPos + 79, topPos + 35, 14, 202, 18, ram);
-        int heat = Math.max(0, Math.min(36, menu.speed() * 36 / PortPressBlockEntity.MAX_SPEED));
-        graphics.fill(leftPos + 16, topPos + 15, leftPos + 16 + heat, topPos + 17, 0xff7f0000);
+        PortGuiGauge.draw(graphics, leftPos + 34, topPos + 25,
+                menu.speed() / (float) PortPressBlockEntity.MAX_SPEED);
     }
 
     @Override protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {

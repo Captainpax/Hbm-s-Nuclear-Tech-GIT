@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,8 +27,9 @@ import net.minecraftforge.items.ItemStackHandler;
 public final class PortPressBlockEntity extends BlockEntity implements MenuProvider {
     public static final int MAX_SPEED = 400;
     public static final int MAX_PRESS = 200;
+    private boolean clientDirty = true;
     private final ItemStackHandler items = new ItemStackHandler(13) {
-        @Override protected void onContentsChanged(int slot) { setChanged(); }
+        @Override protected void onContentsChanged(int slot) { setChanged(); clientDirty = true; }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
             if (slot == 0) return fuelTime(stack) > 0;
             if (slot == 1) return PortPressRecipes.isStamp(stack);
@@ -42,6 +45,12 @@ public final class PortPressBlockEntity extends BlockEntity implements MenuProvi
     private int press;
     private int delay;
     private boolean retracting;
+    private double renderPress;
+    private double previousRenderPress;
+    private int syncedPress;
+    private int interpolationTicks;
+    private boolean receivedClientState;
+    private ItemStack displayInput = ItemStack.EMPTY;
     private final ContainerData menuData = new ContainerData() {
         @Override public int get(int index) {
             return switch (index) {
@@ -64,17 +73,31 @@ public final class PortPressBlockEntity extends BlockEntity implements MenuProvi
     public int burnTime() { return burnTime; }
     public int press() { return press; }
     public ContainerData menuData() { return menuData; }
+    public double renderPress(float partialTick) {
+        return Math.max(0, Math.min(MAX_PRESS,
+                previousRenderPress + (renderPress - previousRenderPress) * partialTick));
+    }
+    public ItemStack displayInput() { return displayInput; }
 
     static int fuelTime(ItemStack stack) {
         return stack.isEmpty() ? 0 : ForgeHooks.getBurnTime(stack, RecipeType.SMELTING);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, PortPressBlockEntity machine) {
-        if (level.isClientSide) return;
-        machine.tickServer();
+        if (level.isClientSide) machine.animateClient();
+        else machine.tickServer();
+    }
+
+    void animateClient() {
+        previousRenderPress = renderPress;
+        if (interpolationTicks > 0) {
+            renderPress += (syncedPress - renderPress) / interpolationTicks;
+            interpolationTicks--;
+        } else renderPress = syncedPress;
     }
 
     private void tickServer() {
+        int oldPress = press;
         boolean canProcess = canProcess();
         if ((canProcess || retracting) && burnTime >= 200) speed = Math.min(MAX_SPEED, speed + 1);
         else speed = Math.max(0, speed - 1);
@@ -125,6 +148,33 @@ public final class PortPressBlockEntity extends BlockEntity implements MenuProvi
             }
         }
         if (canProcess || retracting || delay > 0 || speed > 0 || burnTime > 0) setChanged();
+        if (oldPress != press || clientDirty) {
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+            clientDirty = false;
+        }
+    }
+
+    @Override public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("press", Math.max(0, Math.min(MAX_PRESS, press)));
+        tag.put("displayInput", items.getStackInSlot(2).copyWithCount(1).save(new CompoundTag()));
+        return tag;
+    }
+    @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+    @Override public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+        if (packet.getTag() != null) handleUpdateTag(packet.getTag());
+    }
+    @Override public void handleUpdateTag(CompoundTag tag) {
+        syncedPress = Math.max(0, Math.min(MAX_PRESS, tag.getInt("press")));
+        displayInput = ItemStack.of(tag.getCompound("displayInput"));
+        if (!displayInput.isEmpty()) displayInput.setCount(1);
+        if (!receivedClientState) {
+            renderPress = previousRenderPress = syncedPress;
+            receivedClientState = true;
+        }
+        interpolationTicks = 2;
     }
 
     public boolean canProcess() {

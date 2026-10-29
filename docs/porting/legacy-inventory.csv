@@ -210,7 +210,7 @@ asset,models/blast_door_block.obj,src/main/resources/assets/hbm/models/blast_doo
 asset,models/blast_door_slider.obj,src/main/resources/assets/hbm/models/blast_door_slider.obj,,unported,,
 asset,models/blast_door_tooth.obj,src/main/resources/assets/hbm/models/blast_door_tooth.obj,,unported,,
 asset,models/blocks/antenna_top.obj,src/main/resources/assets/hbm/models/blocks/antenna_top.obj,,unported,,
-asset,models/blocks/anvil.obj,src/main/resources/assets/hbm/models/blocks/anvil.obj,,unported,,
+asset,models/blocks/anvil.obj,src/main/resources/assets/hbm/models/blocks/anvil.obj,,partial,src/forge120/resources/assets/hbm/models/machines/anvil.obj,Source geometry with Forge material binding; iron and steel texture plus four-facing bounds audits pass; steel world model checked after offset correction
 asset,models/blocks/arrow.obj,src/main/resources/assets/hbm/models/blocks/arrow.obj,,unported,,
 asset,models/blocks/barbed_wire.obj,src/main/resources/assets/hbm/models/blocks/barbed_wire.obj,,unported,,
 asset,models/blocks/barrel.obj,src/main/resources/assets/hbm/models/blocks/barrel.obj,,unported,,
@@ -531,8 +531,8 @@ asset,models/pheodoors/sliding_door.obj,src/main/resources/assets/hbm/models/phe
 asset,models/pheodoors/vault_door.obj,src/main/resources/assets/hbm/models/pheodoors/vault_door.obj,,unported,,
 asset,models/pheodoors/vehicle_door.obj,src/main/resources/assets/hbm/models/pheodoors/vehicle_door.obj,,unported,,
 asset,models/pheodoors/water_door.obj,src/main/resources/assets/hbm/models/pheodoors/water_door.obj,,unported,,
-asset,models/press_body.obj,src/main/resources/assets/hbm/models/press_body.obj,,unported,,
-asset,models/press_head.obj,src/main/resources/assets/hbm/models/press_head.obj,,unported,,
+asset,models/press_body.obj,src/main/resources/assets/hbm/models/press_body.obj,,partial,src/forge120/resources/assets/hbm/models/machines/press_body.obj,Source geometry with Forge material binding; textured bake audit and live normal placement pass; wider lighting comparison pending
+asset,models/press_head.obj,src/main/resources/assets/hbm/models/press_head.obj,,partial,src/forge120/resources/assets/hbm/models/machines/press_head.obj,Source geometry with Forge material binding; bake audit and active ram travel checked in Creative QA; multiplayer comparison pending
 asset,models/projectiles/deb_blank.obj,src/main/resources/assets/hbm/models/projectiles/deb_blank.obj,,unported,,
 asset,models/projectiles/deb_element.obj,src/main/resources/assets/hbm/models/projectiles/deb_element.obj,,unported,,
 asset,models/projectiles/deb_fuel.obj,src/main/resources/assets/hbm/models/projectiles/deb_fuel.obj,,unported,,
@@ -3331,7 +3331,7 @@ asset,textures/gui/gui_field.png,src/main/resources/assets/hbm/textures/gui/gui_
 asset,textures/gui/gui_keyforge.png,src/main/resources/assets/hbm/textures/gui/gui_keyforge.png,,unported,,
 asset,textures/gui/gui_linker.png,src/main/resources/assets/hbm/textures/gui/gui_linker.png,,unported,,
 asset,textures/gui/gui_missile_assembly.png,src/main/resources/assets/hbm/textures/gui/gui_missile_assembly.png,,unported,,
-asset,textures/gui/gui_press.png,src/main/resources/assets/hbm/textures/gui/gui_press.png,,unported,,
+asset,textures/gui/gui_press.png,src/main/resources/assets/hbm/textures/gui/gui_press.png,,verified,src/forge120/resources/assets/hbm/textures/gui/gui_press.png,SHA-256 matches source background; live press layout inspected
 asset,textures/gui/gui_radiolysis.png,src/main/resources/assets/hbm/textures/gui/gui_radiolysis.png,,unported,,
 asset,textures/gui/gui_reactor_control.png,src/main/resources/assets/hbm/textures/gui/gui_reactor_control.png,,unported,,
 asset,textures/gui/gui_rebar.png,src/main/resources/assets/hbm/textures/gui/gui_rebar.png,,unported,,
@@ -6734,8 +6734,8 @@ asset,textures/models/pheodoors/vehicle_door.png,src/main/resources/assets/hbm/t
 asset,textures/models/pheodoors/water_door.png,src/main/resources/assets/hbm/textures/models/pheodoors/water_door.png,,unported,,
 asset,textures/models/pheodoors/water_door_clean.png,src/main/resources/assets/hbm/textures/models/pheodoors/water_door_clean.png,,unported,,
 asset,textures/models/press_base.png,src/main/resources/assets/hbm/textures/models/press_base.png,,unported,,
-asset,textures/models/press_body.png,src/main/resources/assets/hbm/textures/models/press_body.png,,unported,,
-asset,textures/models/press_head.png,src/main/resources/assets/hbm/textures/models/press_head.png,,unported,,
+asset,textures/models/press_body.png,src/main/resources/assets/hbm/textures/models/press_body.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/press_body.png,SHA-256 matches source texture; correctly textured model bake audit passes
+asset,textures/models/press_head.png,src/main/resources/assets/hbm/textures/models/press_head.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/press_head.png,SHA-256 matches source texture; correctly textured model bake audit passes
 asset,textures/models/projectiles/bullet_pistol.png,src/main/resources/assets/hbm/textures/models/projectiles/bullet_pistol.png,,unported,,
 asset,textures/models/projectiles/bullet_rifle.png,src/main/resources/assets/hbm/textures/models/projectiles/bullet_rifle.png,,unported,,
 asset,textures/models/projectiles/flechette.png,src/main/resources/assets/hbm/textures/models/projectiles/flechette.png,,unported,,
@@ -7161,13 +7161,13 @@ block,anvil_bismuth_bronze,src/main/java/com/hbm/blocks/ModBlocks.java,2989,unpo
 block,anvil_desh,src/main/java/com/hbm/blocks/ModBlocks.java,2986,unported,,
 block,anvil_dnt,src/main/java/com/hbm/blocks/ModBlocks.java,2992,unported,,
 block,anvil_ferrouranium,src/main/java/com/hbm/blocks/ModBlocks.java,2987,unported,,
-block,anvil_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2983,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Source iron-block recipe and falling facing tier-one construction interaction; temporary block model and full recipe browser pending
+block,anvil_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2983,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Source iron-block recipe and falling tier-one construction; source OBJ texture and four facing bounds audited; full browser pending
 block,anvil_lead,src/main/java/com/hbm/blocks/ModBlocks.java,2984,unported,,
 block,anvil_murky,src/main/java/com/hbm/blocks/ModBlocks.java,2994,unported,,
 block,anvil_osmiridium,src/main/java/com/hbm/blocks/ModBlocks.java,2993,unported,,
 block,anvil_saturnite,src/main/java/com/hbm/blocks/ModBlocks.java,2988,unported,,
 block,anvil_schrabidate,src/main/java/com/hbm/blocks/ModBlocks.java,2991,unported,,
-block,anvil_steel,src/main/java/com/hbm/blocks/ModBlocks.java,2985,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Steel anvil smithing from iron anvil and ten steel ingots tested; steel production and full tier-two recipes pending
+block,anvil_steel,src/main/java/com/hbm/blocks/ModBlocks.java,2985,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Steel-anvil smithing tested and original OBJ visually checked after offset correction; full tier-two recipes pending
 block,ash_digamma,src/main/java/com/hbm/blocks/ModBlocks.java,2925,unported,,
 block,asphalt,src/main/java/com/hbm/blocks/ModBlocks.java,2615,unported,,
 block,asphalt_light,src/main/java/com/hbm/blocks/ModBlocks.java,2616,unported,,
@@ -7707,7 +7707,7 @@ block,machine_mixer,src/main/java/com/hbm/blocks/ModBlocks.java,3229,unported,,
 block,machine_orbus,src/main/java/com/hbm/blocks/ModBlocks.java,3233,unported,,
 block,machine_ore_slopper,src/main/java/com/hbm/blocks/ModBlocks.java,3273,unported,,
 block,machine_precass,src/main/java/com/hbm/blocks/ModBlocks.java,3222,unported,,
-block,machine_press,src/main/java/com/hbm/blocks/ModBlocks.java,2997,partial,src/forge120/java/com/hbm/PortPressBlock.java,Three-high placed press with teardown and temporary block model; source animated model and preheater pending
+block,machine_press,src/main/java/com/hbm/blocks/ModBlocks.java,2997,partial,src/forge120/java/com/hbm/PortPressBlock.java,Three-high press with original body moving ram and visible input; normal placement active stamping and menu checked; preheater pending
 block,machine_puf6_tank,src/main/java/com/hbm/blocks/ModBlocks.java,3042,unported,,
 block,machine_pumpjack,src/main/java/com/hbm/blocks/ModBlocks.java,3256,unported,,
 block,machine_purex,src/main/java/com/hbm/blocks/ModBlocks.java,3225,unported,,
@@ -8309,7 +8309,7 @@ block_entity,TileEntityMachineOrbus,src/main/java/com/hbm/tileentity/TileMapping
 block_entity,TileEntityMachineOreSlopper,src/main/java/com/hbm/tileentity/TileMappings.java,116,unported,,
 block_entity,TileEntityMachinePUREX,src/main/java/com/hbm/tileentity/TileMappings.java,361,unported,,
 block_entity,TileEntityMachinePrecAss,src/main/java/com/hbm/tileentity/TileMappings.java,358,unported,,
-block_entity,TileEntityMachinePress,src/main/java/com/hbm/tileentity/TileMappings.java,127,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,First fuel and stamped-wire operation with NBT test; proxy automation and two-launch restart pending
+block_entity,TileEntityMachinePress,src/main/java/com/hbm/tileentity/TileMappings.java,127,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-stamp operation plus bounded two-tick render state tested; live blocked-output state survived a client restart; proxy automation and dedicated restart pending
 block_entity,TileEntityMachinePuF6Tank,src/main/java/com/hbm/tileentity/TileMappings.java,80,unported,,
 block_entity,TileEntityMachinePumpElectric,src/main/java/com/hbm/tileentity/TileMappings.java,313,unported,,
 block_entity,TileEntityMachinePumpSteam,src/main/java/com/hbm/tileentity/TileMappings.java,312,unported,,
@@ -9835,7 +9835,7 @@ item,ingot_electronium,src/main/java/com/hbm/items/ModItems.java,4541,unported,,
 item,ingot_euphemium,src/main/java/com/hbm/items/ModItems.java,4539,unported,,
 item,ingot_ferrouranium,src/main/java/com/hbm/items/ModItems.java,4534,unported,,
 item,ingot_fiberglass,src/main/java/com/hbm/items/ModItems.java,4566,unported,,
-item,ingot_firebrick,src/main/java/com/hbm/items/ModItems.java,4504,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,Vanilla-furnace smelting path ported; downstream anvil and foundry uses pending
+item,ingot_firebrick,src/main/java/com/hbm/items/ModItems.java,4504,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,Vanilla-furnace smelting plus first blast-furnace and casting construction uses ported; remaining uses pending
 item,ingot_gh336,src/main/java/com/hbm/items/ModItems.java,4520,unported,,
 item,ingot_graphite,src/main/java/com/hbm/items/ModItems.java,4503,unported,,
 item,ingot_gunmetal,src/main/java/com/hbm/items/ModItems.java,4536,unported,,
@@ -9882,7 +9882,7 @@ item,ingot_smore,src/main/java/com/hbm/items/ModItems.java,4542,unported,,
 item,ingot_solinium,src/main/java/com/hbm/items/ModItems.java,4519,unported,,
 item,ingot_sr90,src/main/java/com/hbm/items/ModItems.java,4476,unported,,
 item,ingot_starmetal,src/main/java/com/hbm/items/ModItems.java,4535,unported,,
-item,ingot_steel,src/main/java/com/hbm/items/ModItems.java,4486,partial,src/forge120/java/com/hbm/PortItems.java,Original item and source texture registered; blast-furnace production pending
+item,ingot_steel,src/main/java/com/hbm/items/ModItems.java,4486,partial,src/forge120/java/com/hbm/PortItems.java,Source texture and first blast-furnace steel route tested; remaining steel production routes pending
 item,ingot_steel_dusted,src/main/java/com/hbm/items/ModItems.java,4546,unported,,
 item,ingot_tantalium,src/main/java/com/hbm/items/ModItems.java,4497,unported,,
 item,ingot_tcalloy,src/main/java/com/hbm/items/ModItems.java,4487,unported,,
@@ -10362,7 +10362,7 @@ item,plate_armor_titanium,src/main/java/com/hbm/items/ModItems.java,4908,unporte
 item,plate_bismuth,src/main/java/com/hbm/items/ModItems.java,4903,unported,,
 item,plate_cast,src/main/java/com/hbm/items/ModItems.java,4916,partial,src/forge120/java/com/hbm/PortItems.java,Named iron template and copper cast plate variants; other material variants pending
 item,plate_combine_steel,src/main/java/com/hbm/items/ModItems.java,4893,unported,,
-item,plate_copper,src/main/java/com/hbm/items/ModItems.java,4889,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate only; foundry cast plate is a separate pending item
+item,plate_copper,src/main/java/com/hbm/items/ModItems.java,4889,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate; separate foundry cast plate route also ported; remaining source pathways pending
 item,plate_dalekanium,src/main/java/com/hbm/items/ModItems.java,4901,unported,,
 item,plate_desh,src/main/java/com/hbm/items/ModItems.java,4902,unported,,
 item,plate_dineutronium,src/main/java/com/hbm/items/ModItems.java,4905,unported,,
@@ -11343,7 +11343,7 @@ java_source,blocks/machine/MachineCompressorCompact,src/main/java/com/hbm/blocks
 java_source,blocks/machine/MachineCondenser,src/main/java/com/hbm/blocks/machine/MachineCondenser.java,,unported,,
 java_source,blocks/machine/MachineCondenserPowered,src/main/java/com/hbm/blocks/machine/MachineCondenserPowered.java,,unported,,
 java_source,blocks/machine/MachineConveyorPress,src/main/java/com/hbm/blocks/machine/MachineConveyorPress.java,,unported,,
-java_source,blocks/machine/MachineCrucible,src/main/java/com/hbm/blocks/machine/MachineCrucible.java,,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source footprint and menu interaction ported; full collision and rendering comparison pending
+java_source,blocks/machine/MachineCrucible,src/main/java/com/hbm/blocks/machine/MachineCrucible.java,,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source footprint hollow basin collision and first menu interaction ported; full rendering and proxy automation comparison pending
 java_source,blocks/machine/MachineCrystallizer,src/main/java/com/hbm/blocks/machine/MachineCrystallizer.java,,unported,,
 java_source,blocks/machine/MachineCyclotron,src/main/java/com/hbm/blocks/machine/MachineCyclotron.java,,unported,,
 java_source,blocks/machine/MachineDeuteriumExtractor,src/main/java/com/hbm/blocks/machine/MachineDeuteriumExtractor.java,,unported,,
@@ -11433,7 +11433,7 @@ java_source,blocks/machine/MachineTurbofan,src/main/java/com/hbm/blocks/machine/
 java_source,blocks/machine/MachineUF6Tank,src/main/java/com/hbm/blocks/machine/MachineUF6Tank.java,,unported,,
 java_source,blocks/machine/MachineVacuumDistill,src/main/java/com/hbm/blocks/machine/MachineVacuumDistill.java,,unported,,
 java_source,blocks/machine/MachineWoodBurner,src/main/java/com/hbm/blocks/machine/MachineWoodBurner.java,,unported,,
-java_source,blocks/machine/NTMAnvil,src/main/java/com/hbm/blocks/machine/NTMAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Iron and steel falling facing blocks with menu; source 3D renderer and other tiers pending
+java_source,blocks/machine/NTMAnvil,src/main/java/com/hbm/blocks/machine/NTMAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Iron and steel falling facing blocks with source OBJ model and first menu actions; other tiers pending
 java_source,blocks/machine/PinkCloudBroadcaster,src/main/java/com/hbm/blocks/machine/PinkCloudBroadcaster.java,,unported,,
 java_source,blocks/machine/PistonInserter,src/main/java/com/hbm/blocks/machine/PistonInserter.java,,unported,,
 java_source,blocks/machine/PowerDetector,src/main/java/com/hbm/blocks/machine/PowerDetector.java,,unported,,
@@ -12303,7 +12303,7 @@ java_source,inventory/gui/GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUI
 java_source,inventory/gui/GUIBarrel,src/main/java/com/hbm/inventory/gui/GUIBarrel.java,,unported,,
 java_source,inventory/gui/GUIBatteryREDD,src/main/java/com/hbm/inventory/gui/GUIBatteryREDD.java,,unported,,
 java_source,inventory/gui/GUIBatterySocket,src/main/java/com/hbm/inventory/gui/GUIBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketScreen.java,Original 176x181 screen texture and modern charge mode priority controls; visual inspection pending
-java_source,inventory/gui/GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background fuel-progress indicators and gas gauge needles ported; idle live screen checked; active and multiplayer comparison pending
+java_source,inventory/gui/GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background and fuel-progress indicators; empty/full gas needles and 1000 mB tooltip checked after legacy rotation-sign fix; active operation and multiplayer comparison pending
 java_source,inventory/gui/GUIBombMulti,src/main/java/com/hbm/inventory/gui/GUIBombMulti.java,,unported,,
 java_source,inventory/gui/GUIBook,src/main/java/com/hbm/inventory/gui/GUIBook.java,,unported,,
 java_source,inventory/gui/GUIBookLore,src/main/java/com/hbm/inventory/gui/GUIBookLore.java,,unported,,
@@ -12391,7 +12391,7 @@ java_source,inventory/gui/GUIMachineOilWell,src/main/java/com/hbm/inventory/gui/
 java_source,inventory/gui/GUIMachinePUREX,src/main/java/com/hbm/inventory/gui/GUIMachinePUREX.java,,unported,,
 java_source,inventory/gui/GUIMachinePlasmaForge,src/main/java/com/hbm/inventory/gui/GUIMachinePlasmaForge.java,,unported,,
 java_source,inventory/gui/GUIMachinePrecAss,src/main/java/com/hbm/inventory/gui/GUIMachinePrecAss.java,,unported,,
-java_source,inventory/gui/GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,unported,,
+java_source,inventory/gui/GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressScreen.java,Original layout burn and ram indicators plus source dial; active GUI and restart checked in Creative QA; multiplayer pending
 java_source,inventory/gui/GUIMachineRTG,src/main/java/com/hbm/inventory/gui/GUIMachineRTG.java,,unported,,
 java_source,inventory/gui/GUIMachineRadGen,src/main/java/com/hbm/inventory/gui/GUIMachineRadGen.java,,unported,,
 java_source,inventory/gui/GUIMachineRadarNT,src/main/java/com/hbm/inventory/gui/GUIMachineRadarNT.java,,unported,,
@@ -12511,7 +12511,7 @@ java_source,inventory/gui/GUIWeaponTable,src/main/java/com/hbm/inventory/gui/GUI
 java_source,inventory/gui/GuiCrateBase,src/main/java/com/hbm/inventory/gui/GuiCrateBase.java,,unported,,
 java_source,inventory/gui/GuiInfoContainer,src/main/java/com/hbm/inventory/gui/GuiInfoContainer.java,,unported,,
 java_source,inventory/gui/LoadingScreenRendererNT,src/main/java/com/hbm/inventory/gui/LoadingScreenRendererNT.java,,unported,,
-java_source,inventory/gui/element/GUIElements,src/main/java/com/hbm/inventory/gui/element/GUIElements.java,,unported,,
+java_source,inventory/gui/element/GUIElements,src/main/java/com/hbm/inventory/gui/element/GUIElements.java,,partial,src/forge120/java/com/hbm/PortGuiGauge.java,Source triangular 270-degree gauge with legacy rotation-sign compensation; other shared GUI helpers pending
 java_source,inventory/gui/element/GuiFileList,src/main/java/com/hbm/inventory/gui/element/GuiFileList.java,,unported,,
 java_source,inventory/material/MatDistribution,src/main/java/com/hbm/inventory/material/MatDistribution.java,,unported,,
 java_source,inventory/material/MaterialShapes,src/main/java/com/hbm/inventory/material/MaterialShapes.java,,unported,,
@@ -13171,7 +13171,7 @@ java_source,render/anim/BusAnimationSequence,src/main/java/com/hbm/render/anim/B
 java_source,render/anim/HbmAnimations,src/main/java/com/hbm/render/anim/HbmAnimations.java,,unported,,
 java_source,render/block/ISBRHUniversal,src/main/java/com/hbm/render/block/ISBRHUniversal.java,,unported,,
 java_source,render/block/RenderAntennaTop,src/main/java/com/hbm/render/block/RenderAntennaTop.java,,unported,,
-java_source,render/block/RenderAnvil,src/main/java/com/hbm/render/block/RenderAnvil.java,,unported,,
+java_source,render/block/RenderAnvil,src/main/java/com/hbm/render/block/RenderAnvil.java,,partial,src/forge120/resources/assets/hbm/models/block/anvil_iron.json,Source iron and steel OBJ textures and facing transforms ported; all facing bounds audited and steel world model checked; other tiers pending
 java_source,render/block/RenderBarbedWire,src/main/java/com/hbm/render/block/RenderBarbedWire.java,,unported,,
 java_source,render/block/RenderBarrel,src/main/java/com/hbm/render/block/RenderBarrel.java,,unported,,
 java_source,render/block/RenderBattery,src/main/java/com/hbm/render/block/RenderBattery.java,,unported,,
@@ -13635,7 +13635,7 @@ java_source,render/tileentity/RenderPlushie,src/main/java/com/hbm/render/tileent
 java_source,render/tileentity/RenderPoleSatelliteReceiver,src/main/java/com/hbm/render/tileentity/RenderPoleSatelliteReceiver.java,,unported,,
 java_source,render/tileentity/RenderPoleTop,src/main/java/com/hbm/render/tileentity/RenderPoleTop.java,,unported,,
 java_source,render/tileentity/RenderPrecAss,src/main/java/com/hbm/render/tileentity/RenderPrecAss.java,,unported,,
-java_source,render/tileentity/RenderPress,src/main/java/com/hbm/render/tileentity/RenderPress.java,,unported,,
+java_source,render/tileentity/RenderPress,src/main/java/com/hbm/render/tileentity/RenderPress.java,,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original body and 0.875-block ram travel with input display checked during Creative QA stamping; wider lighting and multiplayer comparison pending
 java_source,render/tileentity/RenderPuF6Tank,src/main/java/com/hbm/render/tileentity/RenderPuF6Tank.java,,unported,,
 java_source,render/tileentity/RenderPump,src/main/java/com/hbm/render/tileentity/RenderPump.java,,unported,,
 java_source,render/tileentity/RenderPumpjack,src/main/java/com/hbm/render/tileentity/RenderPumpjack.java,,unported,,
@@ -13860,7 +13860,7 @@ java_source,tileentity/machine/TileEntityCoreEmitter,src/main/java/com/hbm/tilee
 java_source,tileentity/machine/TileEntityCoreInjector,src/main/java/com/hbm/tileentity/machine/TileEntityCoreInjector.java,,unported,,
 java_source,tileentity/machine/TileEntityCoreReceiver,src/main/java/com/hbm/tileentity/machine/TileEntityCoreReceiver.java,,unported,,
 java_source,tileentity/machine/TileEntityCoreStabilizer,src/main/java/com/hbm/tileentity/machine/TileEntityCoreStabilizer.java,,unported,,
-java_source,tileentity/machine/TileEntityCrucible,src/main/java/com/hbm/tileentity/machine/TileEntityCrucible.java,,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,First copper melting and rear waste-spout path; remaining materials recipes acceptors and hazards pending
+java_source,tileentity/machine/TileEntityCrucible,src/main/java/com/hbm/tileentity/machine/TileEntityCrucible.java,,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,First copper melting rear spout and five-tick dropped-copper collection; remaining materials recipes acceptors and hazards pending
 java_source,tileentity/machine/TileEntityCustomMachine,src/main/java/com/hbm/tileentity/machine/TileEntityCustomMachine.java,,unported,,
 java_source,tileentity/machine/TileEntityCyberCrab,src/main/java/com/hbm/tileentity/machine/TileEntityCyberCrab.java,,unported,,
 java_source,tileentity/machine/TileEntityDecon,src/main/java/com/hbm/tileentity/machine/TileEntityDecon.java,,unported,,
@@ -13942,7 +13942,7 @@ java_source,tileentity/machine/TileEntityMachineMixer,src/main/java/com/hbm/tile
 java_source,tileentity/machine/TileEntityMachineOreSlopper,src/main/java/com/hbm/tileentity/machine/TileEntityMachineOreSlopper.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePUREX,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePUREX.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePrecAss,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePrecAss.java,,unported,,
-java_source,tileentity/machine/TileEntityMachinePress,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics ported; preheater and animation pending
+java_source,tileentity/machine/TileEntityMachinePress,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics and source two-tick client smoothing ported; preheater and complete recipe table pending
 java_source,tileentity/machine/TileEntityMachinePumpBase,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePumpBase.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePumpElectric,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePumpElectric.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePumpSteam,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePumpSteam.java,,unported,,
@@ -17607,7 +17607,7 @@ renderer_source,RenderAirlockDoor,src/main/java/com/hbm/render/tileentity/door/R
 renderer_source,RenderAmmoPress,src/main/java/com/hbm/render/tileentity/RenderAmmoPress.java,,unported,,
 renderer_source,RenderAnnihilator,src/main/java/com/hbm/render/tileentity/RenderAnnihilator.java,,unported,,
 renderer_source,RenderAntennaTop,src/main/java/com/hbm/render/block/RenderAntennaTop.java,,unported,,
-renderer_source,RenderAnvil,src/main/java/com/hbm/render/block/RenderAnvil.java,,unported,,
+renderer_source,RenderAnvil,src/main/java/com/hbm/render/block/RenderAnvil.java,,partial,src/forge120/resources/assets/hbm/models/block/anvil_iron.json,Source iron and steel OBJ textures and facing transforms ported; all facing bounds audited and steel world model checked; other tiers pending
 renderer_source,RenderArcFurnace,src/main/java/com/hbm/render/tileentity/RenderArcFurnace.java,,unported,,
 renderer_source,RenderArcWelder,src/main/java/com/hbm/render/tileentity/RenderArcWelder.java,,unported,,
 renderer_source,RenderArtilleryRocket,src/main/java/com/hbm/render/entity/projectile/RenderArtilleryRocket.java,,unported,,
@@ -17866,7 +17866,7 @@ renderer_source,RenderPneumoTube,src/main/java/com/hbm/render/block/RenderPneumo
 renderer_source,RenderPoleSatelliteReceiver,src/main/java/com/hbm/render/tileentity/RenderPoleSatelliteReceiver.java,,unported,,
 renderer_source,RenderPoleTop,src/main/java/com/hbm/render/tileentity/RenderPoleTop.java,,unported,,
 renderer_source,RenderPrecAss,src/main/java/com/hbm/render/tileentity/RenderPrecAss.java,,unported,,
-renderer_source,RenderPress,src/main/java/com/hbm/render/tileentity/RenderPress.java,,unported,,
+renderer_source,RenderPress,src/main/java/com/hbm/render/tileentity/RenderPress.java,,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original body and 0.875-block ram travel with input display checked during Creative QA stamping; wider lighting and multiplayer comparison pending
 renderer_source,RenderPribris,src/main/java/com/hbm/render/block/RenderPribris.java,,unported,,
 renderer_source,RenderPuF6Tank,src/main/java/com/hbm/render/tileentity/RenderPuF6Tank.java,,unported,,
 renderer_source,RenderPump,src/main/java/com/hbm/render/tileentity/RenderPump.java,,unported,,
@@ -18015,7 +18015,7 @@ screen_source,GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUIAutocrafter.
 screen_source,GUIBarrel,src/main/java/com/hbm/inventory/gui/GUIBarrel.java,,unported,,
 screen_source,GUIBatteryREDD,src/main/java/com/hbm/inventory/gui/GUIBatteryREDD.java,,unported,,
 screen_source,GUIBatterySocket,src/main/java/com/hbm/inventory/gui/GUIBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketScreen.java,Original screen texture reused; visual and multiplayer interaction pending
-screen_source,GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Idle screen and slot alignment checked in QA world; active visual and multiplayer checks pending
+screen_source,GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Live idle layout and empty/full flue needles with matching tooltip checked in Creative QA; active operation and multiplayer checks pending
 screen_source,GUIBombMulti,src/main/java/com/hbm/inventory/gui/GUIBombMulti.java,,unported,,
 screen_source,GUIBook,src/main/java/com/hbm/inventory/gui/GUIBook.java,,unported,,
 screen_source,GUIBookLore,src/main/java/com/hbm/inventory/gui/GUIBookLore.java,,unported,,
@@ -18104,7 +18104,7 @@ screen_source,GUIMachineOilWell,src/main/java/com/hbm/inventory/gui/GUIMachineOi
 screen_source,GUIMachinePUREX,src/main/java/com/hbm/inventory/gui/GUIMachinePUREX.java,,unported,,
 screen_source,GUIMachinePlasmaForge,src/main/java/com/hbm/inventory/gui/GUIMachinePlasmaForge.java,,unported,,
 screen_source,GUIMachinePrecAss,src/main/java/com/hbm/inventory/gui/GUIMachinePrecAss.java,,unported,,
-screen_source,GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,unported,,
+screen_source,GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressScreen.java,Active fuel stamp input and output alignment checked; blocked-output state persisted through client restart; multiplayer pending
 screen_source,GUIMachineRTG,src/main/java/com/hbm/inventory/gui/GUIMachineRTG.java,,unported,,
 screen_source,GUIMachineRadGen,src/main/java/com/hbm/inventory/gui/GUIMachineRadGen.java,,unported,,
 screen_source,GUIMachineRadarNT,src/main/java/com/hbm/inventory/gui/GUIMachineRadarNT.java,,unported,,

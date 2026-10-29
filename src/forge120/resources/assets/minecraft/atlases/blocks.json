@@ -1,5 +1,7 @@
 {
   "sources": [
+    {"type": "single", "resource": "hbm:models/machines/press_body"},
+    {"type": "single", "resource": "hbm:models/machines/press_head"},
     {"type": "single", "resource": "hbm:models/machines/firebox"},
     {"type": "single", "resource": "hbm:models/machines/crucible_heat"},
     {"type": "single", "resource": "hbm:models/machines/blast_furnace"},

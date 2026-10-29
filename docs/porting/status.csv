@@ -6,18 +6,18 @@ java_source,blocks/machine/MachineBlastFurnace,partial,src/forge120/java/com/hbm
 java_source,tileentity/machine/TileEntityMachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,First steel route gas tanks source speed and decay plus flue overflow emission ported; remaining recipes and pollution effects pending
 java_source,inventory/recipes/BlastFurnaceRecipesNT,partial,src/forge120/java/com/hbm/PortBlastFurnaceRecipes.java,First active steel-from-ingots recipe ported; source recipe table and external JSON loading pending
 java_source,inventory/container/ContainerBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceMenu.java,Source five-slot positions and server-owned data ported; in-world interaction pending
-java_source,inventory/gui/GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background fuel-progress indicators and gas gauge needles ported; idle live screen checked; active and multiplayer comparison pending
-screen_source,GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Idle screen and slot alignment checked in QA world; active visual and multiplayer checks pending
+java_source,inventory/gui/GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background and fuel-progress indicators; empty/full gas needles and 1000 mB tooltip checked after legacy rotation-sign fix; active operation and multiplayer comparison pending
+screen_source,GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Live idle layout and empty/full flue needles with matching tooltip checked in Creative QA; active operation and multiplayer checks pending
 asset,textures/blocks/brick_fire.png,verified,src/forge120/resources/assets/hbm/textures/block/brick_fire.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_raw.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_raw_slag.png,Original base texture copied byte-for-byte; source material tint pending
 asset,textures/gui/processing/gui_blast_furnace.png,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_blast_furnace.png,Original texture copied byte-for-byte
-block,anvil_iron,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Source iron-block recipe and falling facing tier-one construction interaction; temporary block model and full recipe browser pending
-block,anvil_steel,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Steel anvil smithing from iron anvil and ten steel ingots tested; steel production and full tier-two recipes pending
-item,ingot_steel,partial,src/forge120/java/com/hbm/PortItems.java,Original item and source texture registered; blast-furnace production pending
+block,anvil_iron,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Source iron-block recipe and falling tier-one construction; source OBJ texture and four facing bounds audited; full browser pending
+block,anvil_steel,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Steel-anvil smithing tested and original OBJ visually checked after offset correction; full tier-two recipes pending
+item,ingot_steel,partial,src/forge120/java/com/hbm/PortItems.java,Source texture and first blast-furnace steel route tested; remaining steel production routes pending
 item,plate_iron,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source one-ingot plate-stamp press output tested; other plate routes pending
 item,plate_steel,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source one-ingot plate-stamp press output tested; Survival steel production pending
 item,bolt,partial,src/forge120/resources/data/hbm/recipes/bolt_steel.json,Named steel variant from two ingots yields sixteen bolts; other material variants pending
-java_source,blocks/machine/NTMAnvil,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Iron and steel falling facing blocks with menu; source 3D renderer and other tiers pending
+java_source,blocks/machine/NTMAnvil,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Iron and steel falling facing blocks with source OBJ model and first menu actions; other tiers pending
 java_source,inventory/container/ContainerAnvil,partial,src/forge120/java/com/hbm/PortAnvilMenu.java,Two-slot steel-anvil smithing and server-validated stamp construction; full recipe catalogue pending
 java_source,inventory/recipes/anvil/AnvilRecipes,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,First two tier-one construction recipes and steel-anvil smithing ported; hundreds of recipes pending
 java_source,inventory/gui/GUIAnvil,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Original background with five first construction choices and material tooltips; live layout checked after overlap fix; full browser pending
@@ -31,17 +31,17 @@ asset,textures/items/plate_steel.png,verified,src/forge120/resources/assets/hbm/
 asset,textures/items/bolt.png,verified,src/forge120/resources/assets/hbm/textures/item/bolt.png,Original texture copied byte-for-byte
 recipe_site,CraftingManager:293,partial,src/forge120/resources/data/hbm/recipes/anvil_iron.json,Source seven iron ingots plus iron block iron-anvil recipe and unlock tested
 recipe_site,CraftingManager:971,partial,src/forge120/resources/data/hbm/recipes/bolt_steel.json,Steel-bolt variant yields sixteen from two ingots; other material variants pending
-block,machine_press,partial,src/forge120/java/com/hbm/PortPressBlock.java,Three-high placed press with teardown and temporary block model; source animated model and preheater pending
-block_entity,TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,First fuel and stamped-wire operation with NBT test; proxy automation and two-launch restart pending
+block,machine_press,partial,src/forge120/java/com/hbm/PortPressBlock.java,Three-high press with original body moving ram and visible input; normal placement active stamping and menu checked; preheater pending
+block_entity,TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-stamp operation plus bounded two-tick render state tested; live blocked-output state survived a client restart; proxy automation and dedicated restart pending
 item,stamp_iron_flat,partial,src/forge120/resources/data/hbm/recipes/stamp_iron_flat_brick.json,Source brick or nether-brick crafting recipe and 64 durability
 item,stamp_iron_plate,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,Source iron-anvil flat-stamp conversion and 64-use press behavior tested; other anvil recipes pending
 item,stamp_iron_wire,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,Source iron-anvil flat-stamp conversion and 64-use press behavior tested; other anvil recipes pending
 item,wire_fine,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Tungsten copper and aluminium named fine wires with eight-per-ingot press yield; other materials and tint pending
 item,coil_tungsten,partial,src/forge120/resources/data/hbm/recipes/coil_tungsten.json,Eight tungsten fine wires around iron or steel ingot tested; other source alternatives pending
-item,plate_copper,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate only; foundry cast plate is a separate pending item
+item,plate_copper,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate; separate foundry cast plate route also ported; remaining source pathways pending
 item,plate_aluminium,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate only; other plate pathways pending
 java_source,inventory/recipes/PressRecipes,partial,src/forge120/java/com/hbm/PortPressRecipes.java,First three wire and four plate mappings ported; full recipe table pending
-java_source,tileentity/machine/TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics ported; preheater and animation pending
+java_source,tileentity/machine/TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics and source two-tick client smoothing ported; preheater and complete recipe table pending
 block,stone_resource,partial,src/forge120/java/com/hbm/PortBlocks.java,Limestone named variant and new-chunk placement ported; other stone-resource variants pending
 block,stone_depth,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld depth filler ported as unbreakable; special deep mining tools pending
 block,cluster_depth_iron,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
@@ -53,7 +53,7 @@ block,ore_depth_borax,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworl
 block,machine_electric_furnace_off,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified off-on block state and base-rate processing ported; upgrades pollution source recipe and live client checks pending
 block,machine_electric_furnace_on,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified lit state ported; live client checks pending
 item,ball_fireclay,partial,src/forge120/resources/data/hbm/recipes/ball_fireclay_from_limestone.json,Limestone route to four balls ported; alternate aluminium routes pending
-item,ingot_firebrick,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,Vanilla-furnace smelting path ported; downstream anvil and foundry uses pending
+item,ingot_firebrick,partial,src/forge120/resources/data/hbm/recipes/ingot_firebrick_from_fireclay.json,Vanilla-furnace smelting plus first blast-furnace and casting construction uses ported; remaining uses pending
 asset,textures/blocks/stone_resource.limestone.png,verified,src/forge120/resources/assets/hbm/textures/block/stone_resource_limestone.png,Original texture copied byte-for-byte
 asset,textures/blocks/stone_depth.png,verified,src/forge120/resources/assets/hbm/textures/block/stone_depth.png,Original texture copied byte-for-byte
 asset,textures/blocks/cluster_depth_iron.png,verified,src/forge120/resources/assets/hbm/textures/block/cluster_depth_iron.png,Original texture copied byte-for-byte
@@ -387,10 +387,10 @@ item,plate_cast,partial,src/forge120/java/com/hbm/PortItems.java,Named iron temp
 item,mold_base,partial,src/forge120/resources/data/hbm/recipes/mold_base.json,Source four-firebrick and iron-ingot recipe; live crafting check pending
 item,mold,partial,src/forge120/java/com/hbm/PortAnvilMenu.java,Named cast-plate mold smithing preserves the iron template and consumes one mold base; other mold variants pending
 java_source,blocks/machine/HeaterFirebox,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source footprint placement player interaction and teardown ported; full proxy behavior pending
-java_source,blocks/machine/MachineCrucible,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source footprint and menu interaction ported; full collision and rendering comparison pending
+java_source,blocks/machine/MachineCrucible,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source footprint hollow basin collision and first menu interaction ported; full rendering and proxy automation comparison pending
 java_source,blocks/machine/FoundryMold,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Install and retrieve mold and cast output with source crafting route; full mold classes pending
 java_source,tileentity/machine/TileEntityHeaterFirebox,partial,src/forge120/java/com/hbm/PortFireboxBlockEntity.java,First solid-fuel heat path and active-state storage; source configurable fuel module and door animation pending
-java_source,tileentity/machine/TileEntityCrucible,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,First copper melting and rear waste-spout path; remaining materials recipes acceptors and hazards pending
+java_source,tileentity/machine/TileEntityCrucible,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,First copper melting rear spout and five-tick dropped-copper collection; remaining materials recipes acceptors and hazards pending
 java_source,tileentity/machine/TileEntityFoundryMold,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,First copper plate route with conserved quanta and reusable mold; full materials and visual state pending
 java_source,render/tileentity/RenderBlastFurnace,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original OBJ and texture through Forge loader; in-world orientation lighting smoke and tilt checks remain
 java_source,render/tileentity/RenderFirebox,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original OBJ empty and burning groups with source texture; door animation emissive interior and live comparison remain
@@ -414,3 +414,16 @@ asset,textures/items/mold_base.png,verified,src/forge120/resources/assets/hbm/te
 asset,models/machines/firebox.obj,partial,src/forge120/resources/assets/hbm/models/machines/firebox.obj,Source geometry with Forge material binding; bake audit and live idle placement checked; active emission and door animation pending
 asset,models/machines/crucible.obj,partial,src/forge120/resources/assets/hbm/models/machines/crucible.obj,Source geometry with Forge material binding; bake audit and live placement checked; molten surface pending
 asset,models/machines/blast_furnace.obj,partial,src/forge120/resources/assets/hbm/models/machines/blast_furnace.obj,Source geometry with Forge material binding; bake audit and full-height world placement checked; all-facing and active-effect comparison pending
+asset,models/blocks/anvil.obj,partial,src/forge120/resources/assets/hbm/models/machines/anvil.obj,Source geometry with Forge material binding; iron and steel texture plus four-facing bounds audits pass; steel world model checked after offset correction
+asset,models/press_body.obj,partial,src/forge120/resources/assets/hbm/models/machines/press_body.obj,Source geometry with Forge material binding; textured bake audit and live normal placement pass; wider lighting comparison pending
+asset,models/press_head.obj,partial,src/forge120/resources/assets/hbm/models/machines/press_head.obj,Source geometry with Forge material binding; bake audit and active ram travel checked in Creative QA; multiplayer comparison pending
+java_source,render/block/RenderAnvil,partial,src/forge120/resources/assets/hbm/models/block/anvil_iron.json,Source iron and steel OBJ textures and facing transforms ported; all facing bounds audited and steel world model checked; other tiers pending
+renderer_source,RenderAnvil,partial,src/forge120/resources/assets/hbm/models/block/anvil_iron.json,Source iron and steel OBJ textures and facing transforms ported; all facing bounds audited and steel world model checked; other tiers pending
+java_source,render/tileentity/RenderPress,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original body and 0.875-block ram travel with input display checked during Creative QA stamping; wider lighting and multiplayer comparison pending
+renderer_source,RenderPress,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original body and 0.875-block ram travel with input display checked during Creative QA stamping; wider lighting and multiplayer comparison pending
+asset,textures/models/press_body.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/press_body.png,SHA-256 matches source texture; correctly textured model bake audit passes
+asset,textures/models/press_head.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/press_head.png,SHA-256 matches source texture; correctly textured model bake audit passes
+java_source,inventory/gui/GUIMachinePress,partial,src/forge120/java/com/hbm/PortPressScreen.java,Original layout burn and ram indicators plus source dial; active GUI and restart checked in Creative QA; multiplayer pending
+screen_source,GUIMachinePress,partial,src/forge120/java/com/hbm/PortPressScreen.java,Active fuel stamp input and output alignment checked; blocked-output state persisted through client restart; multiplayer pending
+java_source,inventory/gui/element/GUIElements,partial,src/forge120/java/com/hbm/PortGuiGauge.java,Source triangular 270-degree gauge with legacy rotation-sign compensation; other shared GUI helpers pending
+asset,textures/gui/gui_press.png,verified,src/forge120/resources/assets/hbm/textures/gui/gui_press.png,SHA-256 matches source background; live press layout inspected

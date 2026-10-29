@@ -66,11 +66,11 @@ public final class PortPressBlock extends BaseEntityBlock {
 
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
             BlockEntityType<T> type) {
-        return level.isClientSide || state.getValue(PART) != 0 ? null
+        return state.getValue(PART) != 0 ? null
                 : createTickerHelper(type, PortBlockEntities.PRESS.get(), PortPressBlockEntity::tick);
     }
 
-    @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
+    @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.INVISIBLE; }
 
     @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {

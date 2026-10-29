@@ -1,0 +1,1 @@
+{"loader":"forge:obj","model":"hbm:models/machines/press_head.obj","flip_v":true,"render_type":"minecraft:cutout","transform":{"origin":"corner"},"textures":{"texture0":"hbm:models/machines/press_head","particle":"hbm:models/machines/press_head"}}

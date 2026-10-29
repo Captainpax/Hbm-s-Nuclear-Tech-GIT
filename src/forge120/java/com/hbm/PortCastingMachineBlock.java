@@ -25,6 +25,11 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -36,6 +41,7 @@ public final class PortCastingMachineBlock extends BaseEntityBlock {
     public static final IntegerProperty Y = IntegerProperty.create("y", 0, 1);
     public static final IntegerProperty Z = IntegerProperty.create("z", 0, 2);
     private static final ThreadLocal<Boolean> TEARING_DOWN = ThreadLocal.withInitial(() -> false);
+    private static final VoxelShape[] CRUCIBLE_SHAPES = makeCrucibleShapes();
     private final Kind kind;
 
     public PortCastingMachineBlock(Properties properties, Kind kind) {
@@ -46,6 +52,29 @@ public final class PortCastingMachineBlock extends BaseEntityBlock {
     }
 
     private int height() { return kind == Kind.CRUCIBLE ? 2 : 1; }
+
+    private static VoxelShape[] makeCrucibleShapes() {
+        // MachineCrucible's five source boxes, translated from the model origin
+        // to the core block and clipped to each member's own unit cube.
+        VoxelShape basin = Shapes.or(
+                Shapes.box(-1, 0, -1, 2, 0.5, 2),
+                Shapes.box(-0.75, 0.5, -0.75, 1.75, 1.5, -0.5),
+                Shapes.box(-0.75, 0.5, -0.75, -0.5, 1.5, 1.75),
+                Shapes.box(-0.75, 0.5, 1.5, 1.75, 1.5, 1.75),
+                Shapes.box(1.5, 0.5, -0.75, 1.75, 1.5, 1.75));
+        VoxelShape[] shapes = new VoxelShape[18];
+        for (int y = 0; y < 2; y++) for (int z = 0; z < 3; z++) for (int x = 0; x < 3; x++) {
+            shapes[y * 9 + z * 3 + x] = Shapes.join(basin.move(1 - x, -y, 1 - z),
+                    Shapes.block(), BooleanOp.AND).optimize();
+        }
+        return shapes;
+    }
+
+    @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos,
+            CollisionContext context) {
+        return kind == Kind.CRUCIBLE ? CRUCIBLE_SHAPES[state.getValue(Y) * 9
+                + state.getValue(Z) * 3 + state.getValue(X)] : Shapes.block();
+    }
 
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, X, Y, Z);
