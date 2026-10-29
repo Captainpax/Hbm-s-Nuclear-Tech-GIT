@@ -15,6 +15,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
@@ -22,6 +25,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
@@ -40,8 +44,12 @@ public final class PortSurvivalClientDriver {
     private static BlockPos target;
     private static BlockState mining;
     private static Vec3 destination;
+    private static Vec3 walkProgress;
+    private static int walkedAt;
     private static boolean firstState, bootstrapped;
+    private static boolean enteredWorld, observedAlive;
     private static int observedPlayer = -1;
+    private static int eatingCount, eatingStarted;
     private static float observedHealth;
 
     private PortSurvivalClientDriver() {}
@@ -63,22 +71,25 @@ public final class PortSurvivalClientDriver {
             }
             if (ticks % 20 == 0) write(client, "state", state(client));
             if (completed != null) { write(client, "result", completed); completed = null; }
-            if (client.player == null || client.level == null) { release(client); return; }
+            if (client.player == null || client.level == null) { enteredWorld = false; release(client); return; }
+            if (!authorized(client) || !client.player.isAlive() || client.player.getId() != observedPlayer) enteredWorld = false;
             // Normal Esc-style pausing protects an unattended walkthrough from
             // continuing an inventory script while a mob attacks. It changes no
             // health, difficulty, inventory or world rule. Keep the damage in
             // the receipt and require the operator to inspect before resuming.
-            if (authorized(client) && client.player.getId() == observedPlayer && client.player.getHealth() < observedHealth
-                    && client.player.isAlive() && !client.isPaused()) {
+            boolean entering = !enteredWorld && authorized(client) && client.player.isAlive() && client.screen == null;
+            if (authorized(client) && client.player.isAlive() && !client.isPaused()
+                    && (entering || enteredWorld && observedAlive && client.player.getHealth() < observedHealth)) {
                 release(client);
                 if (pending != null) {
-                    error = "Player took damage; walkthrough paused for inspection";
+                    error = "Player joined or took damage; walkthrough paused for inspection";
                     running = null; finishAt = ticks + 1;
                 }
                 client.player.closeContainer();
                 client.setScreen(new PauseScreen(true));
+                enteredWorld = true;
             }
-            observedPlayer = client.player.getId(); observedHealth = client.player.getHealth();
+            observedPlayer = client.player.getId(); observedHealth = client.player.getHealth(); observedAlive = client.player.isAlive();
             if (pending != null) {
                 if (running != null) {
                     try {
@@ -86,7 +97,7 @@ public final class PortSurvivalClientDriver {
                         if (ticks >= deadline) throw new IllegalStateException("Action timed out; inspect before retrying");
                         advance(client);
                     } catch (Exception failure) {
-                        error = failure.toString(); running = null; release(client); finishAt = ticks + 20;
+                        error = failure.toString(); running = null; pauseAfterFailure(client); finishAt = ticks + 5;
                     }
                 } else if (ticks >= finishAt) {
                     completed = state(client);
@@ -104,7 +115,7 @@ public final class PortSurvivalClientDriver {
             var request = JsonParser.parseString(Files.readString(inbox)).getAsJsonObject();
             if (!SESSION.equals(request.get("session").getAsString()) || request.get("id").getAsLong() <= lastId) return;
             lastId = request.get("id").getAsLong(); pending = request; before = state(client); error = null; observation = null;
-            finishAt = ticks + 20;
+            finishAt = ticks + 5;
             try {
                 guard(client);
                 if (!firstState) {
@@ -112,7 +123,7 @@ public final class PortSurvivalClientDriver {
                     firstState = true;
                 }
                 act(client, request);
-            } catch (Exception failure) { error = failure.toString(); release(client); }
+            } catch (Exception failure) { error = failure.toString(); pauseAfterFailure(client); }
         } catch (Exception failure) {
             if (ticks % 100 == 0) LogUtils.getLogger().warn("Survival client QA driver: {}", failure.toString());
         }
@@ -136,8 +147,16 @@ public final class PortSurvivalClientDriver {
 
     private static void act(Minecraft client, JsonObject request) throws java.io.IOException {
         String action = request.get("action").getAsString();
-        if (!client.player.isAlive() && !java.util.Set.of("inspect", "scan", "probe", "exit", "pause").contains(action)) {
+        if (!client.player.isAlive() && !java.util.Set.of("inspect", "scan", "probe", "entities", "exit").contains(action)) {
             throw new IllegalStateException("Dead player cannot perform inventory or gameplay actions");
+        }
+        if (request.has("resume") && request.get("resume").getAsBoolean()) {
+            if (!(client.screen instanceof PauseScreen)) throw new IllegalStateException("Resume only the ordinary pause menu");
+            client.setScreen(null);
+            // Minecraft updates isPaused on its following frame. Dispatch the
+            // requested normal action only after that update, retaining its ID.
+            running = "resume"; deadline = ticks + 40;
+            return;
         }
         switch (action) {
             case "inspect" -> { }
@@ -148,6 +167,7 @@ public final class PortSurvivalClientDriver {
                 int slot = request.get("slot").getAsInt();
                 if (slot < 0 || slot > 8) throw new IllegalArgumentException("Select a hotbar slot 0-8");
                 client.player.getInventory().selected = slot;
+                finishAt = ticks + 5;
             }
             case "click" -> {
                 var menu = client.player.containerMenu;
@@ -170,6 +190,34 @@ public final class PortSurvivalClientDriver {
                 client.gameMode.handleInventoryButtonClick(menu.containerId, button);
             }
             case "scan" -> { /* Read-only loaded terrain is included in the receipt below. */ }
+            case "entities" -> {
+                observation = new JsonObject(); observation.add("entities", entities(client));
+            }
+            case "attack" -> {
+                playing(client);
+                var entity = client.level.getEntity(request.get("entity").getAsInt());
+                if (!(entity instanceof LivingEntity living) || entity instanceof Player || !living.isAlive()
+                        || client.player.getAttackStrengthScale(0.5F) < 1) {
+                    throw new IllegalArgumentException("Requires a living non-player target and a fully cooled attack");
+                }
+                look(client, entity.getBoundingBox().getCenter());
+                client.gameRenderer.pick(1);
+                if (!(client.hitResult instanceof EntityHitResult hit) || hit.getEntity() != entity
+                        || client.player.getEyePosition().distanceToSqr(hit.getLocation()) > 9) {
+                    throw new IllegalArgumentException("Target is not within normal melee reach and line of sight");
+                }
+                client.gameMode.attack(client.player, entity);
+                client.player.swing(InteractionHand.MAIN_HAND);
+            }
+            case "eat" -> {
+                playing(client);
+                var held = client.player.getMainHandItem();
+                if (!held.isEdible() || !client.player.canEat(false)) throw new IllegalArgumentException("Hold edible food while hungry");
+                eatingCount = held.getCount(); eatingStarted = ticks;
+                client.gameMode.useItem(client.player, InteractionHand.MAIN_HAND);
+                client.options.keyUse.setDown(true);
+                running = "eat"; deadline = ticks + 120;
+            }
             case "probe" -> {
                 BlockPos pos = position(request);
                 if (!client.level.hasChunkAt(pos) || pos.distSqr(client.player.blockPosition()) > 1_024) {
@@ -182,24 +230,18 @@ public final class PortSurvivalClientDriver {
             }
             case "use", "mine" -> {
                 playing(client);
-                target = position(request);
-                Vec3 aim = Vec3.atCenterOf(target);
-                if (request.has("face")) aim = aim.add(Vec3.atLowerCornerOf(net.minecraft.core.Direction.valueOf(request.get("face").getAsString()).getNormal()).scale(0.49));
-                look(client, aim);
-                BlockHitResult hit = hit(client, target);
-                if (action.equals("use")) client.gameMode.useItemOn(client.player, InteractionHand.MAIN_HAND, hit);
-                else {
-                    mining = client.level.getBlockState(target);
-                    if (mining.isAir() || mining.getDestroySpeed(client.level, target) < 0) throw new IllegalArgumentException("Cannot mine this block");
-                    running = "mine"; deadline = ticks + 1_200;
-                    client.gameMode.startDestroyBlock(target, hit.getDirection());
-                    client.options.keyAttack.setDown(true);
+                if (action.equals("use") && request.has("sneak") && request.get("sneak").getAsBoolean()) {
+                    client.options.keyShift.setDown(true);
+                    running = "sneak-use"; deadline = ticks + 40; finishAt = ticks + 3;
+                    return;
                 }
+                useOrMine(client, request, action);
             }
             case "walk" -> {
                 playing(client);
                 destination = new Vec3(request.get("x").getAsDouble(), request.get("y").getAsDouble(), request.get("z").getAsDouble());
                 if (client.player.position().distanceToSqr(destination) > 1_024) throw new IllegalArgumentException("Walk at most 32 blocks per action");
+                walkProgress = client.player.position(); walkedAt = ticks;
                 running = "walk"; deadline = ticks + 1_200;
             }
             case "exit" -> {
@@ -212,9 +254,45 @@ public final class PortSurvivalClientDriver {
         }
     }
 
+    private static void useOrMine(Minecraft client, JsonObject request, String action) {
+        target = position(request);
+        Vec3 aim = Vec3.atCenterOf(target);
+        if (request.has("face")) aim = aim.add(Vec3.atLowerCornerOf(net.minecraft.core.Direction.valueOf(request.get("face").getAsString()).getNormal()).scale(0.49));
+        look(client, aim);
+        BlockHitResult hit = hit(client, target);
+        if (action.equals("use")) {
+            client.gameMode.useItemOn(client.player, InteractionHand.MAIN_HAND, hit);
+            // At least the ordinary four-tick use delay, plus settlement.
+            finishAt = ticks + 5;
+        } else {
+            mining = client.level.getBlockState(target);
+            if (mining.isAir() || mining.getDestroySpeed(client.level, target) < 0) throw new IllegalArgumentException("Cannot mine this block");
+            running = "mine"; deadline = ticks + 1_200;
+            client.gameMode.startDestroyBlock(target, hit.getDirection());
+            client.options.keyAttack.setDown(true);
+        }
+    }
+
     private static void advance(Minecraft client) {
+        if (running.equals("resume")) {
+            if (client.isPaused()) return;
+            var resumed = pending.deepCopy(); resumed.remove("resume");
+            running = null; finishAt = ticks + 5; actResumed(client, resumed);
+            return;
+        }
         playing(client);
-        if (running.equals("mine")) {
+        if (running.equals("sneak-use")) {
+            if (ticks < finishAt) return;
+            if (!client.player.isShiftKeyDown()) throw new IllegalStateException("Normal crouch input has not taken effect");
+            useOrMine(client, pending, "use");
+            running = "use-settle"; finishAt = ticks + 5;
+        } else if (running.equals("use-settle")) {
+            if (ticks >= finishAt) finish(client);
+        } else if (running.equals("eat")) {
+            if (client.player.getMainHandItem().getCount() < eatingCount) { finish(client); return; }
+            if (ticks > eatingStarted + 8 && !client.player.isUsingItem()) throw new IllegalStateException("Food use was interrupted");
+            client.options.keyUse.setDown(true);
+        } else if (running.equals("mine")) {
             if (!client.level.getBlockState(target).equals(mining)) { finish(client); return; }
             look(client, Vec3.atCenterOf(target));
             hit(client, target);
@@ -227,6 +305,11 @@ public final class PortSurvivalClientDriver {
                 finish(client); return;
             }
             if (client.player.isInLava() || client.player.isUnderWater()) throw new IllegalStateException("Walk stopped in hazardous liquid");
+            if (Math.hypot(here.x - walkProgress.x, here.z - walkProgress.z) > 0.2) {
+                walkProgress = here; walkedAt = ticks;
+            } else if (ticks - walkedAt >= 60) {
+                throw new IllegalStateException("Walking made no horizontal progress for three seconds; inspect the obstacle");
+            }
             Vec3 direction = destination.subtract(here);
             look(client, client.player.getEyePosition().add(direction.x, 0, direction.z));
             client.options.keyUp.setDown(true);
@@ -237,11 +320,24 @@ public final class PortSurvivalClientDriver {
     private static void playing(Minecraft client) {
         if (client.screen != null || client.isPaused() || !client.player.isAlive()) throw new IllegalStateException("Requires live gameplay with menus closed");
     }
-    private static void finish(Minecraft client) { release(client); running = null; finishAt = ticks + 20; }
+    private static void actResumed(Minecraft client, JsonObject request) {
+        try { act(client, request); }
+        catch (java.io.IOException failure) { throw new IllegalStateException(failure); }
+    }
+    private static void pauseAfterFailure(Minecraft client) {
+        release(client);
+        if (client.player != null && client.player.isAlive() && authorized(client)) {
+            client.player.closeContainer(); client.setScreen(new PauseScreen(true));
+        }
+    }
+    private static void finish(Minecraft client) { release(client); running = null; finishAt = ticks + 5; }
     private static void release(Minecraft client) {
         client.options.keyUp.setDown(false); client.options.keyJump.setDown(false);
         client.options.keyAttack.setDown(false);
+        client.options.keyUse.setDown(false);
+        client.options.keyShift.setDown(false);
         if (client.gameMode != null && client.player != null) client.gameMode.stopDestroyBlock();
+        if (client.gameMode != null && client.player != null && client.player.isUsingItem()) client.gameMode.releaseUsingItem(client.player);
     }
     private static BlockPos position(JsonObject request) {
         return new BlockPos(request.get("x").getAsInt(), request.get("y").getAsInt(), request.get("z").getAsInt());
@@ -271,6 +367,8 @@ public final class PortSurvivalClientDriver {
         state.addProperty("x", player.getX()); state.addProperty("y", player.getY()); state.addProperty("z", player.getZ());
         state.addProperty("health", player.getHealth()); state.addProperty("food", player.getFoodData().getFoodLevel());
         state.addProperty("alive", player.isAlive()); state.addProperty("paused", client.isPaused());
+        state.addProperty("screen", client.screen == null ? "none" : client.screen.getClass().getSimpleName());
+        state.addProperty("attackStrength", player.getAttackStrengthScale(0.5F));
         state.addProperty("selected", player.getInventory().selected);
         state.addProperty("mode", client.gameMode.getPlayerMode().getName());
         state.addProperty("dimension", client.level.dimension().location().toString());
@@ -311,6 +409,21 @@ public final class PortSurvivalClientDriver {
         result.addProperty("x", pos.getX()); result.addProperty("y", pos.getY()); result.addProperty("z", pos.getZ());
         result.addProperty("canHarvest", client.player.hasCorrectToolForDrops(block));
         result.addProperty("hardness", block.getDestroySpeed(client.level, pos));
+        return result;
+    }
+    private static JsonArray entities(Minecraft client) {
+        var result = new JsonArray();
+        for (var entity : client.level.getEntities(client.player, client.player.getBoundingBox().inflate(24))) {
+            var value = new JsonObject();
+            value.addProperty("entity", entity.getId());
+            value.addProperty("type", BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString());
+            value.addProperty("x", entity.getX()); value.addProperty("y", entity.getY()); value.addProperty("z", entity.getZ());
+            value.addProperty("distance", client.player.distanceTo(entity));
+            value.addProperty("visible", client.player.hasLineOfSight(entity));
+            if (entity instanceof LivingEntity living) value.addProperty("health", living.getHealth());
+            if (entity instanceof ItemEntity dropped) { value.add("item", item(dropped.getItem())); value.addProperty("age", dropped.getAge()); }
+            result.add(value);
+        }
         return result;
     }
     private static JsonObject item(ItemStack stack) {

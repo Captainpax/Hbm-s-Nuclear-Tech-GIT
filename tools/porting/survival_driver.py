@@ -97,7 +97,7 @@ def request(action: str, **fields) -> dict:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["prepare", "state", "poll", "inspect", "scan", "probe", "walk", "mine", "use", "select", "inventory", "close", "pause", "recipe", "click", "button", "exit"])
+    parser.add_argument("action", choices=["prepare", "state", "poll", "inspect", "scan", "probe", "entities", "attack", "eat", "walk", "mine", "use", "select", "inventory", "close", "pause", "recipe", "click", "button", "exit"])
     parser.add_argument("--fields", default="{}", help="JSON action fields")
     parser.add_argument("--id", type=int)
     arguments = parser.parse_args()

@@ -127,7 +127,32 @@ def nearby_saved_items() -> dict:
     return {"dropped_items":drops, "starter_furnaces":furnaces, "nearby_hostile_mobs":mobs}
 
 
-def audit(bootstrap: bool, first_iron: bool = False) -> dict:
+def saved_blocks(positions: list[tuple[int, int, int]]) -> dict:
+    """Decode the saved block palette at explicit audit positions; never load chunks."""
+    wanted = set(positions)
+    result = {}
+    for rx, rz in {(x//512, z//512) for x,y,z in wanted}:
+        for chunk in region_chunks(SAVE / "region" / f"r.{rx}.{rz}.mca"):
+            selected = [(x,y,z) for x,y,z in wanted if x//16 == chunk["xPos"] and z//16 == chunk["zPos"]]
+            if not selected:
+                continue
+            sections = {section["Y"]:section for section in chunk["sections"]}
+            for x,y,z in selected:
+                states = sections.get(y//16, {}).get("block_states", {"palette":[{"Name":"minecraft:air"}]})
+                palette = states["palette"]
+                index = 0
+                if len(palette) > 1:
+                    bits = max(4, (len(palette)-1).bit_length())
+                    per_long = 64//bits
+                    cell = (y & 15)*256 + (z & 15)*16 + (x & 15)
+                    word = states["data"][cell//per_long] & ((1 << 64)-1)
+                    index = (word >> ((cell % per_long)*bits)) & ((1 << bits)-1)
+                result[f"{x},{y},{z}"] = palette[index]["Name"]
+    assert len(result) == len(wanted), "An audited position has no saved chunk"
+    return result
+
+
+def audit(bootstrap: bool, first_iron: bool = False, iron_tools: bool = False) -> dict:
     data = nbt(SAVE / "level.dat")["Data"]
     assert data["LevelName"] == "HBM Survival Progression" and data["GameType"] == 0
     assert data["allowCommands"] == 0 and data["Difficulty"] == 2
@@ -221,6 +246,49 @@ def audit(bootstrap: bool, first_iron: bool = False) -> dict:
         assert tools["minecraft:wooden_pickaxe"] == used["minecraft:wooden_pickaxe"] == 30
         report["first_iron_material_ledger"] = "passed across player, ordinary death drops and furnace"
         report["scope"] = "First four naturally mined iron smelted; death-drop recovery and iron tools remain pending"
+    if iron_tools:
+        counts = Counter()
+        for item in inventory:
+            counts[item["item"]] += item["count"]
+        expected = Counter({"minecraft:cobblestone":56, "minecraft:coal":4, "minecraft:furnace":1,
+                            "minecraft:stone_pickaxe":1, "minecraft:dirt":35, "minecraft:diorite":12,
+                            "minecraft:torch":2, "minecraft:iron_pickaxe":1, "minecraft:iron_ingot":1,
+                            "minecraft:sand":2, "minecraft:stick":2, "minecraft:wooden_pickaxe":1,
+                            "minecraft:spruce_sapling":1, "minecraft:spruce_log":2, "minecraft:sandstone":1})
+        assert counts == expected, (counts, expected)
+        crafted, mined, used = (stats[f"minecraft:{key}"] for key in ("crafted","mined","used"))
+        assert crafted["minecraft:iron_pickaxe"] == 1 and crafted["minecraft:iron_ingot"] == mined["minecraft:iron_ore"] == 4
+        assert counts["minecraft:iron_ingot"] + 3 == 4
+        assert counts["minecraft:spruce_log"] + crafted["minecraft:spruce_planks"]//4 + 2 == mined["minecraft:spruce_log"] == 8
+        assert crafted["minecraft:spruce_planks"] == 16 and crafted["minecraft:crafting_table"] == 2
+        assert counts["minecraft:stick"] + 2 + 2 + 2 + 1 + 1 == crafted["minecraft:stick"] + 2
+        assert mined["minecraft:coal_ore"] == counts["minecraft:coal"] == 4
+        assert crafted["minecraft:charcoal"] == 2 and crafted["minecraft:torch"] == 4
+        assert used["minecraft:torch"] + counts["minecraft:torch"] == 4
+        tools = {item["item"]:item["tag"]["Damage"] for item in inventory if item["item"].endswith("_pickaxe")}
+        assert tools == {"minecraft:wooden_pickaxe":30, "minecraft:stone_pickaxe":84, "minecraft:iron_pickaxe":0}
+        assert used["minecraft:stone_pickaxe"] == 84 and used.get("minecraft:iron_pickaxe", 0) == 0
+        assert stats["minecraft:custom"]["minecraft:deaths"] == 4
+        assert stats["minecraft:killed"]["minecraft:skeleton"] == 1
+        assert stats["minecraft:killed_by"]["minecraft:skeleton"] == 4
+        blocks = saved_blocks([(24,57,41), (29,63,38), (30,63,39), (29,63,36), (29,61,39),
+                               (35,51,38), (26,51,56)])
+        assert blocks == {"24,57,41":"minecraft:crafting_table", "29,63,38":"minecraft:air",
+                          "30,63,39":"minecraft:air", "29,63,36":"minecraft:cobblestone",
+                          "29,61,39":"minecraft:cobblestone", "35,51,38":"minecraft:wall_torch",
+                          "26,51,56":"minecraft:wall_torch"}, blocks
+        assert mined["minecraft:stone"] - 3 - 8 == counts["minecraft:cobblestone"] + 2 + 6 == 64
+        assert used["minecraft:cobblestone"] == 8
+        saved = nearby_saved_items()
+        assert not saved["starter_furnaces"]
+        originals = set(expected) - {"minecraft:dirt"}
+        assert not [drop for drop in saved["dropped_items"] if drop["item"]["id"] in originals]
+        report["scope"] = "Naturally mined iron crafted into the first iron pickaxe; full Survival progression remains open"
+        report["iron_tools_material_ledger"] = "passed; all original death-drop stacks recovered"
+        report["environmental_changes"] = {"cobblestone_lost":6, "crafting_table_lost":1, "explosion_dirt_salvaged":19,
+                                           "note":"One wrong-tool cobblestone break and a nearby Creeper explosion; no save rollback or grants"}
+        report["saved_blocks"] = blocks
+        report["saved_items"] = saved
     return report
 
 
@@ -229,12 +297,14 @@ if __name__ == "__main__":
     phase = parser.add_mutually_exclusive_group()
     phase.add_argument("--bootstrap", action="store_true")
     phase.add_argument("--first-iron", action="store_true")
+    phase.add_argument("--iron-tools", action="store_true")
     parser.add_argument("--record", action="store_true", help="Preserve the first phase report in the ignored evidence directory")
     arguments = parser.parse_args()
-    report = audit(arguments.bootstrap, arguments.first_iron)
+    report = audit(arguments.bootstrap, arguments.first_iron, arguments.iron_tools)
     if arguments.record:
-        assert arguments.bootstrap or arguments.first_iron, "Recording requires a phase ledger"
-        target = driver.RUN / ("evidence/bootstrap-audit.json" if arguments.bootstrap else "evidence/first-iron-audit.json")
+        assert arguments.bootstrap or arguments.first_iron or arguments.iron_tools, "Recording requires a phase ledger"
+        name = "bootstrap" if arguments.bootstrap else "first-iron" if arguments.first_iron else "iron-tools"
+        target = driver.RUN / f"evidence/{name}-audit.json"
         if target.exists():
             raise RuntimeError("Preserve the existing phase audit instead of overwriting it")
         driver.write(target, report)
