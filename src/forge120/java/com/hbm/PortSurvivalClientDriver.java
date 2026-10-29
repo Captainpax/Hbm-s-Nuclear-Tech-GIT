@@ -19,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.RecipeBookMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.ClipContext;
@@ -180,6 +181,10 @@ public final class PortSurvivalClientDriver {
             case "recipe" -> {
                 var recipe = client.level.getRecipeManager().byKey(ResourceLocation.parse(request.get("recipe").getAsString())).orElseThrow();
                 if (!client.player.getRecipeBook().contains(recipe)) throw new IllegalStateException("Recipe has not been unlocked by this player");
+                if (!(client.player.containerMenu instanceof RecipeBookMenu<?> menu)
+                        || !recipe.canCraftInDimensions(menu.getGridWidth(), menu.getGridHeight())) {
+                    throw new IllegalArgumentException("Recipe does not fit the current crafting grid");
+                }
                 client.gameMode.handlePlaceRecipe(client.player.containerMenu.containerId, recipe, request.has("all") && request.get("all").getAsBoolean());
             }
             case "button" -> {
@@ -256,9 +261,7 @@ public final class PortSurvivalClientDriver {
 
     private static void useOrMine(Minecraft client, JsonObject request, String action) {
         target = position(request);
-        Vec3 aim = Vec3.atCenterOf(target);
-        if (request.has("face")) aim = aim.add(Vec3.atLowerCornerOf(net.minecraft.core.Direction.valueOf(request.get("face").getAsString()).getNormal()).scale(0.49));
-        look(client, aim);
+        look(client, aim(client, target, request));
         BlockHitResult hit = hit(client, target);
         if (action.equals("use")) {
             client.gameMode.useItemOn(client.player, InteractionHand.MAIN_HAND, hit);
@@ -294,14 +297,17 @@ public final class PortSurvivalClientDriver {
             client.options.keyUse.setDown(true);
         } else if (running.equals("mine")) {
             if (!client.level.getBlockState(target).equals(mining)) { finish(client); return; }
-            look(client, Vec3.atCenterOf(target));
+            look(client, aim(client, target, pending));
             hit(client, target);
             // Minecraft's ordinary held-attack handler advances damage once per
             // client tick. Do not call continueDestroyBlock a second time here.
             client.options.keyAttack.setDown(true);
         } else {
             Vec3 here = client.player.position();
-            if (Math.hypot(destination.x - here.x, destination.z - here.z) < 0.35 && Math.abs(destination.y - here.y) < 1.3) {
+            if (client.player.onGround() && Math.hypot(destination.x - here.x, destination.z - here.z) < 0.35) {
+                if (Math.abs(destination.y - here.y) >= 0.6) {
+                    throw new IllegalStateException("Destination feet height does not match the standing floor");
+                }
                 finish(client); return;
             }
             if (client.player.isInLava() || client.player.isUnderWater()) throw new IllegalStateException("Walk stopped in hazardous liquid");
@@ -347,6 +353,20 @@ public final class PortSurvivalClientDriver {
         client.player.setYRot((float) Math.toDegrees(Math.atan2(-delta.x, delta.z)));
         client.player.setXRot((float) -Math.toDegrees(Math.atan2(delta.y, Math.hypot(delta.x, delta.z))));
     }
+    private static Vec3 aim(Minecraft client, BlockPos pos, JsonObject request) {
+        var shape = client.level.getBlockState(pos).getShape(client.level, pos,
+                net.minecraft.world.phys.shapes.CollisionContext.of(client.player));
+        if (shape.isEmpty()) throw new IllegalArgumentException("Target has no selectable outline");
+        var bounds = shape.bounds();
+        Vec3 point = bounds.getCenter();
+        if (request.has("face")) {
+            var normal = net.minecraft.core.Direction.valueOf(request.get("face").getAsString()).getNormal();
+            point = new Vec3(normal.getX() == 0 ? point.x : normal.getX() > 0 ? bounds.maxX - 0.001 : bounds.minX + 0.001,
+                    normal.getY() == 0 ? point.y : normal.getY() > 0 ? bounds.maxY - 0.001 : bounds.minY + 0.001,
+                    normal.getZ() == 0 ? point.z : normal.getZ() > 0 ? bounds.maxZ - 0.001 : bounds.minZ + 0.001);
+        }
+        return Vec3.atLowerCornerOf(pos).add(point);
+    }
     private static BlockHitResult hit(Minecraft client, BlockPos pos) {
         if (!client.level.hasChunkAt(pos) || client.player.getEyePosition().distanceToSqr(Vec3.atCenterOf(pos)) > 20.25
                 || !(client.player.pick(4.5, 1, false) instanceof BlockHitResult hit)
@@ -369,6 +389,8 @@ public final class PortSurvivalClientDriver {
         state.addProperty("alive", player.isAlive()); state.addProperty("paused", client.isPaused());
         state.addProperty("screen", client.screen == null ? "none" : client.screen.getClass().getSimpleName());
         state.addProperty("attackStrength", player.getAttackStrengthScale(0.5F));
+        state.addProperty("onGround", player.onGround()); state.addProperty("horizontalCollision", player.horizontalCollision);
+        state.addProperty("sneaking", player.isShiftKeyDown());
         state.addProperty("selected", player.getInventory().selected);
         state.addProperty("mode", client.gameMode.getPlayerMode().getName());
         state.addProperty("dimension", client.level.dimension().location().toString());
@@ -409,6 +431,10 @@ public final class PortSurvivalClientDriver {
         result.addProperty("x", pos.getX()); result.addProperty("y", pos.getY()); result.addProperty("z", pos.getZ());
         result.addProperty("canHarvest", client.player.hasCorrectToolForDrops(block));
         result.addProperty("hardness", block.getDestroySpeed(client.level, pos));
+        var properties = new JsonObject();
+        block.getValues().forEach((property, value) -> properties.addProperty(property.getName(),
+                value instanceof net.minecraft.util.StringRepresentable named ? named.getSerializedName() : value.toString()));
+        result.add("properties", properties);
         return result;
     }
     private static JsonArray entities(Minecraft client) {

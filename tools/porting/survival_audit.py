@@ -127,7 +127,7 @@ def nearby_saved_items() -> dict:
     return {"dropped_items":drops, "starter_furnaces":furnaces, "nearby_hostile_mobs":mobs}
 
 
-def saved_blocks(positions: list[tuple[int, int, int]]) -> dict:
+def saved_states(positions: list[tuple[int, int, int]]) -> dict:
     """Decode the saved block palette at explicit audit positions; never load chunks."""
     wanted = set(positions)
     result = {}
@@ -147,12 +147,29 @@ def saved_blocks(positions: list[tuple[int, int, int]]) -> dict:
                     cell = (y & 15)*256 + (z & 15)*16 + (x & 15)
                     word = states["data"][cell//per_long] & ((1 << 64)-1)
                     index = (word >> ((cell % per_long)*bits)) & ((1 << bits)-1)
-                result[f"{x},{y},{z}"] = palette[index]["Name"]
+                result[f"{x},{y},{z}"] = palette[index]
     assert len(result) == len(wanted), "An audited position has no saved chunk"
     return result
 
 
-def audit(bootstrap: bool, first_iron: bool = False, iron_tools: bool = False) -> dict:
+def saved_blocks(positions: list[tuple[int, int, int]]) -> dict:
+    return {key: value["Name"] for key, value in saved_states(positions).items()}
+
+
+def saved_block_entities(positions: list[tuple[int, int, int]]) -> dict:
+    wanted = set(positions)
+    result = {}
+    for rx, rz in {(x//512, z//512) for x,y,z in wanted}:
+        for chunk in region_chunks(SAVE / "region" / f"r.{rx}.{rz}.mca"):
+            for block in chunk.get("block_entities", []):
+                pos = block["x"], block["y"], block["z"]
+                if pos in wanted:
+                    result[",".join(map(str, pos))] = block
+    assert len(result) == len(wanted), "An audited block entity is missing"
+    return result
+
+
+def audit(bootstrap: bool, first_iron: bool = False, iron_tools: bool = False, food_storage: bool = False) -> dict:
     data = nbt(SAVE / "level.dat")["Data"]
     assert data["LevelName"] == "HBM Survival Progression" and data["GameType"] == 0
     assert data["allowCommands"] == 0 and data["Difficulty"] == 2
@@ -289,6 +306,85 @@ def audit(bootstrap: bool, first_iron: bool = False, iron_tools: bool = False) -
                                            "note":"One wrong-tool cobblestone break and a nearby Creeper explosion; no save rollback or grants"}
         report["saved_blocks"] = blocks
         report["saved_items"] = saved
+    if food_storage:
+        containers = saved_block_entities([(23,57,40), (24,57,42)])
+        chest, furnace = containers["23,57,40"], containers["24,57,42"]
+        assert chest["id"] == "minecraft:chest" and furnace["id"] == "minecraft:furnace"
+        assert not furnace["Items"] and furnace["BurnTime"] == furnace["CookTime"] == 0
+        stored = [{"slot":item["Slot"], "item":item["id"], "count":item["Count"], "tag":item.get("tag", {})}
+                  for item in chest["Items"]]
+        expected_chest = [("cobblestone",28), ("coal",2), ("stone_pickaxe",1), ("dirt",35), ("diorite",12),
+                          ("sand",3), ("stick",2), ("wooden_pickaxe",1), ("spruce_sapling",1),
+                          ("iron_ingot",1), ("sandstone",2)]
+        assert [(item["slot"],item["item"],item["count"]) for item in stored] == [
+            (slot,"minecraft:"+name,count) for slot,(name,count) in enumerate(expected_chest)]
+        saved = nearby_saved_items()
+        counts = Counter()
+        for item in inventory + stored:
+            counts[item["item"]] += item["count"]
+        expected = Counter({"minecraft:cobblestone":56, "minecraft:coal":3, "minecraft:stone_pickaxe":1,
+                            "minecraft:dirt":45, "minecraft:diorite":12, "minecraft:torch":1,
+                            "minecraft:iron_pickaxe":1, "minecraft:iron_ingot":1, "minecraft:sand":8,
+                            "minecraft:stick":2, "minecraft:wooden_pickaxe":1, "minecraft:spruce_sapling":1,
+                            "minecraft:sandstone":3, "minecraft:spruce_planks":7,
+                            "minecraft:spruce_door":2, "minecraft:cooked_mutton":3})
+        assert counts == expected, (counts,expected)
+        dropped = Counter()
+        for drop in saved["dropped_items"]:
+            dropped[drop["item"]["id"]] += drop["item"]["Count"]
+        # These two excavation drops fell into the existing coal access stair.
+        # The additional sapling remains on the surface, not in player storage.
+        assert dropped == Counter({"minecraft:cobblestone":2, "minecraft:spruce_sapling":1}), dropped
+        crafted, mined, used = (stats[f"minecraft:{key}"] for key in ("crafted","mined","used"))
+        for key,count in {"spruce_planks":40, "stick":8, "crafting_table":2, "wooden_pickaxe":1,
+                          "stone_pickaxe":1, "iron_ingot":4, "iron_pickaxe":1, "furnace":1,
+                          "charcoal":2, "torch":4, "chest":1, "white_bed":1, "spruce_door":3,
+                          "cooked_mutton":4}.items():
+            assert crafted[f"minecraft:{key}"] == count, key
+        assert mined["minecraft:spruce_log"] == crafted["minecraft:spruce_planks"]//4 + 2 == 12
+        assert 40 == 2*4 + 3 + 4 + 1 + 8 + 3 + 6 + counts["minecraft:spruce_planks"]
+        assert counts["minecraft:stick"] + 2+2+2+1+1 == crafted["minecraft:stick"] + 2
+        assert counts["minecraft:iron_ingot"] + 3 == mined["minecraft:iron_ore"] == crafted["minecraft:iron_ingot"] == 4
+        assert counts["minecraft:coal"] + 1 == mined["minecraft:coal_ore"] == 4
+        assert counts["minecraft:cooked_mutton"] + used["minecraft:cooked_mutton"] == 4
+        assert used["minecraft:cooked_mutton"] == 1 and stats["minecraft:killed"]["minecraft:sheep"] == 3
+        assert counts["minecraft:cobblestone"] + dropped["minecraft:cobblestone"] + 4 + 6 == mined["minecraft:stone"] - 3 - 8 == 68
+        assert counts["minecraft:dirt"] == mined["minecraft:dirt"] + mined["minecraft:grass_block"] + 19 == 45
+        for key in ("sand", "sandstone", "diorite"):
+            assert counts[f"minecraft:{key}"] == mined[f"minecraft:{key}"], key
+        tools = {item["item"]:item["tag"]["Damage"] for item in inventory + stored if item["item"].endswith("_pickaxe")}
+        assert tools == {"minecraft:wooden_pickaxe":30, "minecraft:stone_pickaxe":86, "minecraft:iron_pickaxe":41}
+        assert used["minecraft:stone_pickaxe"] == 86 and used["minecraft:wooden_pickaxe"] == 30
+        # Six normal pickaxe attacks used two durability each, plus 29 blocks.
+        assert used["minecraft:iron_pickaxe"] == 35 and tools["minecraft:iron_pickaxe"] == 35 + 6
+        assert stats["minecraft:custom"]["minecraft:deaths"] == stats["minecraft:killed_by"]["minecraft:skeleton"] == 4
+        assert stats["minecraft:killed"]["minecraft:skeleton"] == 1
+        assert player["Health"] == player["foodLevel"] == 20
+        assert [player[key] for key in ("SpawnX","SpawnY","SpawnZ")] == [27,57,41]
+        assert player["SpawnDimension"] == "minecraft:overworld" and player["SpawnForced"] == 0
+        blocks = saved_states([(26,57,41), (27,57,41), (24,58,39), (24,59,39), (25,57,42),
+                               (24,58,42), (24,57,41), (65,59,68), (29,63,36), (29,61,39),
+                               (28,60,39), (64,59,68), (35,51,38), (26,51,56)])
+        for pos,part in (("26,57,41","foot"), ("27,57,41","head")):
+            assert blocks[pos]["Name"] == "minecraft:white_bed"
+            assert blocks[pos]["Properties"] == {"facing":"east", "occupied":"false", "part":part}
+        for pos,half in (("24,58,39","lower"), ("24,59,39","upper")):
+            assert blocks[pos]["Name"] == "minecraft:spruce_door"
+            assert blocks[pos]["Properties"] == {"facing":"north", "half":half, "hinge":"left", "open":"false", "powered":"false"}
+        assert blocks["25,57,42"]["Name"] == "minecraft:crafting_table"
+        for pos in ("24,58,42", "35,51,38", "26,51,56"):
+            assert blocks[pos]["Name"] == "minecraft:wall_torch"
+        for pos in ("24,57,41", "65,59,68"):
+            assert blocks[pos]["Name"] == "minecraft:air"
+        for pos in ("29,63,36", "29,61,39", "28,60,39", "64,59,68"):
+            assert blocks[pos]["Name"] == "minecraft:cobblestone"
+        report["scope"] = "Naturally acquired food, storage and bed respawn; raw-resource HBM progression remains open"
+        report["food_storage_material_ledger"] = "passed across player, chest, placed blocks and ordinary saved drops"
+        report["chest_inventory"] = stored
+        report["saved_block_entities"] = containers
+        report["saved_states"] = blocks
+        report["saved_items"] = saved
+        report["bed_spawn"] = [27,57,41]
     return report
 
 
@@ -298,12 +394,13 @@ if __name__ == "__main__":
     phase.add_argument("--bootstrap", action="store_true")
     phase.add_argument("--first-iron", action="store_true")
     phase.add_argument("--iron-tools", action="store_true")
+    phase.add_argument("--food-storage", action="store_true")
     parser.add_argument("--record", action="store_true", help="Preserve the first phase report in the ignored evidence directory")
     arguments = parser.parse_args()
-    report = audit(arguments.bootstrap, arguments.first_iron, arguments.iron_tools)
+    report = audit(arguments.bootstrap, arguments.first_iron, arguments.iron_tools, arguments.food_storage)
     if arguments.record:
-        assert arguments.bootstrap or arguments.first_iron or arguments.iron_tools, "Recording requires a phase ledger"
-        name = "bootstrap" if arguments.bootstrap else "first-iron" if arguments.first_iron else "iron-tools"
+        assert arguments.bootstrap or arguments.first_iron or arguments.iron_tools or arguments.food_storage, "Recording requires a phase ledger"
+        name = "bootstrap" if arguments.bootstrap else "first-iron" if arguments.first_iron else "iron-tools" if arguments.iron_tools else "food-storage"
         target = driver.RUN / f"evidence/{name}-audit.json"
         if target.exists():
             raise RuntimeError("Preserve the existing phase audit instead of overwriting it")
