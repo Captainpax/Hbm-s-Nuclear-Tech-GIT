@@ -11,6 +11,10 @@ public final class PortConfig {
     public static final ForgeConfigSpec.BooleanValue DISABLE_ASBESTOS;
     public static final ForgeConfigSpec.BooleanValue ENABLE_POLLUTION;
     public static final ForgeConfigSpec.DoubleValue POLLUTION_MULTIPLIER;
+    public static final ForgeConfigSpec.DoubleValue SOOT_MOB_THRESHOLD;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_SOOT_FOG;
+    public static final ForgeConfigSpec.DoubleValue SOOT_FOG_THRESHOLD;
+    public static final ForgeConfigSpec.DoubleValue SOOT_FOG_DIVISOR;
     public static final ForgeConfigSpec.BooleanValue ENABLE_OVERWORLD_ORES;
     public static final ForgeConfigSpec.IntValue ORE_URANIUM_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_THORIUM_COUNT;
@@ -57,6 +61,10 @@ public final class PortConfig {
         builder.push("pollution");
         ENABLE_POLLUTION = builder.define("enablePollution", true);
         POLLUTION_MULTIPLIER = builder.defineInRange("pollutionMult", 1.0D, 0.0D, 100_000.0D);
+        SOOT_MOB_THRESHOLD = builder.defineInRange("POL_05_buffMobThreshold", 15D, 0D, 10_000D);
+        ENABLE_SOOT_FOG = builder.define("POL_03_enableSootFog", true);
+        SOOT_FOG_THRESHOLD = builder.defineInRange("POL_06_sootFogThreshold", 35D, 0D, 10_000D);
+        SOOT_FOG_DIVISOR = builder.defineInRange("POL_07_sootFogDivisor", 120D, 0.0001D, 100_000D);
         builder.pop();
         builder.push("oregen");
         ENABLE_OVERWORLD_ORES = builder

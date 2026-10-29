@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +23,8 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 /** Solid-fuel firebox heat source for the crucible. */
 public final class PortFireboxBlockEntity extends BlockEntity implements MenuProvider {
@@ -34,6 +37,7 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
     private int maxBurnTime;
     private int burnHeat;
     private int heatEnergy;
+    private int smoke;
     private final ContainerData menuData = new ContainerData() {
         @Override public int get(int index) {
             return switch (index) {
@@ -55,6 +59,7 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
     public ItemStackHandler items() { return items; }
     public int heatEnergy() { return heatEnergy; }
     public int burnTime() { return burnTime; }
+    public int smoke() { return smoke; }
     public ContainerData menuData() { return menuData; }
 
     public void useUpHeat(int amount) {
@@ -71,6 +76,7 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
     }
 
     private void tickServer() {
+        pushSmoke();
         boolean wasBurning = burnTime > 0;
         if (burnTime <= 0) {
             for (int slot = 0; slot < 2; slot++) {
@@ -89,7 +95,19 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
             }
         }
         if (burnTime > 0) {
-            if (heatEnergy < 100_000) burnTime--;
+            // A newly lit fuel item heats immediately but starts consuming burn
+            // ticks (and producing smoke) on the next tick in TileEntityFireboxBase.
+            if (wasBurning && heatEnergy < 100_000) {
+                burnTime--;
+                if (level.getGameTime() % 20 == 0) {
+                    int generated = (int) Math.ceil(PortSootPollution.SOOT_PER_SECOND * 3 * 100);
+                    int overflow = Math.max(0, smoke + generated - 50);
+                    smoke = Math.min(50, smoke + generated);
+                    if (overflow > 0 && level instanceof ServerLevel server) {
+                        PortSootPollution.get(server).add(worldPosition, overflow / 100F);
+                    }
+                }
+            }
             heatEnergy = Math.min(100_000, heatEnergy + burnHeat);
         } else {
             heatEnergy = Math.max(0, heatEnergy - Math.max(heatEnergy / 1000, 1));
@@ -98,6 +116,27 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
         if (burnTime > 0 || heatEnergy > 0) setChanged();
         if (wasBurning != (burnTime > 0)) {
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 3);
+        }
+    }
+
+    private void pushSmoke() {
+        if (smoke == 0) return;
+        // Twelve source outlets: three positions along each horizontal face.
+        for (Direction outward : Direction.Plane.HORIZONTAL) {
+            Direction tangent = outward.getClockWise();
+            for (int offset = -1; offset <= 1; offset++) {
+                BlockPos target = worldPosition.relative(outward, 2).relative(tangent, offset);
+                if (!level.hasChunkAt(target)) continue;
+                BlockEntity receiver = level.getBlockEntity(target);
+                if (receiver == null) continue;
+                IFluidHandler handler = receiver.getCapability(ForgeCapabilities.FLUID_HANDLER,
+                        outward.getOpposite()).resolve().orElse(null);
+                if (handler == null) continue;
+                int sent = handler.fill(new FluidStack(PortFluids.SMOKE.get(), smoke), IFluidHandler.FluidAction.EXECUTE);
+                sent = Math.max(0, Math.min(smoke, sent));
+                if (sent > 0) { smoke -= sent; setChanged(); }
+                if (smoke == 0) return;
+            }
         }
     }
 
@@ -113,6 +152,7 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
         maxBurnTime = Math.max(0, tag.getInt("maxBurnTime"));
         burnHeat = Math.max(0, tag.getInt("burnHeat"));
         heatEnergy = Math.max(0, Math.min(100_000, tag.getInt("heatEnergy")));
+        smoke = Math.max(0, Math.min(50, tag.getInt("smoke")));
     }
 
     @Override protected void saveAdditional(CompoundTag tag) {
@@ -122,6 +162,7 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
         tag.putInt("maxBurnTime", maxBurnTime);
         tag.putInt("burnHeat", burnHeat);
         tag.putInt("heatEnergy", heatEnergy);
+        tag.putInt("smoke", smoke);
     }
 
     @Override public Component getDisplayName() { return Component.translatable("container.hbm.firebox"); }

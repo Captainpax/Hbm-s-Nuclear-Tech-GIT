@@ -905,10 +905,10 @@ asset,sounds/music/recordGlass.ogg,src/main/resources/assets/hbm/sounds/music/re
 asset,sounds/music/recordLambdaCore.ogg,src/main/resources/assets/hbm/sounds/music/recordLambdaCore.ogg,,unported,,
 asset,sounds/music/recordSectorSweep.ogg,src/main/resources/assets/hbm/sounds/music/recordSectorSweep.ogg,,unported,,
 asset,sounds/music/recordVortalCombat.ogg,src/main/resources/assets/hbm/sounds/music/recordVortalCombat.ogg,,unported,,
-asset,sounds/player/cough1.ogg,src/main/resources/assets/hbm/sounds/player/cough1.ogg,,unported,,
-asset,sounds/player/cough2.ogg,src/main/resources/assets/hbm/sounds/player/cough2.ogg,,unported,,
-asset,sounds/player/cough3.ogg,src/main/resources/assets/hbm/sounds/player/cough3.ogg,,unported,,
-asset,sounds/player/cough4.ogg,src/main/resources/assets/hbm/sounds/player/cough4.ogg,,unported,,
+asset,sounds/player/cough1.ogg,src/main/resources/assets/hbm/sounds/player/cough1.ogg,,verified,src/forge120/resources/assets/hbm/sounds/player/cough1.ogg,SHA-256 matches frozen source sound; client smoke checks event and resource presence; audible comparison pending
+asset,sounds/player/cough2.ogg,src/main/resources/assets/hbm/sounds/player/cough2.ogg,,verified,src/forge120/resources/assets/hbm/sounds/player/cough2.ogg,SHA-256 matches frozen source sound; client smoke checks event and resource presence; audible comparison pending
+asset,sounds/player/cough3.ogg,src/main/resources/assets/hbm/sounds/player/cough3.ogg,,verified,src/forge120/resources/assets/hbm/sounds/player/cough3.ogg,SHA-256 matches frozen source sound; client smoke checks event and resource presence; audible comparison pending
+asset,sounds/player/cough4.ogg,src/main/resources/assets/hbm/sounds/player/cough4.ogg,,verified,src/forge120/resources/assets/hbm/sounds/player/cough4.ogg,SHA-256 matches frozen source sound; client smoke checks event and resource presence; audible comparison pending
 asset,sounds/player/groan1.ogg,src/main/resources/assets/hbm/sounds/player/groan1.ogg,,unported,,
 asset,sounds/player/groan2.ogg,src/main/resources/assets/hbm/sounds/player/groan2.ogg,,unported,,
 asset,sounds/player/groan3.ogg,src/main/resources/assets/hbm/sounds/player/groan3.ogg,,unported,,
@@ -8674,11 +8674,11 @@ config_option,RadiationConfig:HAZ_06_disableFibrosis:67,src/main/java/com/hbm/co
 config_option,RadiationConfig:POL_00_enablePollution:70,src/main/java/com/hbm/config/RadiationConfig.java,70,unported,,
 config_option,RadiationConfig:POL_01_enableLeadFromBlocks:71,src/main/java/com/hbm/config/RadiationConfig.java,71,unported,,
 config_option,RadiationConfig:POL_02_enableLeadPoisoning:72,src/main/java/com/hbm/config/RadiationConfig.java,72,unported,,
-config_option,RadiationConfig:POL_03_enableSootFog:73,src/main/java/com/hbm/config/RadiationConfig.java,73,unported,,
+config_option,RadiationConfig:POL_03_enableSootFog:73,src/main/java/com/hbm/config/RadiationConfig.java,73,partial,src/forge120/java/com/hbm/PortConfig.java,Source default restored with bounded server-synced setting; default behavior in soot regressions; independent changed-value and restart toggle comparison pending
 config_option,RadiationConfig:POL_04_enablePoison:74,src/main/java/com/hbm/config/RadiationConfig.java,74,unported,,
-config_option,RadiationConfig:POL_05_buffMobThreshold:75,src/main/java/com/hbm/config/RadiationConfig.java,75,unported,,
-config_option,RadiationConfig:POL_06_sootFogThreshold:76,src/main/java/com/hbm/config/RadiationConfig.java,76,unported,,
-config_option,RadiationConfig:POL_07_sootFogDivisor:77,src/main/java/com/hbm/config/RadiationConfig.java,77,unported,,
+config_option,RadiationConfig:POL_05_buffMobThreshold:75,src/main/java/com/hbm/config/RadiationConfig.java,75,partial,src/forge120/java/com/hbm/PortConfig.java,Source default restored with bounded server-synced setting; default behavior in soot regressions; independent changed-value and restart toggle comparison pending
+config_option,RadiationConfig:POL_06_sootFogThreshold:76,src/main/java/com/hbm/config/RadiationConfig.java,76,partial,src/forge120/java/com/hbm/PortConfig.java,Source default restored with bounded server-synced setting; default behavior in soot regressions; independent changed-value and restart toggle comparison pending
+config_option,RadiationConfig:POL_07_sootFogDivisor:77,src/main/java/com/hbm/config/RadiationConfig.java,77,partial,src/forge120/java/com/hbm/PortConfig.java,Source default restored with bounded server-synced setting; default behavior in soot regressions; independent changed-value and restart toggle comparison pending
 config_option,RadiationConfig:POL_08_smokeStackSootMult:78,src/main/java/com/hbm/config/RadiationConfig.java,78,unported,,
 config_option,RadiationConfig:RADIATION_00_enableContamination:52,src/main/java/com/hbm/config/RadiationConfig.java,52,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls radon and chunk dose; broader radiation effects not yet ported
 config_option,RadiationConfig:RADIATION_01_enableChunkRads:53,src/main/java/com/hbm/config/RadiationConfig.java,53,partial,src/forge120/java/com/hbm/PortConfig.java,Server config controls default scalar chunk radiation; PRISM and world effects pending
@@ -11925,7 +11925,7 @@ java_source,handler/BulletConfiguration,src/main/java/com/hbm/handler/BulletConf
 java_source,handler/CasingEjector,src/main/java/com/hbm/handler/CasingEjector.java,,unported,,
 java_source,handler/CompatHandler,src/main/java/com/hbm/handler/CompatHandler.java,,unported,,
 java_source,handler/DispenserBehaviorHandler,src/main/java/com/hbm/handler/DispenserBehaviorHandler.java,,unported,,
-java_source,handler/EntityEffectHandler,src/main/java/com/hbm/handler/EntityEffectHandler.java,,partial,src/forge120/java/com/hbm/PortRadiationEffects.java,Radiation illness tiers lethal threshold and chunk/Nether exposure ported; transformations and other effects pending
+java_source,handler/EntityEffectHandler,src/main/java/com/hbm/handler/EntityEffectHandler.java,,partial,src/forge120/java/com/hbm/PortSootEffects.java,Source soot cough threshold frequency and coarse filter protection without filter wear; combined asbestos contribution retained; other lung effects and other handlers pending
 java_source,handler/FuelHandler,src/main/java/com/hbm/handler/FuelHandler.java,,partial,src/forge120/java/com/hbm/PortLigniteItem.java,Lignite 1200-tick furnace fuel behavior ported; other custom fuels remain
 java_source,handler/GUIHandler,src/main/java/com/hbm/handler/GUIHandler.java,,unported,,
 java_source,handler/HTTPHandler,src/main/java/com/hbm/handler/HTTPHandler.java,,unported,,
@@ -12041,7 +12041,7 @@ java_source,handler/neutron/NeutronStream,src/main/java/com/hbm/handler/neutron/
 java_source,handler/neutron/PileNeutronHandler,src/main/java/com/hbm/handler/neutron/PileNeutronHandler.java,,unported,,
 java_source,handler/neutron/RBMKNeutronHandler,src/main/java/com/hbm/handler/neutron/RBMKNeutronHandler.java,,unported,,
 java_source,handler/neutron/package-info,src/main/java/com/hbm/handler/neutron/package-info.java,,unported,,
-java_source,handler/pollution/PollutionHandler,src/main/java/com/hbm/handler/pollution/PollutionHandler.java,,partial,src/forge120/java/com/hbm/PortSootPollution.java,Source-sized persistent soot cells and first casting/flue emissions; dispersion decay effects and other pollution types remain
+java_source,handler/pollution/PollutionHandler,src/main/java/com/hbm/handler/pollution/PollutionHandler.java,,partial,src/forge120/java/com/hbm/PortSootPollution.java,Source 64-block soot cells now disperse and decay every 60 server ticks without loading terrain; saved cells config gates negative removal and source mob buffs tested; other pollutant channels world destruction and glyphids remain
 java_source,handler/radiation/ChunkRadiationHandler,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandler.java,,unported,,
 java_source,handler/radiation/ChunkRadiationHandler3D,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandler3D.java,,unported,,
 java_source,handler/radiation/ChunkRadiationHandlerBlank,src/main/java/com/hbm/handler/radiation/ChunkRadiationHandlerBlank.java,,unported,,
@@ -13048,7 +13048,7 @@ java_source,main/MainRegistry,src/main/java/com/hbm/main/MainRegistry.java,,unpo
 java_source,main/ModEventHandler,src/main/java/com/hbm/main/ModEventHandler.java,,unported,,
 java_source,main/ModEventHandlerClient,src/main/java/com/hbm/main/ModEventHandlerClient.java,,partial,src/forge120/java/com/hbm/PortClientRadiation.java,Geiger overlay registration only; remaining client events pending
 java_source,main/ModEventHandlerImpact,src/main/java/com/hbm/main/ModEventHandlerImpact.java,,unported,,
-java_source,main/ModEventHandlerRenderer,src/main/java/com/hbm/main/ModEventHandlerRenderer.java,,unported,,
+java_source,main/ModEventHandlerRenderer,src/main/java/com/hbm/main/ModEventHandlerRenderer.java,,partial,src/forge120/java/com/hbm/PortClientSoot.java,Source soot fog smoothing gray color and distance equations through Forge viewport events; reset on world or player change; broader rendering handlers remain
 java_source,main/NEIConfig,src/main/java/com/hbm/main/NEIConfig.java,,unported,,
 java_source,main/NEIRegistry,src/main/java/com/hbm/main/NEIRegistry.java,,unported,,
 java_source,main/NTMSounds,src/main/java/com/hbm/main/NTMSounds.java,,unported,,
@@ -13070,7 +13070,7 @@ java_source,module/machine/ModuleMachinePUREX,src/main/java/com/hbm/module/machi
 java_source,module/machine/ModuleMachinePlasma,src/main/java/com/hbm/module/machine/ModuleMachinePlasma.java,,unported,,
 java_source,module/machine/ModuleMachinePrecAss,src/main/java/com/hbm/module/machine/ModuleMachinePrecAss.java,,unported,,
 java_source,packet/PacketDispatcher,src/main/java/com/hbm/packet/PacketDispatcher.java,,unported,,
-java_source,packet/PermaSyncHandler,src/main/java/com/hbm/packet/PermaSyncHandler.java,,unported,,
+java_source,packet/PermaSyncHandler,src/main/java/com/hbm/packet/PermaSyncHandler.java,,partial,src/forge120/java/com/hbm/PortNetwork.java,Local player soot sent every server tick through a bounded client-only packet with login respawn and dimension sync; other pollution channels impact and player effects pending
 java_source,packet/threading/PrecompiledPacket,src/main/java/com/hbm/packet/threading/PrecompiledPacket.java,,unported,,
 java_source,packet/threading/ThreadedPacket,src/main/java/com/hbm/packet/threading/ThreadedPacket.java,,unported,,
 java_source,packet/toclient/AuxParticlePacketNT,src/main/java/com/hbm/packet/toclient/AuxParticlePacketNT.java,,unported,,
@@ -13792,7 +13792,7 @@ java_source,tileentity/TileEntityDoorGeneric,src/main/java/com/hbm/tileentity/Ti
 java_source,tileentity/TileEntityInventoryBase,src/main/java/com/hbm/tileentity/TileEntityInventoryBase.java,,unported,,
 java_source,tileentity/TileEntityLoadedBase,src/main/java/com/hbm/tileentity/TileEntityLoadedBase.java,,unported,,
 java_source,tileentity/TileEntityMachineBase,src/main/java/com/hbm/tileentity/TileEntityMachineBase.java,,partial,src/forge120/java/com/hbm/PortMenuValidity.java,Source isUseableByPlayer live-controller identity and 128-square range restored for seven ported machine menus; remaining shared inventory and machine framework pending
-java_source,tileentity/TileEntityMachinePolluting,src/main/java/com/hbm/tileentity/TileEntityMachinePolluting.java,,unported,,
+java_source,tileentity/TileEntityMachinePolluting,src/main/java/com/hbm/tileentity/TileEntityMachinePolluting.java,,partial,src/forge120/java/com/hbm/PortFireboxBlockEntity.java,Firebox source 50 mB smoke buffer source overflow and twelve horizontal Forge-fluid exports conserve partial transfers and persist; leaded/poison smoke generic shared framework and HBM fluid networks pending
 java_source,tileentity/TileEntityProxyBase,src/main/java/com/hbm/tileentity/TileEntityProxyBase.java,,unported,,
 java_source,tileentity/TileEntityProxyCombo,src/main/java/com/hbm/tileentity/TileEntityProxyCombo.java,,partial,src/forge120/java/com/hbm/PortBatterySocketProxyBlockEntity.java,Socket-specific inventory delegation and capability lifecycle ported; generic power fluid heat and integration proxy roles pending
 java_source,tileentity/TileEntityProxyConductor,src/main/java/com/hbm/tileentity/TileEntityProxyConductor.java,,unported,,
@@ -13873,7 +13873,7 @@ java_source,tileentity/machine/TileEntityDummy,src/main/java/com/hbm/tileentity/
 java_source,tileentity/machine/TileEntityElectrolyser,src/main/java/com/hbm/tileentity/machine/TileEntityElectrolyser.java,,unported,,
 java_source,tileentity/machine/TileEntityFEL,src/main/java/com/hbm/tileentity/machine/TileEntityFEL.java,,unported,,
 java_source,tileentity/machine/TileEntityFF,src/main/java/com/hbm/tileentity/machine/TileEntityFF.java,,unported,,
-java_source,tileentity/machine/TileEntityFireboxBase,src/main/java/com/hbm/tileentity/machine/TileEntityFireboxBase.java,,unported,,
+java_source,tileentity/machine/TileEntityFireboxBase,src/main/java/com/hbm/tileentity/machine/TileEntityFireboxBase.java,,partial,src/forge120/java/com/hbm/PortFireboxBlockEntity.java,Source first ignition tick preserves full burn time; heat-demand-only fuel consumption and 12 mB per second smoke generation plus 50 mB storage tested; ashpit door animation other fuels sound and source particles pending
 java_source,tileentity/machine/TileEntityForceField,src/main/java/com/hbm/tileentity/machine/TileEntityForceField.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryBase,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryBase.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryBasin,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryBasin.java,,unported,,
@@ -14363,7 +14363,7 @@ packet_source,NBTControlPacket,src/main/java/com/hbm/packet/toserver/NBTControlP
 packet_source,NBTItemControlPacket,src/main/java/com/hbm/packet/toserver/NBTItemControlPacket.java,,unported,,
 packet_source,PacketDispatcher,src/main/java/com/hbm/packet/PacketDispatcher.java,,unported,,
 packet_source,ParticleBurstPacket,src/main/java/com/hbm/packet/toclient/ParticleBurstPacket.java,,unported,,
-packet_source,PermaSyncHandler,src/main/java/com/hbm/packet/PermaSyncHandler.java,,unported,,
+packet_source,PermaSyncHandler,src/main/java/com/hbm/packet/PermaSyncHandler.java,,partial,src/forge120/java/com/hbm/PortNetwork.java,Soot-only sync uses protocol 2 with bounded float decoding and client direction registration; remaining perma-sync fields pending
 packet_source,PermaSyncPacket,src/main/java/com/hbm/packet/toclient/PermaSyncPacket.java,,unported,,
 packet_source,PlayerInformPacket,src/main/java/com/hbm/packet/toclient/PlayerInformPacket.java,,unported,,
 packet_source,PrecompiledPacket,src/main/java/com/hbm/packet/threading/PrecompiledPacket.java,,unported,,

@@ -42,6 +42,11 @@ public final class PortGasMask extends ArmorItem {
         if (mask.getTag() != null) mask.getTag().remove(FILTER_KEY);
     }
 
+    /** Source ArmorRegistry queries do not wear filters merely for soot irritation. */
+    public static boolean hasCoarseParticleProtection(LivingEntity entity) {
+        return filter(entity.getItemBySlot(EquipmentSlot.HEAD)).getItem() instanceof PortGasMaskFilter;
+    }
+
     /** Matches legacy radon: consume one point while protected, including the last usable point. */
     public static boolean protectFromFineParticles(LivingEntity entity) {
         return protectFromFineParticles(entity, 1);

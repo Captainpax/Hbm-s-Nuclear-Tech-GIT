@@ -17,6 +17,8 @@ public final class PortFluids {
             () -> new FluidType(FluidType.Properties.create().density(-100).viscosity(500)) {});
     public static final RegistryObject<FluidType> FLUE_TYPE = TYPES.register("flue",
             () -> new FluidType(FluidType.Properties.create().density(-100).viscosity(500)) {});
+    public static final RegistryObject<FluidType> SMOKE_TYPE = TYPES.register("smoke",
+            () -> new FluidType(FluidType.Properties.create().density(-100).viscosity(500)) {});
     public static final RegistryObject<Fluid> AIRBLAST = FLUIDS.register("airblast",
             () -> new ForgeFlowingFluid.Source(airblastProperties()));
     public static final RegistryObject<Fluid> AIRBLAST_FLOWING = FLUIDS.register("airblast_flowing",
@@ -25,12 +27,19 @@ public final class PortFluids {
             () -> new ForgeFlowingFluid.Source(flueProperties()));
     public static final RegistryObject<Fluid> FLUE_FLOWING = FLUIDS.register("flue_flowing",
             () -> new ForgeFlowingFluid.Flowing(flueProperties()));
+    public static final RegistryObject<Fluid> SMOKE = FLUIDS.register("smoke",
+            () -> new ForgeFlowingFluid.Source(smokeProperties()));
+    public static final RegistryObject<Fluid> SMOKE_FLOWING = FLUIDS.register("smoke_flowing",
+            () -> new ForgeFlowingFluid.Flowing(smokeProperties()));
 
     private static ForgeFlowingFluid.Properties airblastProperties() {
         return new ForgeFlowingFluid.Properties(AIRBLAST_TYPE, AIRBLAST, AIRBLAST_FLOWING);
     }
     private static ForgeFlowingFluid.Properties flueProperties() {
         return new ForgeFlowingFluid.Properties(FLUE_TYPE, FLUE, FLUE_FLOWING);
+    }
+    private static ForgeFlowingFluid.Properties smokeProperties() {
+        return new ForgeFlowingFluid.Properties(SMOKE_TYPE, SMOKE, SMOKE_FLOWING);
     }
     private PortFluids() {}
 }

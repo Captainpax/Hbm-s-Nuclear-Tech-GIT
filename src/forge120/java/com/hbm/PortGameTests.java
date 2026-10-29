@@ -789,6 +789,11 @@ public final class PortGameTests {
 
             level.setBlock(cruciblePos, Blocks.AIR.defaultBlockState(), 3);
             level.setBlock(fireboxPos, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(moldPos, Blocks.AIR.defaultBlockState(), 3);
+            // A failed seed can leave an earlier casting and recovered scraps.
+            // Reset this dedicated fixture before adding its next 216 quanta.
+            level.getEntitiesOfClass(ItemEntity.class, new AABB(fireboxPos).inflate(4))
+                    .forEach(ItemEntity::discard);
             PortCastingMachineBlock fireboxBlock = (PortCastingMachineBlock) PortBlocks.HEATER_FIREBOX.get();
             var fireboxState = fireboxBlock.defaultBlockState();
             level.setBlock(fireboxPos, fireboxState, 3);
@@ -1313,6 +1318,7 @@ public final class PortGameTests {
         BlockPos fixture = new BlockPos(560, 80, 512);
         level.getChunkAt(fixture);
         if (phase.equals("seed")) {
+            level.setBlock(fixture, Blocks.AIR.defaultBlockState(), 3);
             level.setBlock(fixture, PortBlocks.MACHINE_ELECTRIC_FURNACE.get().defaultBlockState(), 3);
             var furnace = (PortElectricFurnaceBlockEntity) level.getBlockEntity(fixture);
             furnace.setPower(20_000L);

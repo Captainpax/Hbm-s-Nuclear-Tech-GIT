@@ -27,6 +27,15 @@ public final class PortClientSmoke {
         Minecraft minecraft = Minecraft.getInstance();
         // A fresh game directory opens the accessibility onboarding screen before the title screen.
         if (minecraft.screen == null || minecraft.level != null) return;
+        if (minecraft.getSoundManager().getSoundEvent(PortSounds.COUGH.get().getLocation()) == null) {
+            throw new IllegalStateException("Source cough sound event is missing");
+        }
+        for (int index = 1; index <= 4; index++) {
+            if (minecraft.getResourceManager().getResource(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                    HbmPort.MOD_ID, "sounds/player/cough" + index + ".ogg")).isEmpty()) {
+                throw new IllegalStateException("Source cough sound resource is missing: " + index);
+            }
+        }
         if (minecraft.getItemRenderer().getModel(new ItemStack(PortItems.PLATE_POLYMER.get()),
                 null, null, 0) == minecraft.getModelManager().getMissingModel()) {
             throw new IllegalStateException("Insulator inventory model is missing");

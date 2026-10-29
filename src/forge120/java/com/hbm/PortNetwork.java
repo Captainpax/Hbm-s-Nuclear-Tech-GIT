@@ -18,10 +18,10 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 
-/** Server-authoritative player exposure sync; clients cannot submit radiation changes. */
+/** Server-owned exposure and local soot synchronization; no client pollution or radiation writes. */
 @Mod.EventBusSubscriber(modid = HbmPort.MOD_ID)
 public final class PortNetwork {
-    private static final String PROTOCOL = "1";
+    private static final String PROTOCOL = "2";
     private static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(HbmPort.MOD_ID, "play"), () -> PROTOCOL,
             PROTOCOL::equals, PROTOCOL::equals);
@@ -32,6 +32,25 @@ public final class PortNetwork {
         CHANNEL.registerMessage(0, ExposureSync.class, ExposureSync::encode,
                 ExposureSync::decode, ExposureSync::handle,
                 Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+        CHANNEL.registerMessage(1, SootSync.class, SootSync::encode,
+                SootSync::decode, SootSync::handle,
+                Optional.of(NetworkDirection.PLAY_TO_CLIENT));
+    }
+
+    public record SootSync(float soot) {
+        public SootSync {
+            soot = Float.isFinite(soot) ? Math.max(0, Math.min(10_000, soot)) : 0;
+        }
+        public void encode(FriendlyByteBuf buffer) { buffer.writeFloat(soot); }
+        public static SootSync decode(FriendlyByteBuf buffer) { return new SootSync(buffer.readFloat()); }
+        public static void handle(SootSync packet, Supplier<NetworkEvent.Context> supplier) {
+            var context = supplier.get();
+            if (context.getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
+                context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                        () -> () -> PortClientSoot.receive(packet)));
+            }
+            context.setPacketHandled(true);
+        }
     }
 
     public record ExposureSync(float radiation, int asbestos) {
@@ -72,12 +91,20 @@ public final class PortNetwork {
     private static void sync(ServerPlayer player) {
         PortRadiation.get(player).ifPresent(data ->
                 CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), ExposureSync.of(data)));
+        syncSoot(player);
+    }
+
+    private static void syncSoot(ServerPlayer player) {
+        CHANNEL.send(PacketDistributor.PLAYER.with(() -> player), new SootSync(
+                PortSootPollution.get(player.serverLevel()).at(player.blockPosition())));
     }
 
     @SubscribeEvent
     public static void playerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player
-                && player.tickCount % 10 == 0) sync(player);
+        if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
+            if (player.tickCount % 10 == 0) sync(player);
+            else syncSoot(player);
+        }
     }
 
     @SubscribeEvent

@@ -116,6 +116,9 @@ public final class PortElectricFurnaceBlockEntity extends BlockEntity implements
         if (canProcess) {
             storage.extract(CONSUMPTION);
             progress++;
+            if (level.getGameTime() % 20 == 0) {
+                PortSootPollution.get(level).add(worldPosition, PortSootPollution.SOOT_PER_SECOND);
+            }
             if (progress >= DURATION) {
                 ItemStack output = items.getStackInSlot(2);
                 if (output.isEmpty()) items.setStackInSlot(2, result.copy());

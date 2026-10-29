@@ -186,5 +186,7 @@
   "container.hbm.crucible.select": "Alloy: %s (click to select)",
   "container.hbm.crucible.none": "None",
   "container.hbm.crucible.input": "Input: %s, %s quanta",
-  "container.hbm.crucible.output": "Output: %s, %s quanta"
+  "container.hbm.crucible.output": "Output: %s, %s quanta",
+  "fluid_type.hbm.smoke": "Smoke",
+  "fluid.hbm.smoke": "Smoke"
 }
