@@ -95,6 +95,14 @@ def write_datapack() -> None:
         'data modify storage hbm_checkpoint:smoke seeded set value 1b',
     ]
     (functions / "seed.mcfunction").write_text("\n".join(seed) + "\n", encoding="utf-8")
+    replacement = ["# Empty-controller lifetime regression; never run with uncollected molten metal.",
+                   "setblock 31 101 16 minecraft:air"]
+    for y in range(2):
+        for z in range(3):
+            for x in range(3):
+                replacement.append(f"setblock {30+x} {101+y} {15+z} "
+                                   f"hbm:machine_crucible[facing=west,x={x},y={y},z={z}]")
+    (functions / "replace_crucible.mcfunction").write_text("\n".join(replacement) + "\n", encoding="utf-8")
     snapshot = ["# One function executes atomically on the server thread, avoiding cross-tick reads.",
                 "data modify storage hbm_checkpoint:smoke snapshot set value {}"]
 
@@ -159,14 +167,19 @@ def write_datapack() -> None:
     operation("value", "=", "steel_output"); operation("value", "*=", "blast_cost")
     operation("blast_fuel_budget", "+=", "value")
     for name, pos, field in [("flue", "39 100 16", "flueGas"),
+                             ("blast_progress", "39 100 16", "progress"),
                              ("crucible_heat", "31 101 16", "heat"),
+                             ("crucible_progress", "31 101 16", "progress"),
                              ("firebox_heat", "31 100 16", "heatEnergy"),
                              ("firebox_burn", "31 100 16", "burnTime"),
+                             ("firebox_smoke", "31 100 16", "smoke"),
+                             ("mold_amount", "33 100 16", "amount"),
                              ("mold_cooling", "33 100 16", "cooloff")]:
         read(name, pos, field)
     for name in ["copper_quanta", "cast_plates", "electric_input", "electric_output", "electric_progress",
                  "electric_he", "blast_input", "steel_output", "slag_output", "blast_fuel_budget", "flue",
-                 "crucible_heat", "firebox_heat", "firebox_burn", "mold_cooling"]:
+                 "crucible_heat", "firebox_heat", "firebox_burn", "firebox_smoke", "mold_amount", "mold_cooling",
+                 "blast_progress", "crucible_progress"]:
         save(name)
     (functions / "snapshot.mcfunction").write_text("\n".join(snapshot) + "\n", encoding="utf-8")
 
@@ -229,7 +242,7 @@ def command(text: str) -> str:
         return "".join(output)
 
 
-def snapshot(require_two_players: bool) -> None:
+def snapshot(require_two_players: bool, *, quiet: bool = False) -> dict[str, int]:
     if require_two_players and not command("list").startswith("There are 2 of a max of 2 players online:"):
         raise AssertionError("Two real clients must be connected for this check")
     command("function hbm_checkpoint:snapshot")
@@ -243,8 +256,10 @@ def snapshot(require_two_players: bool) -> None:
         raise AssertionError(f"Blast furnace material/fuel ledger changed: {result}")
     if state.get("slag_output", -1) * 2 != state.get("steel_output") or not 0 <= state.get("flue", -1) <= 1000:
         raise AssertionError(f"Blast furnace slag/flue state changed: {result}")
-    print(json.dumps(state, sort_keys=True, indent=2))
-    print("Conservation verified" + (" with two connected clients" if require_two_players else " (server fixture only)"))
+    if not quiet:
+        print(json.dumps(state, sort_keys=True, indent=2))
+        print("Conservation verified" + (" with two connected clients" if require_two_players else " (server fixture only)"))
+    return state
 
 
 if __name__ == "__main__":

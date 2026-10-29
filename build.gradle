@@ -41,6 +41,10 @@ minecraft {
         }
         client {
             property 'hbm.port.auditSocketModels', 'true'
+            if (project.hasProperty('hbmClientDriver')) {
+                property 'hbm.port.clientDriver', project.property('hbmClientDriver').toString()
+                args '--quickPlayMultiplayer', '127.0.0.1:25566'
+            }
         }
         clientSmoke {
             parent runs.client
@@ -58,7 +62,7 @@ minecraft {
             workingDirectory project.file('run-multiplayer-client')
             jvmArgs '-Xmx2G'
             args '--username', 'HbmObserver'
-            if (project.hasProperty('hbmAutoJoin')) {
+            if (project.hasProperty('hbmAutoJoin') && !project.hasProperty('hbmClientDriver')) {
                 args '--quickPlayMultiplayer', '127.0.0.1:25566'
             }
         }
