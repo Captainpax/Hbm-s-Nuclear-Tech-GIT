@@ -1620,7 +1620,7 @@ asset,textures/blocks/brick_concrete_marked.png,src/main/resources/assets/hbm/te
 asset,textures/blocks/brick_concrete_mossy.png,src/main/resources/assets/hbm/textures/blocks/brick_concrete_mossy.png,,unported,,
 asset,textures/blocks/brick_cracked_base.png,src/main/resources/assets/hbm/textures/blocks/brick_cracked_base.png,,unported,,
 asset,textures/blocks/brick_ducrete.png,src/main/resources/assets/hbm/textures/blocks/brick_ducrete.png,,unported,,
-asset,textures/blocks/brick_fire.png,src/main/resources/assets/hbm/textures/blocks/brick_fire.png,,unported,,
+asset,textures/blocks/brick_fire.png,src/main/resources/assets/hbm/textures/blocks/brick_fire.png,,verified,src/forge120/resources/assets/hbm/textures/block/brick_fire.png,Original texture copied byte-for-byte
 asset,textures/blocks/brick_forgotten.png,src/main/resources/assets/hbm/textures/blocks/brick_forgotten.png,,unported,,
 asset,textures/blocks/brick_forgotten_bw.png,src/main/resources/assets/hbm/textures/blocks/brick_forgotten_bw.png,,unported,,
 asset,textures/blocks/brick_forgotten_bw_top.png,src/main/resources/assets/hbm/textures/blocks/brick_forgotten_bw_top.png,,unported,,
@@ -3421,7 +3421,7 @@ asset,textures/gui/processing/gui_arc_welder.png,src/main/resources/assets/hbm/t
 asset,textures/gui/processing/gui_assembler.png,src/main/resources/assets/hbm/textures/gui/processing/gui_assembler.png,,unported,,
 asset,textures/gui/processing/gui_assembly_factory.png,src/main/resources/assets/hbm/textures/gui/processing/gui_assembly_factory.png,,unported,,
 asset,textures/gui/processing/gui_autocrafter.png,src/main/resources/assets/hbm/textures/gui/processing/gui_autocrafter.png,,unported,,
-asset,textures/gui/processing/gui_blast_furnace.png,src/main/resources/assets/hbm/textures/gui/processing/gui_blast_furnace.png,,unported,,
+asset,textures/gui/processing/gui_blast_furnace.png,src/main/resources/assets/hbm/textures/gui/processing/gui_blast_furnace.png,,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_blast_furnace.png,Original texture copied byte-for-byte
 asset,textures/gui/processing/gui_book.png,src/main/resources/assets/hbm/textures/gui/processing/gui_book.png,,unported,,
 asset,textures/gui/processing/gui_breeder.png,src/main/resources/assets/hbm/textures/gui/processing/gui_breeder.png,,unported,,
 asset,textures/gui/processing/gui_catalytic_reformer.png,src/main/resources/assets/hbm/textures/gui/processing/gui_catalytic_reformer.png,,unported,,
@@ -4795,7 +4795,7 @@ asset,textures/items/ingot_pu241.png,src/main/resources/assets/hbm/textures/item
 asset,textures/items/ingot_pu_mix.png,src/main/resources/assets/hbm/textures/items/ingot_pu_mix.png,,unported,,
 asset,textures/items/ingot_pvc.png,src/main/resources/assets/hbm/textures/items/ingot_pvc.png,,unported,,
 asset,textures/items/ingot_ra226.png,src/main/resources/assets/hbm/textures/items/ingot_ra226.png,,unported,,
-asset,textures/items/ingot_raw.png,src/main/resources/assets/hbm/textures/items/ingot_raw.png,,unported,,
+asset,textures/items/ingot_raw.png,src/main/resources/assets/hbm/textures/items/ingot_raw.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_raw_slag.png,Original base texture copied byte-for-byte; source material tint pending
 asset,textures/items/ingot_red_copper.png,src/main/resources/assets/hbm/textures/items/ingot_red_copper.png,,unported,,
 asset,textures/items/ingot_rubber.png,src/main/resources/assets/hbm/textures/items/ingot_rubber.png,,unported,,
 asset,textures/items/ingot_saturnite.png,src/main/resources/assets/hbm/textures/items/ingot_saturnite.png,,unported,,
@@ -7638,7 +7638,7 @@ block,machine_battery_potato,src/main/java/com/hbm/blocks/ModBlocks.java,3202,un
 block,machine_battery_redd,src/main/java/com/hbm/blocks/ModBlocks.java,3201,unported,,
 block,machine_battery_socket,src/main/java/com/hbm/blocks/ModBlocks.java,3200,partial,src/forge120/java/com/hbm/PortBatterySocketBlock.java,Four-part floor footprint with core item reservoir proxy HE ports and shared proxy item automation; source dynamic model SC and creative battery behavior remain pending
 block,machine_bigasstank,src/main/java/com/hbm/blocks/ModBlocks.java,3232,unported,,
-block,machine_blast_furnace,src/main/java/com/hbm/blocks/ModBlocks.java,3032,unported,,
+block,machine_blast_furnace,src/main/java/com/hbm/blocks/ModBlocks.java,3032,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,3x3x7 placement and teardown tested; temporary cube model and fluid ports pending
 block,machine_boiler,src/main/java/com/hbm/blocks/ModBlocks.java,3018,unported,,
 block,machine_boiler_off,src/main/java/com/hbm/blocks/ModBlocks.java,3234,unported,,
 block,machine_catalytic_cracker,src/main/java/com/hbm/blocks/ModBlocks.java,3265,unported,,
@@ -8266,7 +8266,7 @@ block_entity,TileEntityMachineAutosaw,src/main/java/com/hbm/tileentity/TileMappi
 block_entity,TileEntityMachineBAT9000,src/main/java/com/hbm/tileentity/TileMappings.java,207,unported,,
 block_entity,TileEntityMachineBattery,src/main/java/com/hbm/tileentity/TileMappings.java,88,partial,src/forge120/java/com/hbm/PortBatteryBlockEntity.java,HE modes priority items sided slots restart and classic-cable cross-chunk transfer tested; throughput logging and full integrations pending
 block_entity,TileEntityMachineBigAssTank,src/main/java/com/hbm/tileentity/TileMappings.java,208,unported,,
-block_entity,TileEntityMachineBlastFurnace,src/main/java/com/hbm/tileentity/TileMappings.java,74,unported,,
+block_entity,TileEntityMachineBlastFurnace,src/main/java/com/hbm/tileentity/TileMappings.java,74,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,First steel route fuel accounting flue counter inventory NBT and sided item automation tested; airblast and pollution pending
 block_entity,TileEntityMachineCatalyticCracker,src/main/java/com/hbm/tileentity/TileMappings.java,371,unported,,
 block_entity,TileEntityMachineCatalyticReformer,src/main/java/com/hbm/tileentity/TileMappings.java,372,unported,,
 block_entity,TileEntityMachineCentrifuge,src/main/java/com/hbm/tileentity/TileMappings.java,77,unported,,
@@ -9868,7 +9868,7 @@ item,ingot_pu241,src/main/java/com/hbm/items/ModItems.java,4467,unported,,
 item,ingot_pu_mix,src/main/java/com/hbm/items/ModItems.java,4468,unported,,
 item,ingot_pvc,src/main/java/com/hbm/items/ModItems.java,4511,unported,,
 item,ingot_ra226,src/main/java/com/hbm/items/ModItems.java,4479,unported,,
-item,ingot_raw,src/main/java/com/hbm/items/ModItems.java,4568,unported,,
+item,ingot_raw,src/main/java/com/hbm/items/ModItems.java,4568,partial,src/forge120/java/com/hbm/PortItems.java,Named raw-slag output variant registered; other raw material variants pending
 item,ingot_red_copper,src/main/java/com/hbm/items/ModItems.java,4482,unported,,
 item,ingot_rubber,src/main/java/com/hbm/items/ModItems.java,4509,unported,,
 item,ingot_saturnite,src/main/java/com/hbm/items/ModItems.java,4538,unported,,
@@ -11323,7 +11323,7 @@ java_source,blocks/machine/MachineAutosaw,src/main/java/com/hbm/blocks/machine/M
 java_source,blocks/machine/MachineBattery,src/main/java/com/hbm/blocks/machine/MachineBattery.java,,partial,src/forge120/java/com/hbm/PortBatteryBlock.java,Placement charged-item drop and control-menu open path ported; WAILA details custom names visual GUI and full harvest behavior pending
 java_source,blocks/machine/MachineBigAssTank,src/main/java/com/hbm/blocks/machine/MachineBigAssTank.java,,unported,,
 java_source,blocks/machine/MachineBigAssTank9000,src/main/java/com/hbm/blocks/machine/MachineBigAssTank9000.java,,unported,,
-java_source,blocks/machine/MachineBlastFurnace,src/main/java/com/hbm/blocks/machine/MachineBlastFurnace.java,,unported,,
+java_source,blocks/machine/MachineBlastFurnace,src/main/java/com/hbm/blocks/machine/MachineBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,Source-sized multiblock with temporary collision and block model; custom rendering pending
 java_source,blocks/machine/MachineBoiler,src/main/java/com/hbm/blocks/machine/MachineBoiler.java,,unported,,
 java_source,blocks/machine/MachineBrickFurnace,src/main/java/com/hbm/blocks/machine/MachineBrickFurnace.java,,unported,,
 java_source,blocks/machine/MachineCapacitor,src/main/java/com/hbm/blocks/machine/MachineCapacitor.java,,unported,,
@@ -12110,7 +12110,7 @@ java_source,inventory/container/ContainerBarrel,src/main/java/com/hbm/inventory/
 java_source,inventory/container/ContainerBase,src/main/java/com/hbm/inventory/container/ContainerBase.java,,unported,,
 java_source,inventory/container/ContainerBatteryREDD,src/main/java/com/hbm/inventory/container/ContainerBatteryREDD.java,,unported,,
 java_source,inventory/container/ContainerBatterySocket,src/main/java/com/hbm/inventory/container/ContainerBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketMenu.java,One slot player inventory 64-bit HE sync and server-authoritative controls; multiplayer interaction pending
-java_source,inventory/container/ContainerBlastFurnace,src/main/java/com/hbm/inventory/container/ContainerBlastFurnace.java,,unported,,
+java_source,inventory/container/ContainerBlastFurnace,src/main/java/com/hbm/inventory/container/ContainerBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceMenu.java,Source five-slot positions and server-owned data ported; in-world interaction pending
 java_source,inventory/container/ContainerBombMulti,src/main/java/com/hbm/inventory/container/ContainerBombMulti.java,,unported,,
 java_source,inventory/container/ContainerBook,src/main/java/com/hbm/inventory/container/ContainerBook.java,,unported,,
 java_source,inventory/container/ContainerCartDestroyer,src/main/java/com/hbm/inventory/container/ContainerCartDestroyer.java,,unported,,
@@ -12303,7 +12303,7 @@ java_source,inventory/gui/GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUI
 java_source,inventory/gui/GUIBarrel,src/main/java/com/hbm/inventory/gui/GUIBarrel.java,,unported,,
 java_source,inventory/gui/GUIBatteryREDD,src/main/java/com/hbm/inventory/gui/GUIBatteryREDD.java,,unported,,
 java_source,inventory/gui/GUIBatterySocket,src/main/java/com/hbm/inventory/gui/GUIBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketScreen.java,Original 176x181 screen texture and modern charge mode priority controls; visual inspection pending
-java_source,inventory/gui/GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,unported,,
+java_source,inventory/gui/GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background and fuel-progress indicators ported; live visual check pending
 java_source,inventory/gui/GUIBombMulti,src/main/java/com/hbm/inventory/gui/GUIBombMulti.java,,unported,,
 java_source,inventory/gui/GUIBook,src/main/java/com/hbm/inventory/gui/GUIBook.java,,unported,,
 java_source,inventory/gui/GUIBookLore,src/main/java/com/hbm/inventory/gui/GUIBookLore.java,,unported,,
@@ -12524,7 +12524,7 @@ java_source,inventory/recipes/ArcWelderRecipes,src/main/java/com/hbm/inventory/r
 java_source,inventory/recipes/AssemblyMachineRecipes,src/main/java/com/hbm/inventory/recipes/AssemblyMachineRecipes.java,,unported,,
 java_source,inventory/recipes/BlastFurnaceRecipe,src/main/java/com/hbm/inventory/recipes/BlastFurnaceRecipe.java,,unported,,
 java_source,inventory/recipes/BlastFurnaceRecipes,src/main/java/com/hbm/inventory/recipes/BlastFurnaceRecipes.java,,unported,,
-java_source,inventory/recipes/BlastFurnaceRecipesNT,src/main/java/com/hbm/inventory/recipes/BlastFurnaceRecipesNT.java,,unported,,
+java_source,inventory/recipes/BlastFurnaceRecipesNT,src/main/java/com/hbm/inventory/recipes/BlastFurnaceRecipesNT.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceRecipes.java,First active steel-from-ingots recipe ported; source recipe table and external JSON loading pending
 java_source,inventory/recipes/BreederRecipes,src/main/java/com/hbm/inventory/recipes/BreederRecipes.java,,unported,,
 java_source,inventory/recipes/CentrifugeRecipes,src/main/java/com/hbm/inventory/recipes/CentrifugeRecipes.java,,unported,,
 java_source,inventory/recipes/ChemicalPlantRecipes,src/main/java/com/hbm/inventory/recipes/ChemicalPlantRecipes.java,,unported,,
@@ -13910,7 +13910,7 @@ java_source,tileentity/machine/TileEntityMachineAssemblyFactory,src/main/java/co
 java_source,tileentity/machine/TileEntityMachineAssemblyMachine,src/main/java/com/hbm/tileentity/machine/TileEntityMachineAssemblyMachine.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineAutocrafter,src/main/java/com/hbm/tileentity/machine/TileEntityMachineAutocrafter.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineAutosaw,src/main/java/com/hbm/tileentity/machine/TileEntityMachineAutosaw.java,,unported,,
-java_source,tileentity/machine/TileEntityMachineBlastFurnace,src/main/java/com/hbm/tileentity/machine/TileEntityMachineBlastFurnace.java,,unported,,
+java_source,tileentity/machine/TileEntityMachineBlastFurnace,src/main/java/com/hbm/tileentity/machine/TileEntityMachineBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,Half-speed two-iron-and-sand operation plus fuel and flue accounting tested; fluid and remaining recipes pending
 java_source,tileentity/machine/TileEntityMachineCentrifuge,src/main/java/com/hbm/tileentity/machine/TileEntityMachineCentrifuge.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineChemicalFactory,src/main/java/com/hbm/tileentity/machine/TileEntityMachineChemicalFactory.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineChemicalPlant,src/main/java/com/hbm/tileentity/machine/TileEntityMachineChemicalPlant.java,,unported,,
@@ -18015,7 +18015,7 @@ screen_source,GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUIAutocrafter.
 screen_source,GUIBarrel,src/main/java/com/hbm/inventory/gui/GUIBarrel.java,,unported,,
 screen_source,GUIBatteryREDD,src/main/java/com/hbm/inventory/gui/GUIBatteryREDD.java,,unported,,
 screen_source,GUIBatterySocket,src/main/java/com/hbm/inventory/gui/GUIBatterySocket.java,,partial,src/forge120/java/com/hbm/PortBatterySocketScreen.java,Original screen texture reused; visual and multiplayer interaction pending
-screen_source,GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,unported,,
+screen_source,GUIBlastFurnace,src/main/java/com/hbm/inventory/gui/GUIBlastFurnace.java,,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Client screen registered; in-world visual and multiplayer checks pending
 screen_source,GUIBombMulti,src/main/java/com/hbm/inventory/gui/GUIBombMulti.java,,unported,,
 screen_source,GUIBook,src/main/java/com/hbm/inventory/gui/GUIBook.java,,unported,,
 screen_source,GUIBookLore,src/main/java/com/hbm/inventory/gui/GUIBookLore.java,,unported,,

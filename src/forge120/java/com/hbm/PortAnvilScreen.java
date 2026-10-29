@@ -28,6 +28,8 @@ public final class PortAnvilScreen extends AbstractContainerScreen<PortAnvilMenu
                 button -> craft(0, true)).bounds(leftPos + 131, topPos + 62, 37, 20).build());
         addRenderableWidget(Button.builder(Component.literal("×64"),
                 button -> craft(1, true)).bounds(leftPos + 131, topPos + 85, 37, 20).build());
+        addRenderableWidget(Button.builder(Component.translatable("block.hbm.machine_blast_furnace"),
+                button -> craft(2, false)).bounds(leftPos + 8, topPos + 108, 160, 20).build());
     }
 
     private void craft(int recipe, boolean bulk) {

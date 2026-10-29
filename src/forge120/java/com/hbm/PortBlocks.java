@@ -110,6 +110,10 @@ public final class PortBlocks {
     public static final RegistryObject<Block> ORE_DEPTH_CINNEBAR = depth("ore_depth_cinnebar");
     public static final RegistryObject<Block> ORE_DEPTH_ZIRCONIUM = depth("ore_depth_zirconium");
     public static final RegistryObject<Block> ORE_DEPTH_BORAX = depth("ore_depth_borax");
+    public static final RegistryObject<Block> MACHINE_BLAST_FURNACE = BLOCKS.register("machine_blast_furnace",
+            () -> new PortBlastFurnaceBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE).strength(5.0F, 10.0F)
+                    .sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
     private PortBlocks() {}
 

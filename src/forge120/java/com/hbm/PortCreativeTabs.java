@@ -28,6 +28,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.INGOT_LEAD.get());
                         output.accept(PortItems.INGOT_BERYLLIUM.get());
                         output.accept(PortItems.INGOT_STEEL.get());
+                        output.accept(PortItems.INGOT_RAW_SLAG.get());
                         output.accept(PortItems.SULFUR.get());
                         output.accept(PortItems.FLUORITE.get());
                         output.accept(PortItems.NITER.get());
@@ -110,6 +111,7 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.ORE_DEPTH_BORAX.get());
                         output.accept(PortItems.MACHINE_ELECTRIC_FURNACE.get());
                         output.accept(PortItems.MACHINE_PRESS.get());
+                        output.accept(PortItems.MACHINE_BLAST_FURNACE.get());
                         output.accept(PortItems.ANVIL_IRON.get());
                         output.accept(PortItems.ANVIL_STEEL.get());
                         output.accept(PortItems.BLOCK_ASBESTOS.get());

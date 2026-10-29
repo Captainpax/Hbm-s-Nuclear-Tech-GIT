@@ -56,6 +56,73 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void blastFurnaceConstructionSteelAndTeardown(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var player = FakePlayerFactory.getMinecraft(level);
+        BlockPos anvilPos = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlock(anvilPos, PortBlocks.ANVIL_IRON.get().defaultBlockState(), 3);
+        player.setPos(anvilPos.getX() + 0.5, anvilPos.getY(), anvilPos.getZ() + 0.5);
+        player.getInventory().clearContent();
+        PortAnvilMenu anvil = new PortAnvilMenu(78, player.getInventory(), anvilPos, 1);
+        player.getInventory().setItem(0, new ItemStack(Blocks.STONE_BRICKS, 4));
+        player.getInventory().setItem(1, new ItemStack(PortItems.INGOT_FIREBRICK.get(), 32));
+        player.getInventory().setItem(2, new ItemStack(PortItems.PLATE_COPPER.get(), 8));
+        if (!anvil.clickMenuButton(player, 4)
+                || countInventory(player, PortItems.MACHINE_BLAST_FURNACE.get()) != 1
+                || countInventory(player, PortItems.INGOT_FIREBRICK.get()) != 0
+                || countInventory(player, PortItems.PLATE_COPPER.get()) != 0
+                || countInventory(player, Blocks.STONE_BRICKS.asItem()) != 0
+                || anvil.clickMenuButton(player, 4)) {
+            throw new IllegalStateException("Blast furnace anvil construction did not consume source inputs once");
+        }
+        anvil.removed(player);
+        player.getInventory().clearContent();
+        level.setBlock(anvilPos, Blocks.AIR.defaultBlockState(), 3);
+
+        BlockPos core = helper.absolutePos(new BlockPos(2, 2, 2));
+        PortBlastFurnaceBlock block = (PortBlastFurnaceBlock) PortBlocks.MACHINE_BLAST_FURNACE.get();
+        var state = block.defaultBlockState();
+        level.setBlock(core, state, 3);
+        block.setPlacedBy(level, core, state, player, new ItemStack(PortItems.MACHINE_BLAST_FURNACE.get()));
+        if (!(level.getBlockEntity(core) instanceof PortBlastFurnaceBlockEntity furnace)
+                || !level.getBlockState(core.offset(1, 6, 1)).is(block)
+                || !PortBlastFurnaceBlock.corePos(core.offset(1, 6, 1),
+                        level.getBlockState(core.offset(1, 6, 1))).equals(core)) {
+            throw new IllegalStateException("Seven-high blast furnace footprint or core missing");
+        }
+        var side = furnace.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.NORTH).resolve().orElseThrow();
+        if (side.getSlots() != 5 || !side.insertItem(3, new ItemStack(Items.STICK), true).is(Items.STICK)
+                || !side.extractItem(1, 1, true).isEmpty()) {
+            throw new IllegalStateException("Blast furnace automation permits invalid output insertion or input extraction");
+        }
+        furnace.items().setStackInSlot(0, new ItemStack(Items.COAL));
+        furnace.items().setStackInSlot(1, new ItemStack(Items.IRON_INGOT, 2));
+        furnace.items().setStackInSlot(2, new ItemStack(Items.SAND));
+        for (int tick = 0; tick < 1600; tick++) {
+            PortBlastFurnaceBlockEntity.tick(level, core, state, furnace);
+        }
+        if (!furnace.items().getStackInSlot(3).is(PortItems.INGOT_STEEL.get())
+                || furnace.items().getStackInSlot(3).getCount() != 2
+                || !furnace.items().getStackInSlot(4).is(PortItems.INGOT_RAW_SLAG.get())
+                || !furnace.items().getStackInSlot(1).isEmpty()
+                || !furnace.items().getStackInSlot(2).isEmpty()
+                || furnace.fuel() != 800 || furnace.flueGas() != 100 || furnace.progress() != 0) {
+            throw new IllegalStateException("Blast furnace steel yield or half-speed fuel/flue accounting differs from source");
+        }
+        PortBlastFurnaceBlockEntity restored = new PortBlastFurnaceBlockEntity(core, state);
+        restored.load(furnace.saveWithFullMetadata());
+        if (restored.fuel() != 800 || restored.flueGas() != 100
+                || restored.items().getStackInSlot(3).getCount() != 2) {
+            throw new IllegalStateException("Blast furnace inventory or tank state did not survive NBT reload");
+        }
+        level.setBlock(core.above(6), Blocks.AIR.defaultBlockState(), 3);
+        if (!level.getBlockState(core).isAir() || !level.getBlockState(core.offset(1, 0, 1)).isAir()) {
+            throw new IllegalStateException("Blast furnace teardown left orphaned proxies");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void ironAnvilUnlocksPressStampsAndSteelUpgrade(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));

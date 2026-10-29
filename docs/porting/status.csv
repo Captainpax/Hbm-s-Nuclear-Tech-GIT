@@ -1,4 +1,16 @@
 kind,key,status,target,notes
+block,machine_blast_furnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,3x3x7 placement and teardown tested; temporary cube model and fluid ports pending
+block_entity,TileEntityMachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,First steel route fuel accounting flue counter inventory NBT and sided item automation tested; airblast and pollution pending
+item,ingot_raw,partial,src/forge120/java/com/hbm/PortItems.java,Named raw-slag output variant registered; other raw material variants pending
+java_source,blocks/machine/MachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,Source-sized multiblock with temporary collision and block model; custom rendering pending
+java_source,tileentity/machine/TileEntityMachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,Half-speed two-iron-and-sand operation plus fuel and flue accounting tested; fluid and remaining recipes pending
+java_source,inventory/recipes/BlastFurnaceRecipesNT,partial,src/forge120/java/com/hbm/PortBlastFurnaceRecipes.java,First active steel-from-ingots recipe ported; source recipe table and external JSON loading pending
+java_source,inventory/container/ContainerBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceMenu.java,Source five-slot positions and server-owned data ported; in-world interaction pending
+java_source,inventory/gui/GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background and fuel-progress indicators ported; live visual check pending
+screen_source,GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Client screen registered; in-world visual and multiplayer checks pending
+asset,textures/blocks/brick_fire.png,verified,src/forge120/resources/assets/hbm/textures/block/brick_fire.png,Original texture copied byte-for-byte
+asset,textures/items/ingot_raw.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_raw_slag.png,Original base texture copied byte-for-byte; source material tint pending
+asset,textures/gui/processing/gui_blast_furnace.png,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_blast_furnace.png,Original texture copied byte-for-byte
 block,anvil_iron,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Source iron-block recipe and falling facing tier-one construction interaction; temporary block model and full recipe browser pending
 block,anvil_steel,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Steel anvil smithing from iron anvil and ten steel ingots tested; steel production and full tier-two recipes pending
 item,ingot_steel,partial,src/forge120/java/com/hbm/PortItems.java,Original item and source texture registered; blast-furnace production pending

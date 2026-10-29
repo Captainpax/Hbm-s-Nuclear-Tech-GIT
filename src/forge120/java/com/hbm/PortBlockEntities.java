@@ -27,6 +27,9 @@ public final class PortBlockEntities {
     public static final RegistryObject<BlockEntityType<PortPressBlockEntity>> PRESS =
             TYPES.register("machine_press", () -> BlockEntityType.Builder.of(
                     PortPressBlockEntity::new, PortBlocks.MACHINE_PRESS.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PortBlastFurnaceBlockEntity>> BLAST_FURNACE =
+            TYPES.register("machine_blast_furnace", () -> BlockEntityType.Builder.of(
+                    PortBlastFurnaceBlockEntity::new, PortBlocks.MACHINE_BLAST_FURNACE.get()).build(null));
 
     private PortBlockEntities() {}
 }

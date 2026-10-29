@@ -164,6 +164,8 @@ public final class PortItems {
     public static final RegistryObject<Item> POWDER_BORAX = ingot("powder_borax");
     public static final RegistryObject<Item> BALL_FIRECLAY = ingot("ball_fireclay");
     public static final RegistryObject<Item> INGOT_FIREBRICK = ingot("ingot_firebrick");
+    public static final RegistryObject<Item> INGOT_RAW_SLAG = ingot("ingot_raw_slag");
+    public static final RegistryObject<Item> MACHINE_BLAST_FURNACE = ore("machine_blast_furnace", PortBlocks.MACHINE_BLAST_FURNACE);
 
     /** Legacy ItemBatteryPack enum order, now represented by stable named item IDs. */
     public static final List<RegistryObject<Item>> BATTERY_PACKS = List.of(

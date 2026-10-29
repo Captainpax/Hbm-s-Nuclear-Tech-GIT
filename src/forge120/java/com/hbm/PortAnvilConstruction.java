@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 
 /** First tier-1 construction recipes, consumed from the player's inventory like AnvilCraftPacket. */
 public final class PortAnvilConstruction {
@@ -19,7 +20,11 @@ public final class PortAnvilConstruction {
                 new Recipe(1, () -> new ItemStack(PortItems.STAMP_IRON_PLATE.get()),
                         List.of(new Requirement(PortItems.STAMP_IRON_FLAT::get, 1))),
                 new Recipe(1, () -> new ItemStack(PortItems.STAMP_IRON_WIRE.get()),
-                        List.of(new Requirement(PortItems.STAMP_IRON_FLAT::get, 1))));
+                        List.of(new Requirement(PortItems.STAMP_IRON_FLAT::get, 1))),
+                new Recipe(1, () -> new ItemStack(PortItems.MACHINE_BLAST_FURNACE.get()),
+                        List.of(new Requirement(() -> Blocks.STONE_BRICKS.asItem(), 4),
+                                new Requirement(PortItems.INGOT_FIREBRICK::get, 32),
+                                new Requirement(PortItems.PLATE_COPPER::get, 8))));
     }
 
     public static boolean craft(Player player, int tier, int recipeIndex, boolean bulk) {
