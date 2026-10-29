@@ -135,6 +135,8 @@
   "block.hbm.foundry_mold": "Foundry Mold",
   "item.hbm.plate_cast_iron": "Iron Cast Plate",
   "item.hbm.plate_cast_copper": "Copper Cast Plate",
+  "item.hbm.scraps_copper": "Copper Scraps",
+  "item.hbm.scraps_copper.amount": "%s quanta (72 per ingot)",
   "item.hbm.mold_base": "Base Mold",
   "item.hbm.mold_plate_cast": "Cast Plate Mold",
   "item.hbm.powder_asbestos.desc": "\"Sniffffffff- MHHHHHHMHHHHHHHHH\"",

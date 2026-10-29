@@ -27,11 +27,12 @@ import net.minecraftforge.items.wrapper.RangedWrapper;
 public final class PortCrucibleBlockEntity extends BlockEntity implements MenuProvider {
     public static final int MAX_HEAT = 100_000;
     public static final int PROCESS_HEAT = 20_000;
-    public static final int COPPER_QUANTA = 72;
+    public static final int COPPER_QUANTA = PortCopperMaterial.INGOT_QUANTA;
+    public static final int MAX_COPPER_QUANTA = 10_368;
     private final ItemStackHandler items = new ItemStackHandler(10) {
         @Override protected void onContentsChanged(int slot) { setChanged(); }
         @Override public boolean isItemValid(int slot, ItemStack stack) {
-            return slot >= 1 && stack.is(PortItems.INGOT_COPPER.get());
+            return slot >= 1 && canSmelt(stack);
         }
         @Override public int getSlotLimit(int slot) { return 1; }
     };
@@ -63,6 +64,18 @@ public final class PortCrucibleBlockEntity extends BlockEntity implements MenuPr
     public int moltenCopper() { return moltenCopper; }
     public ContainerData menuData() { return menuData; }
 
+    public boolean canSmelt(ItemStack stack) {
+        int amount = PortCopperMaterial.quantaPerItem(stack);
+        return amount > 0 && amount <= MAX_COPPER_QUANTA - moltenCopper;
+    }
+
+    ItemStack takeCopperScraps() {
+        ItemStack recovered = PortScrapsItem.copper(moltenCopper);
+        moltenCopper = 0;
+        setChanged();
+        return recovered;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, PortCrucibleBlockEntity machine) {
         if (!level.isClientSide) machine.tickServer();
     }
@@ -82,16 +95,17 @@ public final class PortCrucibleBlockEntity extends BlockEntity implements MenuPr
 
         int slot = -1;
         for (int index = 1; index < 10; index++) {
-            if (items.getStackInSlot(index).is(PortItems.INGOT_COPPER.get())) { slot = index; break; }
+            if (canSmelt(items.getStackInSlot(index))) { slot = index; break; }
         }
-        if (heat >= MAX_HEAT / 2 && slot != -1 && moltenCopper <= 10_368 - COPPER_QUANTA) {
+        if (heat >= MAX_HEAT / 2 && slot != -1) {
             int delta = (heat - MAX_HEAT / 2) / 20;
             heat -= delta;
             progress += delta;
             if (progress >= PROCESS_HEAT) {
                 progress = 0;
+                int amount = PortCopperMaterial.quantaPerItem(items.getStackInSlot(slot));
                 items.extractItem(slot, 1, false);
-                moltenCopper += COPPER_QUANTA;
+                moltenCopper += amount;
             }
         } else {
             progress = 0;
@@ -118,7 +132,7 @@ public final class PortCrucibleBlockEntity extends BlockEntity implements MenuPr
                 worldPosition.getZ() - 0.5, worldPosition.getX() + 1.5,
                 worldPosition.getY() + 1, worldPosition.getZ() + 1.5);
         for (ItemEntity entity : level.getEntitiesOfClass(ItemEntity.class, basin, item -> item.isAlive())) {
-            if (!entity.getItem().is(PortItems.INGOT_COPPER.get())) continue;
+            if (!canSmelt(entity.getItem())) continue;
             ItemStack remaining = entity.getItem().copy();
             for (int slot = 1; slot < 10 && !remaining.isEmpty(); slot++) {
                 if (!items.getStackInSlot(slot).isEmpty()) continue;
@@ -134,7 +148,7 @@ public final class PortCrucibleBlockEntity extends BlockEntity implements MenuPr
         if (tag.contains("items", 10)) items.deserializeNBT(tag.getCompound("items"));
         heat = Math.max(0, Math.min(MAX_HEAT, tag.getInt("heat")));
         progress = Math.max(0, Math.min(PROCESS_HEAT - 1, tag.getInt("progress")));
-        moltenCopper = Math.max(0, Math.min(10_368, tag.getInt("moltenCopper")));
+        moltenCopper = Math.max(0, Math.min(MAX_COPPER_QUANTA, tag.getInt("moltenCopper")));
     }
 
     @Override protected void saveAdditional(CompoundTag tag) {

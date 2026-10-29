@@ -35,6 +35,14 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     public int copperQuanta() { return copperQuanta; }
     public int cooloff() { return cooloff; }
 
+    ItemStack takeCopperScraps() {
+        ItemStack recovered = PortScrapsItem.copper(copperQuanta);
+        copperQuanta = 0;
+        cooloff = 200;
+        setChanged();
+        return recovered;
+    }
+
     public int acceptCopper(int offered) {
         if (offered <= 0 || !items.getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get())
                 || !items.getStackInSlot(1).isEmpty()) return 0;

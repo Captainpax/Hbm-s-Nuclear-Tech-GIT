@@ -68,7 +68,7 @@ public final class PortClientSmoke {
                 PortItems.HEATER_FIREBOX.get(), PortItems.MACHINE_CRUCIBLE.get(),
                 PortItems.FOUNDRY_MOLD.get(), PortItems.MOLD_BASE.get(),
                 PortItems.MOLD_PLATE_CAST.get(), PortItems.PLATE_CAST_IRON.get(),
-                PortItems.PLATE_CAST_COPPER.get()
+                PortItems.PLATE_CAST_COPPER.get(), PortItems.SCRAPS_COPPER.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {

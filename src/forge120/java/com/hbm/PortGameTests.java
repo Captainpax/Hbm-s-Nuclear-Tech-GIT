@@ -55,6 +55,165 @@ import java.util.UUID;
 public final class PortGameTests {
     private PortGameTests() {}
 
+    @GameTest(template = "empty")
+    public static void castingTeardownReturnsEveryQuantum(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos core = helper.absolutePos(new BlockPos(3, 2, 3));
+        PortCastingMachineBlock block = (PortCastingMachineBlock) PortBlocks.MACHINE_CRUCIBLE.get();
+        AABB dropsArea = new AABB(core).inflate(2);
+        for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) for (int y = 0; y < 2; y++) {
+            var state = block.defaultBlockState().setValue(PortCastingMachineBlock.FACING,
+                    x == 0 ? Direction.EAST : x < 0 ? Direction.SOUTH : Direction.NORTH);
+            level.setBlock(core, state, 3);
+            block.setPlacedBy(level, core, state, null, new ItemStack(block));
+            PortCrucibleBlockEntity crucible = (PortCrucibleBlockEntity) level.getBlockEntity(core);
+            CompoundTag saved = crucible.saveWithFullMetadata();
+            saved.putInt("moltenCopper", 145);
+            crucible.load(saved);
+            crucible.items().setStackInSlot(1, new ItemStack(PortItems.INGOT_COPPER.get()));
+            crucible.items().setStackInSlot(2, PortScrapsItem.copper(7));
+            level.setBlock(core.offset(x, y, z), Blocks.AIR.defaultBlockState(), 3);
+            var drops = level.getEntitiesOfClass(ItemEntity.class, dropsArea, ItemEntity::isAlive);
+            if (drops.size() != 3 || copperInDrops(drops) != 224 || !crucible.takeCopperScraps().isEmpty()) {
+                throw new IllegalStateException("Breaking crucible part " + x + "," + y + "," + z
+                        + " lost or duplicated molten or buffered copper");
+            }
+            for (int px = -1; px <= 1; px++) for (int pz = -1; pz <= 1; pz++) for (int py = 0; py < 2; py++) {
+                if (!level.getBlockState(core.offset(px, py, pz)).isAir()) {
+                    throw new IllegalStateException("Scrap recovery left an orphan crucible member");
+                }
+            }
+            drops.forEach(ItemEntity::discard);
+        }
+        for (int phase = 0; phase < 3; phase++) {
+            level.setBlock(core, PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), 3);
+            var mold = (PortFoundryMoldBlockEntity) level.getBlockEntity(core);
+            mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+            int expected = phase == 0 ? 24 : PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA;
+            mold.acceptCopper(expected);
+            int ticks = phase == 1 ? 199 : phase == 2 ? 200 : 0;
+            for (int tick = 0; tick < ticks; tick++) PortFoundryMoldBlockEntity.tick(level, core, mold.getBlockState(), mold);
+            level.setBlock(core, Blocks.AIR.defaultBlockState(), 3);
+            var drops = level.getEntitiesOfClass(ItemEntity.class, dropsArea, ItemEntity::isAlive);
+            int molds = drops.stream().filter(drop -> drop.getItem().is(PortItems.MOLD_PLATE_CAST.get()))
+                    .mapToInt(drop -> drop.getItem().getCount()).sum();
+            if (drops.size() != 2 || copperInDrops(drops) != expected || molds != 1
+                    || !mold.takeCopperScraps().isEmpty()) {
+                throw new IllegalStateException("Mold teardown lost copper or duplicated its reusable mold in phase " + phase);
+            }
+            drops.forEach(ItemEntity::discard);
+        }
+        helper.succeed();
+    }
+
+    private static long copperInDrops(List<ItemEntity> drops) {
+        return drops.stream().mapToLong(drop -> (long) PortCopperMaterial.quantaPerItem(drop.getItem())
+                * drop.getItem().getCount()).sum();
+    }
+
+    @GameTest(template = "empty")
+    public static void shovelRecoversCopperWithFullInventory(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos core = helper.absolutePos(new BlockPos(3, 3, 3));
+        PortCastingMachineBlock block = (PortCastingMachineBlock) PortBlocks.MACHINE_CRUCIBLE.get();
+        var state = block.defaultBlockState();
+        level.setBlock(core, state, 3);
+        block.setPlacedBy(level, core, state, null, new ItemStack(block));
+        var crucible = (PortCrucibleBlockEntity) level.getBlockEntity(core);
+        CompoundTag saved = crucible.saveWithFullMetadata();
+        saved.putInt("moltenCopper", 97);
+        saved.putInt("heat", 61_234);
+        saved.putInt("progress", 12_345);
+        crucible.load(saved);
+        var player = FakePlayerFactory.getMinecraft(level);
+        player.getInventory().clearContent();
+        player.setShiftKeyDown(false);
+        player.setPos(core.getX() + 0.5, core.getY(), core.getZ() + 0.5);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SHOVEL));
+        BlockPos proxy = core.east().above();
+        var hit = new BlockHitResult(Vec3.atCenterOf(proxy), Direction.UP, proxy, false);
+        block.use(level.getBlockState(proxy), level, proxy, player, InteractionHand.MAIN_HAND, hit);
+        block.use(level.getBlockState(proxy), level, proxy, player, InteractionHand.MAIN_HAND, hit);
+        long recovered = player.getInventory().items.stream().mapToLong(stack ->
+                (long) PortScrapsItem.quanta(stack) * stack.getCount()).sum();
+        if (recovered != 97 || crucible.moltenCopper() != 0 || crucible.heat() != 61_234
+                || crucible.progress() != 12_345 || player.getMainHandItem().getDamageValue() != 0) {
+            throw new IllegalStateException("Crucible shovel recovery duplicated copper or changed heat/progress/tool wear");
+        }
+        BlockPos moldPos = core.west(2).below();
+        var moldBlock = (PortFoundryMoldBlock) PortBlocks.FOUNDRY_MOLD.get();
+        level.setBlock(moldPos, moldBlock.defaultBlockState(), 3);
+        var mold = (PortFoundryMoldBlockEntity) level.getBlockEntity(moldPos);
+        mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+        mold.acceptCopper(47);
+        for (int slot = 0; slot < 36; slot++) player.getInventory().setItem(slot, new ItemStack(Items.STONE, 64));
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SHOVEL));
+        player.setPos(moldPos.getX() + 0.5, moldPos.getY(), moldPos.getZ() + 0.5);
+        hit = new BlockHitResult(Vec3.atCenterOf(moldPos), Direction.UP, moldPos, false);
+        moldBlock.use(mold.getBlockState(), level, moldPos, player, InteractionHand.MAIN_HAND, hit);
+        moldBlock.use(mold.getBlockState(), level, moldPos, player, InteractionHand.MAIN_HAND, hit);
+        var drops = level.getEntitiesOfClass(ItemEntity.class, new AABB(moldPos).inflate(2), ItemEntity::isAlive);
+        if (copperInDrops(drops) != 47 || mold.copperQuanta() != 0 || mold.cooloff() != 200
+                || !mold.items().getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get())) {
+            throw new IllegalStateException("Full-inventory shovel recovery lost copper or altered the installed mold");
+        }
+        drops.forEach(ItemEntity::discard);
+        player.getInventory().clearContent();
+        level.setBlock(core, Blocks.AIR.defaultBlockState(), 3);
+        level.setBlock(moldPos, Blocks.AIR.defaultBlockState(), 3);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void copperScrapsRemeltWithoutRoundingOrOverflow(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(3, 2, 3));
+        var state = PortBlocks.MACHINE_CRUCIBLE.get().defaultBlockState();
+        level.setBlock(pos, state, 3);
+        var crucible = (PortCrucibleBlockEntity) level.getBlockEntity(pos);
+        ItemStack defaultScrap = new ItemStack(PortItems.SCRAPS_COPPER.get());
+        if (PortScrapsItem.quanta(defaultScrap) != 72) throw new IllegalStateException("Untagged scrap lost source one-ingot default");
+        ItemStack malformed = PortScrapsItem.copper(1);
+        for (int amount : new int[] {0, -1, Integer.MIN_VALUE, Integer.MAX_VALUE}) {
+            malformed.getOrCreateTag().putInt("amount", amount);
+            if (crucible.canSmelt(malformed)) throw new IllegalStateException("Crucible accepted invalid or oversized scraps");
+        }
+        malformed.getOrCreateTag().putString("amount", "72");
+        if (crucible.canSmelt(malformed)) throw new IllegalStateException("Crucible accepted malformed scrap NBT");
+        ItemStack[] inputs = {PortScrapsItem.copper(1), PortScrapsItem.copper(7), PortScrapsItem.copper(71),
+                PortScrapsItem.copper(73), PortScrapsItem.copper(145), new ItemStack(PortItems.INGOT_COPPER.get()),
+                new ItemStack(PortItems.PLATE_COPPER.get()), new ItemStack(PortItems.PLATE_CAST_COPPER.get()),
+                new ItemStack(PortItems.WIRE_FINE_COPPER.get())};
+        int[] expected = {1, 7, 71, 73, 145, 72, 72, 216, 9};
+        for (int i = 0; i < inputs.length; i++) {
+            CompoundTag saved = crucible.saveWithFullMetadata();
+            saved.putInt("heat", 100_000);
+            saved.putInt("progress", PortCrucibleBlockEntity.PROCESS_HEAT - 1);
+            saved.putInt("moltenCopper", 0);
+            crucible.load(saved);
+            ItemStack restored = ItemStack.of(inputs[i].save(new CompoundTag()));
+            crucible.items().setStackInSlot(1, restored);
+            PortCrucibleBlockEntity.tick(level, pos, state, crucible);
+            if (crucible.moltenCopper() != expected[i] || !crucible.items().getStackInSlot(1).isEmpty()) {
+                throw new IllegalStateException("Source copper shape/scrap quanta changed when remelting input " + i);
+            }
+        }
+        CompoundTag saved = crucible.saveWithFullMetadata();
+        saved.putInt("moltenCopper", PortCrucibleBlockEntity.MAX_COPPER_QUANTA - 7);
+        saved.putInt("heat", 100_000);
+        saved.putInt("progress", PortCrucibleBlockEntity.PROCESS_HEAT - 1);
+        crucible.load(saved);
+        if (crucible.canSmelt(PortScrapsItem.copper(8)) || !crucible.canSmelt(PortScrapsItem.copper(7))) {
+            throw new IllegalStateException("Crucible did not check the full per-item scrap amount against capacity");
+        }
+        crucible.items().setStackInSlot(1, PortScrapsItem.copper(7));
+        PortCrucibleBlockEntity.tick(level, pos, state, crucible);
+        if (crucible.moltenCopper() != PortCrucibleBlockEntity.MAX_COPPER_QUANTA) {
+            throw new IllegalStateException("Exact-capacity scrap remelt lost or overflowed copper");
+        }
+        helper.succeed();
+    }
+
     @GameTest(template = "empty", timeoutTicks = 30)
     public static void crucibleCollectsDropsWithoutLosingOverflow(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
@@ -412,9 +571,9 @@ public final class PortGameTests {
             PortCrucibleBlockEntity crucible = (PortCrucibleBlockEntity) level.getBlockEntity(cruciblePos);
             PortFoundryMoldBlockEntity mold = (PortFoundryMoldBlockEntity) level.getBlockEntity(moldPos);
             firebox.items().setStackInSlot(0, new ItemStack(Items.COAL));
-            for (int slot = 1; slot <= 3; slot++) {
-                crucible.items().setStackInSlot(slot, new ItemStack(PortItems.INGOT_COPPER.get()));
-            }
+            crucible.items().setStackInSlot(1, PortScrapsItem.copper(73));
+            crucible.items().setStackInSlot(2, PortScrapsItem.copper(71));
+            crucible.items().setStackInSlot(3, new ItemStack(PortItems.INGOT_COPPER.get()));
             mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
             for (int tick = 0; tick < 2_500 && crucible.moltenCopper() == 0; tick++) {
                 PortFireboxBlockEntity.tick(level, fireboxPos, fireboxState, firebox);
@@ -466,7 +625,8 @@ public final class PortGameTests {
     private static int castingCopperTotal(PortCrucibleBlockEntity crucible, PortFoundryMoldBlockEntity mold) {
         int quanta = crucible.moltenCopper() + mold.copperQuanta();
         for (int slot = 1; slot < 10; slot++) {
-            quanta += crucible.items().getStackInSlot(slot).getCount() * PortCrucibleBlockEntity.COPPER_QUANTA;
+            ItemStack stack = crucible.items().getStackInSlot(slot);
+            quanta += stack.getCount() * PortCopperMaterial.quantaPerItem(stack);
         }
         quanta += mold.items().getStackInSlot(1).getCount()
                 * PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA;

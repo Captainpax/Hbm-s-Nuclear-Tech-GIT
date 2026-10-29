@@ -30,6 +30,8 @@ public final class PortItems {
     public static final RegistryObject<Item> INGOT_TH232 = ingot("ingot_th232");
     public static final RegistryObject<Item> INGOT_TITANIUM = ingot("ingot_titanium");
     public static final RegistryObject<Item> INGOT_COPPER = ingot("ingot_copper");
+    public static final RegistryObject<Item> SCRAPS_COPPER = ITEMS.register("scraps_copper",
+            () -> new PortScrapsItem(new Item.Properties()));
     public static final RegistryObject<Item> INGOT_TUNGSTEN = ingot("ingot_tungsten");
     public static final RegistryObject<Item> INGOT_LEAD = ingot("ingot_lead");
     public static final RegistryObject<Item> INGOT_BERYLLIUM = ingot("ingot_beryllium");

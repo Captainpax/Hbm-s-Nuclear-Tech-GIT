@@ -32,6 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.common.ToolActions;
 
 /** Source 3x3 firebox and 3x3x2 crucible footprints, each with one core. */
 public final class PortCastingMachineBlock extends BaseEntityBlock {
@@ -137,9 +138,14 @@ public final class PortCastingMachineBlock extends BaseEntityBlock {
         if (player.isShiftKeyDown()) return InteractionResult.PASS;
         BlockPos core = corePos(pos, state);
         if (!level.hasChunkAt(core)) return InteractionResult.PASS;
-        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer
-                && level.getBlockEntity(core) instanceof MenuProvider provider) {
-            NetworkHooks.openScreen(serverPlayer, provider, core);
+        if (!level.isClientSide && level.getBlockEntity(core) instanceof MenuProvider provider) {
+            if (provider instanceof PortCrucibleBlockEntity crucible
+                    && player.getItemInHand(hand).canPerformAction(ToolActions.SHOVEL_DIG)) {
+                ItemStack recovered = crucible.takeCopperScraps();
+                if (!recovered.isEmpty() && !player.getInventory().add(recovered)) player.drop(recovered, false);
+            } else if (player instanceof ServerPlayer serverPlayer) {
+                NetworkHooks.openScreen(serverPlayer, provider, core);
+            }
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -154,8 +160,13 @@ public final class PortCastingMachineBlock extends BaseEntityBlock {
                         : entity instanceof PortCrucibleBlockEntity crucible ? crucible.items() : null;
                 if (items != null) for (int slot = 0; slot < items.getSlots(); slot++) {
                     ItemStack stack = items.getStackInSlot(slot);
-                    if (!stack.isEmpty()) Containers.dropItemStack(level,
-                            core.getX(), core.getY(), core.getZ(), stack.copy());
+                    if (!stack.isEmpty()) Containers.dropItemStack(level, core.getX(), core.getY(), core.getZ(),
+                            items.extractItem(slot, stack.getCount(), false));
+                }
+                if (entity instanceof PortCrucibleBlockEntity crucible) {
+                    ItemStack recovered = crucible.takeCopperScraps();
+                    if (!recovered.isEmpty()) Containers.dropItemStack(level,
+                            core.getX(), core.getY(), core.getZ(), recovered);
                 }
                 for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) for (int y = 0; y < height(); y++) {
                     BlockPos member = core.offset(x, y, z);

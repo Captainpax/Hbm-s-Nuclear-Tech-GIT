@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.ToolActions;
 
 /** Source small mold: click to install a mold or collect the cooled casting. */
 public final class PortFoundryMoldBlock extends BaseEntityBlock {
@@ -55,6 +56,11 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock {
             if (!player.getAbilities().instabuild) held.shrink(1);
             return InteractionResult.CONSUME;
         }
+        if (held.canPerformAction(ToolActions.SHOVEL_DIG)) {
+            ItemStack recovered = mold.takeCopperScraps();
+            if (!recovered.isEmpty() && !player.getInventory().add(recovered)) player.drop(recovered, false);
+            return InteractionResult.CONSUME;
+        }
         if (player.isShiftKeyDown() && held.isEmpty() && mold.copperQuanta() == 0
                 && !mold.items().getStackInSlot(0).isEmpty()) {
             ItemStack removed = mold.items().extractItem(0, 1, false);
@@ -69,8 +75,11 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock {
                 && level.getBlockEntity(pos) instanceof PortFoundryMoldBlockEntity mold) {
             for (int slot = 0; slot < 2; slot++) {
                 ItemStack stack = mold.items().getStackInSlot(slot);
-                if (!stack.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack.copy());
+                if (!stack.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(),
+                        mold.items().extractItem(slot, stack.getCount(), false));
             }
+            ItemStack recovered = mold.takeCopperScraps();
+            if (!recovered.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), recovered);
         }
         super.onRemove(state, level, pos, replacement, moving);
     }
