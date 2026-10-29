@@ -18,7 +18,7 @@ public final class PortBlastFurnaceMenu extends AbstractContainerMenu {
     private final ContainerData data;
 
     public PortBlastFurnaceMenu(int id, Inventory inventory, FriendlyByteBuf extra) {
-        this(id, inventory, find(inventory, extra.readBlockPos()), new SimpleContainerData(5));
+        this(id, inventory, find(inventory, extra.readBlockPos()), new SimpleContainerData(6));
     }
 
     public PortBlastFurnaceMenu(int id, Inventory inventory, PortBlastFurnaceBlockEntity machine) {
@@ -54,6 +54,7 @@ public final class PortBlastFurnaceMenu extends AbstractContainerMenu {
     public int progress() { return data.get(2); }
     public int flueGas() { return data.get(3); }
     public boolean progressing() { return data.get(4) != 0; }
+    public int airblast() { return data.get(5); }
 
     @Override public boolean stillValid(Player player) {
         return stillValid(access, player, PortBlocks.MACHINE_BLAST_FURNACE.get());

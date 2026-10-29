@@ -21,7 +21,8 @@ public final class PortClientSmoke {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (finished || event.phase != TickEvent.Phase.END
                 || !Boolean.getBoolean("hbm.port.clientSmoke")
-                || !PortBatterySocketRenderer.modelsAudited()) return;
+                || !PortBatterySocketRenderer.modelsAudited()
+                || !PortMachineObjRenderer.modelsAudited()) return;
         Minecraft minecraft = Minecraft.getInstance();
         // A fresh game directory opens the accessibility onboarding screen before the title screen.
         if (minecraft.screen == null || minecraft.level != null) return;
@@ -63,7 +64,11 @@ public final class PortClientSmoke {
                 PortItems.ANVIL_IRON.get(), PortItems.ANVIL_STEEL.get(),
                 PortItems.INGOT_STEEL.get(), PortItems.PLATE_IRON.get(),
                 PortItems.PLATE_STEEL.get(), PortItems.BOLT_STEEL.get(),
-                PortItems.MACHINE_BLAST_FURNACE.get(), PortItems.INGOT_RAW_SLAG.get()
+                PortItems.MACHINE_BLAST_FURNACE.get(), PortItems.INGOT_RAW_SLAG.get(),
+                PortItems.HEATER_FIREBOX.get(), PortItems.MACHINE_CRUCIBLE.get(),
+                PortItems.FOUNDRY_MOLD.get(), PortItems.MOLD_BASE.get(),
+                PortItems.MOLD_PLATE_CAST.get(), PortItems.PLATE_CAST_IRON.get(),
+                PortItems.PLATE_CAST_COPPER.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {
@@ -71,7 +76,7 @@ public final class PortClientSmoke {
             }
         }
         finished = true;
-        LOGGER.info("HBM client smoke passed: menu loaded, Insulator, ore/resource, anvil, press and blast-furnace inventory models, socket OBJ layers validated");
+        LOGGER.info("HBM client smoke passed: menu loaded, ore/resource and progression inventory models, socket and casting/blast-furnace OBJ layers validated");
         minecraft.stop();
     }
 }

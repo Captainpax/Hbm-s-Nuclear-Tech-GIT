@@ -1,13 +1,13 @@
 kind,key,status,target,notes
-block,machine_blast_furnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,3x3x7 placement and teardown tested; temporary cube model and fluid ports pending
-block_entity,TileEntityMachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,First steel route fuel accounting flue counter inventory NBT and sided item automation tested; airblast and pollution pending
+block,machine_blast_furnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,3x3x7 footprint and source gas-port positions ported; core OBJ renderer and chunk-boundary teardown implemented; live visual and multiplayer checks pending
+block_entity,TileEntityMachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,First steel route with fuel airblast decay and speed flue extraction overflow soot and persistence; remaining recipes and live multiplayer checks pending
 item,ingot_raw,partial,src/forge120/java/com/hbm/PortItems.java,Named raw-slag output variant registered; other raw material variants pending
-java_source,blocks/machine/MachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,Source-sized multiblock with temporary collision and block model; custom rendering pending
-java_source,tileentity/machine/TileEntityMachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,Half-speed two-iron-and-sand operation plus fuel and flue accounting tested; fluid and remaining recipes pending
+java_source,blocks/machine/MachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlock.java,Source-sized multiblock with six gas ports and core OBJ renderer; collision still uses full proxy cubes and live comparison remains
+java_source,tileentity/machine/TileEntityMachineBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceBlockEntity.java,First steel route gas tanks source speed and decay plus flue overflow emission ported; remaining recipes and pollution effects pending
 java_source,inventory/recipes/BlastFurnaceRecipesNT,partial,src/forge120/java/com/hbm/PortBlastFurnaceRecipes.java,First active steel-from-ingots recipe ported; source recipe table and external JSON loading pending
 java_source,inventory/container/ContainerBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceMenu.java,Source five-slot positions and server-owned data ported; in-world interaction pending
-java_source,inventory/gui/GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background and fuel-progress indicators ported; live visual check pending
-screen_source,GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Client screen registered; in-world visual and multiplayer checks pending
+java_source,inventory/gui/GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Source background fuel-progress indicators and gas gauge needles ported; idle live screen checked; active and multiplayer comparison pending
+screen_source,GUIBlastFurnace,partial,src/forge120/java/com/hbm/PortBlastFurnaceScreen.java,Idle screen and slot alignment checked in QA world; active visual and multiplayer checks pending
 asset,textures/blocks/brick_fire.png,verified,src/forge120/resources/assets/hbm/textures/block/brick_fire.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_raw.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_raw_slag.png,Original base texture copied byte-for-byte; source material tint pending
 asset,textures/gui/processing/gui_blast_furnace.png,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_blast_furnace.png,Original texture copied byte-for-byte
@@ -20,8 +20,8 @@ item,bolt,partial,src/forge120/resources/data/hbm/recipes/bolt_steel.json,Named 
 java_source,blocks/machine/NTMAnvil,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Iron and steel falling facing blocks with menu; source 3D renderer and other tiers pending
 java_source,inventory/container/ContainerAnvil,partial,src/forge120/java/com/hbm/PortAnvilMenu.java,Two-slot steel-anvil smithing and server-validated stamp construction; full recipe catalogue pending
 java_source,inventory/recipes/anvil/AnvilRecipes,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,First two tier-one construction recipes and steel-anvil smithing ported; hundreds of recipes pending
-java_source,inventory/gui/GUIAnvil,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Original GUI background with temporary two-recipe controls; live visual and full browser pending
-screen_source,GUIAnvil,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Anvil screen registered and client smoke passes; in-world visual and full browser pending
+java_source,inventory/gui/GUIAnvil,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Original background with five first construction choices and material tooltips; live layout checked after overlap fix; full browser pending
+screen_source,GUIAnvil,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Live steel-anvil layout and recipe tooltips checked after restart; full browser and multiplayer pending
 asset,textures/blocks/anvil_iron.png,verified,src/forge120/resources/assets/hbm/textures/block/anvil_iron.png,Original texture copied byte-for-byte
 asset,textures/blocks/anvil_steel.png,verified,src/forge120/resources/assets/hbm/textures/block/anvil_steel.png,Original texture copied byte-for-byte
 asset,textures/gui/processing/gui_anvil.png,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_anvil.png,Original texture copied byte-for-byte
@@ -290,7 +290,7 @@ java_source,tileentity/machine/storage/TileEntityMachineBattery,partial,src/forg
 asset,textures/blocks/battery_front_alt.png,verified,src/forge120/resources/assets/hbm/textures/block/battery_front_alt.png,Original texture copied byte-for-byte
 asset,textures/blocks/battery_side_alt.png,verified,src/forge120/resources/assets/hbm/textures/block/battery_side_alt.png,Original texture copied byte-for-byte
 asset,textures/blocks/battery_top.png,verified,src/forge120/resources/assets/hbm/textures/block/battery_top.png,Original texture copied byte-for-byte
-item,battery_potato,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Legacy 1000 HE full-by-default item discharges at 100 HE per tick into storage; crafting and other machine use pending
+item,battery_potato,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Source charged potato and fine-wire recipe; five crafted batteries power one 5000 HE furnace smelt in GameTest; live Survival check pending
 item,cube_power,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Long-valued 1e18 HE battery with 1e15 HE charge and discharge rates; crafting and broader machine use pending
 java_source,items/machine/ItemBattery,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Potato battery and power cube charge semantics ported; other ItemBattery instances and item behavior pending
 java_source,api/hbm/energymk2/IBatteryItem,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Charge discharge rates and NBT clamping tested for two existing items and twelve pack variants; other implementations and machine integrations pending
@@ -377,3 +377,40 @@ recipe_site,CraftingManager:946,partial,src/forge120/resources/data/hbm/recipes,
 recipe_site,CraftingManager:947,partial,src/forge120/resources/data/hbm/recipes,Scorched schist plus water bucket recipe checked; real player crafting and recipe-book unlock pending
 java_source,world/feature/SchistStratum,partial,src/forge120/java/com/hbm/PortGneissStratumFeature.java,Four octave seed-shaped stratum in fresh Overworld chunks; cross-chunk write removed and distribution comparison pending
 worldgen_source,SchistStratum,partial,src/forge120/java/com/hbm/PortGneissStratumFeature.java,Stratum independent of ore master switch and eight schist ores generated after it; two clean seeds and restart no-regeneration marker pass; distribution comparison pending
+block,heater_firebox,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source 3x3 footprint heat fuel inventory and first tier-two construction route; live GUI and full fuel module pending
+block,machine_crucible,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source 3x3x2 footprint and first copper melting route; alloy recipes materials molten rendering and full source behavior remain
+block,foundry_mold,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Reusable small cast-plate mold receives 216 copper quanta and cools to one plate; other molds materials and molten visuals pending
+block_entity,TileEntityHeaterFirebox,partial,src/forge120/java/com/hbm/PortFireboxBlockEntity.java,Coal and lignite time and heat modifiers plus heat transfer and saved active burn; remaining fuels and controls pending
+block_entity,TileEntityCrucible,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,Nine one-item copper buffers source heat threshold and 72 quanta per ingot; first waste spout and soot emission ported; other materials alloys and casting networks pending
+block_entity,TileEntityFoundryMold,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,Copper plate cooling mold reuse blocked-output conservation and NBT checks; other molds and materials pending
+item,plate_cast,partial,src/forge120/java/com/hbm/PortItems.java,Named iron template and copper cast plate variants; other material variants pending
+item,mold_base,partial,src/forge120/resources/data/hbm/recipes/mold_base.json,Source four-firebrick and iron-ingot recipe; live crafting check pending
+item,mold,partial,src/forge120/java/com/hbm/PortAnvilMenu.java,Named cast-plate mold smithing preserves the iron template and consumes one mold base; other mold variants pending
+java_source,blocks/machine/HeaterFirebox,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source footprint placement player interaction and teardown ported; full proxy behavior pending
+java_source,blocks/machine/MachineCrucible,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source footprint and menu interaction ported; full collision and rendering comparison pending
+java_source,blocks/machine/FoundryMold,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Install and retrieve mold and cast output with source crafting route; full mold classes pending
+java_source,tileentity/machine/TileEntityHeaterFirebox,partial,src/forge120/java/com/hbm/PortFireboxBlockEntity.java,First solid-fuel heat path and active-state storage; source configurable fuel module and door animation pending
+java_source,tileentity/machine/TileEntityCrucible,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,First copper melting and rear waste-spout path; remaining materials recipes acceptors and hazards pending
+java_source,tileentity/machine/TileEntityFoundryMold,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,First copper plate route with conserved quanta and reusable mold; full materials and visual state pending
+java_source,render/tileentity/RenderBlastFurnace,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original OBJ and texture through Forge loader; in-world orientation lighting smoke and tilt checks remain
+java_source,render/tileentity/RenderFirebox,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original OBJ empty and burning groups with source texture; door animation emissive interior and live comparison remain
+java_source,render/tileentity/RenderCrucible,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original static OBJ and texture; dynamic molten surface pouring smoke and live comparison remain
+java_source,inventory/fluid/Fluids,partial,src/forge120/java/com/hbm/PortFluids.java,Airblast and flue registered as non-placeable Forge process gases; other fluids traits containers and icons remain
+java_source,handler/pollution/PollutionHandler,partial,src/forge120/java/com/hbm/PortSootPollution.java,Source-sized persistent soot cells and first casting/flue emissions; dispersion decay effects and other pollution types remain
+recipe_site,CraftingManager:99,partial,src/forge120/resources/data/hbm/recipes/plate_cast_iron.json,Source six steel bolts and three iron plates make iron cast template; live crafting check pending
+recipe_site,CraftingManager:230,partial,src/forge120/resources/data/hbm/recipes/machine_electric_furnace.json,Original beryllium cast-copper furnace and tungsten-coil pattern and recipe unlock checked; full Survival walkthrough pending
+recipe_site,CraftingManager:526,partial,src/forge120/resources/data/hbm/recipes/battery_potato.json,Charged potato battery recipe and five-battery furnace operation checked; live crafting pending
+recipe_site,CraftingManager:913,partial,src/forge120/resources/data/hbm/recipes/foundry_mold.json,Source firebrick and stone-slab recipe registered; live crafting pending
+recipe_site,CraftingManager:918,partial,src/forge120/resources/data/hbm/recipes/mold_base.json,Source firebrick and iron recipe registered; live crafting pending
+asset,textures/models/machines/firebox.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/firebox.png,SHA-256 matches the source texture
+asset,textures/models/machines/crucible_heat.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/crucible_heat.png,SHA-256 matches the source texture
+asset,textures/models/machines/blast_furnace.png,verified,src/forge120/resources/assets/hbm/textures/models/machines/blast_furnace.png,SHA-256 matches the source texture
+asset,textures/gui/machine/gui_firebox.png,verified,src/forge120/resources/assets/hbm/textures/gui/machine/gui_firebox.png,SHA-256 matches the source background; live idle screen checked
+asset,textures/gui/processing/gui_crucible.png,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_crucible.png,SHA-256 matches the source background; live idle screen checked
+asset,textures/blocks/foundry_mold_top.png,verified,src/forge120/resources/assets/hbm/textures/block/foundry_mold_top.png,SHA-256 matches the source texture
+asset,textures/blocks/foundry_mold_side.png,verified,src/forge120/resources/assets/hbm/textures/block/foundry_mold_side.png,SHA-256 matches the source texture
+asset,textures/blocks/foundry_mold_bottom.png,verified,src/forge120/resources/assets/hbm/textures/block/foundry_mold_bottom.png,SHA-256 matches the source texture
+asset,textures/items/mold_base.png,verified,src/forge120/resources/assets/hbm/textures/item/mold_base.png,SHA-256 matches the source texture
+asset,models/machines/firebox.obj,partial,src/forge120/resources/assets/hbm/models/machines/firebox.obj,Source geometry with Forge material binding; bake audit and live idle placement checked; active emission and door animation pending
+asset,models/machines/crucible.obj,partial,src/forge120/resources/assets/hbm/models/machines/crucible.obj,Source geometry with Forge material binding; bake audit and live placement checked; molten surface pending
+asset,models/machines/blast_furnace.obj,partial,src/forge120/resources/assets/hbm/models/machines/blast_furnace.obj,Source geometry with Forge material binding; bake audit and full-height world placement checked; all-facing and active-effect comparison pending

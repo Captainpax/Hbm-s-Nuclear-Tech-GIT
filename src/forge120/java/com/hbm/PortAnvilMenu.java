@@ -41,11 +41,15 @@ public final class PortAnvilMenu extends AbstractContainerMenu {
         addSlot(new Slot(input, 1, 53, 27));
         addSlot(new Slot(output, 0, 89, 27) {
             @Override public boolean mayPlace(ItemStack stack) { return false; }
-            @Override public boolean mayPickup(Player player) { return !output.getItem(0).isEmpty() && validSmithing(); }
+            @Override public boolean mayPickup(Player player) { return !output.getItem(0).isEmpty() && smithingRecipe() != 0; }
             @Override public void onTake(Player player, ItemStack stack) {
-                if (validSmithing()) {
+                int recipe = smithingRecipe();
+                if (recipe == 1) {
                     input.removeItem(0, 1);
                     input.removeItem(1, 10);
+                } else if (recipe == 2) {
+                    // AnvilSmithingMold uses the cast iron plate as a reusable template.
+                    input.removeItem(1, 1);
                 }
                 super.onTake(player, stack);
             }
@@ -61,14 +65,20 @@ public final class PortAnvilMenu extends AbstractContainerMenu {
 
     public int tier() { return tier; }
 
-    private boolean validSmithing() {
-        return tier >= 1 && input.getItem(0).is(PortItems.ANVIL_IRON.get())
+    private int smithingRecipe() {
+        if (tier >= 1 && input.getItem(0).is(PortItems.ANVIL_IRON.get())
                 && input.getItem(1).is(PortItems.INGOT_STEEL.get())
-                && input.getItem(1).getCount() >= 10;
+                && input.getItem(1).getCount() >= 10) return 1;
+        if (tier >= 1 && input.getItem(0).is(PortItems.PLATE_CAST_IRON.get())
+                && input.getItem(0).getCount() == 1
+                && input.getItem(1).is(PortItems.MOLD_BASE.get())) return 2;
+        return 0;
     }
 
     @Override public void slotsChanged(Container container) {
-        if (validSmithing()) output.setItem(0, new ItemStack(PortItems.ANVIL_STEEL.get()));
+        int recipe = smithingRecipe();
+        if (recipe == 1) output.setItem(0, new ItemStack(PortItems.ANVIL_STEEL.get()));
+        else if (recipe == 2) output.setItem(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
         else output.setItem(0, ItemStack.EMPTY);
         broadcastChanges();
     }
@@ -92,15 +102,15 @@ public final class PortAnvilMenu extends AbstractContainerMenu {
         ItemStack stack = slot.getItem();
         ItemStack original = stack.copy();
         if (index == 2) {
-            if (!validSmithing() || !moveItemStackTo(stack, 3, slots.size(), true)) return ItemStack.EMPTY;
+            if (smithingRecipe() == 0 || !moveItemStackTo(stack, 3, slots.size(), true)) return ItemStack.EMPTY;
             slot.onTake(player, original);
             return original;
         }
         if (index < 2) {
             if (!moveItemStackTo(stack, 3, slots.size(), true)) return ItemStack.EMPTY;
         } else {
-            int target = stack.is(PortItems.ANVIL_IRON.get()) ? 0
-                    : stack.is(PortItems.INGOT_STEEL.get()) ? 1 : -1;
+            int target = stack.is(PortItems.ANVIL_IRON.get()) || stack.is(PortItems.PLATE_CAST_IRON.get()) ? 0
+                    : stack.is(PortItems.INGOT_STEEL.get()) || stack.is(PortItems.MOLD_BASE.get()) ? 1 : -1;
             if (target == -1 || !moveItemStackTo(stack, target, target + 1, false)) return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) slot.set(ItemStack.EMPTY);

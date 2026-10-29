@@ -1,0 +1,1 @@
+{"parent":"minecraft:recipes/root","criteria":{"has_cast_copper":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"items":["hbm:plate_cast_copper"]}]}}},"rewards":{"recipes":["hbm:machine_electric_furnace"]}}

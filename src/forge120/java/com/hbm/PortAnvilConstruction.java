@@ -24,7 +24,15 @@ public final class PortAnvilConstruction {
                 new Recipe(1, () -> new ItemStack(PortItems.MACHINE_BLAST_FURNACE.get()),
                         List.of(new Requirement(() -> Blocks.STONE_BRICKS.asItem(), 4),
                                 new Requirement(PortItems.INGOT_FIREBRICK::get, 32),
-                                new Requirement(PortItems.PLATE_COPPER::get, 8))));
+                                new Requirement(PortItems.PLATE_COPPER::get, 8))),
+                new Recipe(2, () -> new ItemStack(PortItems.HEATER_FIREBOX.get()),
+                        List.of(new Requirement(() -> Blocks.FURNACE.asItem(), 1),
+                                new Requirement(PortItems.PLATE_STEEL::get, 8),
+                                new Requirement(PortItems.INGOT_COPPER::get, 8))),
+                new Recipe(2, () -> new ItemStack(PortItems.MACHINE_CRUCIBLE.get()),
+                        List.of(new Requirement(PortItems.INGOT_FIREBRICK::get, 20),
+                                new Requirement(PortItems.INGOT_COPPER::get, 8),
+                                new Requirement(PortItems.PLATE_STEEL::get, 8))));
     }
 
     public static boolean craft(Player player, int tier, int recipeIndex, boolean bulk) {

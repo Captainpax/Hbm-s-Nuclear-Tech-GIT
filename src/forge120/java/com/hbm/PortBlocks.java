@@ -113,7 +113,19 @@ public final class PortBlocks {
     public static final RegistryObject<Block> MACHINE_BLAST_FURNACE = BLOCKS.register("machine_blast_furnace",
             () -> new PortBlastFurnaceBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.STONE).strength(5.0F, 10.0F)
-                    .sound(SoundType.STONE).requiresCorrectToolForDrops()));
+                    .sound(SoundType.STONE).noOcclusion().requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> HEATER_FIREBOX = BLOCKS.register("heater_firebox",
+            () -> new PortCastingMachineBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.METAL).strength(5.0F, 10.0F)
+                    .sound(SoundType.METAL).noOcclusion().requiresCorrectToolForDrops(), PortCastingMachineBlock.Kind.FIREBOX));
+    public static final RegistryObject<Block> MACHINE_CRUCIBLE = BLOCKS.register("machine_crucible",
+            () -> new PortCastingMachineBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE).strength(5.0F, 10.0F)
+                    .sound(SoundType.STONE).noOcclusion().requiresCorrectToolForDrops(), PortCastingMachineBlock.Kind.CRUCIBLE));
+    public static final RegistryObject<Block> FOUNDRY_MOLD = BLOCKS.register("foundry_mold",
+            () -> new PortFoundryMoldBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE).strength(5.0F, 10.0F)
+                    .sound(SoundType.STONE).noOcclusion().requiresCorrectToolForDrops()));
 
     private PortBlocks() {}
 

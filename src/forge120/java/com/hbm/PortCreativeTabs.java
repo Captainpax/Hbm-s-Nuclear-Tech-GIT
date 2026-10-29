@@ -62,6 +62,10 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.PLATE_IRON.get());
                         output.accept(PortItems.PLATE_STEEL.get());
                         output.accept(PortItems.BOLT_STEEL.get());
+                        output.accept(PortItems.PLATE_CAST_IRON.get());
+                        output.accept(PortItems.PLATE_CAST_COPPER.get());
+                        output.accept(PortItems.MOLD_BASE.get());
+                        output.accept(PortItems.MOLD_PLATE_CAST.get());
                     })
                     .build());
 
@@ -112,6 +116,9 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.MACHINE_ELECTRIC_FURNACE.get());
                         output.accept(PortItems.MACHINE_PRESS.get());
                         output.accept(PortItems.MACHINE_BLAST_FURNACE.get());
+                        output.accept(PortItems.HEATER_FIREBOX.get());
+                        output.accept(PortItems.MACHINE_CRUCIBLE.get());
+                        output.accept(PortItems.FOUNDRY_MOLD.get());
                         output.accept(PortItems.ANVIL_IRON.get());
                         output.accept(PortItems.ANVIL_STEEL.get());
                         output.accept(PortItems.BLOCK_ASBESTOS.get());

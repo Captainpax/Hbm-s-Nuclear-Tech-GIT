@@ -166,6 +166,13 @@ public final class PortItems {
     public static final RegistryObject<Item> INGOT_FIREBRICK = ingot("ingot_firebrick");
     public static final RegistryObject<Item> INGOT_RAW_SLAG = ingot("ingot_raw_slag");
     public static final RegistryObject<Item> MACHINE_BLAST_FURNACE = ore("machine_blast_furnace", PortBlocks.MACHINE_BLAST_FURNACE);
+    public static final RegistryObject<Item> HEATER_FIREBOX = ore("heater_firebox", PortBlocks.HEATER_FIREBOX);
+    public static final RegistryObject<Item> MACHINE_CRUCIBLE = ore("machine_crucible", PortBlocks.MACHINE_CRUCIBLE);
+    public static final RegistryObject<Item> FOUNDRY_MOLD = ore("foundry_mold", PortBlocks.FOUNDRY_MOLD);
+    public static final RegistryObject<Item> PLATE_CAST_IRON = ingot("plate_cast_iron");
+    public static final RegistryObject<Item> PLATE_CAST_COPPER = ingot("plate_cast_copper");
+    public static final RegistryObject<Item> MOLD_BASE = ingot("mold_base");
+    public static final RegistryObject<Item> MOLD_PLATE_CAST = ingot("mold_plate_cast");
 
     /** Legacy ItemBatteryPack enum order, now represented by stable named item IDs. */
     public static final List<RegistryObject<Item>> BATTERY_PACKS = List.of(

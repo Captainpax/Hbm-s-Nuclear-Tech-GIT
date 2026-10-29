@@ -82,7 +82,26 @@ public final class PortBlastFurnaceBlock extends BaseEntityBlock {
     }
 
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return isCore(state) ? new PortBlastFurnaceBlockEntity(pos, state) : null;
+        return isCore(state) ? new PortBlastFurnaceBlockEntity(pos, state)
+                : portDirection(state) != null ? new PortBlastFurnacePortBlockEntity(pos, state) : null;
+    }
+
+    public static Direction portDirection(BlockState state) {
+        if (!(state.getBlock() instanceof PortBlastFurnaceBlock)) return null;
+        int x = state.getValue(X) - 1;
+        int y = state.getValue(Y);
+        int z = state.getValue(Z) - 1;
+        if (y == 0 && z == 0 && Math.abs(x) == 1) return x > 0 ? Direction.EAST : Direction.WEST;
+        if (y == 0 && x == 0 && z == 1) return Direction.SOUTH;
+        if (y == 6 && x == 0 && z == 0) return Direction.UP;
+        Direction facing = state.getValue(FACING);
+        return (y == 3 || y == 5) && x == facing.getStepX() && z == facing.getStepZ() ? facing : null;
+    }
+
+    public static java.util.List<BlockPos> fluidPorts(BlockPos core, BlockState state) {
+        Direction facing = state.getValue(FACING);
+        return java.util.List.of(core.east(), core.west(), core.south(),
+                core.relative(facing).above(3), core.relative(facing).above(5), core.above(6));
     }
 
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state,
@@ -91,7 +110,7 @@ public final class PortBlastFurnaceBlock extends BaseEntityBlock {
                 : createTickerHelper(type, PortBlockEntities.BLAST_FURNACE.get(), PortBlastFurnaceBlockEntity::tick);
     }
 
-    @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.MODEL; }
+    @Override public RenderShape getRenderShape(BlockState state) { return RenderShape.INVISIBLE; }
 
     @Override public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
             InteractionHand hand, BlockHitResult hit) {
@@ -120,7 +139,9 @@ public final class PortBlastFurnaceBlock extends BaseEntityBlock {
                 }
                 for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) for (int y = 0; y <= 6; y++) {
                     BlockPos member = core.offset(x, y, z);
-                    if (member.equals(pos) || !level.hasChunkAt(member)) continue;
+                    // Teardown must also remove members in a neighboring chunk
+                    // that was unloaded after this structure was placed.
+                    if (member.equals(pos)) continue;
                     BlockState memberState = level.getBlockState(member);
                     if (memberState.is(this) && corePos(member, memberState).equals(core)) {
                         level.setBlock(member, Blocks.AIR.defaultBlockState(), 3);

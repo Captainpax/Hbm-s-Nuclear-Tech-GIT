@@ -56,6 +56,338 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void castingAndElectricFurnaceRecipesMatchSource(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        for (String path : new String[] {"plate_cast_iron", "mold_base", "foundry_mold",
+                "machine_electric_furnace", "battery_potato"}) {
+            var id = ResourceLocation.fromNamespaceAndPath("hbm", path);
+            if (level.getRecipeManager().byKey(id).isEmpty()) throw new IllegalStateException("Missing recipe " + path);
+            var unlock = level.getServer().getAdvancements().getAdvancement(
+                    ResourceLocation.fromNamespaceAndPath("hbm", "recipes/misc/" + path));
+            if (unlock == null || !Set.of(unlock.getRewards().getRecipes()).contains(id)) {
+                throw new IllegalStateException("Missing recipe-book unlock " + path);
+            }
+        }
+        var player = FakePlayerFactory.getMinecraft(level);
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        for (int index = 0; index < 9; index++) {
+            grid.setItem(index, new ItemStack(index / 3 == 1 && index % 3 == 1 ? Items.FURNACE
+                    : index / 3 == 0 ? PortItems.INGOT_BERYLLIUM.get()
+                    : index / 3 == 1 ? PortItems.PLATE_CAST_COPPER.get()
+                    : PortItems.COIL_TUNGSTEN.get()));
+        }
+        var furnaceRecipe = level.getRecipeManager()
+                .byKey(ResourceLocation.fromNamespaceAndPath("hbm", "machine_electric_furnace")).orElseThrow();
+        if (!(furnaceRecipe instanceof ShapedRecipe shaped) || !shaped.matches(grid, level)
+                || !shaped.assemble(grid, level.registryAccess()).is(PortItems.MACHINE_ELECTRIC_FURNACE.get())) {
+            throw new IllegalStateException("Electric furnace original beryllium/cast-copper/coil pattern changed");
+        }
+        grid.clearContent();
+        grid.setItem(0, new ItemStack(Items.POTATO));
+        grid.setItem(1, new ItemStack(PortItems.WIRE_FINE_ALUMINIUM.get()));
+        grid.setItem(2, new ItemStack(PortItems.WIRE_FINE_COPPER.get()));
+        var potatoRecipe = level.getRecipeManager()
+                .byKey(ResourceLocation.fromNamespaceAndPath("hbm", "battery_potato")).orElseThrow();
+        if (!(potatoRecipe instanceof ShapelessRecipe potato) || !potato.matches(grid, level)) {
+            throw new IllegalStateException("Charged potato battery recipe did not match source inputs");
+        }
+        ItemStack charged = potato.assemble(grid, level.registryAccess());
+        if (!charged.is(PortItems.BATTERY_POTATO.get())
+                || ((PortBatteryItem) charged.getItem()).charge(charged) != 1_000L) {
+            throw new IllegalStateException("Crafted potato battery was not charged to 1000 HE");
+        }
+
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlock(pos, PortBlocks.ANVIL_IRON.get().defaultBlockState(), 3);
+        player.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+        player.getInventory().clearContent();
+        PortAnvilMenu menu = new PortAnvilMenu(80, player.getInventory(), pos, 1);
+        menu.getSlot(0).set(new ItemStack(PortItems.PLATE_CAST_IRON.get()));
+        menu.getSlot(1).set(new ItemStack(PortItems.MOLD_BASE.get()));
+        if (!menu.getSlot(2).getItem().is(PortItems.MOLD_PLATE_CAST.get())) {
+            throw new IllegalStateException("Cast plate mold smithing output missing");
+        }
+        menu.getSlot(2).onTake(player, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+        if (!menu.getSlot(0).getItem().is(PortItems.PLATE_CAST_IRON.get())
+                || !menu.getSlot(1).getItem().isEmpty()) {
+            throw new IllegalStateException("Cast iron plate template should remain after smithing");
+        }
+        menu.removed(player);
+        player.getInventory().clearContent();
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void fireboxCrucibleAndFoundryCastCopperPlate(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var player = FakePlayerFactory.getMinecraft(level);
+        BlockPos fireboxPos = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlock(fireboxPos, PortBlocks.ANVIL_STEEL.get().defaultBlockState(), 3);
+        player.setPos(fireboxPos.getX() + 0.5, fireboxPos.getY(), fireboxPos.getZ() + 0.5);
+        player.getInventory().clearContent();
+        player.getInventory().setItem(0, new ItemStack(Items.FURNACE));
+        player.getInventory().setItem(1, new ItemStack(PortItems.PLATE_STEEL.get(), 16));
+        player.getInventory().setItem(2, new ItemStack(PortItems.INGOT_COPPER.get(), 16));
+        player.getInventory().setItem(3, new ItemStack(PortItems.INGOT_FIREBRICK.get(), 20));
+        PortAnvilMenu anvil = new PortAnvilMenu(81, player.getInventory(), fireboxPos, 2);
+        if (!anvil.clickMenuButton(player, 6) || !anvil.clickMenuButton(player, 8)
+                || countInventory(player, PortItems.HEATER_FIREBOX.get()) != 1
+                || countInventory(player, PortItems.MACHINE_CRUCIBLE.get()) != 1
+                || countInventory(player, PortItems.PLATE_STEEL.get()) != 0
+                || countInventory(player, PortItems.INGOT_COPPER.get()) != 0
+                || countInventory(player, PortItems.INGOT_FIREBRICK.get()) != 0) {
+            throw new IllegalStateException("Tier-two anvil did not construct firebox and crucible from source materials");
+        }
+        anvil.removed(player);
+        player.getInventory().clearContent();
+        level.setBlock(fireboxPos, Blocks.AIR.defaultBlockState(), 3);
+
+        PortCastingMachineBlock fireboxBlock = (PortCastingMachineBlock) PortBlocks.HEATER_FIREBOX.get();
+        var fireboxState = fireboxBlock.defaultBlockState();
+        level.setBlock(fireboxPos, fireboxState, 3);
+        fireboxBlock.setPlacedBy(level, fireboxPos, fireboxState, player,
+                new ItemStack(PortItems.HEATER_FIREBOX.get()));
+        BlockPos cruciblePos = fireboxPos.above();
+        PortCastingMachineBlock crucibleBlock = (PortCastingMachineBlock) PortBlocks.MACHINE_CRUCIBLE.get();
+        var crucibleState = crucibleBlock.defaultBlockState().setValue(PortCastingMachineBlock.FACING, Direction.EAST);
+        level.setBlock(cruciblePos, crucibleState, 3);
+        crucibleBlock.setPlacedBy(level, cruciblePos, crucibleState, player,
+                new ItemStack(PortItems.MACHINE_CRUCIBLE.get()));
+        BlockPos moldPos = cruciblePos.west(2).below();
+        level.setBlock(moldPos, PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), 3);
+        if (!(level.getBlockEntity(fireboxPos) instanceof PortFireboxBlockEntity firebox)
+                || !(level.getBlockEntity(cruciblePos) instanceof PortCrucibleBlockEntity crucible)
+                || !(level.getBlockEntity(moldPos) instanceof PortFoundryMoldBlockEntity mold)
+                || !level.getBlockState(cruciblePos.offset(1, 1, 1)).is(crucibleBlock)) {
+            throw new IllegalStateException("Firebox/crucible/foundry footprint or cores missing");
+        }
+        firebox.items().setStackInSlot(0, new ItemStack(Items.COAL));
+        crucible.items().setStackInSlot(1, new ItemStack(PortItems.INGOT_COPPER.get()));
+        crucible.items().setStackInSlot(2, new ItemStack(PortItems.INGOT_COPPER.get()));
+        crucible.items().setStackInSlot(3, new ItemStack(PortItems.INGOT_COPPER.get()));
+        mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+        boolean checkedActiveNbt = false;
+        for (int tick = 0; tick < 2_500 && mold.items().getStackInSlot(1).isEmpty(); tick++) {
+            PortFireboxBlockEntity.tick(level, fireboxPos, fireboxState, firebox);
+            PortCrucibleBlockEntity.tick(level, cruciblePos, crucibleState, crucible);
+            PortFoundryMoldBlockEntity.tick(level, moldPos,
+                    PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), mold);
+            if (!checkedActiveNbt && crucible.moltenCopper() > 0) {
+                PortFireboxBlockEntity fireboxCopy = new PortFireboxBlockEntity(fireboxPos, fireboxState);
+                fireboxCopy.load(firebox.saveWithFullMetadata());
+                PortCrucibleBlockEntity crucibleCopy = new PortCrucibleBlockEntity(cruciblePos, crucibleState);
+                crucibleCopy.load(crucible.saveWithFullMetadata());
+                PortFoundryMoldBlockEntity moldCopy = new PortFoundryMoldBlockEntity(moldPos,
+                        PortBlocks.FOUNDRY_MOLD.get().defaultBlockState());
+                moldCopy.load(mold.saveWithFullMetadata());
+                if (fireboxCopy.heatEnergy() != firebox.heatEnergy()
+                        || crucibleCopy.moltenCopper() != crucible.moltenCopper()
+                        || moldCopy.copperQuanta() != mold.copperQuanta()) {
+                    throw new IllegalStateException("Active casting state did not survive NBT round trip");
+                }
+                checkedActiveNbt = true;
+            }
+        }
+        if (!checkedActiveNbt || !mold.items().getStackInSlot(1).is(PortItems.PLATE_CAST_COPPER.get())
+                || mold.copperQuanta() != 0 || !mold.items().getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get())
+                || !crucible.items().getStackInSlot(1).isEmpty()
+                || !crucible.items().getStackInSlot(2).isEmpty()
+                || !crucible.items().getStackInSlot(3).isEmpty()) {
+            throw new IllegalStateException("Three molten copper ingots did not cool into one cast plate");
+        }
+        var moldSide = mold.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).resolve().orElseThrow();
+        if (mold.acceptCopper(1) != 0 || !moldSide.extractItem(0, 1, true).isEmpty()
+                || !moldSide.insertItem(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()), true)
+                        .is(PortItems.MOLD_PLATE_CAST.get())
+                || !moldSide.insertItem(1, new ItemStack(PortItems.PLATE_CAST_COPPER.get()), true)
+                        .is(PortItems.PLATE_CAST_COPPER.get())) {
+            throw new IllegalStateException("Filled foundry mold accepted metal or automation altered its mold/output");
+        }
+        if (crucible.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).resolve().orElseThrow()
+                .getSlots() != 9) {
+            throw new IllegalStateException("Crucible automation did not expose exactly nine material buffers");
+        }
+        ItemStack firstPlate = moldSide.extractItem(1, 1, false);
+        if (!firstPlate.is(PortItems.PLATE_CAST_COPPER.get())
+                || mold.acceptCopper(PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA)
+                        != PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA) {
+            throw new IllegalStateException("Foundry mold could not be reused after output extraction");
+        }
+        for (int tick = 0; tick < 200; tick++) {
+            PortFoundryMoldBlockEntity.tick(level, moldPos,
+                    PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), mold);
+        }
+        if (!mold.items().getStackInSlot(1).is(PortItems.PLATE_CAST_COPPER.get())
+                || mold.items().getStackInSlot(0).isEmpty()) {
+            throw new IllegalStateException("Reusable mold did not make a second plate");
+        }
+        level.setBlock(cruciblePos.above(), Blocks.AIR.defaultBlockState(), 3);
+        if (!level.getBlockState(cruciblePos).isAir()
+                || !level.getBlockState(cruciblePos.offset(1, 0, 1)).isAir()) {
+            throw new IllegalStateException("Crucible teardown left orphaned proxies");
+        }
+        level.setBlock(fireboxPos.offset(1, 0, 1), Blocks.AIR.defaultBlockState(), 3);
+        if (!level.getBlockState(fireboxPos).isAir()) {
+            throw new IllegalStateException("Firebox teardown left orphaned proxies");
+        }
+        level.setBlock(moldPos, Blocks.AIR.defaultBlockState(), 3);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
+    public static void craftedPotatoBatteriesRunElectricFurnace(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        var player = FakePlayerFactory.getMinecraft(level);
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        grid.setItem(0, new ItemStack(Items.POTATO));
+        grid.setItem(1, new ItemStack(PortItems.WIRE_FINE_ALUMINIUM.get()));
+        grid.setItem(2, new ItemStack(PortItems.WIRE_FINE_COPPER.get()));
+        var loadedRecipe = level.getRecipeManager()
+                .byKey(ResourceLocation.fromNamespaceAndPath("hbm", "battery_potato")).orElseThrow();
+        if (!(loadedRecipe instanceof ShapelessRecipe recipe)) {
+            throw new IllegalStateException("Potato battery recipe is not shapeless");
+        }
+        if (!recipe.matches(grid, level)) throw new IllegalStateException("Potato battery ingredients do not craft");
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        var state = PortBlocks.MACHINE_ELECTRIC_FURNACE.get().defaultBlockState();
+        level.setBlock(pos, state, 3);
+        if (!(level.getBlockEntity(pos) instanceof PortElectricFurnaceBlockEntity furnace)) {
+            throw new IllegalStateException("Electric furnace core missing");
+        }
+        furnace.items().setStackInSlot(1, new ItemStack(Items.IRON_ORE));
+        int batteries = 0;
+        for (int tick = 0; tick < PortElectricFurnaceBlockEntity.DURATION; tick++) {
+            ItemStack installed = furnace.items().getStackInSlot(0);
+            if (batteries < 5 && (installed.isEmpty()
+                    || ((PortBatteryItem) installed.getItem()).charge(installed) == 0)) {
+                furnace.items().setStackInSlot(0, recipe.assemble(grid, level.registryAccess()));
+                batteries++;
+            }
+            PortElectricFurnaceBlockEntity.tick(level, pos, level.getBlockState(pos), furnace);
+        }
+        if (batteries != 5 || furnace.power() != 0 || furnace.progress() != 0
+                || !furnace.items().getStackInSlot(1).isEmpty()
+                || !furnace.items().getStackInSlot(2).is(Items.IRON_INGOT)) {
+            throw new IllegalStateException("Five crafted potato batteries did not power one 5000 HE smelt");
+        }
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty", timeoutTicks = 300)
+    public static void blastAndCastingSurviveServerRestart(GameTestHelper helper) {
+        String phase = System.getProperty("hbm.port.persistence.phase", "");
+        if (phase.isEmpty()) {
+            helper.succeed();
+            return;
+        }
+        ServerLevel level = helper.getLevel();
+        BlockPos blastPos = new BlockPos(672, 80, 512);
+        BlockPos fireboxPos = new BlockPos(704, 80, 512);
+        BlockPos cruciblePos = fireboxPos.above();
+        BlockPos moldPos = cruciblePos.west(2).below();
+        level.getChunkAt(blastPos);
+        level.getChunkAt(fireboxPos);
+        level.getChunkAt(moldPos);
+        if (phase.equals("seed")) {
+            level.setBlock(blastPos, Blocks.AIR.defaultBlockState(), 3);
+            PortBlastFurnaceBlock blastBlock = (PortBlastFurnaceBlock) PortBlocks.MACHINE_BLAST_FURNACE.get();
+            var blastState = blastBlock.defaultBlockState();
+            level.setBlock(blastPos, blastState, 3);
+            blastBlock.setPlacedBy(level, blastPos, blastState, null,
+                    new ItemStack(PortItems.MACHINE_BLAST_FURNACE.get()));
+            PortBlastFurnaceBlockEntity blast = (PortBlastFurnaceBlockEntity) level.getBlockEntity(blastPos);
+            blast.items().setStackInSlot(0, new ItemStack(Items.COAL));
+            blast.items().setStackInSlot(1, new ItemStack(Items.IRON_INGOT, 2));
+            blast.items().setStackInSlot(2, new ItemStack(Items.SAND));
+            for (int tick = 0; tick < 500; tick++) {
+                PortBlastFurnaceBlockEntity.tick(level, blastPos, blastState, blast);
+            }
+            if (blast.progress() != 500 || blast.fuel() != 1600) {
+                throw new IllegalStateException("Blast restart fixture was not active at save time");
+            }
+
+            level.setBlock(cruciblePos, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(fireboxPos, Blocks.AIR.defaultBlockState(), 3);
+            PortCastingMachineBlock fireboxBlock = (PortCastingMachineBlock) PortBlocks.HEATER_FIREBOX.get();
+            var fireboxState = fireboxBlock.defaultBlockState();
+            level.setBlock(fireboxPos, fireboxState, 3);
+            fireboxBlock.setPlacedBy(level, fireboxPos, fireboxState, null,
+                    new ItemStack(PortItems.HEATER_FIREBOX.get()));
+            PortCastingMachineBlock crucibleBlock = (PortCastingMachineBlock) PortBlocks.MACHINE_CRUCIBLE.get();
+            var crucibleState = crucibleBlock.defaultBlockState().setValue(PortCastingMachineBlock.FACING,
+                    Direction.EAST);
+            level.setBlock(cruciblePos, crucibleState, 3);
+            crucibleBlock.setPlacedBy(level, cruciblePos, crucibleState, null,
+                    new ItemStack(PortItems.MACHINE_CRUCIBLE.get()));
+            level.setBlock(moldPos, PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), 3);
+            PortFireboxBlockEntity firebox = (PortFireboxBlockEntity) level.getBlockEntity(fireboxPos);
+            PortCrucibleBlockEntity crucible = (PortCrucibleBlockEntity) level.getBlockEntity(cruciblePos);
+            PortFoundryMoldBlockEntity mold = (PortFoundryMoldBlockEntity) level.getBlockEntity(moldPos);
+            firebox.items().setStackInSlot(0, new ItemStack(Items.COAL));
+            for (int slot = 1; slot <= 3; slot++) {
+                crucible.items().setStackInSlot(slot, new ItemStack(PortItems.INGOT_COPPER.get()));
+            }
+            mold.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
+            for (int tick = 0; tick < 2_500 && crucible.moltenCopper() == 0; tick++) {
+                PortFireboxBlockEntity.tick(level, fireboxPos, fireboxState, firebox);
+                PortCrucibleBlockEntity.tick(level, cruciblePos, crucibleState, crucible);
+                PortFoundryMoldBlockEntity.tick(level, moldPos,
+                        PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), mold);
+            }
+            if (crucible.moltenCopper() == 0 || castingCopperTotal(crucible, mold) != 216) {
+                throw new IllegalStateException("Casting restart fixture did not reach molten state");
+            }
+        } else if (phase.equals("verify")) {
+            if (!(level.getBlockEntity(blastPos) instanceof PortBlastFurnaceBlockEntity blast)
+                    || !(level.getBlockEntity(fireboxPos) instanceof PortFireboxBlockEntity firebox)
+                    || !(level.getBlockEntity(cruciblePos) instanceof PortCrucibleBlockEntity crucible)
+                    || !(level.getBlockEntity(moldPos) instanceof PortFoundryMoldBlockEntity mold)) {
+                throw new IllegalStateException("Active blast/casting machines did not load after restart");
+            }
+            if (castingCopperTotal(crucible, mold) != 216 || firebox.heatEnergy() <= 0) {
+                throw new IllegalStateException("Casting restart lost or duplicated copper or firebox heat");
+            }
+            for (int tick = 0; tick < 2_500 && mold.items().getStackInSlot(1).isEmpty(); tick++) {
+                PortFireboxBlockEntity.tick(level, fireboxPos, level.getBlockState(fireboxPos), firebox);
+                PortCrucibleBlockEntity.tick(level, cruciblePos, level.getBlockState(cruciblePos), crucible);
+                PortFoundryMoldBlockEntity.tick(level, moldPos,
+                        PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), mold);
+            }
+            if (!mold.items().getStackInSlot(1).is(PortItems.PLATE_CAST_COPPER.get())
+                    || castingCopperTotal(crucible, mold) != 216) {
+                throw new IllegalStateException("Reloaded casting line did not finish one conserved plate");
+            }
+            for (int tick = 0; tick < 1_600 && blast.items().getStackInSlot(3).isEmpty(); tick++) {
+                PortBlastFurnaceBlockEntity.tick(level, blastPos, level.getBlockState(blastPos), blast);
+            }
+            if (blast.items().getStackInSlot(3).getCount() != 2
+                    || blast.items().getStackInSlot(4).getCount() != 1
+                    || blast.fuel() != 800 || blast.flueGas() != 100) {
+                throw new IllegalStateException("Reloaded blast furnace lost or duplicated fuel, steel or flue");
+            }
+            level.setBlock(blastPos.above(6), Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(cruciblePos.above(), Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(fireboxPos, Blocks.AIR.defaultBlockState(), 3);
+            level.setBlock(moldPos, Blocks.AIR.defaultBlockState(), 3);
+        } else {
+            throw new IllegalStateException("Unknown machine restart phase: " + phase);
+        }
+        helper.succeed();
+    }
+
+    private static int castingCopperTotal(PortCrucibleBlockEntity crucible, PortFoundryMoldBlockEntity mold) {
+        int quanta = crucible.moltenCopper() + mold.copperQuanta();
+        for (int slot = 1; slot < 10; slot++) {
+            quanta += crucible.items().getStackInSlot(slot).getCount() * PortCrucibleBlockEntity.COPPER_QUANTA;
+        }
+        quanta += mold.items().getStackInSlot(1).getCount()
+                * PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA;
+        return quanta;
+    }
+
+    @GameTest(template = "empty")
     public static void blastFurnaceConstructionSteelAndTeardown(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         var player = FakePlayerFactory.getMinecraft(level);
@@ -114,6 +446,40 @@ public final class PortGameTests {
         if (restored.fuel() != 800 || restored.flueGas() != 100
                 || restored.items().getStackInSlot(3).getCount() != 2) {
             throw new IllegalStateException("Blast furnace inventory or tank state did not survive NBT reload");
+        }
+        var portEntity = level.getBlockEntity(core.east());
+        if (!(portEntity instanceof PortBlastFurnacePortBlockEntity)
+                || portEntity.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.WEST).isPresent()) {
+            throw new IllegalStateException("Blast gas port is missing or exposes its inward face");
+        }
+        var gas = portEntity.getCapability(ForgeCapabilities.FLUID_HANDLER, Direction.EAST).resolve().orElseThrow();
+        var execute = net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE;
+        var simulate = net.minecraftforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE;
+        var air = new net.minecraftforge.fluids.FluidStack(PortFluids.AIRBLAST.get(), 4_000);
+        if (gas.fill(new net.minecraftforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,
+                100), execute) != 0 || gas.fill(air, simulate) != 4_000 || furnace.airblast() != 0
+                || gas.fill(air, execute) != 4_000 || gas.drain(50, simulate).getAmount() != 50
+                || furnace.flueGas() != 100 || gas.drain(50, execute).getAmount() != 50) {
+            throw new IllegalStateException("Blast gas port did not preserve input/output and simulation rules");
+        }
+        furnace.items().setStackInSlot(1, new ItemStack(Items.IRON_INGOT, 2));
+        furnace.items().setStackInSlot(2, new ItemStack(Items.SAND));
+        PortBlastFurnaceBlockEntity.tick(level, core, state, furnace);
+        if (furnace.progress() != 10 || furnace.airblast() != 3_800) {
+            throw new IllegalStateException("Full airblast did not give source 5x speed and 95 percent decay");
+        }
+        CompoundTag overflow = furnace.saveWithFullMetadata();
+        overflow.putInt("airblast", 0);
+        overflow.putInt("progress", 1_599);
+        overflow.putInt("progressRemainder", 0);
+        overflow.putInt("flueGas", 1_000);
+        furnace.load(overflow);
+        float sootBefore = PortSootPollution.get(level).at(core);
+        PortBlastFurnaceBlockEntity.tick(level, core, state, furnace);
+        float sootAfter = PortSootPollution.get(level).at(core);
+        if (furnace.flueGas() != 1_000 || Math.abs(sootAfter - sootBefore - 0.505F) > 0.0001F
+                || PortSootPollution.load(PortSootPollution.get(level).save(new CompoundTag())).at(core) != sootAfter) {
+            throw new IllegalStateException("Flue overflow emission or soot persistence differs from source");
         }
         level.setBlock(core.above(6), Blocks.AIR.defaultBlockState(), 3);
         if (!level.getBlockState(core).isAir() || !level.getBlockState(core.offset(1, 0, 1)).isAir()) {

@@ -9,6 +9,8 @@ public final class PortConfig {
     public static final ForgeConfigSpec.BooleanValue ENABLE_CHUNK_RADS;
     public static final ForgeConfigSpec.DoubleValue NETHER_AMBIENT_RADS;
     public static final ForgeConfigSpec.BooleanValue DISABLE_ASBESTOS;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_POLLUTION;
+    public static final ForgeConfigSpec.DoubleValue POLLUTION_MULTIPLIER;
     public static final ForgeConfigSpec.BooleanValue ENABLE_OVERWORLD_ORES;
     public static final ForgeConfigSpec.IntValue ORE_URANIUM_COUNT;
     public static final ForgeConfigSpec.IntValue ORE_THORIUM_COUNT;
@@ -51,6 +53,10 @@ public final class PortConfig {
         DISABLE_ASBESTOS = builder
                 .comment("Disable asbestos hazards.")
                 .define("HAZ_00_disableAsbestos", false);
+        builder.pop();
+        builder.push("pollution");
+        ENABLE_POLLUTION = builder.define("enablePollution", true);
+        POLLUTION_MULTIPLIER = builder.defineInRange("pollutionMult", 1.0D, 0.0D, 100_000.0D);
         builder.pop();
         builder.push("oregen");
         ENABLE_OVERWORLD_ORES = builder

@@ -30,6 +30,18 @@ public final class PortBlockEntities {
     public static final RegistryObject<BlockEntityType<PortBlastFurnaceBlockEntity>> BLAST_FURNACE =
             TYPES.register("machine_blast_furnace", () -> BlockEntityType.Builder.of(
                     PortBlastFurnaceBlockEntity::new, PortBlocks.MACHINE_BLAST_FURNACE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PortFireboxBlockEntity>> FIREBOX =
+            TYPES.register("heater_firebox", () -> BlockEntityType.Builder.of(
+                    PortFireboxBlockEntity::new, PortBlocks.HEATER_FIREBOX.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PortBlastFurnacePortBlockEntity>> BLAST_FURNACE_PORT =
+            TYPES.register("machine_blast_furnace_port", () -> BlockEntityType.Builder.of(
+                    PortBlastFurnacePortBlockEntity::new, PortBlocks.MACHINE_BLAST_FURNACE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PortCrucibleBlockEntity>> CRUCIBLE =
+            TYPES.register("machine_crucible", () -> BlockEntityType.Builder.of(
+                    PortCrucibleBlockEntity::new, PortBlocks.MACHINE_CRUCIBLE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<PortFoundryMoldBlockEntity>> FOUNDRY_MOLD =
+            TYPES.register("foundry_mold", () -> BlockEntityType.Builder.of(
+                    PortFoundryMoldBlockEntity::new, PortBlocks.FOUNDRY_MOLD.get()).build(null));
 
     private PortBlockEntities() {}
 }

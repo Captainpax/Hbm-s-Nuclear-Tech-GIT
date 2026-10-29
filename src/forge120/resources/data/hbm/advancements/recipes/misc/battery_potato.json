@@ -1,0 +1,1 @@
+{"parent":"minecraft:recipes/root","criteria":{"has_potato":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"items":["minecraft:potato"]}]}}},"rewards":{"recipes":["hbm:battery_potato"]}}

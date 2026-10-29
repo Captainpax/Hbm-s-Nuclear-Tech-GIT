@@ -1,5 +1,8 @@
 {
   "sources": [
+    {"type": "single", "resource": "hbm:models/machines/firebox"},
+    {"type": "single", "resource": "hbm:models/machines/crucible_heat"},
+    {"type": "single", "resource": "hbm:models/machines/blast_furnace"},
     {
       "type": "single",
       "resource": "hbm:models/machines/battery_redstone"

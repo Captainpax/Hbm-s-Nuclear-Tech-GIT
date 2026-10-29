@@ -1,0 +1,4 @@
+{
+  "parent": "hbm:block/firebox_obj_empty",
+  "visibility": {"Main": true, "Door": true, "InnerEmpty": false, "InnerBurning": true}
+}

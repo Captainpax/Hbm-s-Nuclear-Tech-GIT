@@ -21,6 +21,10 @@ public final class PortMenus {
             TYPES.register("machine_press", () -> IForgeMenuType.create(PortPressMenu::new));
     public static final RegistryObject<MenuType<PortBlastFurnaceMenu>> BLAST_FURNACE =
             TYPES.register("machine_blast_furnace", () -> IForgeMenuType.create(PortBlastFurnaceMenu::new));
+    public static final RegistryObject<MenuType<PortFireboxMenu>> FIREBOX =
+            TYPES.register("heater_firebox", () -> IForgeMenuType.create(PortFireboxMenu::new));
+    public static final RegistryObject<MenuType<PortCrucibleMenu>> CRUCIBLE =
+            TYPES.register("machine_crucible", () -> IForgeMenuType.create(PortCrucibleMenu::new));
     public static final RegistryObject<MenuType<PortAnvilMenu>> ANVIL =
             TYPES.register("anvil", () -> IForgeMenuType.create(PortAnvilMenu::new));
 
