@@ -66,6 +66,17 @@ minecraft {
                 args '--quickPlayMultiplayer', '127.0.0.1:25566'
             }
         }
+        survivalClient {
+            parent runs.client
+            workingDirectory project.file('run-survival-client')
+            args '--username', 'HbmSurvival'
+            if (project.hasProperty('hbmSurvivalDriver')) {
+                property 'hbm.port.survivalDriver', project.property('hbmSurvivalDriver').toString()
+            }
+            if (project.hasProperty('hbmSurvivalResume')) {
+                args '--quickPlaySingleplayer', 'HBM Survival Progression'
+            }
+        }
         gameTestServer {
             property 'forge.enabledGameTestNamespaces', modId
             if (project.hasProperty('hbmMultiplayer')) {

@@ -30,7 +30,7 @@ The parity baseline is commit `9d7b7ca3bc999b7909fdb349738d305dff58bd7d` on the 
 
 ## Next gates
 
-The active checkpoint remains open. The first casting chain and original electric-furnace and potato-battery recipes now work in server tests. Required acceptance evidence still includes a new-world raw-resource-to-running-furnace Survival walkthrough without injected items, broader two-player machine/network and visual checks beyond the injected copper fixture, live model/screen/effect/sound comparisons, and independent multi-seed limestone/depth generation checks. The blast furnace has gas ports and overflow soot, with source soot dispersion, decay, mob buffs, coughing and client smog now connected. Other pollutant effects and remaining machine behavior are tracked as partial. Deep deposit mining needs a later source-equivalent tool. The press source animated model is ported; live comparison, preheater and full recipe list remain. The full-mod parity matrix remains the release finish line.
+The active checkpoint remains open. The first casting chain and original electric-furnace and potato-battery recipes now work in server tests. Required acceptance evidence still includes the remainder of the new-world raw-resource-to-running-furnace Survival walkthrough without injected items (the audited vanilla starter step and restart now pass), broader two-player machine/network and visual checks beyond the injected copper fixture, live model/screen/effect/sound comparisons, and independent multi-seed limestone/depth generation checks. The blast furnace has gas ports and overflow soot, with source soot dispersion, decay, mob buffs, coughing and client smog now connected. Other pollutant effects and remaining machine behavior are tracked as partial. Deep deposit mining needs a later source-equivalent tool. The press source animated model is ported; live comparison, preheater and full recipe list remain. The full-mod parity matrix remains the release finish line.
 
 1. Complete the radiation ecosystem: remaining sources, PRISM and high-radiation world effects, remaining armor resistance and other hazards, audible Geiger sound comparison, mob transformations, and in-world multiplayer/HUD/reload checks.
 2. Validate the battery and socket GUIs, installed-pack/support OBJ layers, and cable model in-world and multiplayer. Then port socket SC behavior and creative-battery effects, modern cable types, remaining batteries, and other machine endpoints; port common fluid, machine, and networking frameworks before expanding registries in feature groups.
@@ -122,6 +122,36 @@ A player can use either naturally obtained vanilla copper or HBM copper in the p
 ```
 
 On 2026-10-29, both ordinary seed/verify launches and the isolated alternate-tag launch passed all 104 required GameTests. The alias checks also shift-clicked tagged steel into the iron anvil, consumed exactly ten ingots and one iron anvil, then reused a tagged cast-iron template to make one plate mold while retaining the second mold base. Client resource smoke, the development JAR build and parity inventory checks passed. The JAR's tag JSON was inspected to confirm the alternate-item fixture was excluded. The CI workflow includes the alias suite after the ordinary restart check; the Actions dispatch limitation above prevents a current remote result. The raw-resource real-player walkthrough and broader release gates remain open.
+
+## Raw-resource Survival walkthrough
+
+The isolated `survivalClient` run uses `run-survival-client` and player `HbmSurvival`. `PortSurvivalClientDriver` is inactive unless `-PhbmSurvivalDriver=<session>` is supplied. Its actions require single player, world name `HBM Survival Progression`, seed 20301017, Survival mode, cheats disabled and no creative/flight/invulnerability abilities. The test world was created through the normal UI with default terrain, structures on, Normal difficulty, bonus chest off and default HBM server config. Saves, screenshots, commands and evidence stay in the ignored runtime directory.
+
+This is an automated real-client walkthrough. Loaded-terrain inspection guides targets without loading extra chunks. Mining requires normal reach and a direct block ray, then uses Minecraft's held-attack handler at its normal rate; it does not call the damage-progress method twice per tick. Walking uses ordinary forward/jump input and physics. Placement, recipe-book filling, inventory clicks and anvil/crucible buttons use normal client APIs and server packets. The driver has no world-editing, item-granting, teleport, health, hunger, flight or game-rule commands. Recipe-book filling requires the player to have unlocked the recipe. Each receipt preserves the request and before/after inventories. Request IDs prevent replays, including commands left by a previous client process; `poll` resumes waiting on the same ID. The original empty-inventory snapshot is preserved on restart.
+
+```sh
+python tools/porting/survival_driver.py prepare
+./gradlew runSurvivalClient -PhbmSurvivalDriver=<printed-session> --no-daemon
+# Create the named Survival world with seed 20301017 through the UI.
+python tools/porting/survival_driver.py state
+python tools/porting/survival_driver.py scan --fields '{"match":"_log","radius":8}'
+# Resume the same world/session after a clean shutdown:
+./gradlew runSurvivalClient -PhbmSurvivalDriver=<same-session> -PhbmSurvivalResume --no-daemon
+```
+
+On 2026-10-29, the clean player harvested eight spruce logs and eleven stone blocks, crafted twelve planks, eight sticks, a table, wooden and stone pickaxes, and a furnace. Two additional sticks and one sapling came from normal leaf drops. Two gathered logs smelted into two charcoal using one plank and one stick as fuel; one charcoal and one stick made four torches. The remaining inventory is three logs, sixteen dirt, two sand, one sandstone, four sticks, both picks, four torches, one charcoal and the sapling. The wooden pick has thirty uses of wear and the stone pick is unused. Minecraft's saved crafted/mined/picked-up/used statistics match these quantities; the material ledger explains the wood, stone, fuel and outputs. Health and food remained twenty, with no deaths. The maximized client captured the empty start (`01.39.28.png`) and starter inventory (`02.06.05.png`) in its local screenshot folder.
+
+`survival_audit.py` reads compressed world/player NBT and ordinary statistics after the client saves/stops. It verifies Survival/Normal, disabled cheats and creative abilities, seed and generation settings, normal daylight/mob/drop rules, the initial empty inventory, and absence of fixture data packs. `--bootstrap` checks the starter quantities and material ledger; `--record` preserves the first report rather than overwriting it. This audit does not edit save or player data.
+
+```sh
+python tools/porting/survival_driver.py exit
+# Wait for the client and integrated server to finish saving and exit.
+python tools/porting/survival_audit.py --bootstrap --record
+```
+
+A separate client launch reloaded the same world and preserved every inventory slot/tag and the exact player position. The old exit command was not replayed, and the original empty-inventory snapshot retained its SHA-256 hash. The placed furnace reopened with empty input/fuel/output slots, and the table reopened with an empty grid; no extra smelt or craft occurred. Both client launches saved and exited cleanly. Local evidence includes `bootstrap-audit.json`, `bootstrap-reload.json`, and `bootstrap-after-reload.json`. The base is at table (30,63,39), furnace (29,63,38), with a stair from (29,63,39) to (24,58,39), an alcove at (24,57,40), and a short stone corridor at Y56/Z40 from X25 through X29.
+
+Only the starter step has passed. The next raw-resource work is food and ore acquisition, iron tools, limestone/clay/firebricks, the press/anvils/steel/casting chain, potato batteries and an actual electric-furnace smelt. The complete Survival progression checkpoint and full source-parity release remain open; no source feature is marked verified merely for completing this vanilla starter step.
 
 ## Ore config smoke
 
