@@ -59,7 +59,10 @@ public final class PortClientSmoke {
                 PortItems.STAMP_IRON_PLATE.get(), PortItems.STAMP_IRON_WIRE.get(),
                 PortItems.WIRE_FINE_TUNGSTEN.get(), PortItems.WIRE_FINE_COPPER.get(),
                 PortItems.WIRE_FINE_ALUMINIUM.get(), PortItems.COIL_TUNGSTEN.get(),
-                PortItems.PLATE_COPPER.get(), PortItems.PLATE_ALUMINIUM.get()
+                PortItems.PLATE_COPPER.get(), PortItems.PLATE_ALUMINIUM.get(),
+                PortItems.ANVIL_IRON.get(), PortItems.ANVIL_STEEL.get(),
+                PortItems.INGOT_STEEL.get(), PortItems.PLATE_IRON.get(),
+                PortItems.PLATE_STEEL.get(), PortItems.BOLT_STEEL.get()
         }) {
             if (minecraft.getItemRenderer().getModel(new ItemStack(item), null, null, 0)
                     == minecraft.getModelManager().getMissingModel()) {

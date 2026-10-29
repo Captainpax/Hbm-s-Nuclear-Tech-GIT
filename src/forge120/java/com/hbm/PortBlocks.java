@@ -78,6 +78,8 @@ public final class PortBlocks {
             () -> new PortPressBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.METAL).strength(5.0F, 10.0F)
                     .sound(SoundType.METAL).noOcclusion().requiresCorrectToolForDrops()));
+    public static final RegistryObject<Block> ANVIL_IRON = anvil("anvil_iron", 1);
+    public static final RegistryObject<Block> ANVIL_STEEL = anvil("anvil_steel", 2);
     public static final RegistryObject<Block> ORE_RARE = ore("ore_rare", 5.0F, 10.0F);
     public static final RegistryObject<Block> ORE_LIGNITE = ore("ore_lignite", 5.0F, 15.0F);
     public static final RegistryObject<Block> ORE_CINNEBAR = ore("ore_cinnebar", 5.0F, 10.0F);
@@ -119,6 +121,12 @@ public final class PortBlocks {
         // Legacy BlockDepth is unbreakable until an IDepthRockTool is held.
         return BLOCKS.register(name, () -> new Block(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE).strength(-1.0F, 10.0F).sound(SoundType.STONE)));
+    }
+
+    private static RegistryObject<Block> anvil(String name, int tier) {
+        return BLOCKS.register(name, () -> new PortAnvilBlock(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.METAL).strength(5.0F, 100.0F)
+                .sound(SoundType.ANVIL).noOcclusion().requiresCorrectToolForDrops(), tier));
     }
 
     private static BlockBehaviour.Properties oreProperties(float hardness, float resistance) {

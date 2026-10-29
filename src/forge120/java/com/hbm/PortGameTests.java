@@ -56,6 +56,79 @@ public final class PortGameTests {
     private PortGameTests() {}
 
     @GameTest(template = "empty")
+    public static void ironAnvilUnlocksPressStampsAndSteelUpgrade(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlock(pos, PortBlocks.ANVIL_IRON.get().defaultBlockState(), 3);
+        var player = FakePlayerFactory.getMinecraft(level);
+        player.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+        player.getInventory().clearContent();
+        PortAnvilMenu menu = new PortAnvilMenu(77, player.getInventory(), pos, 1);
+        player.getInventory().setItem(0, new ItemStack(PortItems.STAMP_IRON_FLAT.get(), 2));
+        if (menu.clickMenuButton(player, 99) || menu.clickMenuButton(player, -1)
+                || !menu.clickMenuButton(player, 0) || !menu.clickMenuButton(player, 2)
+                || countInventory(player, PortItems.STAMP_IRON_FLAT.get()) != 0
+                || countInventory(player, PortItems.STAMP_IRON_PLATE.get()) != 1
+                || countInventory(player, PortItems.STAMP_IRON_WIRE.get()) != 1
+                || menu.clickMenuButton(player, 2)) {
+            throw new IllegalStateException("Anvil construction did not consume one flat stamp per output");
+        }
+        menu.getSlot(0).set(new ItemStack(PortItems.ANVIL_IRON.get()));
+        menu.getSlot(1).set(new ItemStack(PortItems.INGOT_STEEL.get(), 9));
+        if (!menu.getSlot(2).getItem().isEmpty()) throw new IllegalStateException("Steel anvil accepted only nine ingots");
+        menu.getSlot(1).set(new ItemStack(PortItems.INGOT_STEEL.get(), 10));
+        if (!menu.getSlot(2).getItem().is(PortItems.ANVIL_STEEL.get())) {
+            throw new IllegalStateException("Tier-1 steel anvil smithing output missing");
+        }
+        menu.getSlot(2).onTake(player, new ItemStack(PortItems.ANVIL_STEEL.get()));
+        if (!menu.getSlot(0).getItem().isEmpty() || !menu.getSlot(1).getItem().isEmpty()
+                || !menu.getSlot(2).getItem().isEmpty()) {
+            throw new IllegalStateException("Steel anvil smithing did not consume the iron anvil and ten ingots");
+        }
+        menu.removed(player);
+        player.getInventory().clearContent();
+        helper.succeed();
+    }
+
+    private static int countInventory(net.minecraft.world.entity.player.Player player, Item item) {
+        int count = 0;
+        for (ItemStack stack : player.getInventory().items) if (stack.is(item)) count += stack.getCount();
+        return count;
+    }
+
+    @GameTest(template = "empty")
+    public static void platesAndSteelBoltsKeepSourceQuantities(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        if (!PortPressRecipes.output(new ItemStack(Items.IRON_INGOT),
+                new ItemStack(PortItems.STAMP_IRON_PLATE.get())).is(PortItems.PLATE_IRON.get())
+                || !PortPressRecipes.output(new ItemStack(PortItems.INGOT_STEEL.get()),
+                new ItemStack(PortItems.STAMP_IRON_PLATE.get())).is(PortItems.PLATE_STEEL.get())) {
+            throw new IllegalStateException("Iron or steel plate press recipe missing");
+        }
+        for (String path : new String[] {"anvil_iron", "bolt_steel", "coil_tungsten_steel"}) {
+            var id = ResourceLocation.fromNamespaceAndPath("hbm", path);
+            if (level.getRecipeManager().byKey(id).isEmpty()) throw new IllegalStateException("Missing recipe " + path);
+            var unlock = level.getServer().getAdvancements().getAdvancement(
+                    ResourceLocation.fromNamespaceAndPath("hbm", "recipes/misc/" + path));
+            if (unlock == null || !Set.of(unlock.getRewards().getRecipes()).contains(id)) {
+                throw new IllegalStateException("Missing recipe-book unlock " + path);
+            }
+        }
+        var player = FakePlayerFactory.getMinecraft(level);
+        var grid = new TransientCraftingContainer(player.inventoryMenu, 3, 3);
+        grid.setItem(0, new ItemStack(PortItems.INGOT_STEEL.get()));
+        grid.setItem(3, new ItemStack(PortItems.INGOT_STEEL.get()));
+        var bolts = level.getRecipeManager().byKey(ResourceLocation.fromNamespaceAndPath("hbm", "bolt_steel"))
+                .orElseThrow();
+        if (!(bolts instanceof ShapedRecipe shaped) || !shaped.matches(grid, level)
+                || !shaped.assemble(grid, level.registryAccess()).is(PortItems.BOLT_STEEL.get())
+                || shaped.assemble(grid, level.registryAccess()).getCount() != 16) {
+            throw new IllegalStateException("Two steel ingots did not yield sixteen bolts");
+        }
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void fuelPressProducesEightWiresAndPersists(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));

@@ -17,6 +17,7 @@ public final class PortClientMenus {
             MenuScreens.register(PortMenus.BATTERY_SOCKET.get(), PortBatterySocketScreen::new);
             MenuScreens.register(PortMenus.ELECTRIC_FURNACE.get(), PortElectricFurnaceScreen::new);
             MenuScreens.register(PortMenus.PRESS.get(), PortPressScreen::new);
+            MenuScreens.register(PortMenus.ANVIL.get(), PortAnvilScreen::new);
         });
     }
 }

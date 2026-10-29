@@ -1,14 +1,34 @@
 kind,key,status,target,notes
+block,anvil_iron,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Source iron-block recipe and falling facing tier-one construction interaction; temporary block model and full recipe browser pending
+block,anvil_steel,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Steel anvil smithing from iron anvil and ten steel ingots tested; steel production and full tier-two recipes pending
+item,ingot_steel,partial,src/forge120/java/com/hbm/PortItems.java,Original item and source texture registered; blast-furnace production pending
+item,plate_iron,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source one-ingot plate-stamp press output tested; other plate routes pending
+item,plate_steel,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source one-ingot plate-stamp press output tested; Survival steel production pending
+item,bolt,partial,src/forge120/resources/data/hbm/recipes/bolt_steel.json,Named steel variant from two ingots yields sixteen bolts; other material variants pending
+java_source,blocks/machine/NTMAnvil,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Iron and steel falling facing blocks with menu; source 3D renderer and other tiers pending
+java_source,inventory/container/ContainerAnvil,partial,src/forge120/java/com/hbm/PortAnvilMenu.java,Two-slot steel-anvil smithing and server-validated stamp construction; full recipe catalogue pending
+java_source,inventory/recipes/anvil/AnvilRecipes,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,First two tier-one construction recipes and steel-anvil smithing ported; hundreds of recipes pending
+java_source,inventory/gui/GUIAnvil,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Original GUI background with temporary two-recipe controls; live visual and full browser pending
+screen_source,GUIAnvil,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Anvil screen registered and client smoke passes; in-world visual and full browser pending
+asset,textures/blocks/anvil_iron.png,verified,src/forge120/resources/assets/hbm/textures/block/anvil_iron.png,Original texture copied byte-for-byte
+asset,textures/blocks/anvil_steel.png,verified,src/forge120/resources/assets/hbm/textures/block/anvil_steel.png,Original texture copied byte-for-byte
+asset,textures/gui/processing/gui_anvil.png,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_anvil.png,Original texture copied byte-for-byte
+asset,textures/items/ingot_steel.png,verified,src/forge120/resources/assets/hbm/textures/item/ingot_steel.png,Original texture copied byte-for-byte
+asset,textures/items/plate_iron.png,verified,src/forge120/resources/assets/hbm/textures/item/plate_iron.png,Original texture copied byte-for-byte
+asset,textures/items/plate_steel.png,verified,src/forge120/resources/assets/hbm/textures/item/plate_steel.png,Original texture copied byte-for-byte
+asset,textures/items/bolt.png,verified,src/forge120/resources/assets/hbm/textures/item/bolt.png,Original texture copied byte-for-byte
+recipe_site,CraftingManager:293,partial,src/forge120/resources/data/hbm/recipes/anvil_iron.json,Source seven iron ingots plus iron block iron-anvil recipe and unlock tested
+recipe_site,CraftingManager:971,partial,src/forge120/resources/data/hbm/recipes/bolt_steel.json,Steel-bolt variant yields sixteen from two ingots; other material variants pending
 block,machine_press,partial,src/forge120/java/com/hbm/PortPressBlock.java,Three-high placed press with teardown and temporary block model; source animated model and preheater pending
 block_entity,TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,First fuel and stamped-wire operation with NBT test; proxy automation and two-launch restart pending
 item,stamp_iron_flat,partial,src/forge120/resources/data/hbm/recipes/stamp_iron_flat_brick.json,Source brick or nether-brick crafting recipe and 64 durability
-item,stamp_iron_plate,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source press behavior and 64 durability; iron-anvil conversion pending
-item,stamp_iron_wire,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source press behavior and 64 durability; iron-anvil conversion pending
+item,stamp_iron_plate,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,Source iron-anvil flat-stamp conversion and 64-use press behavior tested; other anvil recipes pending
+item,stamp_iron_wire,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,Source iron-anvil flat-stamp conversion and 64-use press behavior tested; other anvil recipes pending
 item,wire_fine,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Tungsten copper and aluminium named fine wires with eight-per-ingot press yield; other materials and tint pending
-item,coil_tungsten,partial,src/forge120/resources/data/hbm/recipes/coil_tungsten.json,Eight tungsten fine wires around iron ingot; steel alternative pending
+item,coil_tungsten,partial,src/forge120/resources/data/hbm/recipes/coil_tungsten.json,Eight tungsten fine wires around iron or steel ingot tested; other source alternatives pending
 item,plate_copper,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate only; foundry cast plate is a separate pending item
 item,plate_aluminium,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate only; other plate pathways pending
-java_source,inventory/recipes/PressRecipes,partial,src/forge120/java/com/hbm/PortPressRecipes.java,First three wire and two plate mappings ported; full recipe table pending
+java_source,inventory/recipes/PressRecipes,partial,src/forge120/java/com/hbm/PortPressRecipes.java,First three wire and four plate mappings ported; full recipe table pending
 java_source,tileentity/machine/TileEntityMachinePress,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics ported; preheater and animation pending
 block,stone_resource,partial,src/forge120/java/com/hbm/PortBlocks.java,Limestone named variant and new-chunk placement ported; other stone-resource variants pending
 block,stone_depth,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld depth filler ported as unbreakable; special deep mining tools pending

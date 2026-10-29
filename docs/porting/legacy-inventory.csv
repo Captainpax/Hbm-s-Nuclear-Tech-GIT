@@ -1334,7 +1334,7 @@ asset,textures/blocks/anvil_bismuth_bronze.png,src/main/resources/assets/hbm/tex
 asset,textures/blocks/anvil_desh.png,src/main/resources/assets/hbm/textures/blocks/anvil_desh.png,,unported,,
 asset,textures/blocks/anvil_dnt.png,src/main/resources/assets/hbm/textures/blocks/anvil_dnt.png,,unported,,
 asset,textures/blocks/anvil_ferrouranium.png,src/main/resources/assets/hbm/textures/blocks/anvil_ferrouranium.png,,unported,,
-asset,textures/blocks/anvil_iron.png,src/main/resources/assets/hbm/textures/blocks/anvil_iron.png,,unported,,
+asset,textures/blocks/anvil_iron.png,src/main/resources/assets/hbm/textures/blocks/anvil_iron.png,,verified,src/forge120/resources/assets/hbm/textures/block/anvil_iron.png,Original texture copied byte-for-byte
 asset,textures/blocks/anvil_lead.png,src/main/resources/assets/hbm/textures/blocks/anvil_lead.png,,unported,,
 asset,textures/blocks/anvil_meteorite.png,src/main/resources/assets/hbm/textures/blocks/anvil_meteorite.png,,unported,,
 asset,textures/blocks/anvil_murky.png,src/main/resources/assets/hbm/textures/blocks/anvil_murky.png,,unported,,
@@ -1342,7 +1342,7 @@ asset,textures/blocks/anvil_osmiridium.png,src/main/resources/assets/hbm/texture
 asset,textures/blocks/anvil_saturnite.png,src/main/resources/assets/hbm/textures/blocks/anvil_saturnite.png,,unported,,
 asset,textures/blocks/anvil_schrabidate.png,src/main/resources/assets/hbm/textures/blocks/anvil_schrabidate.png,,unported,,
 asset,textures/blocks/anvil_starmetal.png,src/main/resources/assets/hbm/textures/blocks/anvil_starmetal.png,,unported,,
-asset,textures/blocks/anvil_steel.png,src/main/resources/assets/hbm/textures/blocks/anvil_steel.png,,unported,,
+asset,textures/blocks/anvil_steel.png,src/main/resources/assets/hbm/textures/blocks/anvil_steel.png,,verified,src/forge120/resources/assets/hbm/textures/block/anvil_steel.png,Original texture copied byte-for-byte
 asset,textures/blocks/armor_table_bottom.png,src/main/resources/assets/hbm/textures/blocks/armor_table_bottom.png,,unported,,
 asset,textures/blocks/armor_table_side.png,src/main/resources/assets/hbm/textures/blocks/armor_table_side.png,,unported,,
 asset,textures/blocks/armor_table_top.png,src/main/resources/assets/hbm/textures/blocks/armor_table_top.png,,unported,,
@@ -3415,7 +3415,7 @@ asset,textures/gui/particleaccelerator/gui_source.png,src/main/resources/assets/
 asset,textures/gui/potions.png,src/main/resources/assets/hbm/textures/gui/potions.png,,unported,,
 asset,textures/gui/processing/gui_ammo_press.png,src/main/resources/assets/hbm/textures/gui/processing/gui_ammo_press.png,,unported,,
 asset,textures/gui/processing/gui_annihilator.png,src/main/resources/assets/hbm/textures/gui/processing/gui_annihilator.png,,unported,,
-asset,textures/gui/processing/gui_anvil.png,src/main/resources/assets/hbm/textures/gui/processing/gui_anvil.png,,unported,,
+asset,textures/gui/processing/gui_anvil.png,src/main/resources/assets/hbm/textures/gui/processing/gui_anvil.png,,verified,src/forge120/resources/assets/hbm/textures/gui/processing/gui_anvil.png,Original texture copied byte-for-byte
 asset,textures/gui/processing/gui_arc_furnace.png,src/main/resources/assets/hbm/textures/gui/processing/gui_arc_furnace.png,,unported,,
 asset,textures/gui/processing/gui_arc_welder.png,src/main/resources/assets/hbm/textures/gui/processing/gui_arc_welder.png,,unported,,
 asset,textures/gui/processing/gui_assembler.png,src/main/resources/assets/hbm/textures/gui/processing/gui_assembler.png,,unported,,
@@ -3966,7 +3966,7 @@ asset,textures/items/board_copper.png,src/main/resources/assets/hbm/textures/ite
 asset,textures/items/boat_rubber.png,src/main/resources/assets/hbm/textures/items/boat_rubber.png,,unported,,
 asset,textures/items/bobmazon.png,src/main/resources/assets/hbm/textures/items/bobmazon.png,,unported,,
 asset,textures/items/bobmazon_special.png,src/main/resources/assets/hbm/textures/items/bobmazon_special.png,,unported,,
-asset,textures/items/bolt.png,src/main/resources/assets/hbm/textures/items/bolt.png,,unported,,
+asset,textures/items/bolt.png,src/main/resources/assets/hbm/textures/items/bolt.png,,verified,src/forge120/resources/assets/hbm/textures/item/bolt.png,Original texture copied byte-for-byte
 asset,textures/items/bolt_spike.png,src/main/resources/assets/hbm/textures/items/bolt_spike.png,,unported,,
 asset,textures/items/boltgun.png,src/main/resources/assets/hbm/textures/items/boltgun.png,,unported,,
 asset,textures/items/bomb_caller.png,src/main/resources/assets/hbm/textures/items/bomb_caller.png,,unported,,
@@ -4815,7 +4815,7 @@ asset,textures/items/ingot_starmetal_orion.png,src/main/resources/assets/hbm/tex
 asset,textures/items/ingot_starmetal_orion_base.png,src/main/resources/assets/hbm/textures/items/ingot_starmetal_orion_base.png,,unported,,
 asset,textures/items/ingot_starmetal_ursa.png,src/main/resources/assets/hbm/textures/items/ingot_starmetal_ursa.png,,unported,,
 asset,textures/items/ingot_starmetal_ursa_base.png,src/main/resources/assets/hbm/textures/items/ingot_starmetal_ursa_base.png,,unported,,
-asset,textures/items/ingot_steel.png,src/main/resources/assets/hbm/textures/items/ingot_steel.png,,unported,,
+asset,textures/items/ingot_steel.png,src/main/resources/assets/hbm/textures/items/ingot_steel.png,,verified,src/forge120/resources/assets/hbm/textures/item/ingot_steel.png,Original texture copied byte-for-byte
 asset,textures/items/ingot_steel_dusted.png,src/main/resources/assets/hbm/textures/items/ingot_steel_dusted.png,,unported,,
 asset,textures/items/ingot_steel_dusted_hot.png,src/main/resources/assets/hbm/textures/items/ingot_steel_dusted_hot.png,,unported,,
 asset,textures/items/ingot_strontium.png,src/main/resources/assets/hbm/textures/items/ingot_strontium.png,,unported,,
@@ -5339,7 +5339,7 @@ asset,textures/items/plate_fuel_u235.png,src/main/resources/assets/hbm/textures/
 asset,textures/items/plate_gold.png,src/main/resources/assets/hbm/textures/items/plate_gold.png,,unported,,
 asset,textures/items/plate_gunmetal.png,src/main/resources/assets/hbm/textures/items/plate_gunmetal.png,,unported,,
 asset,textures/items/plate_gunsteel.png,src/main/resources/assets/hbm/textures/items/plate_gunsteel.png,,unported,,
-asset,textures/items/plate_iron.png,src/main/resources/assets/hbm/textures/items/plate_iron.png,,unported,,
+asset,textures/items/plate_iron.png,src/main/resources/assets/hbm/textures/items/plate_iron.png,,verified,src/forge120/resources/assets/hbm/textures/item/plate_iron.png,Original texture copied byte-for-byte
 asset,textures/items/plate_kevlar.png,src/main/resources/assets/hbm/textures/items/plate_kevlar.png,,unported,,
 asset,textures/items/plate_lead.png,src/main/resources/assets/hbm/textures/items/plate_lead.png,,unported,,
 asset,textures/items/plate_mixed.png,src/main/resources/assets/hbm/textures/items/plate_mixed.png,,unported,,
@@ -5347,7 +5347,7 @@ asset,textures/items/plate_paa.png,src/main/resources/assets/hbm/textures/items/
 asset,textures/items/plate_polymer.png,src/main/resources/assets/hbm/textures/items/plate_polymer.png,,verified,src/forge120/resources/assets/hbm/textures/item/plate_polymer.png,Original texture copied byte-for-byte
 asset,textures/items/plate_saturnite.png,src/main/resources/assets/hbm/textures/items/plate_saturnite.png,,unported,,
 asset,textures/items/plate_schrabidium.png,src/main/resources/assets/hbm/textures/items/plate_schrabidium.png,,unported,,
-asset,textures/items/plate_steel.png,src/main/resources/assets/hbm/textures/items/plate_steel.png,,unported,,
+asset,textures/items/plate_steel.png,src/main/resources/assets/hbm/textures/items/plate_steel.png,,verified,src/forge120/resources/assets/hbm/textures/item/plate_steel.png,Original texture copied byte-for-byte
 asset,textures/items/plate_titanium.png,src/main/resources/assets/hbm/textures/items/plate_titanium.png,,unported,,
 asset,textures/items/plate_waste_overlay_heat.png,src/main/resources/assets/hbm/textures/items/plate_waste_overlay_heat.png,,unported,,
 asset,textures/items/plate_welded.png,src/main/resources/assets/hbm/textures/items/plate_welded.png,,unported,,
@@ -7161,13 +7161,13 @@ block,anvil_bismuth_bronze,src/main/java/com/hbm/blocks/ModBlocks.java,2989,unpo
 block,anvil_desh,src/main/java/com/hbm/blocks/ModBlocks.java,2986,unported,,
 block,anvil_dnt,src/main/java/com/hbm/blocks/ModBlocks.java,2992,unported,,
 block,anvil_ferrouranium,src/main/java/com/hbm/blocks/ModBlocks.java,2987,unported,,
-block,anvil_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2983,unported,,
+block,anvil_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2983,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Source iron-block recipe and falling facing tier-one construction interaction; temporary block model and full recipe browser pending
 block,anvil_lead,src/main/java/com/hbm/blocks/ModBlocks.java,2984,unported,,
 block,anvil_murky,src/main/java/com/hbm/blocks/ModBlocks.java,2994,unported,,
 block,anvil_osmiridium,src/main/java/com/hbm/blocks/ModBlocks.java,2993,unported,,
 block,anvil_saturnite,src/main/java/com/hbm/blocks/ModBlocks.java,2988,unported,,
 block,anvil_schrabidate,src/main/java/com/hbm/blocks/ModBlocks.java,2991,unported,,
-block,anvil_steel,src/main/java/com/hbm/blocks/ModBlocks.java,2985,unported,,
+block,anvil_steel,src/main/java/com/hbm/blocks/ModBlocks.java,2985,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Steel anvil smithing from iron anvil and ten steel ingots tested; steel production and full tier-two recipes pending
 block,ash_digamma,src/main/java/com/hbm/blocks/ModBlocks.java,2925,unported,,
 block,asphalt,src/main/java/com/hbm/blocks/ModBlocks.java,2615,unported,,
 block,asphalt_light,src/main/java/com/hbm/blocks/ModBlocks.java,2616,unported,,
@@ -9297,7 +9297,7 @@ item,blueprints,src/main/java/com/hbm/items/ModItems.java,5179,unported,,
 item,boat_rubber,src/main/java/com/hbm/items/ModItems.java,6165,unported,,
 item,bobmazon,src/main/java/com/hbm/items/ModItems.java,5181,unported,,
 item,bobmazon_hidden,src/main/java/com/hbm/items/ModItems.java,5182,unported,,
-item,bolt,src/main/java/com/hbm/items/ModItems.java,4922,unported,,
+item,bolt,src/main/java/com/hbm/items/ModItems.java,4922,partial,src/forge120/resources/data/hbm/recipes/bolt_steel.json,Named steel variant from two ingots yields sixteen bolts; other material variants pending
 item,bolt_spike,src/main/java/com/hbm/items/ModItems.java,4923,unported,,
 item,boltgun,src/main/java/com/hbm/items/ModItems.java,5275,unported,,
 item,bomb_caller,src/main/java/com/hbm/items/ModItems.java,6316,unported,,
@@ -9451,7 +9451,7 @@ item,coil_copper_torus,src/main/java/com/hbm/items/ModItems.java,4941,unported,,
 item,coil_gold,src/main/java/com/hbm/items/ModItems.java,4942,unported,,
 item,coil_gold_torus,src/main/java/com/hbm/items/ModItems.java,4943,unported,,
 item,coil_magnetized_tungsten,src/main/java/com/hbm/items/ModItems.java,4945,unported,,
-item,coil_tungsten,src/main/java/com/hbm/items/ModItems.java,4944,partial,src/forge120/resources/data/hbm/recipes/coil_tungsten.json,Eight tungsten fine wires around iron ingot; steel alternative pending
+item,coil_tungsten,src/main/java/com/hbm/items/ModItems.java,4944,partial,src/forge120/resources/data/hbm/recipes/coil_tungsten.json,Eight tungsten fine wires around iron or steel ingot tested; other source alternatives pending
 item,coin_creeper,src/main/java/com/hbm/items/ModItems.java,6084,unported,,
 item,coin_maskman,src/main/java/com/hbm/items/ModItems.java,6086,unported,,
 item,coin_radiation,src/main/java/com/hbm/items/ModItems.java,6085,unported,,
@@ -9882,7 +9882,7 @@ item,ingot_smore,src/main/java/com/hbm/items/ModItems.java,4542,unported,,
 item,ingot_solinium,src/main/java/com/hbm/items/ModItems.java,4519,unported,,
 item,ingot_sr90,src/main/java/com/hbm/items/ModItems.java,4476,unported,,
 item,ingot_starmetal,src/main/java/com/hbm/items/ModItems.java,4535,unported,,
-item,ingot_steel,src/main/java/com/hbm/items/ModItems.java,4486,unported,,
+item,ingot_steel,src/main/java/com/hbm/items/ModItems.java,4486,partial,src/forge120/java/com/hbm/PortItems.java,Original item and source texture registered; blast-furnace production pending
 item,ingot_steel_dusted,src/main/java/com/hbm/items/ModItems.java,4546,unported,,
 item,ingot_tantalium,src/main/java/com/hbm/items/ModItems.java,4497,unported,,
 item,ingot_tcalloy,src/main/java/com/hbm/items/ModItems.java,4487,unported,,
@@ -10377,7 +10377,7 @@ item,plate_fuel_u233,src/main/java/com/hbm/items/ModItems.java,5393,unported,,
 item,plate_fuel_u235,src/main/java/com/hbm/items/ModItems.java,5394,unported,,
 item,plate_gold,src/main/java/com/hbm/items/ModItems.java,4884,unported,,
 item,plate_gunmetal,src/main/java/com/hbm/items/ModItems.java,4895,unported,,
-item,plate_iron,src/main/java/com/hbm/items/ModItems.java,4883,unported,,
+item,plate_iron,src/main/java/com/hbm/items/ModItems.java,4883,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source one-ingot plate-stamp press output tested; other plate routes pending
 item,plate_kevlar,src/main/java/com/hbm/items/ModItems.java,4900,unported,,
 item,plate_lead,src/main/java/com/hbm/items/ModItems.java,4888,unported,,
 item,plate_mixed,src/main/java/com/hbm/items/ModItems.java,4894,unported,,
@@ -10385,7 +10385,7 @@ item,plate_paa,src/main/java/com/hbm/items/ModItems.java,4898,unported,,
 item,plate_polymer,src/main/java/com/hbm/items/ModItems.java,4899,partial,src/forge120/java/com/hbm/PortItems.java,Original Insulator item registered with source texture and three vanilla-material crafting paths; plastic rubber fiber and asbestos inputs plus downstream progression pending
 item,plate_saturnite,src/main/java/com/hbm/items/ModItems.java,4897,unported,,
 item,plate_schrabidium,src/main/java/com/hbm/items/ModItems.java,4892,unported,,
-item,plate_steel,src/main/java/com/hbm/items/ModItems.java,4887,unported,,
+item,plate_steel,src/main/java/com/hbm/items/ModItems.java,4887,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source one-ingot plate-stamp press output tested; Survival steel production pending
 item,plate_titanium,src/main/java/com/hbm/items/ModItems.java,4885,unported,,
 item,plate_weaponsteel,src/main/java/com/hbm/items/ModItems.java,4896,unported,,
 item,plate_welded,src/main/java/com/hbm/items/ModItems.java,4917,unported,,
@@ -10735,8 +10735,8 @@ item,stamp_desh_plate,src/main/java/com/hbm/items/ModItems.java,5206,unported,,
 item,stamp_desh_wire,src/main/java/com/hbm/items/ModItems.java,5207,unported,,
 item,stamp_iron_circuit,src/main/java/com/hbm/items/ModItems.java,5192,unported,,
 item,stamp_iron_flat,src/main/java/com/hbm/items/ModItems.java,5189,partial,src/forge120/resources/data/hbm/recipes/stamp_iron_flat_brick.json,Source brick or nether-brick crafting recipe and 64 durability
-item,stamp_iron_plate,src/main/java/com/hbm/items/ModItems.java,5190,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source press behavior and 64 durability; iron-anvil conversion pending
-item,stamp_iron_wire,src/main/java/com/hbm/items/ModItems.java,5191,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Source press behavior and 64 durability; iron-anvil conversion pending
+item,stamp_iron_plate,src/main/java/com/hbm/items/ModItems.java,5190,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,Source iron-anvil flat-stamp conversion and 64-use press behavior tested; other anvil recipes pending
+item,stamp_iron_wire,src/main/java/com/hbm/items/ModItems.java,5191,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,Source iron-anvil flat-stamp conversion and 64-use press behavior tested; other anvil recipes pending
 item,stamp_obsidian_circuit,src/main/java/com/hbm/items/ModItems.java,5204,unported,,
 item,stamp_obsidian_flat,src/main/java/com/hbm/items/ModItems.java,5201,unported,,
 item,stamp_obsidian_plate,src/main/java/com/hbm/items/ModItems.java,5202,unported,,
@@ -11433,7 +11433,7 @@ java_source,blocks/machine/MachineTurbofan,src/main/java/com/hbm/blocks/machine/
 java_source,blocks/machine/MachineUF6Tank,src/main/java/com/hbm/blocks/machine/MachineUF6Tank.java,,unported,,
 java_source,blocks/machine/MachineVacuumDistill,src/main/java/com/hbm/blocks/machine/MachineVacuumDistill.java,,unported,,
 java_source,blocks/machine/MachineWoodBurner,src/main/java/com/hbm/blocks/machine/MachineWoodBurner.java,,unported,,
-java_source,blocks/machine/NTMAnvil,src/main/java/com/hbm/blocks/machine/NTMAnvil.java,,unported,,
+java_source,blocks/machine/NTMAnvil,src/main/java/com/hbm/blocks/machine/NTMAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilBlock.java,Iron and steel falling facing blocks with menu; source 3D renderer and other tiers pending
 java_source,blocks/machine/PinkCloudBroadcaster,src/main/java/com/hbm/blocks/machine/PinkCloudBroadcaster.java,,unported,,
 java_source,blocks/machine/PistonInserter,src/main/java/com/hbm/blocks/machine/PistonInserter.java,,unported,,
 java_source,blocks/machine/PowerDetector,src/main/java/com/hbm/blocks/machine/PowerDetector.java,,unported,,
@@ -12102,7 +12102,7 @@ java_source,inventory/SlotTakeOnly,src/main/java/com/hbm/inventory/SlotTakeOnly.
 java_source,inventory/SlotUpgrade,src/main/java/com/hbm/inventory/SlotUpgrade.java,,unported,,
 java_source,inventory/UpgradeManagerNT,src/main/java/com/hbm/inventory/UpgradeManagerNT.java,,unported,,
 java_source,inventory/container/ContainerAmmoBag,src/main/java/com/hbm/inventory/container/ContainerAmmoBag.java,,unported,,
-java_source,inventory/container/ContainerAnvil,src/main/java/com/hbm/inventory/container/ContainerAnvil.java,,unported,,
+java_source,inventory/container/ContainerAnvil,src/main/java/com/hbm/inventory/container/ContainerAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilMenu.java,Two-slot steel-anvil smithing and server-validated stamp construction; full recipe catalogue pending
 java_source,inventory/container/ContainerArmorTable,src/main/java/com/hbm/inventory/container/ContainerArmorTable.java,,unported,,
 java_source,inventory/container/ContainerAshpit,src/main/java/com/hbm/inventory/container/ContainerAshpit.java,,unported,,
 java_source,inventory/container/ContainerAutocrafter,src/main/java/com/hbm/inventory/container/ContainerAutocrafter.java,,unported,,
@@ -12296,7 +12296,7 @@ java_source,inventory/fluid/trait/FT_VentRadiation,src/main/java/com/hbm/invento
 java_source,inventory/fluid/trait/FluidTrait,src/main/java/com/hbm/inventory/fluid/trait/FluidTrait.java,,unported,,
 java_source,inventory/fluid/trait/FluidTraitSimple,src/main/java/com/hbm/inventory/fluid/trait/FluidTraitSimple.java,,unported,,
 java_source,inventory/gui/GUIAmmoBag,src/main/java/com/hbm/inventory/gui/GUIAmmoBag.java,,unported,,
-java_source,inventory/gui/GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,unported,,
+java_source,inventory/gui/GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Original GUI background with temporary two-recipe controls; live visual and full browser pending
 java_source,inventory/gui/GUIArmorTable,src/main/java/com/hbm/inventory/gui/GUIArmorTable.java,,unported,,
 java_source,inventory/gui/GUIAshpit,src/main/java/com/hbm/inventory/gui/GUIAshpit.java,,unported,,
 java_source,inventory/gui/GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUIAutocrafter.java,,unported,,
@@ -12561,7 +12561,7 @@ java_source,inventory/recipes/PedestalRecipes,src/main/java/com/hbm/inventory/re
 java_source,inventory/recipes/PlasmaForgeRecipe,src/main/java/com/hbm/inventory/recipes/PlasmaForgeRecipe.java,,unported,,
 java_source,inventory/recipes/PlasmaForgeRecipes,src/main/java/com/hbm/inventory/recipes/PlasmaForgeRecipes.java,,unported,,
 java_source,inventory/recipes/PrecAssRecipes,src/main/java/com/hbm/inventory/recipes/PrecAssRecipes.java,,unported,,
-java_source,inventory/recipes/PressRecipes,src/main/java/com/hbm/inventory/recipes/PressRecipes.java,,partial,src/forge120/java/com/hbm/PortPressRecipes.java,First three wire and two plate mappings ported; full recipe table pending
+java_source,inventory/recipes/PressRecipes,src/main/java/com/hbm/inventory/recipes/PressRecipes.java,,partial,src/forge120/java/com/hbm/PortPressRecipes.java,First three wire and four plate mappings ported; full recipe table pending
 java_source,inventory/recipes/PyroOvenRecipes,src/main/java/com/hbm/inventory/recipes/PyroOvenRecipes.java,,unported,,
 java_source,inventory/recipes/RadiolysisRecipes,src/main/java/com/hbm/inventory/recipes/RadiolysisRecipes.java,,unported,,
 java_source,inventory/recipes/RefineryRecipes,src/main/java/com/hbm/inventory/recipes/RefineryRecipes.java,,unported,,
@@ -12572,7 +12572,7 @@ java_source,inventory/recipes/ShredderRecipes,src/main/java/com/hbm/inventory/re
 java_source,inventory/recipes/SolderingRecipes,src/main/java/com/hbm/inventory/recipes/SolderingRecipes.java,,unported,,
 java_source,inventory/recipes/SolidificationRecipes,src/main/java/com/hbm/inventory/recipes/SolidificationRecipes.java,,unported,,
 java_source,inventory/recipes/VacuumRefineryRecipes,src/main/java/com/hbm/inventory/recipes/VacuumRefineryRecipes.java,,unported,,
-java_source,inventory/recipes/anvil/AnvilRecipes,src/main/java/com/hbm/inventory/recipes/anvil/AnvilRecipes.java,,unported,,
+java_source,inventory/recipes/anvil/AnvilRecipes,src/main/java/com/hbm/inventory/recipes/anvil/AnvilRecipes.java,,partial,src/forge120/java/com/hbm/PortAnvilConstruction.java,First two tier-one construction recipes and steel-anvil smithing ported; hundreds of recipes pending
 java_source,inventory/recipes/anvil/AnvilSmithingCyanideRecipe,src/main/java/com/hbm/inventory/recipes/anvil/AnvilSmithingCyanideRecipe.java,,unported,,
 java_source,inventory/recipes/anvil/AnvilSmithingHotRecipe,src/main/java/com/hbm/inventory/recipes/anvil/AnvilSmithingHotRecipe.java,,unported,,
 java_source,inventory/recipes/anvil/AnvilSmithingMold,src/main/java/com/hbm/inventory/recipes/anvil/AnvilSmithingMold.java,,unported,,
@@ -15561,7 +15561,7 @@ recipe_site,CraftingManager:289,src/main/java/com/hbm/main/CraftingManager.java,
 recipe_site,CraftingManager:290,src/main/java/com/hbm/main/CraftingManager.java,290,unported,,"addRecipeAuto(new ItemStack(ModBlocks.machine_microwave, 1), new Object[] { ""III"", ""SGM"", ""IDI"", 'I', ModItems.plate_polymer, 'S', STEEL.plate(), 'G', KEY_ANYPANE, 'M', ModItems.magnetron, 'D', ModIte"
 recipe_site,CraftingManager:291,src/main/java/com/hbm/main/CraftingManager.java,291,unported,,"addRecipeAuto(new ItemStack(ModBlocks.machine_solar_boiler), new Object[] { ""SHS"", ""DHD"", ""SHS"", 'S', STEEL.ingot(), 'H', STEEL.shell(), 'D', KEY_BLACK });"
 recipe_site,CraftingManager:292,src/main/java/com/hbm/main/CraftingManager.java,292,unported,,"addRecipeAuto(new ItemStack(ModBlocks.solar_mirror, 3), new Object[] { ""AAA"", "" B "", ""SSS"", 'A', AL.plate(), 'B', ModBlocks.steel_beam, 'S', STEEL.ingot() });"
-recipe_site,CraftingManager:293,src/main/java/com/hbm/main/CraftingManager.java,293,unported,,"addRecipeAuto(new ItemStack(ModBlocks.anvil_iron, 1), new Object[] { ""III"", "" B "", ""III"", 'I', IRON.ingot(), 'B', IRON.block() });"
+recipe_site,CraftingManager:293,src/main/java/com/hbm/main/CraftingManager.java,293,partial,src/forge120/resources/data/hbm/recipes/anvil_iron.json,Source seven iron ingots plus iron block iron-anvil recipe and unlock tested
 recipe_site,CraftingManager:294,src/main/java/com/hbm/main/CraftingManager.java,294,unported,,"addRecipeAuto(new ItemStack(ModBlocks.anvil_lead, 1), new Object[] { ""III"", "" B "", ""III"", 'I', PB.ingot(), 'B', PB.block() });"
 recipe_site,CraftingManager:295,src/main/java/com/hbm/main/CraftingManager.java,295,unported,,"addRecipeAuto(new ItemStack(ModBlocks.anvil_murky, 1), new Object[] { ""UUU"", ""UAU"", ""UUU"", 'U', ModItems.undefined, 'A', ModBlocks.anvil_steel });"
 recipe_site,CraftingManager:296,src/main/java/com/hbm/main/CraftingManager.java,296,unported,,"addRecipeAuto(new ItemStack(ModBlocks.machine_fraction_tower), new Object[] { ""H"", ""G"", ""H"", 'H', STEEL.plateWelded(), 'G', ModBlocks.steel_grate });"
@@ -16096,7 +16096,7 @@ recipe_site,CraftingManager:961,src/main/java/com/hbm/main/CraftingManager.java,
 recipe_site,CraftingManager:964,src/main/java/com/hbm/main/CraftingManager.java,964,unported,,"if(mat.autogen.contains(MaterialShapes.WIRE)) for(String name : mat.names) addRecipeAuto(new ItemStack(ModItems.wire_fine, 24, mat.id), new Object[] { ""###"", '#', MaterialShapes.INGOT.name() + name })"
 recipe_site,CraftingManager:967,src/main/java/com/hbm/main/CraftingManager.java,967,unported,,"addRecipeAuto(new ItemStack(ModItems.book_of_), new Object[] { ""BGB"", ""GAG"", ""BGB"", 'B', ModItems.egg_balefire_shard, 'G', GOLD.ingot(), 'A', Items.book });"
 recipe_site,CraftingManager:97,src/main/java/com/hbm/main/CraftingManager.java,97,unported,,"addRecipeAuto(new ItemStack(ModItems.big_sword, 1), new Object[] { ""QIQ"", ""QIQ"", ""GSG"", 'G', Items.gold_ingot, 'S', KEY_STICK, 'I', Items.iron_ingot, 'Q', Items.quartz});"
-recipe_site,CraftingManager:971,src/main/java/com/hbm/main/CraftingManager.java,971,unported,,"if(mat.autogen.contains(MaterialShapes.BOLT)) for(String name : mat.names) addRecipeAuto(new ItemStack(ModItems.bolt, 16, mat.id), new Object[] { ""#"", ""#"", '#', MaterialShapes.INGOT.name() + name });"
+recipe_site,CraftingManager:971,src/main/java/com/hbm/main/CraftingManager.java,971,partial,src/forge120/resources/data/hbm/recipes/bolt_steel.json,Steel-bolt variant yields sixteen from two ingots; other material variants pending
 recipe_site,CraftingManager:974,src/main/java/com/hbm/main/CraftingManager.java,974,unported,,"addRecipeAuto(new ItemStack(ModBlocks.struct_launcher_core, 1), new Object[] { ""SCS"", ""SIS"", ""BEB"", 'S', ModBlocks.steel_scaffold, 'I', Blocks.iron_bars, 'C', DictFrame.fromOne(ModItems.circuit, EnumC"
 recipe_site,CraftingManager:975,src/main/java/com/hbm/main/CraftingManager.java,975,unported,,"addRecipeAuto(new ItemStack(ModBlocks.struct_launcher_core_large, 1), new Object[] { ""SIS"", ""ICI"", ""BEB"", 'S', DictFrame.fromOne(ModItems.circuit, EnumCircuitType.ADVANCED), 'I', Blocks.iron_bars, 'C'"
 recipe_site,CraftingManager:978,src/main/java/com/hbm/main/CraftingManager.java,978,unported,,"addRecipeAuto(new ItemStack(ModItems.reactor_sensor, 1), new Object[] { ""WPW"", ""CMC"", ""PPP"", 'W', W.wireFine(), 'P', PB.plate(), 'C', DictFrame.fromOne(ModItems.circuit, EnumCircuitType.BASIC), 'M', M"
@@ -18008,7 +18008,7 @@ renderer_source,TextureAtlasSpriteMutatable,src/main/java/com/hbm/render/icon/Te
 renderer_source,TomPronter,src/main/java/com/hbm/render/util/TomPronter.java,,unported,,
 renderer_source,Uniform,src/main/java/com/hbm/render/shader/Uniform.java,,unported,,
 screen_source,GUIAmmoBag,src/main/java/com/hbm/inventory/gui/GUIAmmoBag.java,,unported,,
-screen_source,GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,unported,,
+screen_source,GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Anvil screen registered and client smoke passes; in-world visual and full browser pending
 screen_source,GUIArmorTable,src/main/java/com/hbm/inventory/gui/GUIArmorTable.java,,unported,,
 screen_source,GUIAshpit,src/main/java/com/hbm/inventory/gui/GUIAshpit.java,,unported,,
 screen_source,GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUIAutocrafter.java,,unported,,

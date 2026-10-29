@@ -22,6 +22,8 @@ public final class PortPressRecipes {
             if (input.is(PortItems.INGOT_ALUMINIUM.get())) return new ItemStack(PortItems.WIRE_FINE_ALUMINIUM.get(), 8);
         }
         if (stamp.is(PortItems.STAMP_IRON_PLATE.get())) {
+            if (input.is(net.minecraft.world.item.Items.IRON_INGOT)) return new ItemStack(PortItems.PLATE_IRON.get());
+            if (input.is(PortItems.INGOT_STEEL.get())) return new ItemStack(PortItems.PLATE_STEEL.get());
             if (input.is(PortItems.INGOT_COPPER.get())) return new ItemStack(PortItems.PLATE_COPPER.get());
             if (input.is(PortItems.INGOT_ALUMINIUM.get())) return new ItemStack(PortItems.PLATE_ALUMINIUM.get());
         }

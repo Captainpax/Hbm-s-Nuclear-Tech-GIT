@@ -33,6 +33,7 @@ public final class PortItems {
     public static final RegistryObject<Item> INGOT_TUNGSTEN = ingot("ingot_tungsten");
     public static final RegistryObject<Item> INGOT_LEAD = ingot("ingot_lead");
     public static final RegistryObject<Item> INGOT_BERYLLIUM = ingot("ingot_beryllium");
+    public static final RegistryObject<Item> INGOT_STEEL = ingot("ingot_steel");
     public static final RegistryObject<Item> GAS_MASK = ITEMS.register("gas_mask",
             () -> new PortGasMask(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> GAS_MASK_M65 = ITEMS.register("gas_mask_m65",
@@ -77,6 +78,8 @@ public final class PortItems {
             () -> new BlockItem(PortBlocks.MACHINE_BATTERY_SOCKET.get(), new Item.Properties()));
     public static final RegistryObject<Item> MACHINE_ELECTRIC_FURNACE = ore("machine_electric_furnace", PortBlocks.MACHINE_ELECTRIC_FURNACE);
     public static final RegistryObject<Item> MACHINE_PRESS = ore("machine_press", PortBlocks.MACHINE_PRESS);
+    public static final RegistryObject<Item> ANVIL_IRON = ore("anvil_iron", PortBlocks.ANVIL_IRON);
+    public static final RegistryObject<Item> ANVIL_STEEL = ore("anvil_steel", PortBlocks.ANVIL_STEEL);
     public static final RegistryObject<Item> STAMP_IRON_FLAT = stamp("stamp_iron_flat");
     public static final RegistryObject<Item> STAMP_IRON_PLATE = stamp("stamp_iron_plate");
     public static final RegistryObject<Item> STAMP_IRON_WIRE = stamp("stamp_iron_wire");
@@ -86,6 +89,9 @@ public final class PortItems {
     public static final RegistryObject<Item> COIL_TUNGSTEN = ingot("coil_tungsten");
     public static final RegistryObject<Item> PLATE_COPPER = ingot("plate_copper");
     public static final RegistryObject<Item> PLATE_ALUMINIUM = ingot("plate_aluminium");
+    public static final RegistryObject<Item> PLATE_IRON = ingot("plate_iron");
+    public static final RegistryObject<Item> PLATE_STEEL = ingot("plate_steel");
+    public static final RegistryObject<Item> BOLT_STEEL = ingot("bolt_steel");
     public static final RegistryObject<Item> BATTERY_POTATO = ITEMS.register("battery_potato",
             () -> new PortBatteryItem(new Item.Properties(), 1_000L, 0L, 100L));
     public static final RegistryObject<Item> CUBE_POWER = ITEMS.register("cube_power",
