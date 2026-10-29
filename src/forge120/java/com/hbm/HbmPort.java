@@ -19,6 +19,8 @@ public final class HbmPort {
         PortBlockEntities.TYPES.register(modBus);
         PortItems.ITEMS.register(modBus);
         PortMenus.TYPES.register(modBus);
+        PortCrucibleRecipes.TYPES.register(modBus);
+        PortCrucibleRecipes.SERIALIZERS.register(modBus);
         PortPlacementModifiers.TYPES.register(modBus);
         PortWorldgenFeatures.FEATURES.register(modBus);
         PortSounds.SOUND_EVENTS.register(modBus);

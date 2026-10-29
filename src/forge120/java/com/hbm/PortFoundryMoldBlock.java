@@ -1,6 +1,7 @@
 package com.hbm;
 
 import api.hbm.block.IToolable;
+import api.hbm.block.ICrucibleAcceptor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
@@ -26,7 +27,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolActions;
 
 /** Source small mold: click to install a mold or collect the cooled casting. */
-public final class PortFoundryMoldBlock extends BaseEntityBlock implements IToolable {
+public final class PortFoundryMoldBlock extends BaseEntityBlock implements IToolable, ICrucibleAcceptor {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 8, 16);
     private static final VoxelShape COLLISION = Shapes.or(
             Block.box(0, 0, 0, 16, 2, 16),
@@ -44,7 +45,7 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock implements ITool
     }
     @Override public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (level.getBlockEntity(pos) instanceof PortFoundryMoldBlockEntity mold
-                && mold.copperQuanta() == PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA) {
+                && mold.amount() == PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA) {
             level.addParticle(ParticleTypes.SMOKE,
                     pos.getX() + 0.25 + random.nextDouble() * 0.5, pos.getY() + 0.5,
                     pos.getZ() + 0.25 + random.nextDouble() * 0.5, 0, 0, 0);
@@ -82,7 +83,7 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock implements ITool
             return InteractionResult.CONSUME;
         }
         if (held.canPerformAction(ToolActions.SHOVEL_DIG)) {
-            ItemStack recovered = mold.takeCopperScraps();
+            ItemStack recovered = mold.takeScraps();
             if (!recovered.isEmpty() && !player.getInventory().add(recovered)) player.drop(recovered, false);
             return InteractionResult.CONSUME;
         }
@@ -94,12 +95,18 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock implements ITool
         Player player = context.getPlayer();
         if (tool != ToolType.SCREWDRIVER || player == null
                 || !(level.getBlockEntity(context.getClickedPos()) instanceof PortFoundryMoldBlockEntity mold)
-                || mold.copperQuanta() > 0) return false;
+                || mold.amount() > 0) return false;
         if (level.isClientSide) return mold.displayMold();
         if (mold.items().getStackInSlot(0).isEmpty()) return false;
         ItemStack removed = mold.items().extractItem(0, 1, false);
         if (!player.getInventory().add(removed)) player.drop(removed, false);
         return true;
+    }
+
+    @Override public int acceptPour(Level level, BlockPos pos, PortMaterial material, int offered) {
+        if (level.isClientSide || !level.hasChunkAt(pos)) return 0;
+        return level.getBlockEntity(pos) instanceof PortFoundryMoldBlockEntity mold
+                ? mold.acceptMaterial(material, offered) : 0;
     }
 
     @Override public void onRemove(BlockState state, Level level, BlockPos pos, BlockState replacement, boolean moving) {
@@ -110,7 +117,7 @@ public final class PortFoundryMoldBlock extends BaseEntityBlock implements ITool
                 if (!stack.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(),
                         mold.items().extractItem(slot, stack.getCount(), false));
             }
-            ItemStack recovered = mold.takeCopperScraps();
+            ItemStack recovered = mold.takeScraps();
             if (!recovered.isEmpty()) Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), recovered);
         }
         super.onRemove(state, level, pos, replacement, moving);

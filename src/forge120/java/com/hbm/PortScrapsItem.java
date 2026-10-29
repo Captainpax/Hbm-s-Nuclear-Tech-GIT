@@ -9,20 +9,29 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-/** Named copper variant of ItemScraps, retaining its exact per-item amount NBT. */
+/** Named ItemScraps material variants, retaining exact per-item amount NBT. */
 public final class PortScrapsItem extends Item {
-    public PortScrapsItem(Properties properties) { super(properties); }
+    private final PortMaterial material;
+    public PortScrapsItem(Properties properties) { this(properties, PortMaterial.COPPER); }
+    public PortScrapsItem(Properties properties, PortMaterial material) {
+        super(properties);
+        this.material = material;
+    }
+    public PortMaterial material() { return material; }
 
     public static ItemStack copper(int quanta) {
+        return of(PortMaterial.COPPER, quanta);
+    }
+    public static ItemStack of(PortMaterial material, int quanta) {
         if (quanta <= 0) return ItemStack.EMPTY;
-        ItemStack scrap = new ItemStack(PortItems.SCRAPS_COPPER.get());
+        ItemStack scrap = new ItemStack(material.scrapItem());
         scrap.getOrCreateTag().putInt("amount", quanta);
         return scrap;
     }
 
     /** The source defaults an untagged scrap to one ingot; tagged amounts are per item. */
     public static int quanta(ItemStack stack) {
-        if (stack.isEmpty() || !stack.is(PortItems.SCRAPS_COPPER.get())) return 0;
+        if (stack.isEmpty() || !(stack.getItem() instanceof PortScrapsItem)) return 0;
         if (!stack.hasTag()) return PortCopperMaterial.INGOT_QUANTA;
         var tag = stack.getTag();
         return tag.contains("amount", Tag.TAG_INT) ? Math.max(0, tag.getInt("amount")) : 0;

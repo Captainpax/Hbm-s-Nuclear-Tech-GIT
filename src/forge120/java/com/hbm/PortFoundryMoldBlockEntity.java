@@ -15,7 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-/** Small foundry mold: three ingots of molten copper cool to one cast plate. */
+/** Small foundry mold: three ingots of one supported metal cool to one cast plate. */
 public final class PortFoundryMoldBlockEntity extends BlockEntity {
     public static final int CAST_PLATE_QUANTA = 216;
     private final ItemStackHandler items = new ItemStackHandler(2) {
@@ -26,7 +26,8 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
         @Override public int getSlotLimit(int slot) { return 1; }
     };
     private LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> new SidedItems(items));
-    private int copperQuanta;
+    private int moltenAmount;
+    private PortMaterial material = PortMaterial.COPPER;
     private int cooloff = 200;
     private boolean displayMold;
     private boolean displayCasting;
@@ -36,7 +37,9 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     }
 
     public ItemStackHandler items() { return items; }
-    public int copperQuanta() { return copperQuanta; }
+    public int copperQuanta() { return material == PortMaterial.COPPER ? moltenAmount : 0; }
+    public int amount() { return moltenAmount; }
+    public PortMaterial material() { return material; }
     public int cooloff() { return cooloff; }
     public boolean displayMold() { return displayMold; }
     public boolean displayCasting() { return displayCasting; }
@@ -52,8 +55,14 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     @Override public CompoundTag getUpdateTag() {
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("displayMold", items.getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get()));
-        tag.putBoolean("displayCasting", items.getStackInSlot(1).is(PortItems.PLATE_CAST_COPPER.get()));
-        tag.putInt("copperQuanta", copperQuanta);
+        ItemStack output = items.getStackInSlot(1);
+        tag.putBoolean("displayCasting", !output.isEmpty());
+        PortMaterial displayed = material;
+        for (PortMaterial candidate : PortMaterial.values()) {
+            if (!candidate.castPlate().isEmpty() && output.is(candidate.castPlate().getItem())) displayed = candidate;
+        }
+        tag.putString("material", displayed.key());
+        tag.putInt("amount", moltenAmount);
         return tag;
     }
     @Override public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -65,12 +74,14 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     @Override public void handleUpdateTag(CompoundTag tag) {
         displayMold = tag.getBoolean("displayMold");
         displayCasting = tag.getBoolean("displayCasting");
-        copperQuanta = Math.max(0, Math.min(CAST_PLATE_QUANTA, tag.getInt("copperQuanta")));
+        try { material = PortMaterial.byKey(tag.getString("material")); }
+        catch (IllegalArgumentException invalid) { material = PortMaterial.COPPER; }
+        moltenAmount = Math.max(0, Math.min(CAST_PLATE_QUANTA, tag.getInt("amount")));
     }
 
-    ItemStack takeCopperScraps() {
-        ItemStack recovered = PortScrapsItem.copper(copperQuanta);
-        copperQuanta = 0;
+    ItemStack takeScraps() {
+        ItemStack recovered = PortScrapsItem.of(material, moltenAmount);
+        moltenAmount = 0;
         cooloff = 200;
         if (!recovered.isEmpty()) visualStateChanged();
         else setChanged();
@@ -78,11 +89,16 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     }
 
     public int acceptCopper(int offered) {
+        return acceptMaterial(PortMaterial.COPPER, offered);
+    }
+    public int acceptMaterial(PortMaterial offeredMaterial, int offered) {
         if (offered <= 0 || !items.getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get())
-                || !items.getStackInSlot(1).isEmpty()) return 0;
-        int accepted = Math.min(offered, CAST_PLATE_QUANTA - copperQuanta);
+                || !items.getStackInSlot(1).isEmpty() || offeredMaterial.castPlate().isEmpty()
+                || moltenAmount > 0 && material != offeredMaterial) return 0;
+        int accepted = Math.min(offered, CAST_PLATE_QUANTA - moltenAmount);
         if (accepted > 0) {
-            copperQuanta += accepted;
+            material = offeredMaterial;
+            moltenAmount += accepted;
             visualStateChanged();
         }
         return accepted;
@@ -90,13 +106,13 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
 
     public static void tick(Level level, BlockPos pos, BlockState state, PortFoundryMoldBlockEntity machine) {
         if (level.isClientSide) return;
-        if (machine.copperQuanta == CAST_PLATE_QUANTA
+        if (machine.moltenAmount == CAST_PLATE_QUANTA
                 && machine.items.getStackInSlot(0).is(PortItems.MOLD_PLATE_CAST.get())
                 && machine.items.getStackInSlot(1).isEmpty()) {
             machine.cooloff--;
             if (machine.cooloff <= 0) {
-                machine.copperQuanta = 0;
-                machine.items.setStackInSlot(1, new ItemStack(PortItems.PLATE_CAST_COPPER.get()));
+                machine.moltenAmount = 0;
+                machine.items.setStackInSlot(1, machine.material.castPlate());
                 machine.cooloff = 200;
             }
             machine.setChanged();
@@ -109,14 +125,17 @@ public final class PortFoundryMoldBlockEntity extends BlockEntity {
     @Override public void load(CompoundTag tag) {
         super.load(tag);
         if (tag.contains("items", 10)) items.deserializeNBT(tag.getCompound("items"));
-        copperQuanta = Math.max(0, Math.min(CAST_PLATE_QUANTA, tag.getInt("copperQuanta")));
+        moltenAmount = Math.max(0, Math.min(CAST_PLATE_QUANTA, tag.contains("amount", 3) ? tag.getInt("amount") : tag.getInt("copperQuanta")));
+        try { material = PortMaterial.byKey(tag.getString("material")); }
+        catch (IllegalArgumentException invalid) { material = PortMaterial.COPPER; }
         cooloff = Math.max(1, Math.min(200, tag.getInt("cooloff")));
     }
 
     @Override protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.put("items", items.serializeNBT());
-        tag.putInt("copperQuanta", copperQuanta);
+        tag.putInt("amount", moltenAmount);
+        tag.putString("material", material.key());
         tag.putInt("cooloff", cooloff);
     }
 

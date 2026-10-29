@@ -11,13 +11,15 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
+import java.util.List;
 
 public final class PortCrucibleMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
     private final ContainerData data;
+    private final PortCrucibleBlockEntity machine;
 
     public PortCrucibleMenu(int id, Inventory inventory, FriendlyByteBuf extra) {
-        this(id, inventory, find(inventory, extra.readBlockPos()), new SimpleContainerData(4));
+        this(id, inventory, find(inventory, extra.readBlockPos()), new SimpleContainerData(PortCrucibleBlockEntity.DATA_COUNT));
     }
     public PortCrucibleMenu(int id, Inventory inventory, PortCrucibleBlockEntity machine) {
         this(id, inventory, machine, machine.menuData());
@@ -26,6 +28,7 @@ public final class PortCrucibleMenu extends AbstractContainerMenu {
         super(PortMenus.CRUCIBLE.get(), id);
         access = ContainerLevelAccess.create(inventory.player.level(), machine.getBlockPos());
         this.data = data;
+        this.machine = machine;
         for (int row = 0; row < 3; row++) for (int col = 0; col < 3; col++) {
             addSlot(new SlotItemHandler(machine.items(), 1 + col + row * 3, 107 + col * 18, 18 + row * 18));
         }
@@ -41,7 +44,33 @@ public final class PortCrucibleMenu extends AbstractContainerMenu {
     }
     public int heat() { return (data.get(0) & 0xffff) | ((data.get(1) & 0xffff) << 16); }
     public int progress() { return data.get(2); }
-    public int moltenCopper() { return data.get(3); }
+    public int selectedIndex() { return data.get(3); }
+    public List<PortCrucibleRecipe> recipes() { return PortCrucibleRecipes.all(machine.getLevel()); }
+    public PortCrucibleRecipe selectedRecipe() {
+        var recipes = recipes();
+        int index = selectedIndex() - 1;
+        return index >= 0 && index < recipes.size() ? recipes.get(index) : null;
+    }
+    public int amount(boolean recipe, PortMaterial material) {
+        return Math.max(0, data.get(4 + (recipe ? 0 : PortMaterial.values().length) + material.ordinal()));
+    }
+    public List<PortMaterial> materials(boolean recipe) {
+        var materials = new java.util.ArrayList<PortMaterial>();
+        int base = 4 + PortMaterial.values().length * (recipe ? 2 : 3);
+        for (int index = 0; index < PortMaterial.values().length; index++) {
+            int value = data.get(base + index);
+            if (value > 0 && value <= PortMaterial.values().length) materials.add(PortMaterial.values()[value - 1]);
+        }
+        return materials;
+    }
+    @Override public boolean clickMenuButton(Player player, int index) {
+        var recipes = recipes();
+        if (!stillValid(player) || index < 0 || index > recipes.size()) return false;
+        if (player.level().isClientSide) return true;
+        boolean selected = machine.selectRecipe(index == 0 ? "" : recipes.get(index - 1).getId().toString());
+        if (selected) broadcastChanges();
+        return selected;
+    }
     @Override public boolean stillValid(Player player) {
         return stillValid(access, player, PortBlocks.MACHINE_CRUCIBLE.get());
     }

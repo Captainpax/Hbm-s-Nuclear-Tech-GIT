@@ -136,7 +136,7 @@ public final class PortGameTests {
                 || mold.items().getStackInSlot(0).isEmpty()) {
             throw new IllegalStateException("Screwdriver removed a filled mold or wore on a rejected action");
         }
-        mold.takeCopperScraps();
+        mold.takeScraps();
         mold.items().setStackInSlot(1, new ItemStack(PortItems.PLATE_CAST_COPPER.get()));
         player.gameMode.useItemOn(player, level, tool, InteractionHand.MAIN_HAND, hit);
         if (!mold.items().getStackInSlot(1).isEmpty() || mold.items().getStackInSlot(0).isEmpty()
@@ -247,7 +247,7 @@ public final class PortGameTests {
         server.items().setStackInSlot(0, new ItemStack(PortItems.MOLD_PLATE_CAST.get()));
         server.acceptCopper(24);
         CompoundTag tag = server.getUpdateTag();
-        if (!tag.getAllKeys().equals(Set.of("displayMold", "displayCasting", "copperQuanta"))
+        if (!tag.getAllKeys().equals(Set.of("displayMold", "displayCasting", "material", "amount"))
                 || !tag.equals(server.getUpdatePacket().getTag())) {
             throw new IllegalStateException("Foundry display packet exposed its inventory or cooling state");
         }
@@ -265,7 +265,7 @@ public final class PortGameTests {
         }
         server.items().extractItem(1, 1, false);
         server.acceptCopper(47);
-        server.takeCopperScraps();
+        server.takeScraps();
         client.handleUpdateTag(server.getUpdateTag());
         if (!client.displayMold() || client.displayCasting() || client.copperQuanta() != 0) {
             throw new IllegalStateException("Collection/recovery left a stale finished or molten surface");
@@ -276,10 +276,10 @@ public final class PortGameTests {
                 || !client.items().getStackInSlot(1).isEmpty() || client.cooloff() != 200) {
             throw new IllegalStateException("Visual sync replaced client inventory or retained a removed mold");
         }
-        tag.putInt("copperQuanta", Integer.MAX_VALUE);
+        tag.putInt("amount", Integer.MAX_VALUE);
         client.handleUpdateTag(tag);
         if (client.copperQuanta() != 216) throw new IllegalStateException("Foundry visual level exceeded its bowl");
-        tag.putInt("copperQuanta", -1);
+        tag.putInt("amount", -1);
         client.handleUpdateTag(tag);
         if (client.copperQuanta() != 0) throw new IllegalStateException("Foundry visual level went below its floor");
         helper.succeed();
@@ -298,13 +298,14 @@ public final class PortGameTests {
             block.setPlacedBy(level, core, state, null, new ItemStack(block));
             PortCrucibleBlockEntity crucible = (PortCrucibleBlockEntity) level.getBlockEntity(core);
             CompoundTag saved = crucible.saveWithFullMetadata();
+            saved.remove("wasteMaterials");
             saved.putInt("moltenCopper", 145);
             crucible.load(saved);
             crucible.items().setStackInSlot(1, new ItemStack(PortItems.INGOT_COPPER.get()));
             crucible.items().setStackInSlot(2, PortScrapsItem.copper(7));
             level.setBlock(core.offset(x, y, z), Blocks.AIR.defaultBlockState(), 3);
             var drops = level.getEntitiesOfClass(ItemEntity.class, dropsArea, ItemEntity::isAlive);
-            if (drops.size() != 3 || copperInDrops(drops) != 224 || !crucible.takeCopperScraps().isEmpty()) {
+            if (drops.size() != 3 || copperInDrops(drops) != 224 || !crucible.takeScraps().isEmpty()) {
                 throw new IllegalStateException("Breaking crucible part " + x + "," + y + "," + z
                         + " lost or duplicated molten or buffered copper");
             }
@@ -328,7 +329,7 @@ public final class PortGameTests {
             int molds = drops.stream().filter(drop -> drop.getItem().is(PortItems.MOLD_PLATE_CAST.get()))
                     .mapToInt(drop -> drop.getItem().getCount()).sum();
             if (drops.size() != 2 || copperInDrops(drops) != expected || molds != 1
-                    || !mold.takeCopperScraps().isEmpty()) {
+                    || !mold.takeScraps().isEmpty()) {
                 throw new IllegalStateException("Mold teardown lost copper or duplicated its reusable mold in phase " + phase);
             }
             drops.forEach(ItemEntity::discard);
@@ -351,6 +352,7 @@ public final class PortGameTests {
         block.setPlacedBy(level, core, state, null, new ItemStack(block));
         var crucible = (PortCrucibleBlockEntity) level.getBlockEntity(core);
         CompoundTag saved = crucible.saveWithFullMetadata();
+        saved.remove("wasteMaterials");
         saved.putInt("moltenCopper", 97);
         saved.putInt("heat", 61_234);
         saved.putInt("progress", 12_345);
@@ -419,6 +421,7 @@ public final class PortGameTests {
             CompoundTag saved = crucible.saveWithFullMetadata();
             saved.putInt("heat", 100_000);
             saved.putInt("progress", PortCrucibleBlockEntity.PROCESS_HEAT - 1);
+            saved.remove("wasteMaterials");
             saved.putInt("moltenCopper", 0);
             crucible.load(saved);
             ItemStack restored = ItemStack.of(inputs[i].save(new CompoundTag()));
@@ -429,6 +432,7 @@ public final class PortGameTests {
             }
         }
         CompoundTag saved = crucible.saveWithFullMetadata();
+        saved.remove("wasteMaterials");
         saved.putInt("moltenCopper", PortCrucibleBlockEntity.MAX_COPPER_QUANTA - 7);
         saved.putInt("heat", 100_000);
         saved.putInt("progress", PortCrucibleBlockEntity.PROCESS_HEAT - 1);
@@ -460,7 +464,7 @@ public final class PortGameTests {
         ItemEntity copper = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.7,
                 pos.getZ() + 0.5, new ItemStack(PortItems.INGOT_COPPER.get(), 12));
         ItemEntity iron = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.7,
-                pos.getZ() + 0.5, new ItemStack(Items.IRON_INGOT, 4));
+                pos.getZ() + 0.5, new ItemStack(Items.STICK, 4));
         ItemEntity outside = new ItemEntity(level, pos.getX() + 4, pos.getY() + 0.7,
                 pos.getZ() + 0.5, new ItemStack(PortItems.INGOT_COPPER.get(), 2));
         for (ItemEntity item : List.of(copper, iron, outside)) {
@@ -797,6 +801,9 @@ public final class PortGameTests {
             crucibleBlock.setPlacedBy(level, cruciblePos, crucibleState, null,
                     new ItemStack(PortItems.MACHINE_CRUCIBLE.get()));
             level.setBlock(moldPos, PortBlocks.FOUNDRY_MOLD.get().defaultBlockState(), 3);
+            // This fixture uses generated terrain outside the empty test template.
+            // The source ray must have an open column above its receiving mold.
+            for (int y = 1; y <= 6; y++) level.setBlock(moldPos.above(y), Blocks.AIR.defaultBlockState(), 3);
             PortFireboxBlockEntity firebox = (PortFireboxBlockEntity) level.getBlockEntity(fireboxPos);
             PortCrucibleBlockEntity crucible = (PortCrucibleBlockEntity) level.getBlockEntity(cruciblePos);
             PortFoundryMoldBlockEntity mold = (PortFoundryMoldBlockEntity) level.getBlockEntity(moldPos);
@@ -832,7 +839,9 @@ public final class PortGameTests {
             }
             if (!mold.items().getStackInSlot(1).is(PortItems.PLATE_CAST_COPPER.get())
                     || castingCopperTotal(crucible, mold) != 216) {
-                throw new IllegalStateException("Reloaded casting line did not finish one conserved plate");
+                throw new IllegalStateException("Reloaded casting line did not finish one conserved plate; total="
+                        + castingCopperTotal(crucible, mold) + "; crucible=" + crucible.saveWithoutMetadata()
+                        + "; mold=" + mold.saveWithoutMetadata() + "; firebox=" + firebox.saveWithoutMetadata());
             }
             for (int tick = 0; tick < 1_600 && blast.items().getStackInSlot(3).isEmpty(); tick++) {
                 PortBlastFurnaceBlockEntity.tick(level, blastPos, level.getBlockState(blastPos), blast);

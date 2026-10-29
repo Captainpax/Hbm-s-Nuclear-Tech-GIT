@@ -1,5 +1,6 @@
 package com.hbm;
 
+import api.hbm.block.ICrucibleAcceptor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,7 +36,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.common.ToolActions;
 
 /** Source 3x3 firebox and 3x3x2 crucible footprints, each with one core. */
-public final class PortCastingMachineBlock extends BaseEntityBlock {
+public final class PortCastingMachineBlock extends BaseEntityBlock implements ICrucibleAcceptor {
     public enum Kind { FIREBOX, CRUCIBLE }
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final IntegerProperty X = IntegerProperty.create("x", 0, 2);
@@ -141,8 +142,9 @@ public final class PortCastingMachineBlock extends BaseEntityBlock {
         if (!level.isClientSide && level.getBlockEntity(core) instanceof MenuProvider provider) {
             if (provider instanceof PortCrucibleBlockEntity crucible
                     && player.getItemInHand(hand).canPerformAction(ToolActions.SHOVEL_DIG)) {
-                ItemStack recovered = crucible.takeCopperScraps();
-                if (!recovered.isEmpty() && !player.getInventory().add(recovered)) player.drop(recovered, false);
+                for (ItemStack recovered : crucible.takeScraps()) {
+                    if (!player.getInventory().add(recovered)) player.drop(recovered, false);
+                }
             } else if (player instanceof ServerPlayer serverPlayer) {
                 NetworkHooks.openScreen(serverPlayer, provider, core);
             }
@@ -164,9 +166,9 @@ public final class PortCastingMachineBlock extends BaseEntityBlock {
                             items.extractItem(slot, stack.getCount(), false));
                 }
                 if (entity instanceof PortCrucibleBlockEntity crucible) {
-                    ItemStack recovered = crucible.takeCopperScraps();
-                    if (!recovered.isEmpty()) Containers.dropItemStack(level,
-                            core.getX(), core.getY(), core.getZ(), recovered);
+                    for (ItemStack recovered : crucible.takeScraps()) {
+                        Containers.dropItemStack(level, core.getX(), core.getY(), core.getZ(), recovered);
+                    }
                 }
                 for (int x = -1; x <= 1; x++) for (int z = -1; z <= 1; z++) for (int y = 0; y < height(); y++) {
                     BlockPos member = core.offset(x, y, z);
@@ -184,5 +186,12 @@ public final class PortCastingMachineBlock extends BaseEntityBlock {
             }
         }
         super.onRemove(state, level, pos, replacement, moving);
+    }
+
+    @Override public int acceptPour(Level level, BlockPos pos, PortMaterial material, int offered) {
+        if (level.isClientSide || kind != Kind.CRUCIBLE) return 0;
+        BlockPos core = corePos(pos, level.getBlockState(pos));
+        return level.hasChunkAt(core) && level.getBlockEntity(core) instanceof PortCrucibleBlockEntity crucible
+                ? crucible.acceptPour(material, offered) : 0;
     }
 }

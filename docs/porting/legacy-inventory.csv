@@ -351,7 +351,7 @@ asset,models/machines/compressor.obj,src/main/resources/assets/hbm/models/machin
 asset,models/machines/condenser.obj,src/main/resources/assets/hbm/models/machines/condenser.obj,,unported,,
 asset,models/machines/conveyor_press.obj,src/main/resources/assets/hbm/models/machines/conveyor_press.obj,,unported,,
 asset,models/machines/cracking_tower.obj,src/main/resources/assets/hbm/models/machines/cracking_tower.obj,,unported,,
-asset,models/machines/crucible.obj,src/main/resources/assets/hbm/models/machines/crucible.obj,,partial,src/forge120/resources/assets/hbm/models/machines/crucible.obj,Source geometry with Forge material binding; bake audit and live placement checked; molten surface pending
+asset,models/machines/crucible.obj,src/main/resources/assets/hbm/models/machines/crucible.obj,,partial,src/forge120/resources/assets/hbm/models/machines/crucible.obj,Source geometry with Forge material binding and dynamic molten surface; bake audit passes; full effect and multiplayer comparison pending
 asset,models/machines/crystallizer.obj,src/main/resources/assets/hbm/models/machines/crystallizer.obj,,unported,,
 asset,models/machines/cyclotron.obj,src/main/resources/assets/hbm/models/machines/cyclotron.obj,,unported,,
 asset,models/machines/deaerator.obj,src/main/resources/assets/hbm/models/machines/deaerator.obj,,unported,,
@@ -5319,7 +5319,7 @@ asset,textures/items/plate_armor_lunar.png,src/main/resources/assets/hbm/texture
 asset,textures/items/plate_armor_overlay.png,src/main/resources/assets/hbm/textures/items/plate_armor_overlay.png,,unported,,
 asset,textures/items/plate_armor_titanium.png,src/main/resources/assets/hbm/textures/items/plate_armor_titanium.png,,unported,,
 asset,textures/items/plate_bismuth.png,src/main/resources/assets/hbm/textures/items/plate_bismuth.png,,unported,,
-asset,textures/items/plate_cast.png,src/main/resources/assets/hbm/textures/items/plate_cast.png,,unported,,
+asset,textures/items/plate_cast.png,src/main/resources/assets/hbm/textures/items/plate_cast.png,,partial,src/forge120/resources/assets/hbm/textures/item/plate_cast_copper.png,Source component remap generates copper iron and steel cast plates; per-pixel generator check; other materials pending
 asset,textures/items/plate_cast_bismuth.png,src/main/resources/assets/hbm/textures/items/plate_cast_bismuth.png,,unported,,
 asset,textures/items/plate_cast_dark.png,src/main/resources/assets/hbm/textures/items/plate_cast_dark.png,,unported,,
 asset,textures/items/plate_combine_steel.png,src/main/resources/assets/hbm/textures/items/plate_combine_steel.png,,unported,,
@@ -5427,7 +5427,7 @@ asset,textures/items/powder_energy_alt.png,src/main/resources/assets/hbm/texture
 asset,textures/items/powder_euphemium.png,src/main/resources/assets/hbm/textures/items/powder_euphemium.png,,unported,,
 asset,textures/items/powder_ferrouranium.png,src/main/resources/assets/hbm/textures/items/powder_ferrouranium.png,,unported,,
 asset,textures/items/powder_fertilizer.png,src/main/resources/assets/hbm/textures/items/powder_fertilizer.png,,unported,,
-asset,textures/items/powder_flux.png,src/main/resources/assets/hbm/textures/items/powder_flux.png,,unported,,
+asset,textures/items/powder_flux.png,src/main/resources/assets/hbm/textures/items/powder_flux.png,,verified,src/forge120/resources/assets/hbm/textures/item/powder_flux.png,SHA-256 matches frozen source texture; resource included in development client smoke
 asset,textures/items/powder_gold.png,src/main/resources/assets/hbm/textures/items/powder_gold.png,,unported,,
 asset,textures/items/powder_i131.png,src/main/resources/assets/hbm/textures/items/powder_i131.png,,unported,,
 asset,textures/items/powder_i131_tiny.png,src/main/resources/assets/hbm/textures/items/powder_i131_tiny.png,,unported,,
@@ -5753,7 +5753,7 @@ asset,textures/items/scrap.png,src/main/resources/assets/hbm/textures/items/scra
 asset,textures/items/scrap_nuclear.png,src/main/resources/assets/hbm/textures/items/scrap_nuclear.png,,unported,,
 asset,textures/items/scrap_oil.png,src/main/resources/assets/hbm/textures/items/scrap_oil.png,,unported,,
 asset,textures/items/scrap_plastic.png,src/main/resources/assets/hbm/textures/items/scrap_plastic.png,,unported,,
-asset,textures/items/scraps.png,src/main/resources/assets/hbm/textures/items/scraps.png,,partial,src/forge120/resources/assets/hbm/textures/item/scraps_copper.png,Original base icon remapped with source copper light FDCA88 and dark 601E0D colors; generated pixels verified; other materials pending
+asset,textures/items/scraps.png,src/main/resources/assets/hbm/textures/items/scraps.png,,partial,src/forge120/resources/assets/hbm/textures/item/scraps_copper.png,Source component remap generates copper iron steel carbon and flux scrap icons with exact material palettes; other materials pending
 asset,textures/items/scraps_additive.png,src/main/resources/assets/hbm/textures/items/scraps_additive.png,,unported,,
 asset,textures/items/scraps_bismuth.png,src/main/resources/assets/hbm/textures/items/scraps_bismuth.png,,unported,,
 asset,textures/items/scraps_liquid.png,src/main/resources/assets/hbm/textures/items/scraps_liquid.png,,unported,,
@@ -5913,7 +5913,7 @@ asset,textures/items/taurun_legs.png,src/main/resources/assets/hbm/textures/item
 asset,textures/items/taurun_plate.png,src/main/resources/assets/hbm/textures/items/taurun_plate.png,,unported,,
 asset,textures/items/tem.png,src/main/resources/assets/hbm/textures/items/tem.png,,unported,,
 asset,textures/items/tem_flakes.png,src/main/resources/assets/hbm/textures/items/tem_flakes.png,,unported,,
-asset,textures/items/template_folder.png,src/main/resources/assets/hbm/textures/items/template_folder.png,,unported,,
+asset,textures/items/template_folder.png,src/main/resources/assets/hbm/textures/items/template_folder.png,,verified,src/forge120/resources/assets/hbm/textures/item/template_folder.png,SHA-256 matches frozen source texture; resource included in development client smoke
 asset,textures/items/tent_tablet.png,src/main/resources/assets/hbm/textures/items/tent_tablet.png,,unported,,
 asset,textures/items/thermo_element.png,src/main/resources/assets/hbm/textures/items/thermo_element.png,,unported,,
 asset,textures/items/thruster_large.png,src/main/resources/assets/hbm/textures/items/thruster_large.png,,unported,,
@@ -6438,7 +6438,7 @@ asset,textures/models/machines/igen3_base.png,src/main/resources/assets/hbm/text
 asset,textures/models/machines/industrial_boiler.png,src/main/resources/assets/hbm/textures/models/machines/industrial_boiler.png,,unported,,
 asset,textures/models/machines/industrial_turbine.png,src/main/resources/assets/hbm/textures/models/machines/industrial_turbine.png,,unported,,
 asset,textures/models/machines/intake.png,src/main/resources/assets/hbm/textures/models/machines/intake.png,,unported,,
-asset,textures/models/machines/lava.png,src/main/resources/assets/hbm/textures/models/machines/lava.png,,unported,,
+asset,textures/models/machines/lava.png,src/main/resources/assets/hbm/textures/models/machines/lava.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/lava.png,SHA-256 matches frozen source texture; resource included in development client smoke
 asset,textures/models/machines/lava_gray.png,src/main/resources/assets/hbm/textures/models/machines/lava_gray.png,,verified,src/forge120/resources/assets/hbm/textures/models/machines/lava_gray.png,SHA-256 matches source molten texture; client resource audit passes
 asset,textures/models/machines/liquefactor.png,src/main/resources/assets/hbm/textures/models/machines/liquefactor.png,,unported,,
 asset,textures/models/machines/lpw2.png,src/main/resources/assets/hbm/textures/models/machines/lpw2.png,,unported,,
@@ -7526,7 +7526,7 @@ block,fluid_valve,src/main/java/com/hbm/blocks/ModBlocks.java,3143,unported,,
 block,foam_layer,src/main/java/com/hbm/blocks/ModBlocks.java,2817,unported,,
 block,foundry_basin,src/main/java/com/hbm/blocks/ModBlocks.java,3021,unported,,
 block,foundry_channel,src/main/java/com/hbm/blocks/ModBlocks.java,3022,unported,,
-block,foundry_mold,src/main/java/com/hbm/blocks/ModBlocks.java,3020,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Reusable copper mold with source hollow collision and synced display; screwdriver removes only empty molds with source click ordering and wear; offhand and conservation tests pass; other molds and multiplayer pending
+block,foundry_mold,src/main/java/com/hbm/blocks/ModBlocks.java,3020,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Copper iron and steel cast plates use source 216-quanta fill and 200-tick cooling; mixed metals additives finished outputs and missing molds reject pours; typed scraps cooling NBT old copper migration and bounded display packets tested; other molds and multiplayer pending
 block,foundry_outlet,src/main/java/com/hbm/blocks/ModBlocks.java,3024,unported,,
 block,foundry_slagtap,src/main/java/com/hbm/blocks/ModBlocks.java,3025,unported,,
 block,foundry_tank,src/main/java/com/hbm/blocks/ModBlocks.java,3023,unported,,
@@ -7657,7 +7657,7 @@ block,machine_controller,src/main/java/com/hbm/blocks/ModBlocks.java,3049,unport
 block,machine_converter_he_rf,src/main/java/com/hbm/blocks/ModBlocks.java,3215,unported,,
 block,machine_converter_rf_he,src/main/java/com/hbm/blocks/ModBlocks.java,3216,unported,,
 block,machine_conveyor_press,src/main/java/com/hbm/blocks/ModBlocks.java,2999,unported,,
-block,machine_crucible,src/main/java/com/hbm/blocks/ModBlocks.java,3016,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source 3x3x2 footprint and first copper melting route; alloy recipes materials molten rendering and full source behavior remain
+block,machine_crucible,src/main/java/com/hbm/blocks/ModBlocks.java,3016,partial,src/forge120/java/com/hbm/PortCastingMachineBlock.java,Source 3x3x2 hollow basin; dual 10368-quanta stores and molten surface; broader materials hazards and real-player acceptance remain
 block,machine_crystallizer,src/main/java/com/hbm/blocks/ModBlocks.java,3040,unported,,
 block,machine_cyclotron,src/main/java/com/hbm/blocks/ModBlocks.java,3055,unported,,
 block,machine_detector,src/main/java/com/hbm/blocks/ModBlocks.java,3134,unported,,
@@ -8170,7 +8170,7 @@ block_entity,TileEntityCrateDesh,src/main/java/com/hbm/tileentity/TileMappings.j
 block_entity,TileEntityCrateIron,src/main/java/com/hbm/tileentity/TileMappings.java,123,unported,,
 block_entity,TileEntityCrateSteel,src/main/java/com/hbm/tileentity/TileMappings.java,124,unported,,
 block_entity,TileEntityCrateTungsten,src/main/java/com/hbm/tileentity/TileMappings.java,198,unported,,
-block_entity,TileEntityCrucible,src/main/java/com/hbm/tileentity/TileMappings.java,308,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,Nine one-item copper buffers with exact scrap wire and plate remelting; shovel and all-part teardown preserve molten copper; full materials alloys tanks and networks pending
+block_entity,TileEntityCrucible,src/main/java/com/hbm/tileentity/TileMappings.java,308,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,Independent 10368-quanta recipe and waste stores; source ratios steel alloy frequency and front/rear 24-quanta safe pours; ordered persistence legacy copper migration typed recovery and restart checks; broader materials hazards and config remain
 block_entity,TileEntityCustomMachine,src/main/java/com/hbm/tileentity/TileMappings.java,211,unported,,
 block_entity,TileEntityCyberCrab,src/main/java/com/hbm/tileentity/TileMappings.java,171,unported,,
 block_entity,TileEntityData,src/main/java/com/hbm/tileentity/TileMappings.java,244,unported,,
@@ -8214,7 +8214,7 @@ block_entity,TileEntityFluidValve,src/main/java/com/hbm/tileentity/TileMappings.
 block_entity,TileEntityForceField,src/main/java/com/hbm/tileentity/TileMappings.java,149,unported,,
 block_entity,TileEntityFoundryBasin,src/main/java/com/hbm/tileentity/TileMappings.java,316,unported,,
 block_entity,TileEntityFoundryChannel,src/main/java/com/hbm/tileentity/TileMappings.java,317,unported,,
-block_entity,TileEntityFoundryMold,src/main/java/com/hbm/tileentity/TileMappings.java,315,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,Copper plate cooling reuse blocked-output conservation NBT and bounded display-only update packets tested; other molds materials and multiplayer pending
+block_entity,TileEntityFoundryMold,src/main/java/com/hbm/tileentity/TileMappings.java,315,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,Copper iron and steel cast plates use source 216-quanta fill and 200-tick cooling; mixed metals additives finished outputs and missing molds reject pours; typed scraps cooling NBT old copper migration and bounded display packets tested; other molds and multiplayer pending
 block_entity,TileEntityFoundryOutlet,src/main/java/com/hbm/tileentity/TileMappings.java,319,unported,,
 block_entity,TileEntityFoundrySlagtap,src/main/java/com/hbm/tileentity/TileMappings.java,320,unported,,
 block_entity,TileEntityFoundryTank,src/main/java/com/hbm/tileentity/TileMappings.java,318,unported,,
@@ -10360,7 +10360,7 @@ item,plate_armor_hev,src/main/java/com/hbm/items/ModItems.java,4910,unported,,
 item,plate_armor_lunar,src/main/java/com/hbm/items/ModItems.java,4911,unported,,
 item,plate_armor_titanium,src/main/java/com/hbm/items/ModItems.java,4908,unported,,
 item,plate_bismuth,src/main/java/com/hbm/items/ModItems.java,4903,unported,,
-item,plate_cast,src/main/java/com/hbm/items/ModItems.java,4916,partial,src/forge120/java/com/hbm/PortItems.java,Named iron template and copper cast plate variants; other material variants pending
+item,plate_cast,src/main/java/com/hbm/items/ModItems.java,4916,partial,src/forge120/java/com/hbm/PortItems.java,Named copper iron and steel cast plates with source component-remapped icons; other material variants pending
 item,plate_combine_steel,src/main/java/com/hbm/items/ModItems.java,4893,unported,,
 item,plate_copper,src/main/java/com/hbm/items/ModItems.java,4889,partial,src/forge120/java/com/hbm/PortPressRecipes.java,Ordinary press plate; separate foundry cast plate route also ported; remaining source pathways pending
 item,plate_dalekanium,src/main/java/com/hbm/items/ModItems.java,4901,unported,,
@@ -10437,7 +10437,7 @@ item,powder_emerald,src/main/java/com/hbm/items/ModItems.java,4647,unported,,
 item,powder_euphemium,src/main/java/com/hbm/items/ModItems.java,4737,unported,,
 item,powder_fertilizer,src/main/java/com/hbm/items/ModItems.java,4727,unported,,
 item,powder_fire,src/main/java/com/hbm/items/ModItems.java,4747,unported,,
-item,powder_flux,src/main/java/com/hbm/items/ModItems.java,4726,unported,,
+item,powder_flux,src/main/java/com/hbm/items/ModItems.java,4726,partial,src/forge120/java/com/hbm/PortItems.java,Original icon and first source charcoal plus sand recipe; 72-quanta flux conversion tested; remaining acquisition routes pending
 item,powder_gold,src/main/java/com/hbm/items/ModItems.java,4643,unported,,
 item,powder_i131,src/main/java/com/hbm/items/ModItems.java,4655,unported,,
 item,powder_i131_tiny,src/main/java/com/hbm/items/ModItems.java,4656,unported,,
@@ -10672,7 +10672,7 @@ item,scrap,src/main/java/com/hbm/items/ModItems.java,5495,unported,,
 item,scrap_nuclear,src/main/java/com/hbm/items/ModItems.java,5497,unported,,
 item,scrap_oil,src/main/java/com/hbm/items/ModItems.java,5496,unported,,
 item,scrap_plastic,src/main/java/com/hbm/items/ModItems.java,5494,unported,,
-item,scraps,src/main/java/com/hbm/items/ModItems.java,5223,partial,src/forge120/java/com/hbm/PortScrapsItem.java,Named non-liquid copper scraps retain per-item amount NBT and one-ingot default; exact recovery/remelting and malformed quantities tested; other materials and liquid variants pending
+item,scraps,src/main/java/com/hbm/items/ModItems.java,5223,partial,src/forge120/java/com/hbm/PortScrapsItem.java,Copper iron steel carbon and flux named scraps preserve exact amount NBT and default 72; typed recovery and remelting tested; remaining materials and liquid variants pending
 item,screwdriver,src/main/java/com/hbm/items/ModItems.java,5267,partial,src/forge120/java/com/hbm/PortToolingItem.java,Original 100 max damage and diagonal iron/steel recipe; source above-max break threshold and crafting remainder; full inventories offhand failed actions and source tool ordering tested; icon hand model normal removal offhand installation and offhand removal checked in Creative QA; other toolable blocks and multiplayer pending
 item,screwdriver_desh,src/main/java/com/hbm/items/ModItems.java,5268,unported,,
 item,scrumpy,src/main/java/com/hbm/items/ModItems.java,6158,unported,,
@@ -10938,7 +10938,7 @@ java_source,animloader/AnimationWrapper,src/main/java/com/hbm/animloader/Animati
 java_source,animloader/ColladaLoader,src/main/java/com/hbm/animloader/ColladaLoader.java,,unported,,
 java_source,animloader/Transform,src/main/java/com/hbm/animloader/Transform.java,,unported,,
 java_source,api/hbm/block/IBlowable,src/main/java/api/hbm/block/IBlowable.java,,unported,,
-java_source,api/hbm/block/ICrucibleAcceptor,src/main/java/api/hbm/block/ICrucibleAcceptor.java,,unported,,
+java_source,api/hbm/block/ICrucibleAcceptor,src/main/java/api/hbm/block/ICrucibleAcceptor.java,,partial,src/forge120/java/api/hbm/block/ICrucibleAcceptor.java,Typed accepted-quantity contract for crucibles and small molds; partial ratio-limited transfer tested; channels basins and other receivers pending
 java_source,api/hbm/block/IDrillInteraction,src/main/java/api/hbm/block/IDrillInteraction.java,,unported,,
 java_source,api/hbm/block/IFuckingExplode,src/main/java/api/hbm/block/IFuckingExplode.java,,unported,,
 java_source,api/hbm/block/IInsertable,src/main/java/api/hbm/block/IInsertable.java,,unported,,
@@ -11294,7 +11294,7 @@ java_source,blocks/machine/DummyOldBase,src/main/java/com/hbm/blocks/machine/Dum
 java_source,blocks/machine/Floodlight,src/main/java/com/hbm/blocks/machine/Floodlight.java,,unported,,
 java_source,blocks/machine/FloodlightBeam,src/main/java/com/hbm/blocks/machine/FloodlightBeam.java,,unported,,
 java_source,blocks/machine/FoundryBasin,src/main/java/com/hbm/blocks/machine/FoundryBasin.java,,unported,,
-java_source,blocks/machine/FoundryCastingBase,src/main/java/com/hbm/blocks/machine/FoundryCastingBase.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Small copper mold shovel recovery teardown cooling smoke and display checked; source screwdriver removal and output-first versus sneak-tool ordering plus full inventories and offhand tested; other molds overlay and multiplayer pending
+java_source,blocks/machine/FoundryCastingBase,src/main/java/com/hbm/blocks/machine/FoundryCastingBase.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Small copper iron and steel mold shovel/teardown recovery and display; source screwdriver output-first versus sneak-tool ordering and offhand tested; other molds overlay and multiplayer pending
 java_source,blocks/machine/FoundryChannel,src/main/java/com/hbm/blocks/machine/FoundryChannel.java,,unported,,
 java_source,blocks/machine/FoundryMold,src/main/java/com/hbm/blocks/machine/FoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlock.java,Source floor and four hollow walls with half-block selection tested; source textures and eleven baked faces audited; full mold classes pending
 java_source,blocks/machine/FoundryOutlet,src/main/java/com/hbm/blocks/machine/FoundryOutlet.java,,unported,,
@@ -12328,7 +12328,7 @@ java_source,inventory/gui/GUICrateDesh,src/main/java/com/hbm/inventory/gui/GUICr
 java_source,inventory/gui/GUICrateIron,src/main/java/com/hbm/inventory/gui/GUICrateIron.java,,unported,,
 java_source,inventory/gui/GUICrateSteel,src/main/java/com/hbm/inventory/gui/GUICrateSteel.java,,unported,,
 java_source,inventory/gui/GUICrateTungsten,src/main/java/com/hbm/inventory/gui/GUICrateTungsten.java,,unported,,
-java_source,inventory/gui/GUICrucible,src/main/java/com/hbm/inventory/gui/GUICrucible.java,,unported,,
+java_source,inventory/gui/GUICrucible,src/main/java/com/hbm/inventory/gui/GUICrucible.java,,partial,src/forge120/java/com/hbm/PortCrucibleScreen.java,Source dual 79-pixel stores with ordered segments heat/progress and recipe icon; live Creative counts tooltips and Steel/None switching checked; full source browser and multiplayer pending
 java_source,inventory/gui/GUICrystallizer,src/main/java/com/hbm/inventory/gui/GUICrystallizer.java,,unported,,
 java_source,inventory/gui/GUIDiFurnace,src/main/java/com/hbm/inventory/gui/GUIDiFurnace.java,,unported,,
 java_source,inventory/gui/GUIDroneCrate,src/main/java/com/hbm/inventory/gui/GUIDroneCrate.java,,unported,,
@@ -12513,9 +12513,9 @@ java_source,inventory/gui/GuiInfoContainer,src/main/java/com/hbm/inventory/gui/G
 java_source,inventory/gui/LoadingScreenRendererNT,src/main/java/com/hbm/inventory/gui/LoadingScreenRendererNT.java,,unported,,
 java_source,inventory/gui/element/GUIElements,src/main/java/com/hbm/inventory/gui/element/GUIElements.java,,partial,src/forge120/java/com/hbm/PortGuiGauge.java,Source triangular 270-degree gauge with legacy rotation-sign compensation; other shared GUI helpers pending
 java_source,inventory/gui/element/GuiFileList,src/main/java/com/hbm/inventory/gui/element/GuiFileList.java,,unported,,
-java_source,inventory/material/MatDistribution,src/main/java/com/hbm/inventory/material/MatDistribution.java,,unported,,
-java_source,inventory/material/MaterialShapes,src/main/java/com/hbm/inventory/material/MaterialShapes.java,,partial,src/forge120/java/com/hbm/PortCopperMaterial.java,Copper ingot and plate 72 cast plate 216 and fine wire 9 quanta tested; remaining shapes and materials pending
-java_source,inventory/material/Mats,src/main/java/com/hbm/inventory/material/Mats.java,,partial,src/forge120/java/com/hbm/PortCopperMaterial.java,First copper ingot ordinary plate cast plate fine-wire and scrap material amounts; full material registry OreDictionary replacements and conversions pending
+java_source,inventory/material/MatDistribution,src/main/java/com/hbm/inventory/material/MatDistribution.java,,partial,src/forge120/java/com/hbm/PortMaterial.java,First source explicit charcoal coal lignite diamond limestone flux and iron-flat-stamp mappings; source ore mixtures and full distribution pending
+java_source,inventory/material/MaterialShapes,src/main/java/com/hbm/inventory/material/MaterialShapes.java,,partial,src/forge120/java/com/hbm/PortMaterial.java,Ported ingot plate cast plate fine wire bolt and flat iron stamp amounts for available materials; remaining source shapes and mappings pending
+java_source,inventory/material/Mats,src/main/java/com/hbm/inventory/material/Mats.java,,partial,src/forge120/java/com/hbm/PortMaterial.java,First five source IDs palettes castability and ingot/block quanta; copper iron steel carbon flux ordered stores and typed scraps; full material registry and tag-backed conversion pending
 java_source,inventory/material/NTMMaterial,src/main/java/com/hbm/inventory/material/NTMMaterial.java,,unported,,
 java_source,inventory/recipes/AmmoPressRecipes,src/main/java/com/hbm/inventory/recipes/AmmoPressRecipes.java,,unported,,
 java_source,inventory/recipes/AnnihilatorRecipes,src/main/java/com/hbm/inventory/recipes/AnnihilatorRecipes.java,,unported,,
@@ -12532,8 +12532,8 @@ java_source,inventory/recipes/CokerRecipes,src/main/java/com/hbm/inventory/recip
 java_source,inventory/recipes/CombinationRecipes,src/main/java/com/hbm/inventory/recipes/CombinationRecipes.java,,unported,,
 java_source,inventory/recipes/CompressorRecipes,src/main/java/com/hbm/inventory/recipes/CompressorRecipes.java,,unported,,
 java_source,inventory/recipes/CrackingRecipes,src/main/java/com/hbm/inventory/recipes/CrackingRecipes.java,,unported,,
-java_source,inventory/recipes/CrucibleRecipe,src/main/java/com/hbm/inventory/recipes/CrucibleRecipe.java,,unported,,
-java_source,inventory/recipes/CrucibleRecipes,src/main/java/com/hbm/inventory/recipes/CrucibleRecipes.java,,unported,,
+java_source,inventory/recipes/CrucibleRecipe,src/main/java/com/hbm/inventory/recipes/CrucibleRecipe.java,,partial,src/forge120/java/com/hbm/PortCrucibleRecipe.java,Material input/output recipe serializer with source tick frequency; network roundtrip invalid recipe rejection and steel application tested; full loader configuration and mold recipes pending
+java_source,inventory/recipes/CrucibleRecipes,src/main/java/com/hbm/inventory/recipes/CrucibleRecipes.java,,partial,src/forge120/java/com/hbm/PortCrucibleRecipes.java,First source steel recipe 16 iron 24 carbon 8 flux to 16 steel every 20 ticks; other alloys smelting recipes mold rules and integrations pending
 java_source,inventory/recipes/CrystallizerRecipes,src/main/java/com/hbm/inventory/recipes/CrystallizerRecipes.java,,unported,,
 java_source,inventory/recipes/CustomMachineRecipes,src/main/java/com/hbm/inventory/recipes/CustomMachineRecipes.java,,unported,,
 java_source,inventory/recipes/CyclotronRecipes,src/main/java/com/hbm/inventory/recipes/CyclotronRecipes.java,,unported,,
@@ -12771,7 +12771,7 @@ java_source,items/machine/ItemRTGPellet,src/main/java/com/hbm/items/machine/Item
 java_source,items/machine/ItemRTGPelletDepleted,src/main/java/com/hbm/items/machine/ItemRTGPelletDepleted.java,,unported,,
 java_source,items/machine/ItemReactorSensor,src/main/java/com/hbm/items/machine/ItemReactorSensor.java,,unported,,
 java_source,items/machine/ItemSatChip,src/main/java/com/hbm/items/machine/ItemSatChip.java,,unported,,
-java_source,items/machine/ItemScraps,src/main/java/com/hbm/items/machine/ItemScraps.java,,partial,src/forge120/java/com/hbm/PortScrapsItem.java,Copper amount NBT default 72 and tooltip ported; malformed and oversized values rejected by crucible; remaining material variants liquid display and full unit formatting pending
+java_source,items/machine/ItemScraps,src/main/java/com/hbm/items/machine/ItemScraps.java,,partial,src/forge120/java/com/hbm/PortScrapsItem.java,Five typed non-liquid scrap variants with source amount NBT default 72 tooltip and exact recovery; other materials liquid display and full unit formatting pending
 java_source,items/machine/ItemStamp,src/main/java/com/hbm/items/machine/ItemStamp.java,,unported,,
 java_source,items/machine/ItemStampBook,src/main/java/com/hbm/items/machine/ItemStampBook.java,,unported,,
 java_source,items/machine/ItemTurretBiometry,src/main/java/com/hbm/items/machine/ItemTurretBiometry.java,,unported,,
@@ -12780,7 +12780,7 @@ java_source,items/machine/ItemWatzPellet,src/main/java/com/hbm/items/machine/Ite
 java_source,items/machine/ItemZirnoxRod,src/main/java/com/hbm/items/machine/ItemZirnoxRod.java,,unported,,
 java_source,items/special/ItemAMSCore,src/main/java/com/hbm/items/special/ItemAMSCore.java,,unported,,
 java_source,items/special/ItemAlexandrite,src/main/java/com/hbm/items/special/ItemAlexandrite.java,,unported,,
-java_source,items/special/ItemAutogen,src/main/java/com/hbm/items/special/ItemAutogen.java,,partial,tools/porting/GenerateMaterialTextures.java,Copper scrap texture uses source component remap and pixel checker; other autogenerated material icons pending
+java_source,items/special/ItemAutogen,src/main/java/com/hbm/items/special/ItemAutogen.java,,partial,tools/porting/GenerateMaterialTextures.java,Source per-component remap reproduced for five scraps and three cast plates; all eight generated images have pixel check; broader runtime generation pending
 java_source,items/special/ItemBedrockOre,src/main/java/com/hbm/items/special/ItemBedrockOre.java,,unported,,
 java_source,items/special/ItemBedrockOreBase,src/main/java/com/hbm/items/special/ItemBedrockOreBase.java,,unported,,
 java_source,items/special/ItemBedrockOreNew,src/main/java/com/hbm/items/special/ItemBedrockOreNew.java,,unported,,
@@ -13324,7 +13324,7 @@ java_source,render/entity/rocket/RenderMissileTaint,src/main/java/com/hbm/render
 java_source,render/entity/rocket/RenderSoyuz,src/main/java/com/hbm/render/entity/rocket/RenderSoyuz.java,,unported,,
 java_source,render/entity/rocket/RenderSoyuzCapsule,src/main/java/com/hbm/render/entity/rocket/RenderSoyuzCapsule.java,,unported,,
 java_source,render/icon/RGBMutator,src/main/java/com/hbm/render/icon/RGBMutator.java,,unported,,
-java_source,render/icon/RGBMutatorInterpolatedComponentRemap,src/main/java/com/hbm/render/icon/RGBMutatorInterpolatedComponentRemap.java,,partial,tools/porting/GenerateMaterialTextures.java,Source per-component remap reproduced for copper scraps and pixel-verified locally with a CI check added; broader runtime texture generation pending
+java_source,render/icon/RGBMutatorInterpolatedComponentRemap,src/main/java/com/hbm/render/icon/RGBMutatorInterpolatedComponentRemap.java,,partial,tools/porting/GenerateMaterialTextures.java,Source per-component remap reproduced for five scraps and three cast plates; all eight generated images have pixel check; broader runtime generation pending
 java_source,render/icon/TextureAtlasSpriteMutatable,src/main/java/com/hbm/render/icon/TextureAtlasSpriteMutatable.java,,unported,,
 java_source,render/item/ItemRenderBase,src/main/java/com/hbm/render/item/ItemRenderBase.java,,unported,,
 java_source,render/item/ItemRenderBatteryPack,src/main/java/com/hbm/render/item/ItemRenderBatteryPack.java,,unported,,
@@ -13531,7 +13531,7 @@ java_source,render/tileentity/RenderCore,src/main/java/com/hbm/render/tileentity
 java_source,render/tileentity/RenderCoreComponent,src/main/java/com/hbm/render/tileentity/RenderCoreComponent.java,,unported,,
 java_source,render/tileentity/RenderCraneConsole,src/main/java/com/hbm/render/tileentity/RenderCraneConsole.java,,unported,,
 java_source,render/tileentity/RenderCrashedBomb,src/main/java/com/hbm/render/tileentity/RenderCrashedBomb.java,,unported,,
-java_source,render/tileentity/RenderCrucible,src/main/java/com/hbm/render/tileentity/RenderCrucible.java,,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Original static OBJ and texture; dynamic molten surface pouring smoke and live comparison remain
+java_source,render/tileentity/RenderCrucible,src/main/java/com/hbm/render/tileentity/RenderCrucible.java,,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Source static OBJ and full-bright 2x2 molten rectangle with combined-mass height; bounded display-only sync tested and 12960-quanta surface checked at night in Creative; smoke pouring streams and multiplayer pending
 java_source,render/tileentity/RenderCrystallizer,src/main/java/com/hbm/render/tileentity/RenderCrystallizer.java,,unported,,
 java_source,render/tileentity/RenderCustomMachine,src/main/java/com/hbm/render/tileentity/RenderCustomMachine.java,,unported,,
 java_source,render/tileentity/RenderCyclotron,src/main/java/com/hbm/render/tileentity/RenderCyclotron.java,,unported,,
@@ -13560,7 +13560,7 @@ java_source,render/tileentity/RenderFluidBarrel,src/main/java/com/hbm/render/til
 java_source,render/tileentity/RenderFluidPump,src/main/java/com/hbm/render/tileentity/RenderFluidPump.java,,unported,,
 java_source,render/tileentity/RenderFluidTank,src/main/java/com/hbm/render/tileentity/RenderFluidTank.java,,unported,,
 java_source,render/tileentity/RenderForceField,src/main/java/com/hbm/render/tileentity/RenderForceField.java,,unported,,
-java_source,render/tileentity/RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldRenderer.java,Small copper mold flat item heights copper-tinted full-bright surface and additive glow; night half-fill restart daylight full-fill smoke cooling collection and recovery checked in Creative QA; other casting blocks block outputs and materials pending
+java_source,render/tileentity/RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldRenderer.java,Small mold uses typed copper iron and steel flat cast plates and molten palette with source heights and additive glow; prior copper night cooling collection and recovery checked in Creative QA; broader casting blocks and multiplayer pending
 java_source,render/tileentity/RenderFrackingTower,src/main/java/com/hbm/render/tileentity/RenderFrackingTower.java,,unported,,
 java_source,render/tileentity/RenderFractionTower,src/main/java/com/hbm/render/tileentity/RenderFractionTower.java,,unported,,
 java_source,render/tileentity/RenderFurnaceCombination,src/main/java/com/hbm/render/tileentity/RenderFurnaceCombination.java,,unported,,
@@ -13860,7 +13860,7 @@ java_source,tileentity/machine/TileEntityCoreEmitter,src/main/java/com/hbm/tilee
 java_source,tileentity/machine/TileEntityCoreInjector,src/main/java/com/hbm/tileentity/machine/TileEntityCoreInjector.java,,unported,,
 java_source,tileentity/machine/TileEntityCoreReceiver,src/main/java/com/hbm/tileentity/machine/TileEntityCoreReceiver.java,,unported,,
 java_source,tileentity/machine/TileEntityCoreStabilizer,src/main/java/com/hbm/tileentity/machine/TileEntityCoreStabilizer.java,,unported,,
-java_source,tileentity/machine/TileEntityCrucible,src/main/java/com/hbm/tileentity/machine/TileEntityCrucible.java,,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,Copper melting rear spout dropped-material intake and exact scrap recovery; remaining materials recipes acceptors and hazards pending
+java_source,tileentity/machine/TileEntityCrucible,src/main/java/com/hbm/tileentity/machine/TileEntityCrucible.java,,partial,src/forge120/java/com/hbm/PortCrucibleBlockEntity.java,Independent 10368-quanta recipe and waste stores; source ratios steel alloy frequency and front/rear 24-quanta safe pours; ordered persistence legacy copper migration typed recovery and restart checks; broader materials hazards and config remain
 java_source,tileentity/machine/TileEntityCustomMachine,src/main/java/com/hbm/tileentity/machine/TileEntityCustomMachine.java,,unported,,
 java_source,tileentity/machine/TileEntityCyberCrab,src/main/java/com/hbm/tileentity/machine/TileEntityCyberCrab.java,,unported,,
 java_source,tileentity/machine/TileEntityDecon,src/main/java/com/hbm/tileentity/machine/TileEntityDecon.java,,unported,,
@@ -13879,7 +13879,7 @@ java_source,tileentity/machine/TileEntityFoundryBase,src/main/java/com/hbm/tilee
 java_source,tileentity/machine/TileEntityFoundryBasin,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryBasin.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryCastingBase,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryCastingBase.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryChannel,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryChannel.java,,unported,,
-java_source,tileentity/machine/TileEntityFoundryMold,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,First copper plate route with conserved quanta reusable mold and display-only updates for fill cooling completion output collection and recovery; full materials pending
+java_source,tileentity/machine/TileEntityFoundryMold,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryMold.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldBlockEntity.java,Copper iron and steel cast plates use source 216-quanta fill and 200-tick cooling; mixed metals additives finished outputs and missing molds reject pours; typed scraps cooling NBT old copper migration and bounded display packets tested; other molds and multiplayer pending
 java_source,tileentity/machine/TileEntityFoundryOutlet,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryOutlet.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundrySlagtap,src/main/java/com/hbm/tileentity/machine/TileEntityFoundrySlagtap.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryTank,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryTank.java,,unported,,
@@ -16595,7 +16595,7 @@ recipe_site,PowderRecipes:62,src/main/java/com/hbm/crafting/PowderRecipes.java,6
 recipe_site,PowderRecipes:63,src/main/java/com/hbm/crafting/PowderRecipes.java,63,unported,,"CraftingManager.addShapelessAuto(ItemScraps.create(new MaterialStack(Mats.MAT_TCALLOY, MaterialShapes.INGOT.q(1))), new Object[] { STEEL.dust(), TC99.nugget() });"
 recipe_site,PowderRecipes:64,src/main/java/com/hbm/crafting/PowderRecipes.java,64,unported,,"CraftingManager.addShapelessAuto(ItemScraps.create(new MaterialStack(Mats.MAT_STEEL, MaterialShapes.INGOT.q(1))), new Object[] { IRON.dust(), COAL.dust() });"
 recipe_site,PowderRecipes:65,src/main/java/com/hbm/crafting/PowderRecipes.java,65,unported,,"CraftingManager.addShapelessAuto(ItemScraps.create(new MaterialStack(Mats.MAT_STEEL, MaterialShapes.INGOT.q(4))), new Object[] { IRON.dust(), IRON.dust(), IRON.dust(), IRON.dust(), COAL.dust(), COAL.d"
-recipe_site,PowderRecipes:67,src/main/java/com/hbm/crafting/PowderRecipes.java,67,unported,,"CraftingManager.addShapelessAuto(new ItemStack(ModItems.powder_flux, 1), new Object[] { new ItemStack(Items.coal, 1, 1), KEY_SAND });"
+recipe_site,PowderRecipes:67,src/main/java/com/hbm/crafting/PowderRecipes.java,67,partial,src/forge120/resources/data/hbm/recipes/powder_flux.json,Source one charcoal and sand makes one flux powder; red-sand tag route output and recipe unlock checked
 recipe_site,PowderRecipes:68,src/main/java/com/hbm/crafting/PowderRecipes.java,68,unported,,"CraftingManager.addShapelessAuto(new ItemStack(ModItems.powder_flux, 2), new Object[] { COAL.dust(), KEY_SAND });"
 recipe_site,PowderRecipes:69,src/main/java/com/hbm/crafting/PowderRecipes.java,69,unported,,"CraftingManager.addShapelessAuto(new ItemStack(ModItems.powder_flux, 4), new Object[] { F.dust(), KEY_SAND });"
 recipe_site,PowderRecipes:70,src/main/java/com/hbm/crafting/PowderRecipes.java,70,unported,,"CraftingManager.addShapelessAuto(new ItemStack(ModItems.powder_flux, 8), new Object[] { PB.dust(), S.dust(), KEY_SAND });"
@@ -17368,8 +17368,8 @@ recipe_source,ConsumableRecipes,src/main/java/com/hbm/crafting/ConsumableRecipes
 recipe_source,ContainerUpgradeCraftingHandler,src/main/java/com/hbm/crafting/handlers/ContainerUpgradeCraftingHandler.java,,unported,,
 recipe_source,CrackingRecipes,src/main/java/com/hbm/inventory/recipes/CrackingRecipes.java,,unported,,
 recipe_source,CraftingManager,src/main/java/com/hbm/main/CraftingManager.java,,partial,src/forge120/resources/data/hbm/recipes,Three Insulator recipes ported and GameTest-verified; central crafting catalog remains largely unported
-recipe_source,CrucibleRecipe,src/main/java/com/hbm/inventory/recipes/CrucibleRecipe.java,,unported,,
-recipe_source,CrucibleRecipes,src/main/java/com/hbm/inventory/recipes/CrucibleRecipes.java,,unported,,
+recipe_source,CrucibleRecipe,src/main/java/com/hbm/inventory/recipes/CrucibleRecipe.java,,partial,src/forge120/java/com/hbm/PortCrucibleRecipe.java,Material input/output recipe serializer with source tick frequency; network roundtrip invalid recipe rejection and steel application tested; full loader configuration and mold recipes pending
+recipe_source,CrucibleRecipes,src/main/java/com/hbm/inventory/recipes/CrucibleRecipes.java,,partial,src/forge120/java/com/hbm/PortCrucibleRecipes.java,First source steel recipe 16 iron 24 carbon 8 flux to 16 steel every 20 ticks; other alloys smelting recipes mold rules and integrations pending
 recipe_source,CrystallizerRecipes,src/main/java/com/hbm/inventory/recipes/CrystallizerRecipes.java,,unported,,
 recipe_source,CustomMachineRecipes,src/main/java/com/hbm/inventory/recipes/CustomMachineRecipes.java,,unported,,
 recipe_source,CyclotronRecipes,src/main/java/com/hbm/inventory/recipes/CyclotronRecipes.java,,unported,,
@@ -17698,7 +17698,7 @@ renderer_source,RenderCoreComponent,src/main/java/com/hbm/render/tileentity/Rend
 renderer_source,RenderCraneConsole,src/main/java/com/hbm/render/tileentity/RenderCraneConsole.java,,unported,,
 renderer_source,RenderCrashedBomb,src/main/java/com/hbm/render/tileentity/RenderCrashedBomb.java,,unported,,
 renderer_source,RenderCreeperUniversal,src/main/java/com/hbm/render/entity/mob/RenderCreeperUniversal.java,,unported,,
-renderer_source,RenderCrucible,src/main/java/com/hbm/render/tileentity/RenderCrucible.java,,unported,,
+renderer_source,RenderCrucible,src/main/java/com/hbm/render/tileentity/RenderCrucible.java,,partial,src/forge120/java/com/hbm/PortMachineObjRenderer.java,Source static OBJ and full-bright 2x2 molten rectangle with combined-mass height; bounded display-only sync tested and 12960-quanta surface checked at night in Creative; smoke pouring streams and multiplayer pending
 renderer_source,RenderCrystallizer,src/main/java/com/hbm/render/tileentity/RenderCrystallizer.java,,unported,,
 renderer_source,RenderCustomMachine,src/main/java/com/hbm/render/tileentity/RenderCustomMachine.java,,unported,,
 renderer_source,RenderCyberCrab,src/main/java/com/hbm/render/entity/mob/RenderCyberCrab.java,,unported,,
@@ -17746,7 +17746,7 @@ renderer_source,RenderFluidBarrel,src/main/java/com/hbm/render/tileentity/Render
 renderer_source,RenderFluidPump,src/main/java/com/hbm/render/tileentity/RenderFluidPump.java,,unported,,
 renderer_source,RenderFluidTank,src/main/java/com/hbm/render/tileentity/RenderFluidTank.java,,unported,,
 renderer_source,RenderForceField,src/main/java/com/hbm/render/tileentity/RenderForceField.java,,unported,,
-renderer_source,RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldRenderer.java,Small copper mold and molten levels plus finished plate checked live through cooling collection and recovery; night glow corrected for modern ONE/ONE blending and restart checked; other materials casting blocks and multiplayer pending
+renderer_source,RenderFoundry,src/main/java/com/hbm/render/tileentity/RenderFoundry.java,,partial,src/forge120/java/com/hbm/PortFoundryMoldRenderer.java,Small mold uses typed copper iron and steel flat cast plates and molten palette with source heights and additive glow; prior copper night cooling collection and recovery checked in Creative QA; broader casting blocks and multiplayer pending
 renderer_source,RenderFoundryBasin,src/main/java/com/hbm/render/block/RenderFoundryBasin.java,,unported,,
 renderer_source,RenderFoundryChannel,src/main/java/com/hbm/render/block/RenderFoundryChannel.java,,unported,,
 renderer_source,RenderFoundryMold,src/main/java/com/hbm/render/block/RenderFoundryMold.java,,partial,src/forge120/resources/assets/hbm/models/block/foundry_mold.json,Small hollow source mold static model; source face count textures floor and rim heights audited; empty and installed mold checked in maximized Creative QA; multiplayer pending
@@ -18040,7 +18040,7 @@ screen_source,GUICrateDesh,src/main/java/com/hbm/inventory/gui/GUICrateDesh.java
 screen_source,GUICrateIron,src/main/java/com/hbm/inventory/gui/GUICrateIron.java,,unported,,
 screen_source,GUICrateSteel,src/main/java/com/hbm/inventory/gui/GUICrateSteel.java,,unported,,
 screen_source,GUICrateTungsten,src/main/java/com/hbm/inventory/gui/GUICrateTungsten.java,,unported,,
-screen_source,GUICrucible,src/main/java/com/hbm/inventory/gui/GUICrucible.java,,unported,,
+screen_source,GUICrucible,src/main/java/com/hbm/inventory/gui/GUICrucible.java,,partial,src/forge120/java/com/hbm/PortCrucibleScreen.java,Source dual 79-pixel stores with ordered segments heat/progress and recipe icon; live Creative counts tooltips and Steel/None switching checked; full source browser and multiplayer pending
 screen_source,GUICrystallizer,src/main/java/com/hbm/inventory/gui/GUICrystallizer.java,,unported,,
 screen_source,GUIDiFurnace,src/main/java/com/hbm/inventory/gui/GUIDiFurnace.java,,unported,,
 screen_source,GUIDroneCrate,src/main/java/com/hbm/inventory/gui/GUIDroneCrate.java,,unported,,

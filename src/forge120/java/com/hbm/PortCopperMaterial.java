@@ -13,6 +13,7 @@ final class PortCopperMaterial {
         if (stack.is(PortItems.INGOT_COPPER.get()) || stack.is(PortItems.PLATE_COPPER.get())) return INGOT_QUANTA;
         if (stack.is(PortItems.WIRE_FINE_COPPER.get())) return 9;
         if (stack.is(PortItems.PLATE_CAST_COPPER.get())) return INGOT_QUANTA * 3;
-        return PortScrapsItem.quanta(stack);
+        return stack.getItem() instanceof PortScrapsItem scrap && scrap.material() == PortMaterial.COPPER
+                ? PortScrapsItem.quanta(stack) : 0;
     }
 }

@@ -32,6 +32,11 @@ public final class PortItems {
     public static final RegistryObject<Item> INGOT_COPPER = ingot("ingot_copper");
     public static final RegistryObject<Item> SCRAPS_COPPER = ITEMS.register("scraps_copper",
             () -> new PortScrapsItem(new Item.Properties()));
+    public static final RegistryObject<Item> SCRAPS_IRON = scraps("scraps_iron", PortMaterial.IRON);
+    public static final RegistryObject<Item> SCRAPS_STEEL = scraps("scraps_steel", PortMaterial.STEEL);
+    public static final RegistryObject<Item> SCRAPS_CARBON = scraps("scraps_carbon", PortMaterial.CARBON);
+    public static final RegistryObject<Item> SCRAPS_FLUX = scraps("scraps_flux", PortMaterial.FLUX);
+    public static final RegistryObject<Item> POWDER_FLUX = ingot("powder_flux");
     public static final RegistryObject<Item> INGOT_TUNGSTEN = ingot("ingot_tungsten");
     public static final RegistryObject<Item> INGOT_LEAD = ingot("ingot_lead");
     public static final RegistryObject<Item> INGOT_BERYLLIUM = ingot("ingot_beryllium");
@@ -173,6 +178,7 @@ public final class PortItems {
     public static final RegistryObject<Item> FOUNDRY_MOLD = ore("foundry_mold", PortBlocks.FOUNDRY_MOLD);
     public static final RegistryObject<Item> PLATE_CAST_IRON = ingot("plate_cast_iron");
     public static final RegistryObject<Item> PLATE_CAST_COPPER = ingot("plate_cast_copper");
+    public static final RegistryObject<Item> PLATE_CAST_STEEL = ingot("plate_cast_steel");
     public static final RegistryObject<Item> MOLD_BASE = ingot("mold_base");
     public static final RegistryObject<Item> MOLD_PLATE_CAST = ingot("mold_plate_cast");
     public static final RegistryObject<Item> SCREWDRIVER = ITEMS.register("screwdriver",
@@ -194,6 +200,9 @@ public final class PortItems {
 
     private static RegistryObject<Item> ingot(String name) {
         return ITEMS.register(name, () -> new Item(new Item.Properties()));
+    }
+    private static RegistryObject<Item> scraps(String name, PortMaterial material) {
+        return ITEMS.register(name, () -> new PortScrapsItem(new Item.Properties(), material));
     }
 
     private static RegistryObject<Item> stamp(String name) {

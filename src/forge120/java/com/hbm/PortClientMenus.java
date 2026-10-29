@@ -5,16 +5,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 
 @Mod.EventBusSubscriber(modid = HbmPort.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PortClientMenus {
     private PortClientMenus() {}
-
-    @SubscribeEvent
-    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
-        event.register((stack, tint) -> 0xFDCA88, PortItems.PLATE_CAST_COPPER.get());
-    }
 
     @SubscribeEvent
     public static void registerScreens(FMLClientSetupEvent event) {

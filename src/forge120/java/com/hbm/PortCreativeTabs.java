@@ -64,7 +64,13 @@ public final class PortCreativeTabs {
                         output.accept(PortItems.BOLT_STEEL.get());
                         output.accept(PortItems.PLATE_CAST_IRON.get());
                         output.accept(PortItems.PLATE_CAST_COPPER.get());
+                        output.accept(PortItems.PLATE_CAST_STEEL.get());
                         output.accept(PortItems.SCRAPS_COPPER.get());
+                        output.accept(PortItems.SCRAPS_IRON.get());
+                        output.accept(PortItems.SCRAPS_STEEL.get());
+                        output.accept(PortItems.SCRAPS_CARBON.get());
+                        output.accept(PortItems.SCRAPS_FLUX.get());
+                        output.accept(PortItems.POWDER_FLUX.get());
                         output.accept(PortItems.MOLD_BASE.get());
                         output.accept(PortItems.MOLD_PLATE_CAST.get());
                     })

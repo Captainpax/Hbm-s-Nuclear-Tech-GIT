@@ -1,6 +1,8 @@
 package com.hbm;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.LightTexture;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -34,6 +36,8 @@ public final class PortMachineObjRenderer<T extends BlockEntity> implements Bloc
     private static final ResourceLocation FIREBOX_EMPTY = model("firebox_obj_empty");
     private static final ResourceLocation FIREBOX_BURNING = model("firebox_obj_burning");
     private static final ResourceLocation CRUCIBLE = model("crucible_obj");
+    private static final ResourceLocation CRUCIBLE_LAVA = ResourceLocation.fromNamespaceAndPath(HbmPort.MOD_ID,
+            "textures/models/machines/lava.png");
     private static final ResourceLocation BLAST = model("blast_furnace_obj");
     private static final ResourceLocation PRESS_BODY = model("press_body_obj");
     private static final ResourceLocation PRESS_HEAD = model("press_head_obj");
@@ -68,6 +72,9 @@ public final class PortMachineObjRenderer<T extends BlockEntity> implements Bloc
         validate(event, FIREBOX_EMPTY, "firebox");
         validate(event, FIREBOX_BURNING, "firebox");
         validate(event, CRUCIBLE, "crucible_heat");
+        if (Minecraft.getInstance().getResourceManager().getResource(CRUCIBLE_LAVA).isEmpty()) {
+            throw new IllegalStateException("Crucible molten-surface texture is missing");
+        }
         validate(event, BLAST, "blast_furnace");
         validate(event, PRESS_BODY, "press_body");
         validate(event, PRESS_HEAD, "press_head");
@@ -178,7 +185,22 @@ public final class PortMachineObjRenderer<T extends BlockEntity> implements Bloc
         poseStack.translate(0.5, 0, 0.5);
         poseStack.mulPose(new Quaternionf().rotationY((float) Math.toRadians(degrees)));
         renderModel(entity, id, poseStack, buffers, packedLight, packedOverlay);
+        if (entity instanceof PortCrucibleBlockEntity crucible && crucible.renderMass() > 0) {
+            float height = 0.5F + crucible.renderMass() * 0.875F / (PortCrucibleBlockEntity.STORE_CAPACITY * 2);
+            var pose = poseStack.last();
+            VertexConsumer vertices = buffers.getBuffer(RenderType.entityCutoutNoCull(CRUCIBLE_LAVA));
+            moltenVertex(pose, vertices, -1, height, -1, 0, 0, packedOverlay);
+            moltenVertex(pose, vertices, -1, height, 1, 0, 1, packedOverlay);
+            moltenVertex(pose, vertices, 1, height, 1, 1, 1, packedOverlay);
+            moltenVertex(pose, vertices, 1, height, -1, 1, 0, packedOverlay);
+        }
         poseStack.popPose();
+    }
+
+    private static void moltenVertex(PoseStack.Pose pose, VertexConsumer vertices,
+            float x, float y, float z, float u, float v, int overlay) {
+        vertices.vertex(pose.pose(), x, y, z).color(255, 255, 255, 255).uv(u, v)
+                .overlayCoords(overlay).uv2(LightTexture.FULL_BRIGHT).normal(pose.normal(), 0, 1, 0).endVertex();
     }
 
     private static void renderPress(PortPressBlockEntity press, float partialTick, PoseStack pose,

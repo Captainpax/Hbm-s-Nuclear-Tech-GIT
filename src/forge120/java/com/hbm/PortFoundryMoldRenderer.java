@@ -33,7 +33,6 @@ public final class PortFoundryMoldRenderer implements BlockEntityRenderer<PortFo
             HbmPort.MOD_ID, "textures/models/machines/lava_gray.png");
     private static boolean modelsAudited;
     private final ItemStack moldItem = new ItemStack(PortItems.MOLD_PLATE_CAST.get());
-    private final ItemStack castItem = new ItemStack(PortItems.PLATE_CAST_COPPER.get());
 
     public PortFoundryMoldRenderer(BlockEntityRendererProvider.Context context) {}
 
@@ -95,12 +94,13 @@ public final class PortFoundryMoldRenderer implements BlockEntityRenderer<PortFo
     @Override public void render(PortFoundryMoldBlockEntity mold, float partialTick, PoseStack pose,
             MultiBufferSource buffers, int light, int overlay) {
         if (mold.displayMold()) drawItem(moldItem, 0.13, mold, pose, buffers, light, overlay);
-        if (mold.displayCasting()) drawItem(castItem, 0.25, mold, pose, buffers, light, overlay);
-        if (mold.copperQuanta() <= 0) return;
-        float height = 0.125F + mold.copperQuanta() * 0.25F / PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA;
-        // Mats.MAT_COPPER moltenColor = C18336. The source adds a white 30% glow pass.
+        if (mold.displayCasting()) drawItem(mold.material().castPlate(), 0.25, mold, pose, buffers, light, overlay);
+        if (mold.amount() <= 0) return;
+        float height = 0.125F + mold.amount() * 0.25F / PortFoundryMoldBlockEntity.CAST_PLATE_QUANTA;
+        int color = mold.material().moltenColor;
+        // The source adds a white 30% glow pass over the material color.
         surface(pose.last(), buffers.getBuffer(RenderType.entityCutoutNoCull(LAVA)), height,
-                193, 131, 54, 255, overlay);
+                color >> 16 & 255, color >> 8 & 255, color & 255, 255, overlay);
         // The modern eyes layer uses ONE/ONE blending; scale RGB instead of source alpha.
         surface(pose.last(), buffers.getBuffer(RenderType.eyes(LAVA)), height,
                 77, 77, 77, 255, overlay);
