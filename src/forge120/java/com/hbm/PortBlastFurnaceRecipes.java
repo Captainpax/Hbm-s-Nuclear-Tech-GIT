@@ -1,7 +1,7 @@
 package com.hbm;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 
 /** First active BlastFurnaceRecipesNT steel route. */
 public final class PortBlastFurnaceRecipes {
@@ -17,10 +17,10 @@ public final class PortBlastFurnaceRecipes {
     }
 
     private static boolean isIron(ItemStack stack) {
-        return stack.is(Items.IRON_INGOT) && stack.getCount() >= 2;
+        return stack.is(Tags.Items.INGOTS_IRON) && stack.getCount() >= 2;
     }
 
     private static boolean isSand(ItemStack stack) {
-        return stack.is(Items.SAND) || stack.is(Items.RED_SAND);
+        return stack.is(Tags.Items.SAND);
     }
 }

@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 
 /** First shared Mats definitions, with their frozen-source IDs, colors and quanta. */
 public enum PortMaterial {
@@ -60,11 +61,13 @@ public enum PortMaterial {
         }
         int copper = PortCopperMaterial.quantaPerItem(stack);
         if (copper > 0) return List.of(new PortMaterialStack(COPPER, copper));
-        if (stack.is(Items.IRON_INGOT) || stack.is(PortItems.PLATE_IRON.get())) return of(IRON, INGOT);
-        if (stack.is(PortItems.PLATE_CAST_IRON.get()) || stack.is(PortItems.STAMP_IRON_FLAT.get())) return of(IRON, INGOT * 3);
-        if (stack.is(PortItems.INGOT_STEEL.get()) || stack.is(PortItems.PLATE_STEEL.get())) return of(STEEL, INGOT);
-        if (stack.is(PortItems.BOLT_STEEL.get())) return of(STEEL, 9);
-        if (stack.is(PortItems.PLATE_CAST_STEEL.get())) return of(STEEL, INGOT * 3);
+        if (stack.is(Tags.Items.INGOTS_IRON) || stack.is(PortItemTags.PLATES_IRON)) return of(IRON, INGOT);
+        if (stack.is(PortItemTags.CAST_PLATES_IRON) || stack.is(PortItems.STAMP_IRON_FLAT.get())) return of(IRON, INGOT * 3);
+        if (stack.is(Tags.Items.STORAGE_BLOCKS_IRON)) return of(IRON, BLOCK);
+        if (stack.is(PortItemTags.INGOTS_STEEL) || stack.is(PortItemTags.PLATES_STEEL)) return of(STEEL, INGOT);
+        if (stack.is(PortItemTags.BOLTS_STEEL)) return of(STEEL, 9);
+        if (stack.is(PortItemTags.CAST_PLATES_STEEL)) return of(STEEL, INGOT * 3);
+        if (stack.is(PortItemTags.BLOCKS_STEEL)) return of(STEEL, BLOCK);
         if (stack.is(Items.CHARCOAL) || stack.is(PortItems.LIGNITE.get())) return of(CARBON, 24);
         if (stack.is(Items.COAL)) return of(CARBON, 36);
         if (stack.is(Items.DIAMOND)) return of(CARBON, INGOT);

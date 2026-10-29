@@ -90,6 +90,12 @@ minecraft {
             workingDirectory project.file('run-gneiss-seed')
             property 'forge.enabledGameTestNamespaces', modId
         }
+        taggedInputGameTestServer {
+            parent runs.gameTestServer
+            workingDirectory project.file('run-tagged-inputs')
+            property 'forge.enabledGameTestNamespaces', modId
+            property 'hbm.port.taggedInputs', 'true'
+        }
         data {
             workingDirectory project.file('run-data')
             args '--mod', modId, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/forge120/resources/')
@@ -122,6 +128,25 @@ tasks.named('processResources', ProcessResources).configure {
 
 tasks.named('jar', Jar).configure {
     finalizedBy 'reobfJar'
+}
+
+// Alternate item identities belong only to this isolated regression world.
+tasks.register('prepareTaggedInputFixture') {
+    def pack = file('run-tagged-inputs/world/datapacks/hbm-tagged-inputs')
+    def properties = file('run-tagged-inputs/server.properties')
+    inputs.dir 'tools/porting/fixtures/tagged-inputs'
+    outputs.dir pack
+    outputs.file properties
+    doLast {
+        copy {
+            from 'tools/porting/fixtures/tagged-inputs'
+            into pack
+        }
+        if (!properties.exists()) properties.setText('level-name=world\n', 'UTF-8')
+    }
+}
+tasks.matching { it.name == 'runTaggedInputGameTestServer' }.configureEach {
+    dependsOn 'prepareTaggedInputFixture'
 }
 
 tasks.withType(JavaCompile).configureEach {

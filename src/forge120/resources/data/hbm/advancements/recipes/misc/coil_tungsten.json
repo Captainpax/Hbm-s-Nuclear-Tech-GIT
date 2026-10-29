@@ -1,1 +1,1 @@
-{"parent":"minecraft:recipes/root","criteria":{"has_tungsten_wire":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"items":["hbm:wire_fine_tungsten"]}]}}},"rewards":{"recipes":["hbm:coil_tungsten"]}}
+{"parent":"minecraft:recipes/root","criteria":{"has_tungsten_wire":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"tag":"hbm:fine_wires/tungsten"}]}}},"rewards":{"recipes":["hbm:coil_tungsten"]}}

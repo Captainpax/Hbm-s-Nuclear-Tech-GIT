@@ -43,6 +43,8 @@ jobs:
         run: ./gradlew build runGameTestServer -PhbmPersistencePhase=seed --no-daemon --console=plain
       - name: Restart dedicated server and verify radiation battery cable socket and charged pack state
         run: ./gradlew runGameTestServer -PhbmPersistencePhase=verify --no-daemon --console=plain
+      - name: Verify alternate tagged progression ingredients
+        run: ./gradlew runTaggedInputGameTestServer --no-daemon --console=plain
       - name: Test fresh worldgen with two independent seeds
         run: |
           mkdir -p run-gneiss-seed

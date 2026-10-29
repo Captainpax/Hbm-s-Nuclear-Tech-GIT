@@ -1,1 +1,1 @@
-{"parent":"minecraft:recipes/root","criteria":{"has_bolts":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"items":["hbm:bolt_steel"]}]}}},"rewards":{"recipes":["hbm:plate_cast_iron"]}}
+{"parent":"minecraft:recipes/root","criteria":{"has_bolts":{"trigger":"minecraft:inventory_changed","conditions":{"items":[{"tag":"hbm:bolts/steel"}]}}},"rewards":{"recipes":["hbm:plate_cast_iron"]}}

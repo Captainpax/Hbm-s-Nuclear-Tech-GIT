@@ -69,7 +69,7 @@ public final class PortBlastFurnaceMenu extends AbstractContainerMenu {
             if (!moveItemStackTo(stack, 5, slots.size(), true)) return ItemStack.EMPTY;
         } else {
             int target = PortBlastFurnaceBlockEntity.fuelTime(stack) > 0 ? 0
-                    : stack.is(net.minecraft.world.item.Items.SAND) || stack.is(net.minecraft.world.item.Items.RED_SAND)
+                    : stack.is(net.minecraftforge.common.Tags.Items.SAND)
                     ? 2 : 1;
             if (!moveItemStackTo(stack, target, target + 1, false)) return ItemStack.EMPTY;
         }

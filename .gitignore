@@ -30,6 +30,7 @@
 /run-multiplayer
 /run-multiplayer-client
 /run-multiplayer-tests
+/run-tagged-inputs
 __pycache__/
 *.pyc
 

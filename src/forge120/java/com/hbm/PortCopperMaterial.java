@@ -1,6 +1,7 @@
 package com.hbm;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.Tags;
 
 /** First material mappings from Mats and MaterialShapes, in source quanta per item. */
 final class PortCopperMaterial {
@@ -10,9 +11,10 @@ final class PortCopperMaterial {
 
     static int quantaPerItem(ItemStack stack) {
         if (stack.isEmpty()) return 0;
-        if (stack.is(PortItems.INGOT_COPPER.get()) || stack.is(PortItems.PLATE_COPPER.get())) return INGOT_QUANTA;
-        if (stack.is(PortItems.WIRE_FINE_COPPER.get())) return 9;
-        if (stack.is(PortItems.PLATE_CAST_COPPER.get())) return INGOT_QUANTA * 3;
+        if (stack.is(Tags.Items.INGOTS_COPPER) || stack.is(PortItemTags.PLATES_COPPER)) return INGOT_QUANTA;
+        if (stack.is(PortItemTags.FINE_WIRES_COPPER)) return 9;
+        if (stack.is(PortItemTags.CAST_PLATES_COPPER)) return INGOT_QUANTA * 3;
+        if (stack.is(Tags.Items.STORAGE_BLOCKS_COPPER)) return INGOT_QUANTA * 9;
         return stack.getItem() instanceof PortScrapsItem scrap && scrap.material() == PortMaterial.COPPER
                 ? PortScrapsItem.quanta(stack) : 0;
     }

@@ -7,10 +7,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.tags.TagKey;
+import net.minecraftforge.common.Tags;
 
 /** First tier-1 construction recipes, consumed from the player's inventory like AnvilCraftPacket. */
 public final class PortAnvilConstruction {
-    public record Requirement(Supplier<Item> item, int count) {}
+    public record Requirement(Supplier<Item> item, int count, TagKey<Item> tag) {
+        public Requirement(Supplier<Item> item, int count) { this(item, count, null); }
+        public boolean matches(ItemStack stack) {
+            return !stack.isEmpty() && stack.getDamageValue() == 0
+                    && (tag == null ? stack.is(item.get()) : stack.is(tag));
+        }
+    }
     public record Recipe(int tier, Supplier<ItemStack> output, List<Requirement> requirements) {}
 
     private PortAnvilConstruction() {}
@@ -24,15 +32,15 @@ public final class PortAnvilConstruction {
                 new Recipe(1, () -> new ItemStack(PortItems.MACHINE_BLAST_FURNACE.get()),
                         List.of(new Requirement(() -> Blocks.STONE_BRICKS.asItem(), 4),
                                 new Requirement(PortItems.INGOT_FIREBRICK::get, 32),
-                                new Requirement(PortItems.PLATE_COPPER::get, 8))),
+                                new Requirement(PortItems.PLATE_COPPER::get, 8, PortItemTags.PLATES_COPPER))),
                 new Recipe(2, () -> new ItemStack(PortItems.HEATER_FIREBOX.get()),
                         List.of(new Requirement(() -> Blocks.FURNACE.asItem(), 1),
-                                new Requirement(PortItems.PLATE_STEEL::get, 8),
-                                new Requirement(PortItems.INGOT_COPPER::get, 8))),
+                                new Requirement(PortItems.PLATE_STEEL::get, 8, PortItemTags.PLATES_STEEL),
+                                new Requirement(PortItems.INGOT_COPPER::get, 8, Tags.Items.INGOTS_COPPER))),
                 new Recipe(2, () -> new ItemStack(PortItems.MACHINE_CRUCIBLE.get()),
                         List.of(new Requirement(PortItems.INGOT_FIREBRICK::get, 20),
-                                new Requirement(PortItems.INGOT_COPPER::get, 8),
-                                new Requirement(PortItems.PLATE_STEEL::get, 8))));
+                                new Requirement(PortItems.INGOT_COPPER::get, 8, Tags.Items.INGOTS_COPPER),
+                                new Requirement(PortItems.PLATE_STEEL::get, 8, PortItemTags.PLATES_STEEL))));
     }
 
     public static boolean craft(Player player, int tier, int recipeIndex, boolean bulk) {
@@ -48,7 +56,7 @@ public final class PortAnvilConstruction {
                 int remaining = requirement.count();
                 for (int slot = 0; slot < player.getInventory().items.size() && remaining > 0; slot++) {
                     ItemStack stack = player.getInventory().getItem(slot);
-                    if (stack.is(requirement.item().get()) && stack.getDamageValue() == 0) {
+                    if (requirement.matches(stack)) {
                         int taken = Math.min(remaining, stack.getCount());
                         player.getInventory().removeItem(slot, taken);
                         remaining -= taken;
@@ -68,7 +76,7 @@ public final class PortAnvilConstruction {
             int found = 0;
             for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
                 ItemStack stack = player.getInventory().getItem(slot);
-                if (stack.is(requirement.item().get()) && stack.getDamageValue() == 0) found += stack.getCount();
+                if (requirement.matches(stack)) found += stack.getCount();
             }
             if (found < requirement.count()) return false;
         }
