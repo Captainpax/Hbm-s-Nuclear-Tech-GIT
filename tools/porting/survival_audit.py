@@ -12,6 +12,7 @@ import io
 import json
 from pathlib import Path
 import struct
+import zlib
 
 import survival_driver as driver
 
@@ -19,7 +20,11 @@ SAVE = driver.RUN / "saves/HBM Survival Progression"
 
 
 def nbt(path: Path) -> dict:
-    stream = io.BytesIO(gzip.decompress(path.read_bytes()))
+    return decode_nbt(gzip.decompress(path.read_bytes()))
+
+
+def decode_nbt(data: bytes) -> dict:
+    stream = io.BytesIO(data)
 
     def read(length: int) -> bytes:
         if length < 0 or length > 32_000_000:
@@ -70,7 +75,59 @@ def nbt(path: Path) -> dict:
     return result
 
 
-def audit(bootstrap: bool) -> dict:
+def region_chunks(path: Path):
+    """Read saved Anvil region chunks, including the separate entity store."""
+    data = path.read_bytes()
+    if len(data) < 8_192:
+        raise ValueError(f"Truncated region header: {path}")
+    for index in range(1_024):
+        location = int.from_bytes(data[index*4:index*4+4], "big")
+        if not location:
+            continue
+        offset, sectors = (location >> 8) * 4_096, location & 255
+        if offset < 8_192 or not sectors or offset + sectors * 4_096 > len(data):
+            raise ValueError(f"Invalid chunk location: {path} slot {index}")
+        length = int.from_bytes(data[offset:offset+4], "big")
+        if not 1 < length <= sectors * 4_096 - 4:
+            raise ValueError(f"Invalid chunk length: {path} slot {index}")
+        compression, payload = data[offset+4], data[offset+5:offset+4+length]
+        if compression == 1:
+            payload = gzip.decompress(payload)
+        elif compression == 2:
+            payload = zlib.decompress(payload)
+        elif compression != 3:
+            raise ValueError(f"Unsupported region compression {compression}: {path}")
+        yield decode_nbt(payload)
+
+
+def nearby_saved_items() -> dict:
+    """Account for ordinary death drops and the starter furnace without edits."""
+    drops, furnaces, mobs = [], [], []
+    # Only saved chunks near the starter base; reading does not load them in-game.
+    for rx in (-1, 0):
+        for rz in (-1, 0):
+            name = f"r.{rx}.{rz}.mca"
+            entities = SAVE / "entities" / name
+            if entities.exists():
+                for chunk in region_chunks(entities):
+                    for entity in chunk.get("Entities", []):
+                        pos = entity.get("Pos", [])
+                        if len(pos) != 3 or (pos[0]-29)**2 + (pos[2]-39)**2 > 64**2:
+                            continue
+                        if entity["id"] == "minecraft:item":
+                            drops.append({"position":pos, "age":entity["Age"], "item":entity["Item"]})
+                        elif entity["id"] in {"minecraft:skeleton", "minecraft:zombie", "minecraft:creeper", "minecraft:spider"}:
+                            mobs.append({"type":entity["id"], "position":pos, "health":entity.get("Health")})
+            terrain = SAVE / "region" / name
+            if terrain.exists():
+                for chunk in region_chunks(terrain):
+                    for block in chunk.get("block_entities", []):
+                        if block["id"] == "minecraft:furnace" and (block["x"],block["y"],block["z"]) == (29,63,38):
+                            furnaces.append({key:block[key] for key in ("x","y","z","Items","BurnTime","CookTime")})
+    return {"dropped_items":drops, "starter_furnaces":furnaces, "nearby_hostile_mobs":mobs}
+
+
+def audit(bootstrap: bool, first_iron: bool = False) -> dict:
     data = nbt(SAVE / "level.dat")["Data"]
     assert data["LevelName"] == "HBM Survival Progression" and data["GameType"] == 0
     assert data["allowCommands"] == 0 and data["Difficulty"] == 2
@@ -127,19 +184,58 @@ def audit(bootstrap: bool) -> dict:
         assert counts["minecraft:stick"] + 4 + 1 + 1 == crafted["minecraft:stick"] + picked["minecraft:stick"]
         assert stats["minecraft:custom"].get("minecraft:deaths", 0) == 0
         report["bootstrap_material_ledger"] = "passed"
+    if first_iron:
+        saved = nearby_saved_items()
+        report["saved_items"] = saved
+        counts = Counter()
+        for item in inventory:
+            counts[item["item"]] += item["count"]
+        for drop in saved["dropped_items"]:
+            counts[drop["item"]["id"]] += drop["item"]["Count"]
+        assert len(saved["starter_furnaces"]) == 1
+        furnace = saved["starter_furnaces"][0]
+        for item in furnace["Items"]:
+            counts[item["id"]] += item["Count"]
+        expected = Counter({"minecraft:spruce_sapling":1, "minecraft:spruce_log":3,
+                            "minecraft:dirt":16, "minecraft:sand":2, "minecraft:sandstone":1,
+                            "minecraft:stick":4, "minecraft:torch":2, "minecraft:wooden_pickaxe":1,
+                            "minecraft:stone_pickaxe":1, "minecraft:cobblestone":64,
+                            "minecraft:diorite":12, "minecraft:coal":4, "minecraft:iron_ingot":4})
+        assert counts == expected, (counts, expected)
+        mined, crafted, used = (stats[f"minecraft:{key}"] for key in ("mined", "crafted", "used"))
+        assert mined["minecraft:iron_ore"] == mined["minecraft:coal_ore"] == 4
+        assert mined["minecraft:stone"] == counts["minecraft:cobblestone"] + 3 + 8 == 75
+        assert mined["minecraft:diorite"] == counts["minecraft:diorite"] == 12
+        assert crafted["minecraft:charcoal"] == 2 and crafted["minecraft:torch"] == 4
+        assert used["minecraft:torch"] + counts["minecraft:torch"] == 4
+        assert counts["minecraft:spruce_log"] + crafted["minecraft:spruce_planks"] // 4 + 2 == mined["minecraft:spruce_log"] == 8
+        assert counts["minecraft:stick"] + 4 + 1 + 1 == crafted["minecraft:stick"] + 2
+        assert furnace["BurnTime"] == furnace["CookTime"] == 0
+        assert furnace["Items"] == [{"Slot":2, "id":"minecraft:iron_ingot", "Count":4}]
+        all_tools = [{"item":item["item"], "tag":item["tag"]} for item in inventory if item["item"].endswith("_pickaxe")]
+        all_tools += [{"item":drop["item"]["id"], "tag":drop["item"].get("tag", {})}
+                      for drop in saved["dropped_items"] if drop["item"]["id"].endswith("_pickaxe")]
+        tools = {tool["item"]:tool["tag"]["Damage"] for tool in all_tools}
+        assert tools["minecraft:stone_pickaxe"] == used["minecraft:stone_pickaxe"] == 84
+        assert 84 == mined["minecraft:stone"] - 11 + mined["minecraft:diorite"] + 4 + 4
+        assert tools["minecraft:wooden_pickaxe"] == used["minecraft:wooden_pickaxe"] == 30
+        report["first_iron_material_ledger"] = "passed across player, ordinary death drops and furnace"
+        report["scope"] = "First four naturally mined iron smelted; death-drop recovery and iron tools remain pending"
     return report
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--bootstrap", action="store_true")
-    parser.add_argument("--record", action="store_true", help="Preserve the first bootstrap report in the ignored evidence directory")
+    phase = parser.add_mutually_exclusive_group()
+    phase.add_argument("--bootstrap", action="store_true")
+    phase.add_argument("--first-iron", action="store_true")
+    parser.add_argument("--record", action="store_true", help="Preserve the first phase report in the ignored evidence directory")
     arguments = parser.parse_args()
-    report = audit(arguments.bootstrap)
+    report = audit(arguments.bootstrap, arguments.first_iron)
     if arguments.record:
-        assert arguments.bootstrap, "Recording requires the bootstrap ledger"
-        target = driver.RUN / "evidence/bootstrap-audit.json"
+        assert arguments.bootstrap or arguments.first_iron, "Recording requires a phase ledger"
+        target = driver.RUN / ("evidence/bootstrap-audit.json" if arguments.bootstrap else "evidence/first-iron-audit.json")
         if target.exists():
-            raise RuntimeError("Preserve the existing bootstrap audit instead of overwriting it")
+            raise RuntimeError("Preserve the existing phase audit instead of overwriting it")
         driver.write(target, report)
     print(json.dumps(report, indent=2))

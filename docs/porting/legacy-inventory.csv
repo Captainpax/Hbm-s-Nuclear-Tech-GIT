@@ -7350,13 +7350,13 @@ block,charger,src/main/java/com/hbm/blocks/ModBlocks.java,2712,unported,,
 block,chimney_brick,src/main/java/com/hbm/blocks/ModBlocks.java,3259,unported,,
 block,chimney_industrial,src/main/java/com/hbm/blocks/ModBlocks.java,3260,unported,,
 block,chlorine_gas,src/main/java/com/hbm/blocks/ModBlocks.java,3449,unported,,
-block,cluster_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2387,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
-block,cluster_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2388,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
+block,cluster_aluminium,src/main/java/com/hbm/blocks/ModBlocks.java,2387,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending; actual Survival drops tested with wood through netherite picks including gold and no drops for hands or axes
+block,cluster_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2388,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending; actual Survival drops tested with wood through netherite picks including gold and no drops for hands or axes
 block,cluster_depth_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2424,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
 block,cluster_depth_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2425,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
 block,cluster_depth_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2426,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
-block,cluster_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2385,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
-block,cluster_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2386,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending
+block,cluster_iron,src/main/java/com/hbm/blocks/ModBlocks.java,2385,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending; actual Survival drops tested with wood through netherite picks including gold and no drops for hands or axes
+block,cluster_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2386,partial,src/forge120/java/com/hbm/PortBlocks.java,Source 5 hardness 15 resistance fresh-chunk placement and crystal drop ported; visual and downstream-machine parity pending; actual Survival drops tested with wood through netherite picks including gold and no drops for hands or axes
 block,cm_anchor,src/main/java/com/hbm/blocks/ModBlocks.java,3319,unported,,
 block,cm_block,src/main/java/com/hbm/blocks/ModBlocks.java,3311,unported,,
 block,cm_circuit,src/main/java/com/hbm/blocks/ModBlocks.java,3315,unported,,
@@ -7793,11 +7793,11 @@ block,ore_australium,src/main/java/com/hbm/blocks/ModBlocks.java,2378,unported,,
 block,ore_basalt,src/main/java/com/hbm/blocks/ModBlocks.java,2433,unported,,
 block,ore_bedrock,src/main/java/com/hbm/blocks/ModBlocks.java,2439,unported,,
 block,ore_bedrock_oil,src/main/java/com/hbm/blocks/ModBlocks.java,2391,unported,,
-block,ore_beryllium,src/main/java/com/hbm/blocks/ModBlocks.java,2368,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
+block,ore_beryllium,src/main/java/com/hbm/blocks/ModBlocks.java,2368,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting tested; source generic-rock pickaxe gate restored and actual Survival drops tested across all pickaxe tiers with no drops for hands or axes; remaining behavior needs parity audit
 block,ore_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2381,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk source-height placement and cinnabar drop with Silk Touch ported; downstream processing pending
 block,ore_cobalt,src/main/java/com/hbm/blocks/ModBlocks.java,2380,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk source-height placement with four-to-nine fragment drops and cobalt smelting ported; downstream processing pending
 block,ore_coltan,src/main/java/com/hbm/blocks/ModBlocks.java,2382,unported,,
-block,ore_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2364,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
+block,ore_copper,src/main/java/com/hbm/blocks/ModBlocks.java,2364,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting tested; source generic-rock pickaxe gate restored and actual Survival drops tested across all pickaxe tiers with no drops for hands or axes; remaining behavior needs parity audit
 block,ore_depth_borax,src/main/java/com/hbm/blocks/ModBlocks.java,2423,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
 block,ore_depth_cinnebar,src/main/java/com/hbm/blocks/ModBlocks.java,2421,partial,src/forge120/java/com/hbm/PortBlocks.java,Overworld deep deposit ported; special tool and fortune behavior pending
 block,ore_depth_nether_neodymium,src/main/java/com/hbm/blocks/ModBlocks.java,2430,unported,,
@@ -7813,7 +7813,7 @@ block,ore_gneiss_rare,src/main/java/com/hbm/blocks/ModBlocks.java,2417,partial,s
 block,ore_gneiss_schrabidium,src/main/java/com/hbm/blocks/ModBlocks.java,2416,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
 block,ore_gneiss_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2411,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
 block,ore_gneiss_uranium_scorched,src/main/java/com/hbm/blocks/ModBlocks.java,2412,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with source texture and tested drops; in-world visual and downstream parity pending
-block,ore_lead,src/main/java/com/hbm/blocks/ModBlocks.java,2369,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
+block,ore_lead,src/main/java/com/hbm/blocks/ModBlocks.java,2369,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting tested; source generic-rock pickaxe gate restored and actual Survival drops tested across all pickaxe tiers with no drops for hands or axes; remaining behavior needs parity audit
 block,ore_lignite,src/main/java/com/hbm/blocks/ModBlocks.java,2373,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk source-height placement and lignite drop with Silk Touch ported; in-world visual check pending
 block,ore_meteor,src/main/java/com/hbm/blocks/ModBlocks.java,2406,unported,,
 block,ore_nether_coal,src/main/java/com/hbm/blocks/ModBlocks.java,2394,unported,,
@@ -7839,11 +7839,11 @@ block,ore_sellafield_schrabidium,src/main/java/com/hbm/blocks/ModBlocks.java,283
 block,ore_sellafield_uranium_scorched,src/main/java/com/hbm/blocks/ModBlocks.java,2831,unported,,
 block,ore_sulfur,src/main/java/com/hbm/blocks/ModBlocks.java,2362,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement and 2-to-4 sulfur plus silk-touch drops tested; tool tier fortune and downstream recipes pending
 block,ore_tektite_osmiridium,src/main/java/com/hbm/blocks/ModBlocks.java,2823,unported,,
-block,ore_thorium,src/main/java/com/hbm/blocks/ModBlocks.java,2360,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
+block,ore_thorium,src/main/java/com/hbm/blocks/ModBlocks.java,2360,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting tested; source generic-rock pickaxe gate restored and actual Survival drops tested across all pickaxe tiers with no drops for hands or axes; remaining behavior needs parity audit
 block,ore_tikite,src/main/java/com/hbm/blocks/ModBlocks.java,2436,unported,,
-block,ore_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2361,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
-block,ore_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2365,partial,src/forge120/java/com/hbm/PortBlocks.java,Registered with fresh-chunk placement self-drop and smelting tests; tool tier and remaining behavior need parity audit
-block,ore_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2358,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Registered with fresh-chunk worldgen and random-tick radon emission; item and placed-block textures manually checked in client; break behavior and hazard integration still need full parity checks
+block,ore_titanium,src/main/java/com/hbm/blocks/ModBlocks.java,2361,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting tested; source generic-rock pickaxe gate restored and actual Survival drops tested across all pickaxe tiers with no drops for hands or axes; remaining behavior needs parity audit
+block,ore_tungsten,src/main/java/com/hbm/blocks/ModBlocks.java,2365,partial,src/forge120/java/com/hbm/PortBlocks.java,Fresh-chunk placement self-drop and smelting tested; source generic-rock pickaxe gate restored and actual Survival drops tested across all pickaxe tiers with no drops for hands or axes; remaining behavior needs parity audit
+block,ore_uranium,src/main/java/com/hbm/blocks/ModBlocks.java,2358,partial,src/forge120/java/com/hbm/PortUraniumOre.java,Fresh-chunk worldgen and radon emission ported; item and placed textures checked; source generic-rock pickaxe gate restored and actual Survival drops tested across all pickaxe tiers with no drops for hands or axes; break hazards and wider behavior remain partial
 block,ore_uranium_scorched,src/main/java/com/hbm/blocks/ModBlocks.java,2359,unported,,
 block,ore_volcano,src/main/java/com/hbm/blocks/ModBlocks.java,2440,unported,,
 block,pa_beamline,src/main/java/com/hbm/blocks/ModBlocks.java,3072,unported,,

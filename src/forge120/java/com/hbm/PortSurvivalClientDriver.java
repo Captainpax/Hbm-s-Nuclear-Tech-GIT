@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,6 +18,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -33,12 +35,14 @@ public final class PortSurvivalClientDriver {
     private static final String WORLD = "HBM Survival Progression";
     private static long lastId = -1;
     private static int ticks, finishAt, deadline;
-    private static JsonObject pending, before, completed;
+    private static JsonObject pending, before, completed, observation;
     private static String error, running;
     private static BlockPos target;
     private static BlockState mining;
     private static Vec3 destination;
     private static boolean firstState, bootstrapped;
+    private static int observedPlayer = -1;
+    private static float observedHealth;
 
     private PortSurvivalClientDriver() {}
 
@@ -60,6 +64,21 @@ public final class PortSurvivalClientDriver {
             if (ticks % 20 == 0) write(client, "state", state(client));
             if (completed != null) { write(client, "result", completed); completed = null; }
             if (client.player == null || client.level == null) { release(client); return; }
+            // Normal Esc-style pausing protects an unattended walkthrough from
+            // continuing an inventory script while a mob attacks. It changes no
+            // health, difficulty, inventory or world rule. Keep the damage in
+            // the receipt and require the operator to inspect before resuming.
+            if (authorized(client) && client.player.getId() == observedPlayer && client.player.getHealth() < observedHealth
+                    && client.player.isAlive() && !client.isPaused()) {
+                release(client);
+                if (pending != null) {
+                    error = "Player took damage; walkthrough paused for inspection";
+                    running = null; finishAt = ticks + 1;
+                }
+                client.player.closeContainer();
+                client.setScreen(new PauseScreen(true));
+            }
+            observedPlayer = client.player.getId(); observedHealth = client.player.getHealth();
             if (pending != null) {
                 if (running != null) {
                     try {
@@ -73,6 +92,7 @@ public final class PortSurvivalClientDriver {
                     completed = state(client);
                     completed.addProperty("id", lastId); completed.add("request", pending); completed.add("before", before);
                     completed.addProperty("ok", error == null);
+                    if (observation != null) completed.add("observation", observation);
                     if (error != null) completed.addProperty("error", error);
                     pending = null;
                 }
@@ -83,7 +103,7 @@ public final class PortSurvivalClientDriver {
             if (!Files.isRegularFile(inbox)) return;
             var request = JsonParser.parseString(Files.readString(inbox)).getAsJsonObject();
             if (!SESSION.equals(request.get("session").getAsString()) || request.get("id").getAsLong() <= lastId) return;
-            lastId = request.get("id").getAsLong(); pending = request; before = state(client); error = null;
+            lastId = request.get("id").getAsLong(); pending = request; before = state(client); error = null; observation = null;
             finishAt = ticks + 20;
             try {
                 guard(client);
@@ -99,23 +119,31 @@ public final class PortSurvivalClientDriver {
     }
 
     private static void guard(Minecraft client) {
-        var server = client.getSingleplayerServer();
-        if (server == null || !WORLD.equals(server.getWorldData().getLevelName()) || server.overworld().getSeed() != 20_301_017L
-                || server.getWorldData().getAllowCommands()
-                || client.gameMode == null || client.gameMode.getPlayerMode() != GameType.SURVIVAL
-                || !client.player.getGameProfile().getName().equals("HbmSurvival")
-                || client.player.getAbilities().instabuild || client.player.getAbilities().mayfly
-                || client.player.getAbilities().flying || client.player.getAbilities().invulnerable) {
+        if (!authorized(client)) {
             throw new IllegalStateException("Requires the named isolated single-player Survival world with cheats and flight disabled");
         }
     }
 
+    private static boolean authorized(Minecraft client) {
+        var server = client.getSingleplayerServer();
+        return server != null && WORLD.equals(server.getWorldData().getLevelName()) && server.overworld().getSeed() == 20_301_017L
+                && !server.getWorldData().getAllowCommands()
+                && client.gameMode != null && client.gameMode.getPlayerMode() == GameType.SURVIVAL
+                && client.player.getGameProfile().getName().equals("HbmSurvival")
+                && !client.player.getAbilities().instabuild && !client.player.getAbilities().mayfly
+                && !client.player.getAbilities().flying && !client.player.getAbilities().invulnerable;
+    }
+
     private static void act(Minecraft client, JsonObject request) throws java.io.IOException {
         String action = request.get("action").getAsString();
+        if (!client.player.isAlive() && !java.util.Set.of("inspect", "scan", "probe", "exit", "pause").contains(action)) {
+            throw new IllegalStateException("Dead player cannot perform inventory or gameplay actions");
+        }
         switch (action) {
             case "inspect" -> { }
             case "inventory" -> client.setScreen(new InventoryScreen(client.player));
             case "close" -> { client.player.closeContainer(); client.setScreen(null); }
+            case "pause" -> { client.player.closeContainer(); client.setScreen(new PauseScreen(true)); }
             case "select" -> {
                 int slot = request.get("slot").getAsInt();
                 if (slot < 0 || slot > 8) throw new IllegalArgumentException("Select a hotbar slot 0-8");
@@ -142,6 +170,16 @@ public final class PortSurvivalClientDriver {
                 client.gameMode.handleInventoryButtonClick(menu.containerId, button);
             }
             case "scan" -> { /* Read-only loaded terrain is included in the receipt below. */ }
+            case "probe" -> {
+                BlockPos pos = position(request);
+                if (!client.level.hasChunkAt(pos) || pos.distSqr(client.player.blockPosition()) > 1_024) {
+                    throw new IllegalArgumentException("Probe only loaded blocks within 32 blocks");
+                }
+                observation = block(client, pos);
+                var ray = client.level.clip(new ClipContext(client.player.getEyePosition(), Vec3.atCenterOf(pos),
+                        ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, client.player));
+                if (ray.getType() == HitResult.Type.BLOCK) observation.add("firstCollision", block(client, ray.getBlockPos()));
+            }
             case "use", "mine" -> {
                 playing(client);
                 target = position(request);
@@ -232,6 +270,7 @@ public final class PortSurvivalClientDriver {
         state.addProperty("player", player.getGameProfile().getName());
         state.addProperty("x", player.getX()); state.addProperty("y", player.getY()); state.addProperty("z", player.getZ());
         state.addProperty("health", player.getHealth()); state.addProperty("food", player.getFoodData().getFoodLevel());
+        state.addProperty("alive", player.isAlive()); state.addProperty("paused", client.isPaused());
         state.addProperty("selected", player.getInventory().selected);
         state.addProperty("mode", client.gameMode.getPlayerMode().getName());
         state.addProperty("dimension", client.level.dimension().location().toString());
@@ -259,12 +298,20 @@ public final class PortSurvivalClientDriver {
             if (!client.level.hasChunkAt(pos)) continue;
             String key = BuiltInRegistries.BLOCK.getKey(client.level.getBlockState(pos).getBlock()).toString();
             if (!key.contains(match)) continue;
-            JsonObject value = new JsonObject(); value.addProperty("block", key);
-            value.addProperty("x", pos.getX()); value.addProperty("y", pos.getY()); value.addProperty("z", pos.getZ());
+            JsonObject value = block(client, pos);
             value.addProperty("distance", pos.distSqr(center)); found.add(value);
         }
         found.sort(Comparator.comparingDouble(value -> value.get("distance").getAsDouble()));
         var result = new JsonArray(); found.stream().limit(120).forEach(result::add); return result;
+    }
+    private static JsonObject block(Minecraft client, BlockPos pos) {
+        var block = client.level.getBlockState(pos);
+        var result = new JsonObject();
+        result.addProperty("block", BuiltInRegistries.BLOCK.getKey(block.getBlock()).toString());
+        result.addProperty("x", pos.getX()); result.addProperty("y", pos.getY()); result.addProperty("z", pos.getZ());
+        result.addProperty("canHarvest", client.player.hasCorrectToolForDrops(block));
+        result.addProperty("hardness", block.getDestroySpeed(client.level, pos));
+        return result;
     }
     private static JsonObject item(ItemStack stack) {
         JsonObject result = new JsonObject(); result.addProperty("item", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());

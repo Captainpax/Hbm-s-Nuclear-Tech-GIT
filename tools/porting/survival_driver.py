@@ -18,8 +18,19 @@ SESSION = RUN / "hbm-survival-session.json"
 
 def write(path: Path, value: dict) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
-    temporary.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
-    temporary.replace(path)
+    contents = json.dumps(value, indent=2) + "\n"
+    deadline = time.monotonic() + 5
+    while True:
+        try:
+            temporary.write_text(contents, encoding="utf-8")
+            temporary.replace(path)
+            return
+        except PermissionError:
+            if time.monotonic() >= deadline:
+                raise
+            # A Windows reader/OneDrive can hold the destination briefly. Keep
+            # the exact request ID and contents; never issue a second action.
+            time.sleep(0.05)
 
 
 def session_id() -> str:
@@ -68,7 +79,7 @@ def result(identifier: int, timeout: float = 70) -> dict:
                 receipts.mkdir(exist_ok=True)
                 write(receipts / f"{identifier}.json", value)
                 return value
-        except (FileNotFoundError, json.JSONDecodeError):
+        except (FileNotFoundError, PermissionError, json.JSONDecodeError):
             pass
         time.sleep(0.15)
     raise TimeoutError(f"Poll the same request id {identifier}; do not issue it again")
@@ -86,7 +97,7 @@ def request(action: str, **fields) -> dict:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["prepare", "state", "poll", "inspect", "scan", "walk", "mine", "use", "select", "inventory", "close", "recipe", "click", "button", "exit"])
+    parser.add_argument("action", choices=["prepare", "state", "poll", "inspect", "scan", "probe", "walk", "mine", "use", "select", "inventory", "close", "pause", "recipe", "click", "button", "exit"])
     parser.add_argument("--fields", default="{}", help="JSON action fields")
     parser.add_argument("--id", type=int)
     arguments = parser.parse_args()
