@@ -46,7 +46,7 @@ public final class PortSurvivalClientDriver {
     private static BlockState mining;
     private static Vec3 destination;
     private static Vec3 walkProgress;
-    private static int walkedAt;
+    private static int walkedAt, walkArrivalAt;
     private static boolean firstState, bootstrapped;
     private static boolean enteredWorld, observedAlive;
     private static int observedPlayer = -1;
@@ -246,7 +246,7 @@ public final class PortSurvivalClientDriver {
                 playing(client);
                 destination = new Vec3(request.get("x").getAsDouble(), request.get("y").getAsDouble(), request.get("z").getAsDouble());
                 if (client.player.position().distanceToSqr(destination) > 1_024) throw new IllegalArgumentException("Walk at most 32 blocks per action");
-                walkProgress = client.player.position(); walkedAt = ticks;
+                walkProgress = client.player.position(); walkedAt = ticks; walkArrivalAt = 0;
                 running = "walk"; deadline = ticks + 1_200;
             }
             case "exit" -> {
@@ -304,13 +304,21 @@ public final class PortSurvivalClientDriver {
             client.options.keyAttack.setDown(true);
         } else {
             Vec3 here = client.player.position();
-            if (client.player.onGround() && Math.hypot(destination.x - here.x, destination.z - here.z) < 0.35) {
-                if (Math.abs(destination.y - here.y) >= 0.6) {
+            if (client.player.isInLava() || client.player.isUnderWater()) throw new IllegalStateException("Walk stopped in hazardous liquid");
+            if (Math.hypot(destination.x - here.x, destination.z - here.z) < 0.15) {
+                // Clear the previous step with the whole player bounding box,
+                // then let ordinary gravity settle before checking the floor.
+                client.options.keyUp.setDown(false); client.options.keyJump.setDown(false);
+                if (walkArrivalAt == 0) walkArrivalAt = ticks;
+                if (client.player.onGround() && Math.abs(destination.y - here.y) < 0.6) {
+                    finish(client); return;
+                }
+                if (client.player.onGround() && ticks - walkArrivalAt >= 10) {
                     throw new IllegalStateException("Destination feet height does not match the standing floor");
                 }
-                finish(client); return;
+                return;
             }
-            if (client.player.isInLava() || client.player.isUnderWater()) throw new IllegalStateException("Walk stopped in hazardous liquid");
+            walkArrivalAt = 0;
             if (Math.hypot(here.x - walkProgress.x, here.z - walkProgress.z) > 0.2) {
                 walkProgress = here; walkedAt = ticks;
             } else if (ticks - walkedAt >= 60) {

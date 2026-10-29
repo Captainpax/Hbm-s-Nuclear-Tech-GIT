@@ -12296,7 +12296,7 @@ java_source,inventory/fluid/trait/FT_VentRadiation,src/main/java/com/hbm/invento
 java_source,inventory/fluid/trait/FluidTrait,src/main/java/com/hbm/inventory/fluid/trait/FluidTrait.java,,unported,,
 java_source,inventory/fluid/trait/FluidTraitSimple,src/main/java/com/hbm/inventory/fluid/trait/FluidTraitSimple.java,,unported,,
 java_source,inventory/gui/GUIAmmoBag,src/main/java/com/hbm/inventory/gui/GUIAmmoBag.java,,unported,,
-java_source,inventory/gui/GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Original background with five first construction choices and material tooltips; live layout checked after overlap fix; full browser pending
+java_source,inventory/gui/GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Source grid selection/search/blueprint layout restored for five construction recipes; native Survival client checked output/ingredient search and missing-input craft rejection; full catalog and multiplayer pending
 java_source,inventory/gui/GUIArmorTable,src/main/java/com/hbm/inventory/gui/GUIArmorTable.java,,unported,,
 java_source,inventory/gui/GUIAshpit,src/main/java/com/hbm/inventory/gui/GUIAshpit.java,,unported,,
 java_source,inventory/gui/GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUIAutocrafter.java,,unported,,
@@ -18008,7 +18008,7 @@ renderer_source,TextureAtlasSpriteMutatable,src/main/java/com/hbm/render/icon/Te
 renderer_source,TomPronter,src/main/java/com/hbm/render/util/TomPronter.java,,unported,,
 renderer_source,Uniform,src/main/java/com/hbm/render/shader/Uniform.java,,unported,,
 screen_source,GUIAmmoBag,src/main/java/com/hbm/inventory/gui/GUIAmmoBag.java,,unported,,
-screen_source,GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Live steel-anvil layout and recipe tooltips checked after restart; full browser and multiplayer pending
+screen_source,GUIAnvil,src/main/java/com/hbm/inventory/gui/GUIAnvil.java,,partial,src/forge120/java/com/hbm/PortAnvilScreen.java,Source grid and blueprint live checked on naturally crafted iron anvil after restart; source bulk server request regression added; full catalog/Shift-click with inputs/audio/multiplayer pending
 screen_source,GUIArmorTable,src/main/java/com/hbm/inventory/gui/GUIArmorTable.java,,unported,,
 screen_source,GUIAshpit,src/main/java/com/hbm/inventory/gui/GUIAshpit.java,,unported,,
 screen_source,GUIAutocrafter,src/main/java/com/hbm/inventory/gui/GUIAutocrafter.java,,unported,,

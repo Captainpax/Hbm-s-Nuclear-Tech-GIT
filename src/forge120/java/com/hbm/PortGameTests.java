@@ -1020,6 +1020,41 @@ public final class PortGameTests {
     }
 
     @GameTest(template = "empty")
+    public static void anvilBulkConstructionStopsAtAvailableIngredients(GameTestHelper helper) {
+        ServerLevel level = helper.getLevel();
+        BlockPos pos = helper.absolutePos(new BlockPos(2, 2, 2));
+        level.setBlock(pos, PortBlocks.ANVIL_IRON.get().defaultBlockState(), 3);
+        var player = FakePlayerFactory.getMinecraft(level);
+        player.setPos(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+        player.getInventory().clearContent();
+        // Split stacks, a worn stamp and a tier-two request must not change the
+        // number of valid inputs consumed by the screen's Shift-craft packet.
+        player.getInventory().setItem(0, new ItemStack(PortItems.STAMP_IRON_FLAT.get(), 2));
+        player.getInventory().setItem(1, new ItemStack(PortItems.STAMP_IRON_FLAT.get(), 3));
+        ItemStack worn = new ItemStack(PortItems.STAMP_IRON_FLAT.get());
+        worn.setDamageValue(1);
+        player.getInventory().setItem(2, worn);
+        player.getInventory().setItem(3, new ItemStack(Items.FURNACE));
+        player.getInventory().setItem(4, new ItemStack(PortItems.PLATE_STEEL.get(), 8));
+        player.getInventory().setItem(5, new ItemStack(PortItems.INGOT_COPPER.get(), 8));
+        PortAnvilMenu menu = new PortAnvilMenu(89, player.getInventory(), pos, 1);
+        if (menu.clickMenuButton(player, 7) || !menu.clickMenuButton(player, 1)
+                || countInventory(player, PortItems.STAMP_IRON_PLATE.get()) != 5
+                || countInventory(player, PortItems.STAMP_IRON_FLAT.get()) != 1
+                || player.getInventory().getItem(2).getDamageValue() != 1
+                || countInventory(player, Items.FURNACE) != 1
+                || countInventory(player, PortItems.PLATE_STEEL.get()) != 8
+                || countInventory(player, PortItems.INGOT_COPPER.get()) != 8
+                || countInventory(player, PortItems.HEATER_FIREBOX.get()) != 0
+                || menu.clickMenuButton(player, 1)) {
+            throw new IllegalStateException("Bulk anvil construction exceeded its inputs or consumed a worn stamp");
+        }
+        menu.removed(player);
+        player.getInventory().clearContent();
+        helper.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void platesAndSteelBoltsKeepSourceQuantities(GameTestHelper helper) {
         ServerLevel level = helper.getLevel();
         if (!PortPressRecipes.output(new ItemStack(Items.IRON_INGOT),

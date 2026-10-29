@@ -169,7 +169,8 @@ def saved_block_entities(positions: list[tuple[int, int, int]]) -> dict:
     return result
 
 
-def audit(bootstrap: bool, first_iron: bool = False, iron_tools: bool = False, food_storage: bool = False) -> dict:
+def audit(bootstrap: bool, first_iron: bool = False, iron_tools: bool = False,
+          food_storage: bool = False, first_anvil: bool = False) -> dict:
     data = nbt(SAVE / "level.dat")["Data"]
     assert data["LevelName"] == "HBM Survival Progression" and data["GameType"] == 0
     assert data["allowCommands"] == 0 and data["Difficulty"] == 2
@@ -385,6 +386,72 @@ def audit(bootstrap: bool, first_iron: bool = False, iron_tools: bool = False, f
         report["saved_states"] = blocks
         report["saved_items"] = saved
         report["bed_spawn"] = [27,57,41]
+    if first_anvil:
+        containers = saved_block_entities([(23,57,40), (24,57,42)])
+        stored = [{"slot":item["Slot"], "item":item["id"], "count":item["Count"], "tag":item.get("tag", {})}
+                  for item in containers["23,57,40"]["Items"]]
+        furnace = containers["24,57,42"]
+        assert not furnace["Items"] and furnace["BurnTime"] == furnace["CookTime"] == 0
+        counts = Counter()
+        for item in inventory + stored:
+            counts[item["item"]] += item["count"]
+        expected = Counter({"minecraft:cobblestone":175, "minecraft:coal":7, "minecraft:stone_pickaxe":1,
+                            "minecraft:dirt":46, "minecraft:diorite":16, "minecraft:torch":5,
+                            "minecraft:iron_pickaxe":2, "minecraft:sand":8, "minecraft:stick":2,
+                            "minecraft:wooden_pickaxe":1, "minecraft:spruce_sapling":1,
+                            "minecraft:sandstone":3, "minecraft:spruce_planks":5, "minecraft:spruce_door":2,
+                            "minecraft:cooked_mutton":3, "minecraft:raw_copper":12,
+                            "hbm:stone_resource_limestone":15})
+        assert counts == expected, (counts,expected)
+        crafted, mined, used = (stats[f"minecraft:{key}"] for key in ("crafted","mined","used"))
+        assert mined["minecraft:iron_ore"] == crafted["minecraft:iron_ingot"] == 21
+        assert crafted["hbm:anvil_iron"] == crafted["minecraft:iron_block"] == 1
+        assert crafted["minecraft:iron_pickaxe"] == 2
+        assert 21 == 15 * crafted["hbm:anvil_iron"] + 3 * crafted["minecraft:iron_pickaxe"]
+        assert mined["hbm:stone_resource_limestone"] == counts["hbm:stone_resource_limestone"] == 15
+        assert used.get("hbm:stone_resource_limestone", 0) == 0
+        assert mined["minecraft:copper_ore"] == 4
+        assert counts["minecraft:raw_copper"] == stats["minecraft:picked_up"]["minecraft:raw_copper"] == 12
+        assert mined["minecraft:coal_ore"] == 13 == counts["minecraft:coal"] + 2 + 1 + 3
+        assert crafted["minecraft:torch"] == 12 == counts["minecraft:torch"] + 7
+        assert mined["minecraft:stone"] - 3 - 8 == counts["minecraft:cobblestone"] + 5 + 6 == 186
+        assert used["minecraft:cobblestone"] == 11 and used["minecraft:torch"] == 8
+        assert counts["minecraft:dirt"] == mined["minecraft:dirt"] + mined["minecraft:grass_block"] + 19
+        for key in ("sand", "sandstone", "diorite"):
+            assert counts[f"minecraft:{key}"] == mined[f"minecraft:{key}"], key
+        assert crafted["minecraft:spruce_planks"] == 40 and crafted["minecraft:stick"] == 12
+        assert 40 == 8 + 3 + 6 + 1 + 8 + 3 + 6 + counts["minecraft:spruce_planks"]
+        assert mined["minecraft:spruce_log"] == 40//4 + crafted["minecraft:charcoal"] == 12
+        assert counts["minecraft:stick"] + 2 + 2 + 4 + 1 + 3 == 12 + 2
+        tools = [(item["item"], item["tag"]["Damage"]) for item in inventory + stored if item["item"].endswith("_pickaxe")]
+        assert sorted(tools) == sorted([("minecraft:wooden_pickaxe",30), ("minecraft:stone_pickaxe",86),
+                                      ("minecraft:iron_pickaxe",0), ("minecraft:iron_pickaxe",209)])
+        assert used["minecraft:iron_pickaxe"] + 6 == 209
+        assert stats["minecraft:custom"]["minecraft:deaths"] == stats["minecraft:killed_by"]["minecraft:skeleton"] == 4
+        assert stats["minecraft:killed"]["minecraft:skeleton"] == 1 and stats["minecraft:killed"]["minecraft:sheep"] == 3
+        assert crafted["minecraft:cooked_mutton"] == counts["minecraft:cooked_mutton"] + used["minecraft:cooked_mutton"] == 4
+        assert player["Health"] == player["foodLevel"] == 20
+        assert [player[key] for key in ("SpawnX","SpawnY","SpawnZ")] == [27,57,41]
+        placed_cobble = [(29,63,36), (29,61,39), (28,60,39), (64,59,68), (21,44,32)]
+        torches = [(35,51,38), (26,51,56), (24,58,42), (20,50,55), (20,50,40), (22,44,32), (20,51,26)]
+        blocks = saved_states(placed_cobble + torches + [(26,57,42), (26,57,41), (27,57,41), (24,58,39), (24,59,39)])
+        assert blocks["26,57,42"] == {"Name":"hbm:anvil_iron", "Properties":{"facing":"west"}}
+        for pos in placed_cobble:
+            assert blocks[",".join(map(str,pos))]["Name"] == "minecraft:cobblestone"
+        for index,pos in enumerate(torches):
+            assert blocks[",".join(map(str,pos))]["Name"] == ("minecraft:wall_torch" if index < 3 else "minecraft:torch")
+        for pos in ("26,57,41", "27,57,41"):
+            assert blocks[pos]["Name"] == "minecraft:white_bed" and blocks[pos]["Properties"]["occupied"] == "false"
+        for pos in ("24,58,39", "24,59,39"):
+            assert blocks[pos]["Name"] == "minecraft:spruce_door" and blocks[pos]["Properties"]["open"] == "false"
+        saved = nearby_saved_items()
+        assert not saved["dropped_items"] and not saved["starter_furnaces"]
+        report["scope"] = "First source iron anvil crafted and placed from natural resources; complete Survival progression remains open"
+        report["first_anvil_material_ledger"] = "passed; iron, fuel, tools, limestone and remaining resources conserved"
+        report["chest_inventory"] = stored
+        report["saved_block_entities"] = containers
+        report["saved_states"] = blocks
+        report["saved_items"] = saved
     return report
 
 
@@ -395,12 +462,16 @@ if __name__ == "__main__":
     phase.add_argument("--first-iron", action="store_true")
     phase.add_argument("--iron-tools", action="store_true")
     phase.add_argument("--food-storage", action="store_true")
+    phase.add_argument("--first-anvil", action="store_true")
     parser.add_argument("--record", action="store_true", help="Preserve the first phase report in the ignored evidence directory")
     arguments = parser.parse_args()
-    report = audit(arguments.bootstrap, arguments.first_iron, arguments.iron_tools, arguments.food_storage)
+    report = audit(arguments.bootstrap, arguments.first_iron, arguments.iron_tools, arguments.food_storage, arguments.first_anvil)
     if arguments.record:
-        assert arguments.bootstrap or arguments.first_iron or arguments.iron_tools or arguments.food_storage, "Recording requires a phase ledger"
-        name = "bootstrap" if arguments.bootstrap else "first-iron" if arguments.first_iron else "iron-tools" if arguments.iron_tools else "food-storage"
+        phases = {"bootstrap":arguments.bootstrap, "first-iron":arguments.first_iron, "iron-tools":arguments.iron_tools,
+                  "food-storage":arguments.food_storage, "first-anvil":arguments.first_anvil}
+        selected = [name for name, active in phases.items() if active]
+        assert selected, "Recording requires a phase ledger"
+        name = selected[0]
         target = driver.RUN / f"evidence/{name}-audit.json"
         if target.exists():
             raise RuntimeError("Preserve the existing phase audit instead of overwriting it")

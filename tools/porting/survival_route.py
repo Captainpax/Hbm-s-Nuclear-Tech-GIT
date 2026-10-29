@@ -36,6 +36,27 @@ def probe(x: int, y: int, z: int) -> dict:
     return act("probe", x=x, y=y, z=z)["observation"]
 
 
+def craft(recipe: str, output: str, count: int = 1) -> dict:
+    """Make one unlocked recipe-book batch in the currently open crafting menu."""
+    def amount(state):
+        return sum(item["count"] for item in state["inventory"] if item["item"] == output)
+
+    before = act("inspect")
+    if before["carried"]["count"]:
+        act("pause")
+        raise RuntimeError("Clear the cursor before crafting")
+    placed = act("recipe", recipe=recipe)
+    result = placed["slots"][0]
+    if result["item"] != output or result["count"] != count:
+        act("pause")
+        raise RuntimeError(f"Recipe did not produce the expected batch: {result}")
+    after = act("click", slot=0, mode="QUICK_MOVE")
+    if after["carried"]["count"] or amount(after) != amount(before) + count:
+        act("pause")
+        raise RuntimeError("Crafted output was not collected exactly once")
+    return after
+
+
 def block_pos(block: dict) -> tuple[int, int, int]:
     return tuple(block[key] for key in ("x", "y", "z"))
 
@@ -71,7 +92,9 @@ def step(x: int, y: int, z: int, *, tall: bool = True) -> dict:
 
 def tunnel_to(x: int, y: int, z: int, record: str) -> None:
     target = (x,y,z)
-    state = driver.state()
+    # The periodic heartbeat can describe an earlier point in a completed walk.
+    # An explicit receipt observes the settled position before choosing steps.
+    state = act("inspect")
     current = tuple(math.floor(state[key]) for key in ("x","y","z"))
     if abs(x-current[0])+abs(z-current[2]) < abs(y-current[1]):
         raise ValueError("Give the staircase enough horizontal distance for its height change")
