@@ -1,18 +1,20 @@
-"""Normal client actions in the isolated, cheats-disabled Survival walkthrough.
+"""Normal client actions in the isolated Survival walkthrough.
 
-This helper cannot write world/player data, issue commands, or grant inventory.
+The default profile cannot issue commands or grant inventory. Set
+HBM_SURVIVAL_ASSISTED=1 only for the separate command-assisted checkpoint world.
 Receipts keep the pre-action state and normal client results in the ignored run directory.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import secrets
 import time
 
 ROOT = Path(__file__).resolve().parents[2]
-RUN = ROOT / "run-survival-client"
+RUN = ROOT / ("run-checkpoint-client" if os.environ.get("HBM_SURVIVAL_ASSISTED") == "1" else "run-survival-client")
 SESSION = RUN / "hbm-survival-session.json"
 
 
@@ -97,7 +99,7 @@ def request(action: str, **fields) -> dict:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["prepare", "state", "poll", "inspect", "scan", "probe", "entities", "attack", "eat", "walk", "mine", "use", "select", "inventory", "close", "pause", "recipe", "click", "button", "exit"])
+    parser.add_argument("action", choices=["prepare", "state", "poll", "inspect", "look", "command", "scan", "terrain", "probe", "entities", "attack", "eat", "walk", "mine", "use", "select", "inventory", "close", "pause", "recipe", "click", "button", "exit"])
     parser.add_argument("--fields", default="{}", help="JSON action fields")
     parser.add_argument("--id", type=int)
     arguments = parser.parse_args()

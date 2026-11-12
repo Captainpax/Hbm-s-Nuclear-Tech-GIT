@@ -83,7 +83,7 @@ def clear(x: int, y: int, z: int, depth: int = 0) -> None:
 
 def step(x: int, y: int, z: int, *, tall: bool = True) -> dict:
     floor = probe(x, y-1, z)
-    if floor["block"] in AIR | LIQUIDS or floor["hardness"] <= 0:
+    if floor["block"] in AIR | LIQUIDS or floor["hardness"] <= 0 or any(hazard in floor["block"] for hazard in HAZARDS):
         raise RuntimeError(f"Unsupported route floor: {floor}")
     for height in ((2,1,0) if tall else (1,0)):
         clear(x, y+height, z)
@@ -123,4 +123,5 @@ def tunnel_to(x: int, y: int, z: int, record: str) -> None:
             raise RuntimeError("Route exceeded its bounded step count")
     except Exception as error:
         driver.write(evidence, {"target":target,"completed":points,"complete":False,"failure":str(error)})
+        act("pause")
         raise

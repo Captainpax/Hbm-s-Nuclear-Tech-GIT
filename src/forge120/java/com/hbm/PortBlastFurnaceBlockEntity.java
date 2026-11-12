@@ -5,6 +5,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -120,6 +122,10 @@ public final class PortBlastFurnaceBlockEntity extends BlockEntity implements Me
                 }
                 progress = 0;
                 progressRemainder = 0;
+            }
+            if (level.random.nextInt(10) == 0) {
+                level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                        SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 0.25F);
             }
         } else {
             progress = 0;

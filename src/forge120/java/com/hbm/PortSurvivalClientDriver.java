@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -37,7 +38,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = HbmPort.MOD_ID, value = Dist.CLIENT)
 public final class PortSurvivalClientDriver {
     private static final String SESSION = System.getProperty("hbm.port.survivalDriver", "");
-    private static final String WORLD = "HBM Survival Progression";
+    private static final boolean ASSISTED = Boolean.getBoolean("hbm.port.survivalAssisted");
+    private static final String WORLD = ASSISTED ? "HBM Survival Checkpoint QA" : "HBM Survival Progression";
     private static long lastId = -1;
     private static int ticks, finishAt, deadline;
     private static JsonObject pending, before, completed, observation;
@@ -52,14 +54,40 @@ public final class PortSurvivalClientDriver {
     private static int observedPlayer = -1;
     private static int eatingCount, eatingStarted;
     private static float observedHealth;
+    private static final java.util.List<HeardSound> heardSounds = new java.util.ArrayList<>();
+
+    private static final class HeardSound {
+        final net.minecraft.client.resources.sounds.SoundInstance sound;
+        final long tick;
+        boolean activeEver;
+        HeardSound(net.minecraft.client.resources.sounds.SoundInstance sound, long tick) {
+            this.sound = sound; this.tick = tick;
+        }
+    }
 
     private PortSurvivalClientDriver() {}
+
+    @SubscribeEvent
+    public static void observeSound(net.minecraftforge.client.event.sound.PlaySoundEvent event) {
+        var client = Minecraft.getInstance();
+        var sound = event.getSound();
+        if (SESSION.isBlank() || sound == null || client.player == null || client.level == null
+                || !authorized(client) || !(HbmPort.MOD_ID.equals(sound.getLocation().getNamespace())
+                || sound.getLocation().equals(net.minecraft.sounds.SoundEvents.FIRE_AMBIENT.getLocation()))) return;
+        synchronized (heardSounds) {
+            if (heardSounds.size() == 32) heardSounds.remove(0);
+            heardSounds.add(new HeardSound(sound, client.level.getGameTime()));
+        }
+    }
 
     @SubscribeEvent
     public static void tick(TickEvent.ClientTickEvent event) {
         if (SESSION.isBlank() || event.phase != TickEvent.Phase.END) return;
         var client = Minecraft.getInstance();
         ticks++;
+        synchronized (heardSounds) {
+            for (var sound : heardSounds) sound.activeEver |= client.getSoundManager().isActive(sound.sound);
+        }
         try {
             // A command left by a previous client process is never replayed.
             if (!bootstrapped) {
@@ -132,16 +160,16 @@ public final class PortSurvivalClientDriver {
 
     private static void guard(Minecraft client) {
         if (!authorized(client)) {
-            throw new IllegalStateException("Requires the named isolated single-player Survival world with cheats and flight disabled");
+            throw new IllegalStateException("Requires the named isolated single-player Survival profile; flight is disabled and commands require the separate assisted QA world");
         }
     }
 
     private static boolean authorized(Minecraft client) {
         var server = client.getSingleplayerServer();
         return server != null && WORLD.equals(server.getWorldData().getLevelName()) && server.overworld().getSeed() == 20_301_017L
-                && !server.getWorldData().getAllowCommands()
+                && (ASSISTED || !server.getWorldData().getAllowCommands())
                 && client.gameMode != null && client.gameMode.getPlayerMode() == GameType.SURVIVAL
-                && client.player.getGameProfile().getName().equals("HbmSurvival")
+                && client.player.getGameProfile().getName().equals(ASSISTED ? "HbmCheckpoint" : "HbmSurvival")
                 && !client.player.getAbilities().instabuild && !client.player.getAbilities().mayfly
                 && !client.player.getAbilities().flying && !client.player.getAbilities().invulnerable;
     }
@@ -161,6 +189,25 @@ public final class PortSurvivalClientDriver {
         }
         switch (action) {
             case "inspect" -> { }
+            case "look" -> {
+                playing(client);
+                Vec3 point = new Vec3(request.get("x").getAsDouble(), request.get("y").getAsDouble(), request.get("z").getAsDouble());
+                if (!Double.isFinite(point.x) || !Double.isFinite(point.y) || !Double.isFinite(point.z)
+                        || client.player.getEyePosition().distanceToSqr(point) > 1_024) {
+                    throw new IllegalArgumentException("Look within 32 blocks of the player");
+                }
+                look(client, point);
+            }
+            case "command" -> {
+                playing(client);
+                String command = request.get("command").getAsString();
+                if (!ASSISTED || !java.util.Set.of("reload", "function hbm_checkpoint:progression_setup",
+                        "function hbm_checkpoint:advance_blast").contains(command)) {
+                    throw new IllegalArgumentException("Only the separately authorized assisted-world setup function is supported");
+                }
+                client.player.connection.sendCommand(command);
+                finishAt = ticks + 20;
+            }
             case "inventory" -> client.setScreen(new InventoryScreen(client.player));
             case "close" -> { client.player.closeContainer(); client.setScreen(null); }
             case "pause" -> { client.player.closeContainer(); client.setScreen(new PauseScreen(true)); }
@@ -195,6 +242,9 @@ public final class PortSurvivalClientDriver {
                 client.gameMode.handleInventoryButtonClick(menu.containerId, button);
             }
             case "scan" -> { /* Read-only loaded terrain is included in the receipt below. */ }
+            case "terrain" -> {
+                observation = new JsonObject(); observation.add("columns", terrain(client, request));
+            }
             case "entities" -> {
                 observation = new JsonObject(); observation.add("entities", entities(client));
             }
@@ -218,6 +268,9 @@ public final class PortSurvivalClientDriver {
                 playing(client);
                 var held = client.player.getMainHandItem();
                 if (!held.isEdible() || !client.player.canEat(false)) throw new IllegalArgumentException("Hold edible food while hungry");
+                // Hold-use must face clear air, otherwise a chest under the
+                // crosshair can open immediately after the last food tick.
+                look(client, client.player.getEyePosition().add(0, 3, 0));
                 eatingCount = held.getCount(); eatingStarted = ticks;
                 client.gameMode.useItem(client.player, InteractionHand.MAIN_HAND);
                 client.options.keyUse.setDown(true);
@@ -247,6 +300,7 @@ public final class PortSurvivalClientDriver {
                 destination = new Vec3(request.get("x").getAsDouble(), request.get("y").getAsDouble(), request.get("z").getAsDouble());
                 if (client.player.position().distanceToSqr(destination) > 1_024) throw new IllegalArgumentException("Walk at most 32 blocks per action");
                 walkProgress = client.player.position(); walkedAt = ticks; walkArrivalAt = 0;
+                client.options.keyShift.setDown(request.has("sneak") && request.get("sneak").getAsBoolean());
                 running = "walk"; deadline = ticks + 1_200;
             }
             case "exit" -> {
@@ -296,7 +350,9 @@ public final class PortSurvivalClientDriver {
             if (ticks > eatingStarted + 8 && !client.player.isUsingItem()) throw new IllegalStateException("Food use was interrupted");
             client.options.keyUse.setDown(true);
         } else if (running.equals("mine")) {
-            if (!client.level.getBlockState(target).equals(mining)) { finish(client); return; }
+            // Redstone lighting and active-machine state changes do not mean
+            // the held attack actually broke the target block.
+            if (!client.level.getBlockState(target).is(mining.getBlock())) { finish(client); return; }
             look(client, aim(client, target, pending));
             hit(client, target);
             // Minecraft's ordinary held-attack handler advances damage once per
@@ -304,7 +360,11 @@ public final class PortSurvivalClientDriver {
             client.options.keyAttack.setDown(true);
         } else {
             Vec3 here = client.player.position();
-            if (client.player.isInLava() || client.player.isUnderWater()) throw new IllegalStateException("Walk stopped in hazardous liquid");
+            if (client.player.isInLava()) throw new IllegalStateException("Walk stopped in lava");
+            if (client.player.isUnderWater() && (!pending.has("swim") || !pending.get("swim").getAsBoolean()
+                    || client.player.getAirSupply() <= 100 && destination.y <= here.y + 0.6)) {
+                throw new IllegalStateException("Underwater movement requires explicit swim input; low-air travel must rise toward the surface");
+            }
             if (Math.hypot(destination.x - here.x, destination.z - here.z) < 0.15) {
                 // Clear the previous step with the whole player bounding box,
                 // then let ordinary gravity settle before checking the floor.
@@ -387,17 +447,31 @@ public final class PortSurvivalClientDriver {
     private static JsonObject state(Minecraft client) {
         JsonObject state = new JsonObject();
         state.addProperty("session", SESSION); state.addProperty("timestamp", System.currentTimeMillis());
+        state.addProperty("assisted", ASSISTED);
         state.addProperty("connected", client.player != null && client.level != null);
         if (client.player == null || client.level == null) return state;
         var player = client.player;
         state.addProperty("gameTime", client.level.getGameTime()); state.addProperty("dayTime", client.level.getDayTime());
         state.addProperty("player", player.getGameProfile().getName());
+        var sounds = new JsonArray();
+        synchronized (heardSounds) {
+            for (var sound : heardSounds) {
+                var value = new JsonObject();
+                value.addProperty("id", sound.sound.getLocation().toString());
+                value.addProperty("tick", sound.tick); value.addProperty("activeEver", sound.activeEver);
+                value.addProperty("volume", sound.sound.getVolume()); value.addProperty("pitch", sound.sound.getPitch());
+                value.addProperty("x", sound.sound.getX()); value.addProperty("y", sound.sound.getY()); value.addProperty("z", sound.sound.getZ());
+                sounds.add(value);
+            }
+        }
+        state.add("sounds", sounds);
         state.addProperty("x", player.getX()); state.addProperty("y", player.getY()); state.addProperty("z", player.getZ());
         state.addProperty("health", player.getHealth()); state.addProperty("food", player.getFoodData().getFoodLevel());
         state.addProperty("alive", player.isAlive()); state.addProperty("paused", client.isPaused());
         state.addProperty("screen", client.screen == null ? "none" : client.screen.getClass().getSimpleName());
         state.addProperty("attackStrength", player.getAttackStrengthScale(0.5F));
         state.addProperty("onGround", player.onGround()); state.addProperty("horizontalCollision", player.horizontalCollision);
+        state.addProperty("air", player.getAirSupply()); state.addProperty("underwater", player.isUnderWater());
         state.addProperty("sneaking", player.isShiftKeyDown());
         state.addProperty("selected", player.getInventory().selected);
         state.addProperty("mode", client.gameMode.getPlayerMode().getName());
@@ -431,6 +505,32 @@ public final class PortSurvivalClientDriver {
         }
         found.sort(Comparator.comparingDouble(value -> value.get("distance").getAsDouble()));
         var result = new JsonArray(); found.stream().limit(120).forEach(result::add); return result;
+    }
+    /** Read loaded surface columns for ordinary walking; never generate or edit terrain. */
+    private static JsonArray terrain(Minecraft client, JsonObject request) {
+        int radius = request.has("radius") ? Math.max(1, Math.min(12, request.get("radius").getAsInt())) : 8;
+        var center = client.player.blockPosition();
+        var result = new JsonArray();
+        for (int x = center.getX() - radius; x <= center.getX() + radius; x++) {
+            for (int z = center.getZ() - radius; z <= center.getZ() + radius; z++) {
+                if (!client.level.hasChunkAt(new BlockPos(x, center.getY(), z))) continue;
+                int top = client.level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+                for (int y = top; y >= Math.max(client.level.getMinBuildHeight(), top - 4); y--) {
+                    var pos = new BlockPos(x, y, z);
+                    var state = client.level.getBlockState(pos);
+                    var shape = state.getCollisionShape(client.level, pos);
+                    if (shape.isEmpty() && state.getFluidState().isEmpty()) continue;
+                    double feet = y + (shape.isEmpty() ? 1 : shape.max(Direction.Axis.Y));
+                    var value = block(client, pos);
+                    value.addProperty("feet", feet);
+                    value.addProperty("fluid", !state.getFluidState().isEmpty());
+                    value.addProperty("clear", client.level.noCollision(client.player,
+                            new net.minecraft.world.phys.AABB(x + 0.2, feet + 0.0001, z + 0.2, x + 0.8, feet + 1.8, z + 0.8)));
+                    result.add(value); break;
+                }
+            }
+        }
+        return result;
     }
     private static JsonObject block(Minecraft client, BlockPos pos) {
         var block = client.level.getBlockState(pos);

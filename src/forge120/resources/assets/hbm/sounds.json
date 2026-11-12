@@ -1,4 +1,5 @@
 {
+  "block.press_operate": {"sounds": [{"name": "hbm:block/press_operate", "stream": false}]},
   "item.tech_boop": {"category": "player", "sounds": [{"name": "hbm:tool/tech_boop", "stream": false}]},
   "item.geiger1": {"category": "player", "sounds": [{"name": "hbm:tool/geiger1", "stream": false}]},
   "item.geiger2": {"category": "player", "sounds": [{"name": "hbm:tool/geiger2", "stream": false}]},

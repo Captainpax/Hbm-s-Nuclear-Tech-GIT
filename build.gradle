@@ -68,13 +68,20 @@ minecraft {
         }
         survivalClient {
             parent runs.client
-            workingDirectory project.file('run-survival-client')
-            args '--username', 'HbmSurvival'
-            if (project.hasProperty('hbmSurvivalDriver')) {
+            def assisted = project.hasProperty('hbmCheckpointDriver')
+            if (assisted && project.hasProperty('hbmSurvivalDriver')) {
+                throw new GradleException('Choose either the unassisted or assisted Survival QA profile')
+            }
+            workingDirectory project.file(assisted ? 'run-checkpoint-client' : 'run-survival-client')
+            args '--username', assisted ? 'HbmCheckpoint' : 'HbmSurvival'
+            if (assisted) {
+                property 'hbm.port.survivalAssisted', 'true'
+                property 'hbm.port.survivalDriver', project.property('hbmCheckpointDriver').toString()
+            } else if (project.hasProperty('hbmSurvivalDriver')) {
                 property 'hbm.port.survivalDriver', project.property('hbmSurvivalDriver').toString()
             }
-            if (project.hasProperty('hbmSurvivalResume')) {
-                args '--quickPlaySingleplayer', 'HBM Survival Progression'
+            if (assisted ? project.hasProperty('hbmCheckpointResume') : project.hasProperty('hbmSurvivalResume')) {
+                args '--quickPlaySingleplayer', assisted ? 'HBM Survival Checkpoint QA' : 'HBM Survival Progression'
             }
         }
         gameTestServer {

@@ -14,7 +14,9 @@ public final class PortPressScreen extends AbstractContainerScreen<PortPressMenu
     public PortPressScreen(PortPressMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         imageWidth = 176;
-        imageHeight = 202;
+        // This frozen texture places the player inventory twelve pixels below
+        // the legacy container coordinates, including its full bottom border.
+        imageHeight = 214;
     }
 
     @Override protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {

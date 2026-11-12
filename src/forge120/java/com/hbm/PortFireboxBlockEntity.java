@@ -6,6 +6,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -107,6 +109,10 @@ public final class PortFireboxBlockEntity extends BlockEntity implements MenuPro
                         PortSootPollution.get(server).add(worldPosition, overflow / 100F);
                     }
                 }
+            }
+            if (wasBurning && level.random.nextInt(15) == 0) {
+                level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                        SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 1.0F, 0.5F + level.random.nextFloat() * 0.5F);
             }
             heatEnergy = Math.min(100_000, heatEnergy + burnHeat);
         } else {

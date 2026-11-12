@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -116,6 +117,8 @@ public final class PortPressBlockEntity extends BlockEntity implements MenuProvi
             } else if (canProcess) {
                 press += stampSpeed;
                 if (press >= MAX_PRESS) {
+                    level.playSound(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(),
+                            PortSounds.PRESS_OPERATE.get(), SoundSource.BLOCKS, 1.5F, 1.0F);
                     ItemStack output = PortPressRecipes.output(items.getStackInSlot(2), items.getStackInSlot(1));
                     ItemStack current = items.getStackInSlot(3);
                     if (current.isEmpty()) items.setStackInSlot(3, output.copy());

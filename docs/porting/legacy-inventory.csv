@@ -805,7 +805,7 @@ asset,sounds/block/openC1.ogg,src/main/resources/assets/hbm/sounds/block/openC1.
 asset,sounds/block/openC2.ogg,src/main/resources/assets/hbm/sounds/block/openC2.ogg,,unported,,
 asset,sounds/block/openCSqueaky.ogg,src/main/resources/assets/hbm/sounds/block/openCSqueaky.ogg,,unported,,
 asset,sounds/block/pipePlaced.ogg,src/main/resources/assets/hbm/sounds/block/pipePlaced.ogg,,unported,,
-asset,sounds/block/pressOperate.ogg,src/main/resources/assets/hbm/sounds/block/pressOperate.ogg,,unported,,
+asset,sounds/block/pressOperate.ogg,src/main/resources/assets/hbm/sounds/block/pressOperate.ogg,,verified,src/forge120/resources/assets/hbm/sounds/block/press_operate.ogg,SHA-256 matches frozen source; modern lowercase event; one successful-stamp sound at source position volume and pitch tested; resource smoke and live SoundEngine playback passed
 asset,sounds/block/pyroOperate.ogg,src/main/resources/assets/hbm/sounds/block/pyroOperate.ogg,,unported,,
 asset,sounds/block/rbmk_az5_cover.ogg,src/main/resources/assets/hbm/sounds/block/rbmk_az5_cover.ogg,,unported,,
 asset,sounds/block/rbmk_explosion.ogg,src/main/resources/assets/hbm/sounds/block/rbmk_explosion.ogg,,unported,,
@@ -7671,8 +7671,8 @@ block,machine_difurnace_rtg_off,src/main/java/com/hbm/blocks/ModBlocks.java,3033
 block,machine_difurnace_rtg_on,src/main/java/com/hbm/blocks/ModBlocks.java,3034,unported,,
 block,machine_dineutronium_battery,src/main/java/com/hbm/blocks/ModBlocks.java,3206,unported,,
 block,machine_drain,src/main/java/com/hbm/blocks/ModBlocks.java,3147,unported,,
-block,machine_electric_furnace_off,src/main/java/com/hbm/blocks/ModBlocks.java,3217,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified off-on block state and base-rate processing ported; upgrades pollution source recipe and live client checks pending
-block,machine_electric_furnace_on,src/main/java/com/hbm/blocks/ModBlocks.java,3218,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified lit state ported; live client checks pending
+block,machine_electric_furnace_off,src/main/java/com/hbm/blocks/ModBlocks.java,3217,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified off-on block state; source crafting and five-battery 5000 HE Survival smelt completed after active client restart with supplied raw inputs; dedicated persistence and soot tested; upgrades and broader recipes pending
+block,machine_electric_furnace_on,src/main/java/com/hbm/blocks/ModBlocks.java,3218,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlock.java,Unified lit state; live crafted furnace menu smelt output and active-state restart checked in assisted Survival; wider lighting and upgrade visuals pending
 block,machine_electrolyser,src/main/java/com/hbm/blocks/ModBlocks.java,3251,unported,,
 block,machine_epress,src/main/java/com/hbm/blocks/ModBlocks.java,2998,unported,,
 block,machine_excavator,src/main/java/com/hbm/blocks/ModBlocks.java,3272,unported,,
@@ -9203,7 +9203,7 @@ item,bathwater,src/main/java/com/hbm/items/ModItems.java,6148,unported,,
 item,bathwater_mk2,src/main/java/com/hbm/items/ModItems.java,6149,unported,,
 item,battery_creative,src/main/java/com/hbm/items/ModItems.java,5169,unported,,
 item,battery_pack,src/main/java/com/hbm/items/ModItems.java,5167,partial,src/forge120/java/com/hbm/PortItems.java,All twelve metadata variants registered with source HE values and empty/full Creative stacks; charged quantum pack restart and all twelve synced OBJ layer bake checks pass; recipes and visual comparison pending
-item,battery_potato,src/main/java/com/hbm/items/ModItems.java,5172,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Source charged potato and fine-wire recipe; five crafted batteries power one 5000 HE furnace smelt in GameTest; live Survival check pending
+item,battery_potato,src/main/java/com/hbm/items/ModItems.java,5172,partial,src/forge120/java/com/hbm/PortBatteryItem.java,Source charged potato and fine-wire recipe; five crafted batteries supplied exactly 5000 HE for a live assisted Survival furnace smelt across restart; depleted items retained; broader source item behavior comparison pending
 item,battery_potatos,src/main/java/com/hbm/items/ModItems.java,5173,unported,,
 item,battery_sc,src/main/java/com/hbm/items/ModItems.java,5168,unported,,
 item,battery_spark,src/main/java/com/hbm/items/ModItems.java,5164,unported,,
@@ -10028,7 +10028,7 @@ item,missile_taint,src/main/java/com/hbm/items/ModItems.java,5570,unported,,
 item,missile_test,src/main/java/com/hbm/items/ModItems.java,5569,unported,,
 item,missile_volcano,src/main/java/com/hbm/items/ModItems.java,5598,unported,,
 item,mold,src/main/java/com/hbm/items/ModItems.java,5222,partial,src/forge120/java/com/hbm/PortAnvilMenu.java,Named cast-plate mold smithing preserves the iron template and consumes one mold base; other mold variants pending
-item,mold_base,src/main/java/com/hbm/items/ModItems.java,5221,partial,src/forge120/resources/data/hbm/recipes/mold_base.json,Source four-firebrick and iron-ingot recipe; live crafting check pending
+item,mold_base,src/main/java/com/hbm/items/ModItems.java,5221,partial,src/forge120/resources/data/hbm/recipes/mold_base.json,Source four-firebrick and iron-ingot recipe crafted normally in assisted Survival; consumed once during mold smithing with reusable iron template retained; other downstream mold recipes pending
 item,morning_glory,src/main/java/com/hbm/items/ModItems.java,6144,unported,,
 item,motor,src/main/java/com/hbm/items/ModItems.java,4948,unported,,
 item,motor_bismuth,src/main/java/com/hbm/items/ModItems.java,4950,unported,,
@@ -12391,7 +12391,7 @@ java_source,inventory/gui/GUIMachineOilWell,src/main/java/com/hbm/inventory/gui/
 java_source,inventory/gui/GUIMachinePUREX,src/main/java/com/hbm/inventory/gui/GUIMachinePUREX.java,,unported,,
 java_source,inventory/gui/GUIMachinePlasmaForge,src/main/java/com/hbm/inventory/gui/GUIMachinePlasmaForge.java,,unported,,
 java_source,inventory/gui/GUIMachinePrecAss,src/main/java/com/hbm/inventory/gui/GUIMachinePrecAss.java,,unported,,
-java_source,inventory/gui/GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressScreen.java,Original layout burn and ram indicators plus source dial; active GUI and restart checked in Creative QA; multiplayer pending
+java_source,inventory/gui/GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressScreen.java,Source texture burn and ram indicators and dial; corrected twelve-pixel inventory offset and 214-pixel height; live assisted Survival stamping and native slot clicks pass at small and maximized viewports after restart; multiplayer GUI comparison pending
 java_source,inventory/gui/GUIMachineRTG,src/main/java/com/hbm/inventory/gui/GUIMachineRTG.java,,unported,,
 java_source,inventory/gui/GUIMachineRadGen,src/main/java/com/hbm/inventory/gui/GUIMachineRadGen.java,,unported,,
 java_source,inventory/gui/GUIMachineRadarNT,src/main/java/com/hbm/inventory/gui/GUIMachineRadarNT.java,,unported,,
@@ -13873,7 +13873,7 @@ java_source,tileentity/machine/TileEntityDummy,src/main/java/com/hbm/tileentity/
 java_source,tileentity/machine/TileEntityElectrolyser,src/main/java/com/hbm/tileentity/machine/TileEntityElectrolyser.java,,unported,,
 java_source,tileentity/machine/TileEntityFEL,src/main/java/com/hbm/tileentity/machine/TileEntityFEL.java,,unported,,
 java_source,tileentity/machine/TileEntityFF,src/main/java/com/hbm/tileentity/machine/TileEntityFF.java,,unported,,
-java_source,tileentity/machine/TileEntityFireboxBase,src/main/java/com/hbm/tileentity/machine/TileEntityFireboxBase.java,,partial,src/forge120/java/com/hbm/PortFireboxBlockEntity.java,Source first ignition tick preserves full burn time; heat-demand-only fuel consumption and 12 mB per second smoke generation plus 50 mB storage tested; ashpit door animation other fuels sound and source particles pending
+java_source,tileentity/machine/TileEntityFireboxBase,src/main/java/com/hbm/tileentity/machine/TileEntityFireboxBase.java,,partial,src/forge120/java/com/hbm/PortFireboxBlockEntity.java,Source first ignition tick preserves full burn time; heat-demand-only fuel consumption and 12 mB per second smoke generation plus 50 mB storage tested; ashpit door animation other fuels and source particles pending; source server-side 1-in-15 active-tick fire crackle volume and pitch restored and tested
 java_source,tileentity/machine/TileEntityForceField,src/main/java/com/hbm/tileentity/machine/TileEntityForceField.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryBase,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryBase.java,,unported,,
 java_source,tileentity/machine/TileEntityFoundryBasin,src/main/java/com/hbm/tileentity/machine/TileEntityFoundryBasin.java,,unported,,
@@ -13924,7 +13924,7 @@ java_source,tileentity/machine/TileEntityMachineDetector,src/main/java/com/hbm/t
 java_source,tileentity/machine/TileEntityMachineDiesel,src/main/java/com/hbm/tileentity/machine/TileEntityMachineDiesel.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineDrain,src/main/java/com/hbm/tileentity/machine/TileEntityMachineDrain.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineEPress,src/main/java/com/hbm/tileentity/machine/TileEntityMachineEPress.java,,unported,,
-java_source,tileentity/machine/TileEntityMachineElectricFurnace,src/main/java/com/hbm/tileentity/machine/TileEntityMachineElectricFurnace.java,,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlockEntity.java,Base HE input smelting GUI inventory and NBT ported; upgrades pollution and source craft progression pending
+java_source,tileentity/machine/TileEntityMachineElectricFurnace,src/main/java/com/hbm/tileentity/machine/TileEntityMachineElectricFurnace.java,,partial,src/forge120/java/com/hbm/PortElectricFurnaceBlockEntity.java,Base HE input smelting GUI inventory NBT soot and source recipe tested; five normally crafted potato batteries completed a conserved smelt after client restart; upgrades and broader behavior pending
 java_source,tileentity/machine/TileEntityMachineExcavator,src/main/java/com/hbm/tileentity/machine/TileEntityMachineExcavator.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineExposureChamber,src/main/java/com/hbm/tileentity/machine/TileEntityMachineExposureChamber.java,,unported,,
 java_source,tileentity/machine/TileEntityMachineFunnel,src/main/java/com/hbm/tileentity/machine/TileEntityMachineFunnel.java,,unported,,
@@ -13942,7 +13942,7 @@ java_source,tileentity/machine/TileEntityMachineMixer,src/main/java/com/hbm/tile
 java_source,tileentity/machine/TileEntityMachineOreSlopper,src/main/java/com/hbm/tileentity/machine/TileEntityMachineOreSlopper.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePUREX,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePUREX.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePrecAss,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePrecAss.java,,unported,,
-java_source,tileentity/machine/TileEntityMachinePress,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics and source two-tick client smoothing ported; preheater and complete recipe table pending
+java_source,tileentity/machine/TileEntityMachinePress,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressBlockEntity.java,Fuel-speed-ram-retract-stamp mechanics and source two-tick client smoothing ported; preheater and complete recipe table pending; source successful-stamp sound and live assisted Survival plate/wire crafting conserve four coal over 32 stamps with wear 27 and 5
 java_source,tileentity/machine/TileEntityMachinePumpBase,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePumpBase.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePumpElectric,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePumpElectric.java,,unported,,
 java_source,tileentity/machine/TileEntityMachinePumpSteam,src/main/java/com/hbm/tileentity/machine/TileEntityMachinePumpSteam.java,,unported,,
@@ -15749,7 +15749,7 @@ recipe_site,CraftingManager:521,src/main/java/com/hbm/main/CraftingManager.java,
 recipe_site,CraftingManager:522,src/main/java/com/hbm/main/CraftingManager.java,522,unported,,"addRecipeAuto(new ItemStack(ModItems.hev_battery, 4), new Object[] { "" W "", ""ICI"", ""IEI"", 'W', GOLD.wireFine(), 'I', ModItems.plate_polymer, 'E', REDSTONE.dust(), 'C', CO.dust() });"
 recipe_site,CraftingManager:523,src/main/java/com/hbm/main/CraftingManager.java,523,unported,,"addShapelessAuto(new ItemStack(ModItems.hev_battery, 1), new Object[] { ModBlocks.hev_battery });"
 recipe_site,CraftingManager:524,src/main/java/com/hbm/main/CraftingManager.java,524,unported,,"addShapelessAuto(new ItemStack(ModBlocks.hev_battery, 1), new Object[] { ModItems.hev_battery });"
-recipe_site,CraftingManager:526,src/main/java/com/hbm/main/CraftingManager.java,526,partial,src/forge120/resources/data/hbm/recipes/battery_potato.json,Source tagged aluminum and copper fine wires with potato make a charged battery; alternate-tag fixture and five-battery furnace operation checked; live raw-resource crafting pending
+recipe_site,CraftingManager:526,src/main/java/com/hbm/main/CraftingManager.java,526,verified,src/forge120/resources/data/hbm/recipes/battery_potato.json,Source tagged aluminum and copper fine wires plus potato craft a charged battery; alternate tags and five-battery furnace operation tested; live assisted Survival crafting discharge and active smelt restart conserve all 5000 HE
 recipe_site,CraftingManager:527,src/main/java/com/hbm/main/CraftingManager.java,527,unported,,"addShapelessAuto(ItemBattery.getFullBattery(ModItems.battery_potatos), new Object[] { ItemBattery.getFullBattery(ModItems.battery_potato), ModItems.turret_chip, REDSTONE.dust() });"
 recipe_site,CraftingManager:529,src/main/java/com/hbm/main/CraftingManager.java,529,unported,,"addRecipeAuto(new ItemStack(ModItems.wiring_red_copper, 1), new Object[] { ""PPP"", ""PIP"", ""PPP"", 'P', STEEL.plate(), 'I', STEEL.ingot() });"
 recipe_site,CraftingManager:531,src/main/java/com/hbm/main/CraftingManager.java,531,unported,,"addRecipeAuto(new ItemStack(ModItems.jetpack_tank, 1), new Object[] { "" S "", ""BKB"", "" S "", 'S', STEEL.plate(), 'B', STEEL.bolt(), 'K', Fluids.KEROSENE.getDict(1000) });"
@@ -18104,7 +18104,7 @@ screen_source,GUIMachineOilWell,src/main/java/com/hbm/inventory/gui/GUIMachineOi
 screen_source,GUIMachinePUREX,src/main/java/com/hbm/inventory/gui/GUIMachinePUREX.java,,unported,,
 screen_source,GUIMachinePlasmaForge,src/main/java/com/hbm/inventory/gui/GUIMachinePlasmaForge.java,,unported,,
 screen_source,GUIMachinePrecAss,src/main/java/com/hbm/inventory/gui/GUIMachinePrecAss.java,,unported,,
-screen_source,GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressScreen.java,Active fuel stamp input and output alignment checked; blocked-output state persisted through client restart; multiplayer pending
+screen_source,GUIMachinePress,src/main/java/com/hbm/inventory/gui/GUIMachinePress.java,,partial,src/forge120/java/com/hbm/PortPressScreen.java,Active fuel stamp input and output plus source dial checked; corrected twelve-pixel inventory offset and full 214-pixel panel; small and maximized viewports plus native slot clicks pass after restart; multiplayer GUI comparison pending
 screen_source,GUIMachineRTG,src/main/java/com/hbm/inventory/gui/GUIMachineRTG.java,,unported,,
 screen_source,GUIMachineRadGen,src/main/java/com/hbm/inventory/gui/GUIMachineRadGen.java,,unported,,
 screen_source,GUIMachineRadarNT,src/main/java/com/hbm/inventory/gui/GUIMachineRadarNT.java,,unported,,

@@ -32,6 +32,7 @@
 /run-multiplayer-tests
 /run-tagged-inputs
 /run-survival-client
+/run-checkpoint-client
 __pycache__/
 *.pyc
 

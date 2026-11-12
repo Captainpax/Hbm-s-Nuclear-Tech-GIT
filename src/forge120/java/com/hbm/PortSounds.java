@@ -7,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-/** Source Geiger and player cough sound events. */
+/** Source Geiger, machine and player cough sound events. */
 public final class PortSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
             DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, HbmPort.MOD_ID);
@@ -15,6 +15,8 @@ public final class PortSounds {
     // The old ID item.techBoop is not a valid modern ResourceLocation (uppercase B).
     public static final RegistryObject<SoundEvent> TECH_BOOP = register("item.tech_boop");
     public static final RegistryObject<SoundEvent> COUGH = register("player.cough");
+    // Source block.pressOperate contains an uppercase O, invalid in modern IDs.
+    public static final RegistryObject<SoundEvent> PRESS_OPERATE = register("block.press_operate");
     private static final List<RegistryObject<SoundEvent>> GEIGER = List.of(
             register("item.geiger1"), register("item.geiger2"), register("item.geiger3"),
             register("item.geiger4"), register("item.geiger5"), register("item.geiger6"));
